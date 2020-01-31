@@ -1,0 +1,210 @@
+	<div id="modal" class="modal fade" tabindex="-1" role="dialog">
+		
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content bgcolormodevolatile textcolorvolatile">
+	      <div class="modal-header">
+	        <h4 class="modal-title"></h4>
+			<form>
+				<input class="btn modalButton" id="monitorButton" type="button" value="Monitoring" title="Go to Monitoring"/>
+			</form>
+			<form>
+				<input class="btn modalButton" id="configButton" type="button" value="Configuration" title="Go to Configuration"/>
+			</form>
+	        <button id="closeModal" type="button" class="close textcolorvolatile" style="float: right; margin-left: 5px;" data-dismiss="modal" aria-label="Close" onclick="modalRestartRefresh()"><span aria-hidden="true">&times;</span></button>
+	      </div>
+		
+			<div class="modal-body" style="padding: 0px;">
+				<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+					<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#overallhealth" onclick="updateModalBody('Overall Health')">Overall Health</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#availability" onclick="updateModalBody('Availability')">Availability</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#accuracy" onclick="updateModalBody('Accuracy')">Accuracy</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#performance" onclick="updateModalBody('Performance')">Performance</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#pageroundtriptime" onclick="updateModalBody('Page round trip time/#Overall Response Time#')">Page Round Trip Time</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#customtimer" onclick="updateModalBody('Custom timer/#Overall Response Time#')">Custom Timers</a></li>
+					<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#description" onclick="updateModalBody('description')">Project Description</a></li>
+				</ul>
+				<div id="modalLeft" class="modalHalf">
+					<div id="leftTable"></div>
+					<div id="leftGraph"></div>
+				</div>
+				<div id="modalRight" class="modalHalf">
+					<div id="rightGraph"></div>
+				</div>
+			</div>
+	    </div>
+	  </div>
+	</div>
+
+<div class="custom" width="100%" height="100%" >
+
+	<div id="loading">
+		<i class="fa fa-cog fa-spin fa-3x fa-fw margin-bottom textcolorvolatile"></i>
+		<p id="loadingText"></p>
+    </div>
+		
+	<div id="settingsDiv" class="row">
+		
+		<div id="viewDiv">
+			<p>View:</p>
+			<select id="viewSelector" class="form-control form-control-sm" onchange="fireViewChange(this)" title="Choose View">
+				<option value="dashboard">Dashboard</option>
+				<option value="box">Box</option>
+				<option value="history">Health History</option>
+				<option value="status">Status</option>
+				<option value="graph">Graph</option>
+			</select>
+		</div>
+		
+		<div id="optionPanel" class="bgtile bg-primary text-light p-3">
+			
+			<i class="fas fa-times" style="float: right; cursor: pointer;" id="toggleCloseOptions"></i>
+			<div class="panel">
+				<h4 class="text-light">Options</h4>
+			</div>
+			
+			<div class="panel">
+				<input id="halfDayRadio" type="radio" name="mode" value="halfday" onclick="handleRadioButtonClick(this)"><p style="display: inline"> Last 12 Hours</p></br>
+				<input id="oneDayRadio" type="radio" name="mode" value="oneday" onclick="handleRadioButtonClick(this)" checked="true"><p style="display: inline"> Last 24 hours</p>
+			</div>
+			<div class="panel" id="checkBoxPanel">
+				<input id="envBox" type="checkbox" value="env" onclick="handleCheckBoxClick()"><p style="display: inline"> Environment</p></br>
+				<input id="tidBox" type="checkbox" value="tid" onclick="handleCheckBoxClick()"><p style="display: inline" id="tidBoxText"> TID</p></br>
+				<input id="customTagBox" type="checkbox" value="customTag" onclick="handleCheckBoxClick()"><p style="display: inline"> Custom Tags</p>
+			</div>
+		</div>
+		
+		<div id="sortDiv" class="optionSelectors">
+			<p>Sor<span onclick="primus_aprilis()">t</span>:</p>
+			<select id="sortSelector" class="form-control form-control-sm" onchange="fireSortChange(this)" title="Set Sort Order">
+				<option value="fullName">By Full Name</option>
+				<option value="name">By Project Name</option>
+				<option value="env">By Environment</option>
+				<option value="tid">By TID</option>
+				<option value="Tag">By Tag</option>
+			</select>
+		</div>
+		
+		<div id="refreshDiv" class="optionSelectors">
+			<p>R<span onclick="bunny()">e</span>fres<span onclick="hohoho()">h</span>:</p>
+			<select id="refreshSelector" class="form-control form-control-sm" onchange="fireRefreshChange(this)" title="Set Refresh Time">
+				<option value="stop">Deactivated</option>
+				<option value="300000">5 Minutes</option>
+				<option value="600000">10 Minutes</option>
+				<option value="900000">15 Minutes</option>
+				<option value="1800000">30 Minutes</option>
+				<option value="3600000">60 Minutes</option>
+			</select>
+		</div>
+		
+		<div id="zoomDiv" class="optionSelectors">
+			<p>Zo<span onclick="zoooom()">o</span>m:</p>
+			<select id="zoomSelector" class="form-control form-control-sm" onchange="fireZoomChange(this)" title="Set Zoom Factor">
+				<option value="1.0">Default</option>
+				<option value="0.67">Mini</option>
+				<option value="0.8">Small</option>
+				<option value="1.5">1.5x</option>
+				<option value="2.0">2x</option>
+				<option value="2.5">2.5x</option>
+				<option value="3.0">3x</option>
+			</select>
+		</div>
+		<div id="filterDiv" class="optionSelectors">
+			<p>Filter:</p>
+			<input id="projectFilter" type="text" class="form-control form-control-sm tablefilter" onkeyup="filterProjects(this)" placeholder="Filter..." title="Filter Projects">
+		</div>
+				
+		<div id="zoomDiv" class="optionSelectors">
+			<p>&nbsp;</p>
+			<button class="btn btn-primary btn-sm" id="toggleOptions" title="Toggle Option Panel">
+				<i class="fas fa-cog"></i>
+			</button>
+		</div>	
+		
+		<div id="zoomDiv" class="optionSelectors">
+			<p>&nbsp;</p>
+			<button class="btn btn-sm btn-primary" id="toggleTextSize" title="Toggle Text Size" onclick="toggleTextSize()">Text Size</button>
+		</div>
+		
+	</div>
+	
+	<div id="graphSettingsDiv" class="row">
+		<div id="projectDiv"class="hideable optionSelectors">
+			<p>Project:</p>
+			<select  id="projectSelector" class="form-control form-control-sm" onchange="fireProjectChange(this)" title="Choose Project">
+			</select>
+		</div>
+		
+		<div id="measureDiv"class="hideable optionSelectors">
+			<p>Measure:</p>
+			<select  id="measureSelector" class="form-control form-control-sm" onchange="fireMeasureChange(this)" title="Choose Measure">
+				<option value="Accuracy">Accuracy</option>
+				<option value="Availability">Availability</option>
+				<option value="Custom timer/#Overall Response Time#">Custom Timers</option>
+				<option value="Overall Health">Overall Health</option>
+				<option value="Page HTML download time/#Overall Response Time#">Page HTML download time (Overall Response Time)</option>
+				<option value="Page round trip time/#Overall Response Time#">Page round trip time (Overall Response Time)</option>
+				<option value="Page server busy time/#Overall Response Time#">Page server busy time (Overall Response Time)</option>
+				<option value="Performance">Performance</option>
+				<option value="TransactionResponseTime">Transaction Response Time</option>	
+			</select>
+		</div>
+		
+		
+		<div id="mergeSpanDiv"class="hideable optionSelectors">
+			<p>Merge Span:</p>
+			<select  id="mergeSpanSelector" class="form-control form-control-sm" onchange="fireMergeSpanChange(this)" title="Choose Merge Span">
+				<option value="10080">Weekly</option>
+				<option value="1440">Daily</option>
+				<option value="60">Hourly</option>
+				<option value="15">Quarter of an Hour</option>
+			</select>
+		</div>
+		
+		
+		<div id="measureDataDiv"class="hideable optionSelectors">
+			<p>Measure Data:</p>
+			<select  id="measureDataSelector" class="form-control form-control-sm" onchange="fireMeasureDataChange(this)" title="Choose Data">
+				<option value="avg">Average</option>
+				<option value="boundCount1">boundCount1</option>
+				<option value="boundCount2">boundCount2</option>
+				<option value="max">max</option>
+				<option value="min">min</option>
+				<option value="sum">sum</option>
+				<option value="sumSquare">sumSquare</option>
+			</select>
+		</div>
+		
+		<div id="timeFrameDiv"class="hideable optionSelectors">
+			<p>Time Frame:</p>
+			<select  id="timeFrameSelector" class="form-control form-control-sm" onchange="fireTimeFrameChange(this)" title="Choose Time Frame">
+				<option value="oneyear">Last Year</option>
+				<option value="onemonth">Last Month</option>
+				<option value="oneweek">Last Week</option>
+				<option value="oneday">Last 24 Hours</option>
+				<option value="onehour">Last Hour</option>
+			</select>
+		</div>
+		
+		<div id="datePickerDivOne" class="hideable optionSelectors" style="margin-right: -13px;">
+			<p>Start Date:</p>
+			<div style="display: inline-block" title="Pick Start Date">
+				<input class="form-control form-control-sm" type="date" name="date" id="startDate" placeholder="Start Date" onchange="getDate(this)">
+				<!-- input readonly class="datepickerField" type="text" name="date" id="startDate" placeholder="Start Date" onchange="getDate(this)"-->
+			</div>
+		</div>
+		
+		<div id="datePickerDivTwo" class="hideable optionSelectors">
+			<p>End Date:</p>
+			<div style="display: inline-block" title="Pick End Date">
+				<input class="form-control form-control-sm" type="date" name="date" id="endDate" placeholder="End Date" onchange="getDate(this)">
+				<!-- input readonly class="datepickerField " type="text" name="date" id="endDate" placeholder="End Date" onchange="getDate(this)" -->
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div id="result"></div>
+		<div id ="legend" class="bgtile"></div>
+	</div>
+</div>
+
+

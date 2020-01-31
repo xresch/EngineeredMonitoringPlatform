@@ -1,0 +1,5 @@
+H2 is dual licensed and available under the MPL 2.0 (Mozilla Public License Version 2.0) or under the EPL 1.0 (Eclipse Public License). 
+There is a license FAQ for both the MPL and the EPL.
+
+>> Mozilla Public License Version 2.0   - http://www.mozilla.org/MPL/2.0 
+>> Eclipse Public License               - http://opensource.org/licenses/eclipse-1.0.php

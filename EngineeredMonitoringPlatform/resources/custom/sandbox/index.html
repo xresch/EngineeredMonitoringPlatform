@@ -1,0 +1,28 @@
+
+<h1>Datepicker Test</h1>
+<ul>
+	<form id="cfw-createGroupForm" class="form" method="post">
+	<input type="hidden" placeholder="Cfw Formid" name="cfw-formID" value="cfw-createGroupForm">
+	<input type="hidden" placeholder="Pk Id" name="PK_ID" value="-999">
+	
+	<div class="form-group row">  
+		
+		<label class="col-sm-3 col-form-label" for="DATE-datepicker">
+		<span class="badge badge-info" data-toggle="tooltip" data-placement="top" title="Tooltip on top"><i class="fa fa-info"></i></span>
+		Summernote:</label> 
+		<textarea id="EDITOR" class="cfw-summernote" name="EDITOR"><strong>test</strong></textarea>
+	</div>
+	<script>
+		
+	
+		window.addEventListener('DOMContentLoaded', function() {
+			$(document).ready(function() {
+				  $('#EDITOR').summernote();
+				});
+		}); 
+		
+	</script>
+
+	<!-- input type="button" onclick="cfw_postJSON('/cfw/formhandler', $('#cfw-createGroupForm').serialize())" class="form-control btn-primary" value="Create Group"></form-->
+	<input type="button" onclick="cfw_sendForm('cfw-createGroupForm', '/cfw/formhandler')" class="form-control btn-primary" value="Create Group"></form>
+</ul>

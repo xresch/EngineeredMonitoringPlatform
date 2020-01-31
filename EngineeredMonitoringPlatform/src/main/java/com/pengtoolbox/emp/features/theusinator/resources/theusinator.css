@@ -1,0 +1,245 @@
+
+#cfw-content  {
+	padding: 10px;
+}
+#cfw-container  {
+	max-width: 100%;
+}
+
+.custom {
+	background: none;
+	height: 100%;
+}
+
+.customTable th {
+	font-weight: bold;
+}
+
+.customTable td  {
+	text-align: left;
+}
+
+#resTable th {
+	font-weight: bold;
+}
+
+#resTable {
+	padding: 10px;
+}
+
+.customTable {
+	width: 100%;
+}
+
+.value {
+	text-align: right;
+}
+
+.tile{
+	border-radius: 5px;
+	text-align: center;
+	margin: 4px;
+	font-weight: bold;
+	word-wrap: break-word;
+	cursor: pointer;
+	position: relative;
+	padding: 1px;
+	border: 0.5px solid #e5e5e5;
+	flex: none;
+}
+
+.hideable {
+	display: none;
+	float: left;
+}
+
+#graph {
+	margin-top: 10px;
+	min-height: 600px;
+}
+
+.modal-content {
+	width: 1200px;
+	overflow: hidden;
+	margin-left: -50%;
+	margin-top: 28%;
+}
+
+.modalHalf {
+	float: left;
+	width: 50%;
+	height: 95%;
+	padding: 10px;
+	margin: auto;
+}
+
+#modal {
+	margin: auto;
+}
+
+#modalRight {
+	border-left: 1px solid #e5e5e5;
+}
+
+.pie {
+	position: absolute;
+	bottom: 0px;
+}
+
+#rightGraph #pie {
+	bottom: 40px;
+}
+
+.modal-body {
+	height: 90%;
+	overflow: hidden;
+}
+
+#tabs {
+	list-style-type: none;
+}
+
+#loading{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	visibility: hidden;
+	text-align: center;
+	line-height: 20px;
+}
+
+#leftTable {
+	width: 100%;
+}
+
+#leftGraph {
+	width: 100%;
+	height: 400px;
+}
+
+#rightGraph {
+	width: 100%;
+	height: 100%;
+}
+
+#rightGraph p {
+	text-align: center;
+	font-size: 18px;
+	word-wrap: break-word;
+}
+
+#leftGraph p {
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+	word-wrap: break-word;
+}
+
+#result {
+	margin-top: 10px;
+	min-height: 80%;
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#legend {
+	visibility: visible;
+	margin: 2px;
+	height: 40px;
+	width: 500px;
+	border: solid 0.5px #e5e5e5;
+	border-radius: 5px;
+}
+
+#menuButton {
+	float: right;
+}
+
+#optionPanel {
+	z-index: 100;
+	position: absolute;
+	right: 0px;
+	top: 127px;
+	height: 300px; 
+	width: 150px;
+	display: none;
+}
+
+#settingsDiv {
+	max-height: 130px;
+	width: 100%;
+}
+
+/* #viewDiv {
+	float: left;
+	margin-bottom: 10px;
+}
+
+#zoomDiv {
+	float: right;
+	display: block;
+}
+
+#filterDiv {
+	float: right;
+	display: block;
+}
+#refreshDiv {
+	float: right;
+	display: block;
+}
+
+#sortDiv {
+	float: right;
+	display: block;
+} */
+
+.datepickerField {
+	height: 19px;
+}
+
+.modalButton{
+	float: right;
+	margin-right: 2px;
+	display: none;
+}
+
+#historyTable {
+	width: 100%;
+}
+
+#historyTable p {
+	margin: 0px;
+}
+
+#historyTable th {
+	font-weight: bold;
+	border-bottom: 1px solid #e5e5e5;
+	height: 40px;
+}
+
+#historyTable td {
+	border-bottom: 1px solid #e5e5e5;
+}
+
+#viewDiv p, #projectDiv p, #measureDiv p, #mergeSpanDiv p, #measureDataDiv p, #timeFrameDiv p, #datePickerDivOne p, #datePickerDivTwo p, #sortDiv p, #refreshDiv p, #zoomDiv p {
+	margin: 0px;
+}
+
+.tooltip {
+	background-color: transparent;
+	border: none;
+}
+
+.optionSelectors {
+	margin-left: 5px;
+	float: right;
+	display: block;
+}
+
+.optionSelectors p{
+	margin: 0px;
+	padding: 0px;
+}

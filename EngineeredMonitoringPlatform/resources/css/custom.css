@@ -1,0 +1,59 @@
+
+//bootstrap fix
+.custom-table {
+	border-collapse: separate;
+	border-spacing: 1;
+}
+
+.chartbox{
+	min-width: 100px; 
+	max-width: 150px;
+	border:  0.05em solid rgba(128,128,128,1);
+	margin: 5px;
+	padding: 5px;
+	border-radius: 5px;
+}
+#tabIndent{
+	border-top: 0.05em solid #ddd;
+}
+
+.alertDiv{
+	width: 100px;
+	height: 100px;
+	margin: 3px;
+	padding: 3px;
+	border-radius: 5px;
+}
+
+.tabbedPane a, .tabbedPane a:visited, .tabbedPane a:hover {
+	border: 0.05em solid #ddd;
+}
+
+.tabbedPane #selectedTab {
+	border-bottom: 0;
+}
+
+.margin5px {
+     margin: 5px;
+}
+
+.flex-container{
+	display: flex;
+	/*flex-direction: row;*/
+	flex-wrap: wrap;
+	overflow-y: auto;
+}
+.flex-item{
+	flex: 1 1 auto;
+}
+
+.innerflex{
+	display: flex;
+}
+	
+
+.colordiv{
+	min-width: 10px;
+	min-height: 10px;
+	margin: 1px;
+}
