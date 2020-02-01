@@ -162,8 +162,7 @@ public class FeatureTheusinator extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplication app) {	
-    	ServletContextHandler appContext = app.getSecureContext();
-        appContext.addServlet(ServletTheusinator.class,  "/theusinator");
+        app.addAppServlet(ServletTheusinator.class,  "/theusinator");
 	}
 
 	@Override

@@ -47,20 +47,11 @@ public class Main implements CFWAppInterface {
 	@Override
 	public void startApp(CFWApplication app) {
 	    	
-	        //###################################################################
-	        // Create API ServletContext, no login needed
-	        //################################################################### 
-	    	ServletContextHandler apiContext = app.getUnsecureContext("/api");
-	    	
-	        //###################################################################
-	        // Create authenticatedServletContext
-	        //###################################################################    	
-	    	ServletContextHandler appContext = app.getSecureContext();
 	        	        
 	        //###################################################################
 	        // Startup
 	        //###################################################################
-	        app.setDefaultURL("/app/theusinator?env=preprod");
+	        app.setDefaultURL("/theusinator?env=preprod", true);
 	        
 	        try {
 				app.start();
