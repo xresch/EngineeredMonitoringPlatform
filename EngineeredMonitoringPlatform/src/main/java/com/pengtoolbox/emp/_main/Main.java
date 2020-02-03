@@ -2,8 +2,6 @@ package com.pengtoolbox.emp._main;
 
 import java.util.logging.Logger;
 
-import org.eclipse.jetty.servlet.ServletContextHandler;
-
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw._main.CFWAppInterface;
 import com.pengtoolbox.cfw._main.CFWApplication;
@@ -56,8 +54,9 @@ public class Main implements CFWAppInterface {
 	        try {
 				app.start();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new CFWLog(logger)
+				.method("startApp")
+				.severe("Exception occured during startup.", e);
 			}
 		
 	}

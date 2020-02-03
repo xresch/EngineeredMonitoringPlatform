@@ -68,96 +68,69 @@ public class FeatureTheusinator extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		
-		Role adminRole = CFW.DB.Roles.selectFirstByName(CFW.DB.Roles.CFW_ROLE_ADMIN);
-		//Role userRole = CFW.DB.Roles.selectFirstByName(CFW.DB.Roles.CFW_ROLE_USER);
+		//-----------------------------------------
+		// 
+		//-----------------------------------------
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_THEUSINATOR_PROD, "user")
+					.description("View and analyze productive SPM Monitoring status using the Theusinator Dashboard.")
+					.isDeletable(false),
+				true,
+				true);
+					
+		//-----------------------------------------
+		// 
+		//-----------------------------------------
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_THEUSINATOR_PREPROD, "user")
+					.description("View and analyze pre-productive SPM Monitoring status using the Theusinator Dashboard.")
+					.isDeletable(false),
+				true,
+				true);
 		
 		//-----------------------------------------
 		// 
 		//-----------------------------------------
-		if(!CFW.DB.Permissions.checkExistsByName(PERMISSION_THEUSINATOR_PROD)) {
-			Permission permission = 
-					new Permission(PERMISSION_THEUSINATOR_PROD, "user")
-						.description("View and analyze productive SPM Monitoring status using the Theusinator Dashboard.")
-						.isDeletable(false);
-			
-			CFW.DB.Permissions.create(permission);
-			
-			permission = CFW.DB.Permissions.selectByName(PERMISSION_THEUSINATOR_PROD);
-			
-			CFW.DB.RolePermissionMap.addPermissionToRole(permission, adminRole, true);
-			//CFW.DB.RolePermissionMap.addPermissionToRole(permission, userRole, true);
-		}
-		
-		//-----------------------------------------
-		// 
-		//-----------------------------------------
-		if(!CFW.DB.Permissions.checkExistsByName(PERMISSION_THEUSINATOR_PREPROD)) {
-			Permission permission = 
-					new Permission(PERMISSION_THEUSINATOR_PREPROD, "user")
-						.description("View and analyze pre-productive SPM Monitoring status using the Theusinator Dashboard.")
-						.isDeletable(false);
-			
-			CFW.DB.Permissions.create(permission);
-			
-			permission = CFW.DB.Permissions.selectByName(PERMISSION_THEUSINATOR_PREPROD);
-			
-			CFW.DB.RolePermissionMap.addPermissionToRole(permission, adminRole, true);
-			//CFW.DB.RolePermissionMap.addPermissionToRole(permission, userRole, true);
-		}
-		
-		//-----------------------------------------
-		// 
-		//-----------------------------------------
-		if(!CFW.DB.Config.checkConfigExists(CONFIG_SPM_PROD_URL)) {
-			CFW.DB.Config.create(
-				new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_URL)
-					.description("The URL of the productive SPM instance.")
-					.type(FormFieldType.TEXT)
-			);
-		}
-		
-		if(!CFW.DB.Config.checkConfigExists(CONFIG_SPM_PROD_APIUSER)) {
-			CFW.DB.Config.create(
-				new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_APIUSER)
-					.description("The username of the user that will access the API.")
-					.type(FormFieldType.TEXT)
-			);
-		}
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_URL)
+				.description("The URL of the productive SPM instance.")
+				.type(FormFieldType.TEXT)
+		);
+	
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_APIUSER)
+				.description("The username of the user that will access the API.")
+				.type(FormFieldType.TEXT)
+		);
 
-		if(!CFW.DB.Config.checkConfigExists(CONFIG_SPM_PROD_PASSWORD)) {
-			CFW.DB.Config.create(
-				new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_PASSWORD)
-					.description("The password of the API User.")
-					.type(FormFieldType.PASSWORD)
-			);
-		}
-		
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_PASSWORD)
+				.description("The password of the API User.")
+				.type(FormFieldType.PASSWORD)
+		);
+
+	
 		//-----------------------------------------
 		// 
 		//-----------------------------------------
-		if(!CFW.DB.Config.checkConfigExists(CONFIG_SPM_PREPROD_URL)) {
-			CFW.DB.Config.create(
-				new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_URL)
-					.description("The URL of the pre-productive SPM instance.")
-					.type(FormFieldType.TEXT)
-			);
-		}
-		
-		if(!CFW.DB.Config.checkConfigExists(CONFIG_SPM_PREPROD_APIUSER)) {
-			CFW.DB.Config.create(
-				new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_APIUSER)
-					.description("The username of the user that will access the API.")
-					.type(FormFieldType.TEXT)
-			);
-		}
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_URL)
+				.description("The URL of the pre-productive SPM instance.")
+				.type(FormFieldType.TEXT)
+		);
+	
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_APIUSER)
+				.description("The username of the user that will access the API.")
+				.type(FormFieldType.TEXT)
+		);
 
-		if(!CFW.DB.Config.checkConfigExists(CONFIG_SPM_PREPROD_PASSWORD)) {
-			CFW.DB.Config.create(
-				new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_PASSWORD)
-					.description("The password of the API User.")
-					.type(FormFieldType.PASSWORD)
-			);
-		}
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_PASSWORD)
+				.description("The password of the API User.")
+				.type(FormFieldType.PASSWORD)
+		);
+		
 	}
 
 	@Override
