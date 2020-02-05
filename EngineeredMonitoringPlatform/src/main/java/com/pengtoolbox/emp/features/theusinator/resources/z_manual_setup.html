@@ -8,6 +8,22 @@
 <img class="img-fluid" src="/cfw/jarresource?pkg=com.pengtoolbox.emp.features.theusinator.resources&file=z_manual_setup_config.png">
 
 
+
+<h2>SPM Project Description</h2>
+<p>Before the environment and TID(Technical ID) can be shown on the various dashboards, the Project description has to be adjusted to a JSON like format, containing at least the fields "env" and "tid": </p>
+<ol>
+	<li>In Silk Performance Manager go to  &quot;Administration &gt;&gt; Projects &quot; and edit the project</li>
+	<li>Enter a description in this format: 
+	<pre><code>{“env”: “yourEnvironment”, “tid”: “yourTID”, “itso”: “yourITSO”, ...}</code></pre></li>
+	<li>Save the changes</li>
+	<li>Activate the project</li>
+</ol>
+
+<p> This is also the way to propagate data to the tab "Project Description" in the <a href="#" onclick="cfw_manual_loadPage('Engineered Montitoring Platform(EMP)|Theusinator|Details Modal');">Options Panel</a>.</p>
+
+
+
+
 <h2>Users</h2>
 <p>Create users under  &quot;Admin &gt;&gt; Manage Users &quot;. The username has to be the same as in Silk Performance Manager. Theusinator will fetch all the information by username through the SPM API.</p>
 
