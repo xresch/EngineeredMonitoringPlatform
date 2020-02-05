@@ -4,7 +4,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw._main.CFWAppFeature;
-import com.pengtoolbox.cfw._main.CFWApplication;
+import com.pengtoolbox.cfw._main.CFWApplicationExecutor;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.datahandling.CFWField.FormFieldType;
 import com.pengtoolbox.cfw.features.config.Configuration;
@@ -234,7 +234,7 @@ public class FeatureTheusinator extends CFWAppFeature {
 	}
 
 	@Override
-	public void addFeature(CFWApplication app) {	
+	public void addFeature(CFWApplicationExecutor app) {	
         app.addAppServlet(ServletTheusinator.class,  "/theusinator");
 	}
 
