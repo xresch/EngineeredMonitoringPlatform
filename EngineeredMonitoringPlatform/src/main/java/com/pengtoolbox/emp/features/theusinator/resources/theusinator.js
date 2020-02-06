@@ -13,27 +13,27 @@ var ENVIRONMENT = URL_PARAMETERS.env;
 
 //-------------------------
 // Dashboard Settings
-var SORT_ORDER = (getMyCookie('SORT_ORDER') == '')? 'fullName' : getMyCookie('SORT_ORDER');
-var CURRENT_MEASURE = (getMyCookie('CURRENT_MEASURE') == '')? 'Accuracy' : getMyCookie('CURRENT_MEASURE');
-var CURRENT_MERGE_SPAN = (getMyCookie('CURRENT_MERGE_SPAN') == '')? 10800 : getMyCookie('CURRENT_MERGE_SPAN');
-var CURRENT_MEASURE_DATA = (getMyCookie('CURRENT_MEASURE_DATA') == '')? 'avg' : getMyCookie('CURRENT_MEASURE_DATA');
-var CURRENT_TIME_FRAME = (getMyCookie('CURRENT_TIME_FRAME') == '')? 'oneyear' : getMyCookie('CURRENT_TIME_FRAME');
-var CURRENT_VIEW = (getMyCookie('CURRENT_VIEW') == '')? 'dashboard' : getMyCookie('CURRENT_VIEW');
-var CURRENT_PROJECT = (getMyCookie('CURRENT_PROJECT') == '')? 'start' : getMyCookie('CURRENT_PROJECT');
+var SORT_ORDER = (retrieveLocalValue('SORT_ORDER') == '')? 'fullName' : retrieveLocalValue('SORT_ORDER');
+var CURRENT_MEASURE = (retrieveLocalValue('CURRENT_MEASURE') == '')? 'Accuracy' : retrieveLocalValue('CURRENT_MEASURE');
+var CURRENT_MERGE_SPAN = (retrieveLocalValue('CURRENT_MERGE_SPAN') == '')? 10800 : retrieveLocalValue('CURRENT_MERGE_SPAN');
+var CURRENT_MEASURE_DATA = (retrieveLocalValue('CURRENT_MEASURE_DATA') == '')? 'avg' : retrieveLocalValue('CURRENT_MEASURE_DATA');
+var CURRENT_TIME_FRAME = (retrieveLocalValue('CURRENT_TIME_FRAME') == '')? 'oneyear' : retrieveLocalValue('CURRENT_TIME_FRAME');
+var CURRENT_VIEW = (retrieveLocalValue('CURRENT_VIEW') == '')? 'dashboard' : retrieveLocalValue('CURRENT_VIEW');
+var CURRENT_PROJECT = (retrieveLocalValue('CURRENT_PROJECT') == '')? 'start' : retrieveLocalValue('CURRENT_PROJECT');
 var CURRENT_MODAL_PROJECT;
 var CURRENT_CHART_TYPE = 'bar';
 
-var BORDER_RADIUS = (getMyCookie('BORDER_RADIUS') == '')? 5 : getMyCookie('BORDER_RADIUS');
+var BORDER_RADIUS = (retrieveLocalValue('BORDER_RADIUS') == '')? 5 : retrieveLocalValue('BORDER_RADIUS');
 var RETRY_COUNTER = 0;
-var ZOOM = (getMyCookie('ZOOM') == '')? 1.0 : getMyCookie('ZOOM');
+var ZOOM = (retrieveLocalValue('ZOOM') == '')? 1.0 : retrieveLocalValue('ZOOM');
 var DISPLAY_MEASURE_NAME = 'Overall Health';
 
-var ENV_BOX = (getMyCookie('ENV_BOX') == '')? true : getMyCookie('ENV_BOX');
-var TID_BOX = (getMyCookie('TID_BOX') == '')? true : getMyCookie('TID_BOX');
-var CUSTOM_TAG_BOX = (getMyCookie('CUSTOM_TAG_BOX') == '')? true : getMyCookie('CUSTOM_TAG_BOX');
+var ENV_BOX = (retrieveLocalValue('ENV_BOX') == '')? true : retrieveLocalValue('ENV_BOX');
+var TID_BOX = (retrieveLocalValue('TID_BOX') == '')? true : retrieveLocalValue('TID_BOX');
+var CUSTOM_TAG_BOX = (retrieveLocalValue('CUSTOM_TAG_BOX') == '')? true : retrieveLocalValue('CUSTOM_TAG_BOX');
 
-var DISPLAY_MODE = (getMyCookie('DISPLAY_MODE') == '')? "regular" : getMyCookie('DISPLAY_MODE');
-var TEXT_SIZE = (getMyCookie('TEXT_SIZE') == '')? "small" : getMyCookie('TEXT_SIZE');
+var DISPLAY_MODE = (retrieveLocalValue('DISPLAY_MODE') == '')? "regular" : retrieveLocalValue('DISPLAY_MODE');
+var TEXT_SIZE = (retrieveLocalValue('TEXT_SIZE') == '')? "small" : retrieveLocalValue('TEXT_SIZE');
 
 //-------------------------
 // Used to apply styleMode after all projects have been drawn
@@ -41,7 +41,7 @@ var PROJECT_COUNTER = 0;
 
 //-------------------------
 // Interval Settings
-var REFRESH_TIME = (getMyCookie('REFRESH_TIME') == '')? 'stop' : getMyCookie('REFRESH_TIME');
+var REFRESH_TIME = (retrieveLocalValue('REFRESH_TIME') == '')? 'stop' : retrieveLocalValue('REFRESH_TIME');
 var INTERVAL_ID;
 var ALIVE;
 var BLINK_INTERVALS = [];
@@ -59,8 +59,8 @@ var PROJECT_LIST = {};
 
 //-------------------------
 // TimeFrame Settings 
-var DASHBOARD_TIME_FRAME = (getMyCookie('DASHBOARD_TIME_FRAME') == '')? 24 : getMyCookie('DASHBOARD_TIME_FRAME');
-var DASHBOARD_TIME_FRAME_STRING = (getMyCookie('DASHBOARD_TIME_FRAME_STRING') == '')? 'oneday' : getMyCookie('DASHBOARD_TIME_FRAME_STRING');
+var DASHBOARD_TIME_FRAME = (retrieveLocalValue('DASHBOARD_TIME_FRAME') == '')? 24 : retrieveLocalValue('DASHBOARD_TIME_FRAME');
+var DASHBOARD_TIME_FRAME_STRING = (retrieveLocalValue('DASHBOARD_TIME_FRAME_STRING') == '')? 'oneday' : retrieveLocalValue('DASHBOARD_TIME_FRAME_STRING');
 var CURRENT_TIME = new Date().getTime();
 var CURRENT_DATE = new Date(CURRENT_TIME);
 var START_DATE;
@@ -85,66 +85,66 @@ $('#toggleCloseOptions').click(function() {
 /**************************************************************************************
  * Update data according to selected project
  * @param selector selected value of #projectSelector
- * @see setMyCookie() 
+ * @see storeLocalValue() 
  * @see draw()
  *************************************************************************************/
 function fireProjectChange(selector) {
 	
 	CURRENT_PROJECT = $(selector).val();
-	setMyCookie('CURRENT_PROJECT', CURRENT_PROJECT, 365);
+	storeLocalValue('CURRENT_PROJECT', CURRENT_PROJECT);
 	draw();
 };
 
 /**************************************************************************************
  * Update data according to selected measure
  * @param selector selected value of #measureSelector
- * @see setMyCookie() 
+ * @see storeLocalValue() 
  * @see draw()
  *************************************************************************************/
 function fireMeasureChange(selector) {
 	
 	CURRENT_MEASURE = $(selector).val();
 	DISPLAY_MEASURE_NAME = CURRENT_MEASURE;
-	setMyCookie('CURRENT_MEASURE', CURRENT_MEASURE, 365);
+	storeLocalValue('CURRENT_MEASURE', CURRENT_MEASURE);
 	draw();
 };
 
 /**************************************************************************************
  * Update data according to selected merge span
  * @param selector selected value of #mergeSpanSelector
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see draw()
  *************************************************************************************/
 function fireMergeSpanChange(selector) {
 	
 	CURRENT_MERGE_SPAN = $(selector).val();
-	setMyCookie('CURRENT_MERGE_SPAN', CURRENT_MERGE_SPAN, 365);
+	storeLocalValue('CURRENT_MERGE_SPAN', CURRENT_MERGE_SPAN);
 	draw();
 };
 
 /**************************************************************************************
  * Update data according to selected measure data
  * @param selector selected value of #measureDataSelector
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see draw()
  *************************************************************************************/
 function fireMeasureDataChange(selector) {
 	
 	CURRENT_MEASURE_DATA = $(selector).val();
-	setMyCookie('CURRENT_MEASURE_DATA', CURRENT_MEASURE_DATA, 365);
+	storeLocalValue('CURRENT_MEASURE_DATA', CURRENT_MEASURE_DATA);
 	draw();
 };
 
 /**************************************************************************************
  * Update data according to selected time frame. Reset datepicker.
  * @param selector selected value of #timeFrameSelector
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see draw()
  *************************************************************************************/
 function fireTimeFrameChange(selector) {
 	
 	CURRENT_TIME_FRAME = $(selector).val();
-	setMyCookie('CURRENT_TIME_FRAME', CURRENT_TIME_FRAME, 365);
+	storeLocalValue('CURRENT_TIME_FRAME', CURRENT_TIME_FRAME);
 	$('.datepickerField').val('');
 	draw();
 };
@@ -152,7 +152,7 @@ function fireTimeFrameChange(selector) {
 /**************************************************************************************
  * Update data according to selected time frame and reset refresh timer
  * @param selector selected value of #timeFrameSelector
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see refreshTimer()
  * @see draw()
  *************************************************************************************/
@@ -164,7 +164,7 @@ function fireViewChange(selector) {
 		optionPanel.css('display', 'none');
 	}
 	CURRENT_VIEW = $(selector).val();
-	setMyCookie('CURRENT_VIEW', CURRENT_VIEW, 365);
+	storeLocalValue('CURRENT_VIEW', CURRENT_VIEW);
 	clearInterval(INTERVAL_ID);
 	refreshTimer();
 	draw();
@@ -173,26 +173,26 @@ function fireViewChange(selector) {
 /**************************************************************************************
  * Change size of boxes in dashboard
  * @param selector selected value of #zoomSelector
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see draw()
  *************************************************************************************/
 function fireZoomChange(selector) {
 	
 	ZOOM = $(selector).val();
-	setMyCookie('ZOOM', ZOOM, 365);
+	storeLocalValue('ZOOM', ZOOM);
 	draw();
 };
 
 /**************************************************************************************
  * Change duration between refreshes
  * @param selector selected value of #refreshSelector
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see refreshTimer()
  *************************************************************************************/
 function fireRefreshChange(selector) {
 	
 	REFRESH_TIME = $(selector).val();
-	setMyCookie('REFRESH_TIME', REFRESH_TIME, 365);
+	storeLocalValue('REFRESH_TIME', REFRESH_TIME);
 	clearInterval(INTERVAL_ID);
 	refreshTimer();
 };
@@ -219,13 +219,13 @@ function fireChartTypeChange(selector) {
 /**************************************************************************************
  * Change order of projects in dashboard (by name, by tid, by environment, by custom tag)
  * @param selector selected value of #sortSelector
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see startTheusinator();
  *************************************************************************************/
 function fireSortChange(selector) {
 
 	SORT_ORDER = $(selector).val();
-	setMyCookie('SORT_ORDER', SORT_ORDER, 365);
+	storeLocalValue('SORT_ORDER', SORT_ORDER);
 	startTheusinator();
 };
 
@@ -297,7 +297,7 @@ function setCookie(cname, cvalue, exdays) {
 /**************************************************************************************
  * Get Cookie
  *************************************************************************************/
-function getCookie(cname) {
+function retrieveLocalValue(cname) {
      var name = cname + "=";
      var decodedCookie = decodeURIComponent(document.cookie);
      var ca = decodedCookie.split(';');
@@ -321,7 +321,7 @@ function doFilter(searchField){
 	var table = $(searchField).data("table");
 	var input = searchField;
 	
-	setCookie("searchFilter", input.value, 365);
+	storeLocalValue("searchFilter", input.value);
 	
 	filter = input.value.toUpperCase();
 	
@@ -385,7 +385,7 @@ function getUserId() {
  * Send API GET request to get all active projects for current user in current session
  * Create data structure used in entire application and prepare order according to
  * #sortSelector
- * @see getMyCookie()
+ * @see retrieveLocalValue()
  * @see dynamicSort()
  *************************************************************************************/
 function getProjectsForUser(){
@@ -406,12 +406,12 @@ function getProjectsForUser(){
 					var description = $(this).find("description").text().trim();
 					project.id = parseInt($(this).find("id").text());
 					project.fullName = $(this).find("name").text();
-					project.Tag = getMyCookie(project.id);
+					project.Tag = retrieveLocalValue(project.id);
 					project.hasConfigRights = false;
 					
 					try {
 						description = JSON.parse(description);
-						description.Tag = getMyCookie(project.id);
+						description.Tag = retrieveLocalValue(project.id);
 						project.fullDescription = description;
 						
 						if(description.env != 'undefined') {
@@ -845,7 +845,7 @@ function applySpecialStyles(){
 
 /**************************************************************************************
  * Call function to draw data according to selected view
- * @see getMyCookie() 
+ * @see retrieveLocalValue() 
  * @see showLoader()
  * @see drawDashboardView()
  * @see drawBoxView()
@@ -859,9 +859,9 @@ function draw() {
 	var datepicker = $('.datepickerField');
 
 	if($("#startDate").val() == '' && $("#endDate").val() == '') {
-		if (getMyCookie('CURRENT_TIME_FRAME') != '') {
-			$('#timeFrameSelector option[value="' + getMyCookie("CURRENT_TIME_FRAME") + '"]').attr('selected', 'selected');
-			CURRENT_TIME_FRAME = getMyCookie("CURRENT_TIME_FRAME");
+		if (retrieveLocalValue('CURRENT_TIME_FRAME') != '') {
+			$('#timeFrameSelector option[value="' + retrieveLocalValue("CURRENT_TIME_FRAME") + '"]').attr('selected', 'selected');
+			CURRENT_TIME_FRAME = retrieveLocalValue("CURRENT_TIME_FRAME");
 		}
 	}
 	
@@ -1144,13 +1144,13 @@ function drawGraphView() {
 	$("#filterDiv").css("display", "none");
 	if(CURRENT_PROJECT != 'start') {
 		setMergeSpanOptions();
-		if(getMyCookie('CURRENT_TIME_FRAME') == '') {
+		if(retrieveLocalValue('CURRENT_TIME_FRAME') == '') {
 			CURRENT_TIME_FRAME = 'oneyear';
-			setMyCookie('CURRENT_TIME_FRAME', CURRENT_TIME_FRAME, 365);
+			storeLocalValue('CURRENT_TIME_FRAME', CURRENT_TIME_FRAME);
 		}else{
 			
 			if($('#startDate').val() == '') {
-				CURRENT_TIME_FRAME = getMyCookie('CURRENT_TIME_FRAME');
+				CURRENT_TIME_FRAME = retrieveLocalValue('CURRENT_TIME_FRAME');
 			}
 		}
 		updateTimeFrame(CURRENT_TIME_FRAME);
@@ -1177,7 +1177,7 @@ function drawGraphView() {
 /**************************************************************************************
  * Add a custom tag to a project
  * @param selector button with id of project for which to set a custom tag
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see draw()
  *************************************************************************************/
 function addTag(selector) {
@@ -1197,7 +1197,7 @@ function addTag(selector) {
 			}catch(err){
 			
 			}
-			setMyCookie(projectId, Tag, 365);
+			storeLocalValue(projectId, Tag);
 			draw();
 			input.val('');
 		}else{
@@ -1213,7 +1213,7 @@ function addTag(selector) {
 
 /**************************************************************************************
  * Remove a custom tag from a project
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see draw()
  *************************************************************************************/
 function removeTag(selector) {
@@ -1228,11 +1228,11 @@ function removeTag(selector) {
 		$('#descriptionTable tr:last').remove();
 		try{
 			PROJECT_LIST[projectId].fullDescription.Tag = '';
-			setMyCookie(projectId, '', 365);
+			storeLocalValue(projectId, '');
 		}catch(err){
 			
 		}
-		setMyCookie(projectId, '', 365);
+		storeLocalValue(projectId, '');
 		draw();
 	}
 };
@@ -1285,31 +1285,31 @@ function handleCheckBoxClick() {
 	if(envBox.prop('checked')) {
 		envDiv.css('display', '');
 		ENV_BOX = true;
-		setMyCookie('ENV_BOX', true, 365);
+		storeLocalValue('ENV_BOX', true);
 	}else {
 		envDiv.css('display', 'none');
 		ENV_BOX = false;
-		setMyCookie('ENV_BOX', false, 365);
+		storeLocalValue('ENV_BOX', false);
 	};
 	
 	if(tidBox.prop('checked')) {
 		tidDiv.css('display', '');
 		TID_BOX = true;
-		setMyCookie('TID_BOX', true, 365);
+		storeLocalValue('TID_BOX', true);
 	}else {
 		tidDiv.css('display', 'none');
 		TID_BOX = false;
-		setMyCookie('TID_BOX', false, 365);
+		storeLocalValue('TID_BOX', false);
 	};
 	
 	if(customTagBox.prop('checked')) {
 		customTagDiv.css('display', '');
 		CUSTOM_TAG_BOX = true;
-		setMyCookie('CUSTOM_TAG_BOX', true, 365);
+		storeLocalValue('CUSTOM_TAG_BOX', true);
 	}else {
 		customTagDiv.css('display', 'none');
 		CUSTOM_TAG_BOX = false;
-		setMyCookie('CUSTOM_TAG_BOX', false, 365);
+		storeLocalValue('CUSTOM_TAG_BOX', false);
 	}
 };
 
@@ -1326,17 +1326,17 @@ function handleRadioButtonClick(selector) {
 		radioButton.attr('checked', true);
 		$('#oneDayRadio').removeAttr('checked');
 		DASHBOARD_TIME_FRAME = 12;
-		setMyCookie('DASHBOARD_TIME_FRAME', 12, 365);
+		storeLocalValue('DASHBOARD_TIME_FRAME', 12);
 		DASHBOARD_TIME_FRAME_STRING = 'halfday';
-		setMyCookie('DASHBOARD_TIME_FRAME_STRING', 'halfday', 365);
+		storeLocalValue('DASHBOARD_TIME_FRAME_STRING', 'halfday');
 		draw();
 	}else{
 		radioButton.attr('checked', true);
 		$('#halfDayRadio').removeAttr('checked');
 		DASHBOARD_TIME_FRAME = 24;
-		setMyCookie('DASHBOARD_TIME_FRAME', 24, 365);
+		storeLocalValue('DASHBOARD_TIME_FRAME', 24);
 		DASHBOARD_TIME_FRAME_STRING = 'oneday';
-		setMyCookie('DASHBOARD_TIME_FRAME_STRING', 'oneday', 365);
+		storeLocalValue('DASHBOARD_TIME_FRAME_STRING', 'oneday');
 		draw();
 	}
 };
@@ -1454,7 +1454,7 @@ function drawTile(projectId) {
 	currentTile.attr('onclick', 'toggleModal(this)');
 	
 	if (document.cookie.indexOf("p" + projectId + "=") >= 0) {
-		var oldValue = getMyCookie("p" + projectId);
+		var oldValue = retrieveLocalValue("p" + projectId);
 		
 		if(oldValue >= 25.00 && currentHealth < 25.00) {
 
@@ -1463,7 +1463,7 @@ function drawTile(projectId) {
 		}
 	}
 	
-	setMyCookie("p" + projectId, currentHealth, 365);
+	storeLocalValue("p" + projectId, currentHealth);
 };
 
 /**************************************************************************************
@@ -1676,7 +1676,7 @@ function drawBoxTile(projectId) {
 	}
 	
 	if (document.cookie.indexOf("p" + projectId + "=") >= 0) {
-		var oldValue = getMyCookie("p" + projectId);
+		var oldValue = retrieveLocalValue("p" + projectId);
 		
 		if(oldValue >= 25.00 && results[results.length -1].value < 25.00) {
 
@@ -1685,7 +1685,7 @@ function drawBoxTile(projectId) {
 		}
 	}
 	
-	setMyCookie("p" + projectId, results[results.length -1].value, 365);
+	storeLocalValue("p" + projectId, results[results.length -1].value);
 	
 	//-------------------------
 	// Add HTML to DOM
@@ -1784,7 +1784,7 @@ function drawHistoryTable(projectId) {
 	healthField.append('<div style="display: flex; flex-wrap: nowrap; align-items: center; width: 100%;"><div style="height: 14px; width: 14px; margin: 3px; background-color: ' + color + '; border: 1px solid #e5e5e5"></div>' + results[results.length - 1].value + '</div>');
 	
 	if (document.cookie.indexOf("p" + projectId + "=") >= 0) {
-		var oldValue = Number.parseFloat(getMyCookie("p" + projectId));
+		var oldValue = Number.parseFloat(retrieveLocalValue("p" + projectId));
 		
 		if(oldValue >= 25.00 &&  results[results.length - 1].value < 25.00) {
 
@@ -1793,7 +1793,7 @@ function drawHistoryTable(projectId) {
 		}
 	}
 	
-	setMyCookie("p" + projectId,  results[results.length - 1].value, 365);
+	storeLocalValue("p" + projectId,  results[results.length - 1].value);
 };
 
 /**************************************************************************************
@@ -2009,7 +2009,7 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 		
 		if (document.cookie.indexOf("p" + targetId + "=") >= 0) {
 			
-			var oldValue = getMyCookie("p" + targetId);
+			var oldValue = retrieveLocalValue("p" + targetId);
 			
 			if(oldValue >= 25.00 && textArray[textArray.length -1] < 25.00) {
 	
@@ -2018,7 +2018,7 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 			}
 		}
 		
-		setMyCookie("p" + targetId, textArray[textArray.length -1], 365);
+		storeLocalValue("p" + targetId, textArray[textArray.length -1]);
 			
 	}
 	
@@ -2385,7 +2385,7 @@ function dynamicSort(property) {
  * getSession(), getUserId() and getProjectsForUser() can't be called asynchronously
  * as each requires a return value from the prior function.
  * Sets all selectors to the right values by getting the right cookies.
- * @see getMyCookie()
+ * @see retrieveLocalValue()
  * @see getSession()
  * @see getUserId()
  * @see getProjectsForUser()
@@ -2404,8 +2404,8 @@ function startTheusinator(){
 	}
 	clearInterval(INTERVAL_ID);
 	clearInterval(ALIVE);
-	PROJECT_FILTER.val(getCookie('searchFilter'));
-	PROJECT_FILTER.text(getCookie('searchFilter'));
+	PROJECT_FILTER.val(retrieveLocalValue('searchFilter'));
+	PROJECT_FILTER.text(retrieveLocalValue('searchFilter'));
 	SORTED_PROJECT_IDS = [];
 	PROJECT_LIST = {};
 	$.ajaxSetup({async:false});
@@ -2422,36 +2422,36 @@ function startTheusinator(){
 	$('.checkBoxes').prop('checked', false);
 	//-------------------------
 	// Set all selectors
-	if (getMyCookie('ZOOM') != '') {
-		$('#zoomSelector option[value="' + getMyCookie("ZOOM") + '"]').attr('selected', 'selected');
+	if (retrieveLocalValue('ZOOM') != '') {
+		$('#zoomSelector option[value="' + retrieveLocalValue("ZOOM") + '"]').attr('selected', 'selected');
 	}
 	
-	if (getMyCookie('REFRESH_TIME') != '') {
-		$('#refreshSelector option[value="' + getMyCookie("REFRESH_TIME") + '"]').attr('selected', 'selected');
+	if (retrieveLocalValue('REFRESH_TIME') != '') {
+		$('#refreshSelector option[value="' + retrieveLocalValue("REFRESH_TIME") + '"]').attr('selected', 'selected');
 	}
 	
-	if (getMyCookie('CURRENT_VIEW') != '') {
-		$('#viewSelector option[value="' + getMyCookie("CURRENT_VIEW") + '"]').attr('selected', 'selected');
+	if (retrieveLocalValue('CURRENT_VIEW') != '') {
+		$('#viewSelector option[value="' + retrieveLocalValue("CURRENT_VIEW") + '"]').attr('selected', 'selected');
 	}
 	
-	if (getMyCookie('CURRENT_PROJECT') != '') {
-		$('#projectSelector option[value="' + getMyCookie("CURRENT_PROJECT") + '"]').attr('selected', 'selected');
+	if (retrieveLocalValue('CURRENT_PROJECT') != '') {
+		$('#projectSelector option[value="' + retrieveLocalValue("CURRENT_PROJECT") + '"]').attr('selected', 'selected');
 	}
 	
-	if (getMyCookie('CURRENT_MEASURE') != '') {
-		$('#measureSelector option[value="' + getMyCookie("CURRENT_MEASURE") + '"]').attr('selected', 'selected');
+	if (retrieveLocalValue('CURRENT_MEASURE') != '') {
+		$('#measureSelector option[value="' + retrieveLocalValue("CURRENT_MEASURE") + '"]').attr('selected', 'selected');
 	}
 	
-	if (getMyCookie('CURRENT_MERGE_SPAN') != '') {
-		$('#mergeSpanSelector option[value="' + getMyCookie("CURRENT_MERGE_SPAN") + '"]').attr('selected', 'selected');
+	if (retrieveLocalValue('CURRENT_MERGE_SPAN') != '') {
+		$('#mergeSpanSelector option[value="' + retrieveLocalValue("CURRENT_MERGE_SPAN") + '"]').attr('selected', 'selected');
 	}
 	
-	if (getMyCookie('CURRENT_MEASURE_DATA') != '') {
-		$('#measureDataSelector option[value="' + getMyCookie("CURRENT_MEASURE_DATA") + '"]').attr('selected', 'selected');
+	if (retrieveLocalValue('CURRENT_MEASURE_DATA') != '') {
+		$('#measureDataSelector option[value="' + retrieveLocalValue("CURRENT_MEASURE_DATA") + '"]').attr('selected', 'selected');
 	}
 	
-	if (getMyCookie('SORT_ORDER') != '') {
-		$('#sortSelector option[value="' + getMyCookie("SORT_ORDER") + '"]').attr('selected', 'selected');
+	if (retrieveLocalValue('SORT_ORDER') != '') {
+		$('#sortSelector option[value="' + retrieveLocalValue("SORT_ORDER") + '"]').attr('selected', 'selected');
 	}
 
 };
@@ -2596,17 +2596,13 @@ function refreshTimer() {
 };
 
 /**************************************************************************************
-* Function to set a cookie
+* Function to store a value in the local storage.
 * @param cname name of the cookie
 * @param cvalue value of the cookie
 * @param exdays number of days after which the cookie gets deleted
  *************************************************************************************/
-function setMyCookie(cname, cvalue, exdays) {
-	
-	var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+function storeLocalValue(cname, cvalue) {
+	window.localStorage.setItem(ENVIRONMENT+"-"+cname, cvalue);
 };
 
 /**************************************************************************************
@@ -2614,25 +2610,12 @@ function setMyCookie(cname, cvalue, exdays) {
 * @param cname name of the cookie to get
 * @return either the value of the cookie or an empty string
  *************************************************************************************/
-function getMyCookie(cname) {
+function retrieveLocalValue(cname) {
 	
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-	var loopable = ca.length;
-   
-   for(var i = 0; i < loopable; i++) {
-        var c = ca[i];
-        
-		while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        
-		if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    };
-    
+	var item = window.localStorage.getItem(ENVIRONMENT+"-"+cname);
+    if(item != null){
+    	return item;
+    }
 	return "";
 };
 
@@ -2654,7 +2637,7 @@ function showLoader(isVisible){
 /*******************************************************************************
  * Filter projects in dashboard
  * @param selector string to filter by
- * @see setMyCookie()
+ * @see storeLocalValue()
  * @see draw()
  * @see refreshTimer()
  ******************************************************************************/
@@ -2665,7 +2648,7 @@ function filterProjects(selector) {
 	
 	filterable.show();
 	
-	setCookie("searchFilter", input, 365);
+	storeLocalValue("searchFilter", input);
 
 	if(input != '') {
 		
@@ -2673,13 +2656,13 @@ function filterProjects(selector) {
 		// Easter eggs
 		if(input == 'magic') {
 			
-			setMyCookie('BORDER_RADIUS', 15 * ZOOM, 365);
+			storeLocalValue('BORDER_RADIUS', 15 * ZOOM);
 			BORDER_RADIUS = 15 * ZOOM;
 			PROJECT_FILTER.val('');
 			draw();
 		}else if(input == 'frankinator'){
 			
-			setMyCookie('BORDER_RADIUS', 5, 365);
+			storeLocalValue('BORDER_RADIUS', 5);
 			BORDER_RADIUS = 5;
 			PROJECT_FILTER.val('');
 			draw();
@@ -2780,14 +2763,14 @@ function filterProjects(selector) {
 
 /*******************************************************************************
  * Easter egg: set zoom to ridiculous level
- * @see getMyCookie()
+ * @see retrieveLocalValue()
  * @see draw()
  ******************************************************************************/
 function zoooom() {
 	
 	if (ZOOM == 4) {
-		if(getMyCookie('ZOOM') != ''){
-			ZOOM = getMyCookie('ZOOM');
+		if(retrieveLocalValue('ZOOM') != ''){
+			ZOOM = retrieveLocalValue('ZOOM');
 		}else{
 			ZOOM = 1;
 		}
@@ -2801,7 +2784,7 @@ function zoooom() {
 
 /*******************************************************************************
  * Easter egg: Change display to draw a christmas design.
- * @see getMyCookie()
+ * @see retrieveLocalValue()
  * @see draw()
  ******************************************************************************/
 function hohoho() {
@@ -2809,12 +2792,12 @@ function hohoho() {
 	if (DISPLAY_MODE != "christmas") {
 		
 		DISPLAY_MODE = "christmas";
-		setMyCookie('DISPLAY_MODE', "christmas", 365);
+		storeLocalValue('DISPLAY_MODE', "christmas");
 		
 	} else {
 		
 		DISPLAY_MODE = "regular";
-		setMyCookie('DISPLAY_MODE', "regular", 365);
+		storeLocalValue('DISPLAY_MODE', "regular");
 		
 	}
 	
@@ -2823,7 +2806,7 @@ function hohoho() {
 
 /*******************************************************************************
  * Easter egg: Change display to draw a april fools day design.
- * @see getMyCookie()
+ * @see retrieveLocalValue()
  * @see draw()
  ******************************************************************************/
 function primus_aprilis() {
@@ -2831,12 +2814,12 @@ function primus_aprilis() {
 	if (DISPLAY_MODE != "april") {
 		
 		DISPLAY_MODE = "april";
-		setMyCookie('DISPLAY_MODE', "april", 365);
+		storeLocalValue('DISPLAY_MODE', "april");
 		
 	} else {
 		
 		DISPLAY_MODE = "regular";
-		setMyCookie('DISPLAY_MODE', "regular", 365);
+		storeLocalValue('DISPLAY_MODE', "regular");
 		
 	}
 	
@@ -2845,7 +2828,7 @@ function primus_aprilis() {
 
 /*******************************************************************************
  * Easter egg: Change display to draw an easter design.
- * @see getMyCookie()
+ * @see retrieveLocalValue()
  * @see draw()
  ******************************************************************************/
 function bunny() {
@@ -2853,12 +2836,12 @@ function bunny() {
 	if (DISPLAY_MODE != "easter") {
 		
 		DISPLAY_MODE = "easter";
-		setMyCookie('DISPLAY_MODE', "easter", 365);
+		storeLocalValue('DISPLAY_MODE', "easter");
 		
 	} else {
 		
 		DISPLAY_MODE = "regular";
-		setMyCookie('DISPLAY_MODE', "regular", 365);
+		storeLocalValue('DISPLAY_MODE', "regular");
 		
 	}
 	
@@ -2971,17 +2954,17 @@ function setMergeSpanOptions() {
 
 /*******************************************************************************
  * Toggles text sizes in box and heaklth history view
- * @see getMyCookie()
+ * @see retrieveLocalValue()
  * @see draw()
  ******************************************************************************/
 function toggleTextSize() {
 	if(TEXT_SIZE == 'big') {
 		TEXT_SIZE = 'small';
-		setMyCookie('TEXT_SIZE', 'small');
+		storeLocalValue('TEXT_SIZE', 'small');
 		draw();
 	} else {
 		TEXT_SIZE = 'big';
-		setMyCookie('TEXT_SIZE', 'big');
+		storeLocalValue('TEXT_SIZE', 'big');
 		draw();
 	}
 }
