@@ -285,35 +285,6 @@ function updateTimeFrame(timeFrame) {
 };
 
 /**************************************************************************************
- * Set Cookie
- *************************************************************************************/
-function setCookie(cname, cvalue, exdays) {
-     var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+ d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-} 
-
-/**************************************************************************************
- * Get Cookie
- *************************************************************************************/
-function retrieveLocalValue(cname) {
-     var name = cname + "=";
-     var decodedCookie = decodeURIComponent(document.cookie);
-     var ca = decodedCookie.split(';');
-     for(var i = 0; i <ca.length; i++) {
-         var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-         if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-     }
-     return "";
- } 
-
-/**************************************************************************************
  * doFilter
  *************************************************************************************/
 function doFilter(searchField){
@@ -1453,9 +1424,8 @@ function drawTile(projectId) {
 	currentTile.css('background-color', color);
 	currentTile.attr('onclick', 'toggleModal(this)');
 	
-	if (document.cookie.indexOf("p" + projectId + "=") >= 0) {
-		var oldValue = retrieveLocalValue("p" + projectId);
-		
+	var oldValue = retrieveLocalValue("p" + projectId);
+	if (oldValue != "") {
 		if(oldValue >= 25.00 && currentHealth < 25.00) {
 
 			blinkInterval = setInterval("blink('#" + projectId + "')", 1500);
@@ -1675,9 +1645,9 @@ function drawBoxTile(projectId) {
 		currentTile.css('border', '5px solid ' + boxColors[boxColors.length -1]);
 	}
 	
-	if (document.cookie.indexOf("p" + projectId + "=") >= 0) {
-		var oldValue = retrieveLocalValue("p" + projectId);
-		
+	var oldValue = retrieveLocalValue("p" + projectId);
+	if (oldValue != "") {
+
 		if(oldValue >= 25.00 && results[results.length -1].value < 25.00) {
 
 			blinkInterval = setInterval("blink('#" + projectId + "')", 1500);
@@ -1783,9 +1753,8 @@ function drawHistoryTable(projectId) {
 	historyField.append(historyString);
 	healthField.append('<div style="display: flex; flex-wrap: nowrap; align-items: center; width: 100%;"><div style="height: 14px; width: 14px; margin: 3px; background-color: ' + color + '; border: 1px solid #e5e5e5"></div>' + results[results.length - 1].value + '</div>');
 	
-	if (document.cookie.indexOf("p" + projectId + "=") >= 0) {
-		var oldValue = Number.parseFloat(retrieveLocalValue("p" + projectId));
-		
+	var oldValue = retrieveLocalValue("p" + projectId);
+	if (oldValue != "") {
 		if(oldValue >= 25.00 &&  results[results.length - 1].value < 25.00) {
 
 			blinkInterval = setInterval("blink('#" + projectId + "')", 1500);
@@ -2007,10 +1976,8 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 			targetDiv.attr('title', 'Offline');
 		}
 		
-		if (document.cookie.indexOf("p" + targetId + "=") >= 0) {
-			
-			var oldValue = retrieveLocalValue("p" + targetId);
-			
+		var oldValue = retrieveLocalValue("p" + projectId);
+		if (oldValue != "") {
 			if(oldValue >= 25.00 && textArray[textArray.length -1] < 25.00) {
 	
 				blinkInterval = setInterval("blink('#" + targetId + "')", 1500);
