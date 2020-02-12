@@ -173,8 +173,7 @@ public class FeatureTheusinator extends CFWAppFeature {
 		//-----------------------------------------
 		CFW.DB.Permissions.oneTimeCreate(
 				new Permission(PERMISSION_THEUSINATOR_PROD, "user")
-					.description("View and analyze productive SPM Monitoring status using the Theusinator Dashboard.")
-					.isDeletable(false),
+					.description("View and analyze productive SPM Monitoring status using the Theusinator Dashboard."),
 				true,
 				true);
 					
@@ -183,8 +182,7 @@ public class FeatureTheusinator extends CFWAppFeature {
 		//-----------------------------------------
 		CFW.DB.Permissions.oneTimeCreate(
 				new Permission(PERMISSION_THEUSINATOR_PREPROD, "user")
-					.description("View and analyze pre-productive SPM Monitoring status using the Theusinator Dashboard.")
-					.isDeletable(false),
+					.description("View and analyze pre-productive SPM Monitoring status using the Theusinator Dashboard."),
 				true,
 				true);
 		
