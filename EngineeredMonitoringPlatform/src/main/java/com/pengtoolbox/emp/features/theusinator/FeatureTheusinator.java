@@ -58,14 +58,14 @@ public class FeatureTheusinator extends CFWAppFeature {
 				(MenuItem)new MenuItem("Production")
 					.faicon("fas fa-cogs")
 					.addPermission(PERMISSION_THEUSINATOR_PROD)
-					.href("./theusinator?env=prod")	
+					.href("/app/theusinator?env=prod")	
 				, "Theusinator");
 		
 		CFW.Registry.Components.addRegularMenuItem(
 				(MenuItem)new MenuItem("Pre-Production")
 					.faicon("fas fa-flask")
 					.addPermission(PERMISSION_THEUSINATOR_PREPROD)
-					.href("./theusinator?env=preprod")	
+					.href("/app/theusinator?env=preprod")	
 				, "Theusinator");
 		
     	//----------------------------------
