@@ -20,7 +20,7 @@
 					var jobStats = data.payload;
 					for(var key in jobStats){
 						var current = jobStats[key];
-						
+						current.textstyle = "white"; 
 						switch(current.status.toUpperCase()){
 							case "RUNNING": 	current.alertstyle = "cfw-warning"; 
 												break;
@@ -33,6 +33,7 @@
 					var dataToRender = {
 						data: data.payload,
 						bgstylefield: 'alertstyle',
+						textstylefield: 'textstyle',
 						titlefields: ['label'], 
 						titledelimiter: ' - ', 
 						visiblefields: ['jobname', 'status'], 
