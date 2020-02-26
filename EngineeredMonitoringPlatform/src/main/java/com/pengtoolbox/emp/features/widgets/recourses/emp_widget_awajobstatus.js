@@ -22,11 +22,11 @@
 						var current = jobStats[key];
 						
 						switch(current.status.toUpperCase()){
-							case "RUNNING": 	current.alertstyle = "warning"; 
+							case "RUNNING": 	current.alertstyle = "cfw-warning"; 
 												break;
-							case "ENDED OK": 	current.alertstyle = "success"; 
+							case "ENDED OK": 	current.alertstyle = "cfw-excellent"; 
 												break;
-							case "ISSUE": 		current.alertstyle = "danger"; 
+							case "ISSUE": 		current.alertstyle = "cfw-danger"; 
 												break;
 						}
 					}
@@ -37,7 +37,8 @@
 						visiblefields: ['jobname', 'status'], 
 						rendererSettings:{
 							alerttiles: {
-								sizefactor: widgetObject.JSON_SETTINGS.sizefactor
+								sizefactor: widgetObject.JSON_SETTINGS.sizefactor,
+								showlabels: widgetObject.JSON_SETTINGS.showlabels
 							}
 					}};
 					
@@ -60,6 +61,8 @@
 				widgetObject.JSON_SETTINGS.joblabels = settingsForm.find('input[name="joblabels"]').val();
 				widgetObject.JSON_SETTINGS.environment = settingsForm.find('select[name="environment"]').val();
 				widgetObject.JSON_SETTINGS.sizefactor = settingsForm.find('select[name="sizefactor"]').val();
+				widgetObject.JSON_SETTINGS.showlabels = ( settingsForm.find('input[name="showlabels"]:checked').val() == "true" )
+				
 				return true;		
 			}
 		}

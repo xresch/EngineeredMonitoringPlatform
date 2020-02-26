@@ -27,7 +27,6 @@ public class WidgetAWAJobStatus extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.TEXT, "jobnames")
 						.setLabel("{!cfw_widget_awajobstatus_jobnames!}")
 						.setDescription("{!cfw_widget_awajobstatus_jobnames_desc!}")
-						.addValidator(new LengthValidator(1, -1))
 						.setValue("")			
 				)
 				
@@ -48,8 +47,14 @@ public class WidgetAWAJobStatus extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
 						.setLabel("{!cfw_widget_awajobstatus_sizefactor!}")
 						.setDescription("{!cfw_widget_awajobstatus_sizefactor_desc!}")
-						.setOptions(new String[]{"0.25", "0.5", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
+						.setOptions(new String[]{"0.5", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
 						.setValue("1")
+				)
+				
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showlabels")
+						.setLabel("{!cfw_widget_awajobstatus_showlabels!}")
+						.setDescription("{!cfw_widget_awajobstatus_showlabels_desc!}")
+						.setValue(true)
 				)
 	
 		;
