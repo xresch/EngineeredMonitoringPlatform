@@ -37,6 +37,7 @@
 						visiblefields: ['jobname', 'status'], 
 						rendererSettings:{
 							alerttiles: {
+								sizefactor: widgetObject.JSON_SETTINGS.sizefactor
 							}
 					}};
 					
@@ -58,6 +59,7 @@
 				widgetObject.JSON_SETTINGS.jobnames = settingsForm.find('input[name="jobnames"]').val();
 				widgetObject.JSON_SETTINGS.joblabels = settingsForm.find('input[name="joblabels"]').val();
 				widgetObject.JSON_SETTINGS.environment = settingsForm.find('select[name="environment"]').val();
+				widgetObject.JSON_SETTINGS.sizefactor = settingsForm.find('select[name="sizefactor"]').val();
 				return true;		
 			}
 		}

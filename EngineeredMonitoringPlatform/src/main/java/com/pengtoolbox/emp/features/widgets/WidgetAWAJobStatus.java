@@ -44,6 +44,13 @@ public class WidgetAWAJobStatus extends WidgetDefinition {
 						.setOptions(new String[]{"Prod", "Pre-Prod"})
 						.setValue("Pre-Prod")
 				)
+				
+				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
+						.setLabel("{!cfw_widget_awajobstatus_sizefactor!}")
+						.setDescription("{!cfw_widget_awajobstatus_sizefactor_desc!}")
+						.setOptions(new String[]{"0.25", "0.5", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
+						.setValue("1")
+				)
 	
 		;
 	}
@@ -57,7 +64,19 @@ public class WidgetAWAJobStatus extends WidgetDefinition {
 				+ "{ \"jobname\":\"JP_0002_B\", \"label\":\"Job B\", \"status\":\"RUNNING\"},"
 				+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"status\":\"ISSUE\"},"
 				+ "{ \"jobname\":\"JP_0003_V\", \"label\":\"JP_0003_V\", \"status\":\"ENDED OK\"},"
-				+ "{ \"jobname\":\"JP_0003_C\", \"label\":\"The Holy C\", \"status\":\"ISSUE\"},"
+				+ "{ \"jobname\":\"JP_0003_C\", \"label\":\"Some Very Long Label with blanks for breaks\", \"status\":\"ISSUE\"},"
+				+ "{ \"jobname\":\"JP_0_A\", \"label\":\"JP__A\", \"status\":\"RUNNING\"},"
+				+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"JP_0003_225\", \"status\":\"RUNNING\"},"
+				+ "{ \"jobname\":\"JP_0002_B\", \"label\":\"Job B\", \"status\":\"ENDED OK\"},"
+				+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"status\":\"ISSUE\"},"
+				+ "{ \"jobname\":\"JP_0003_V\", \"label\":\"JP_0003_V\", \"status\":\"ENDED OK\"},"
+				+ "{ \"jobname\":\"JP_0003_Chjkl\", \"label\":\"The Holy C\", \"status\":\"ENDED OK\"},"
+				+ "{ \"jobname\":\"JP_0003_A\", \"label\":\"JP_0003_A\", \"status\":\"RUNNING\"},"
+				+ "{ \"jobname\":\"JP_0003_225fksdfghuw\", \"label\":\"JP_0003_225fksdfghuw\", \"status\":\"ENDED OK\"},"
+				+ "{ \"jobname\":\"JP_0002_B\", \"label\":\"Job B\", \"status\":\"ENDED OK\"},"
+				+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"status\":\"ISSUE\"},"
+				+ "{ \"jobname\":\"JP_0003_Vhjklh\", \"label\":\"JP_0003_Vhjklh\", \"status\":\"ENDED OK\"},"
+				+ "{ \"jobname\":\"JP_01\", \"label\":\"JP_01\", \"status\":\"ISSUE\"},"
 				+ "{ \"jobname\":\"JP_0003_A\", \"label\":\"JP_0003_A\", \"status\":\"RUNNING\"}"
 				+"]";
 		
