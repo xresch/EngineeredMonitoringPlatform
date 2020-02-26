@@ -8,6 +8,7 @@ import com.pengtoolbox.cfw._main.CFWApplicationExecutor;
 import com.pengtoolbox.cfw.features.manual.ManualPage;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.emp.features.theusinator.FeatureTheusinator;
+import com.pengtoolbox.emp.features.widgets.FeatureEMPWidgets;
 
 /**************************************************************************************************************
  * 
@@ -31,7 +32,7 @@ public class Main implements CFWAppInterface {
 		//----------------------------------
 		// Register Objects
     	CFW.Registry.Features.addFeature(FeatureTheusinator.class);
-    	
+    	CFW.Registry.Features.addFeature(FeatureEMPWidgets.class);
 		//----------------------------------
 		// Register Manual PAges
 		
