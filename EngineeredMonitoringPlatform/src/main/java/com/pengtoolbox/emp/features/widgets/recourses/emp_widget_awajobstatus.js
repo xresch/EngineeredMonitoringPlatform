@@ -34,6 +34,7 @@
 						data: data.payload,
 						bgstylefield: 'alertstyle',
 						titlefields: ['label'], 
+						titledelimiter: ' - ', 
 						visiblefields: ['jobname', 'status'], 
 						rendererSettings:{
 							alerttiles: {
