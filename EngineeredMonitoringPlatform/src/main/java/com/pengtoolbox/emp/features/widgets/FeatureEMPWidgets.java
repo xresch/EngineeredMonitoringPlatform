@@ -27,17 +27,19 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 	public static final String PERMISSION_AWAJOBSTATUS_PROD = "AWA Jobstatus Prod";
 	public static final String PERMISSION_AWAJOBSTATUS_PREPROD = "AWA Jobstatus Pre-Prod";
 	
-	public static final String CONFIG_AWA_PROD_DBHOST = "AWA PROD DB Host";
-	public static final String CONFIG_AWA_PROD_DBPORT = "AWA PROD DB Port";
-	public static final String CONFIG_AWA_PROD_DBNAME = "AWA PROD DB Name";
-	public static final String CONFIG_AWA_PROD_DBUSER = "AWA PROD DB User";
-	public static final String CONFIG_AWA_PROD_PASSWORD = "AWA PROD Password";
+	public static final String CONFIG_AWA_PROD_DBHOST 		= "AWA PROD DB Host";
+	public static final String CONFIG_AWA_PROD_DBPORT 		= "AWA PROD DB Port";
+	public static final String CONFIG_AWA_PROD_DBNAME 		= "AWA PROD DB Name";
+	public static final String CONFIG_AWA_PROD_DBTYPE 		= "AWA PROD DB Type";
+	public static final String CONFIG_AWA_PROD_DBUSER 		= "AWA PROD DB User";
+	public static final String CONFIG_AWA_PROD_PASSWORD 	= "AWA PROD Password";
 	
-	public static final String CONFIG_AWA_PREPROD_DBHOST = "AWA PRE-PROD DB Host";
-	public static final String CONFIG_AWA_PREPROD_DBPORT = "AWA PRE-PROD DB Port";
-	public static final String CONFIG_AWA_PREPROD_DBNAME = "AWA PRE-PROD DB Name";
-	public static final String CONFIG_AWA_PREPROD_DBUSER = "AWA PRE-PROD DB User";
-	public static final String CONFIG_AWA_PREPROD_PASSWORD = "AWA PRE-PROD Password";
+	public static final String CONFIG_AWA_PREPROD_DBHOST 	= "AWA PRE-PROD DB Host";
+	public static final String CONFIG_AWA_PREPROD_DBPORT 	= "AWA PRE-PROD DB Port";
+	public static final String CONFIG_AWA_PREPROD_DBNAME 	= "AWA PRE-PROD DB Name";
+	public static final String CONFIG_AWA_PREPROD_DBTYPE 	= "AWA PRE-PROD DB Type";
+	public static final String CONFIG_AWA_PREPROD_DBUSER 	= "AWA PRE-PROD DB User";
+	public static final String CONFIG_AWA_PREPROD_PASSWORD 	= "AWA PRE-PROD Password";
 
 	@Override
 	public void register() {
@@ -76,6 +78,8 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		
+		AWAJobStatusDatabase.initialize();
+		
 		//-----------------------------------------
 		// 
 		//-----------------------------------------
@@ -111,9 +115,17 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		
 		CFW.DB.Config.oneTimeCreate(
 			new Configuration("AWA Job Status", CONFIG_AWA_PROD_DBNAME)
-				.description("The name of the productive database used to fetch the job status from.")
+				.description("The Service Name or SID of the productive database used to fetch the job status from.")
 				.type(FormFieldType.TEXT)
 		);
+		
+		CFW.DB.Config.oneTimeCreate(
+				new Configuration("AWA Job Status", CONFIG_AWA_PROD_DBTYPE)
+					.description("The type of the oracle service consumed.")
+					.type(FormFieldType.SELECT)
+					.options(new String[] {"Service Name", "SID"})
+					.value("SID")
+			);
 		
 		CFW.DB.Config.oneTimeCreate(
 			new Configuration("AWA Job Status", CONFIG_AWA_PROD_DBUSER)
@@ -144,10 +156,18 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		);
 		
 		CFW.DB.Config.oneTimeCreate(
-			new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBHOST)
-				.description("The name of the pre-productive database used to fetch the job status from.")
-				.type(FormFieldType.TEXT)
-		);
+				new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBNAME)
+					.description("The Service Name or SID of pre-productive database used to fetch the job status from.")
+					.type(FormFieldType.TEXT)
+			);
+		
+		CFW.DB.Config.oneTimeCreate(
+				new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBTYPE)
+					.description("The type of the oracle service consumed.")
+					.type(FormFieldType.SELECT)
+					.options(new String[] {"Service Name", "SID"})
+					.value("SID")
+			);	
 			
 		CFW.DB.Config.oneTimeCreate(
 			new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBUSER)

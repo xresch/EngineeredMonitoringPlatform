@@ -77,18 +77,21 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		//---------------------------------
 		// Resolve Jobnames
 		JsonElement jobnamesElement = settings.get("jobnames");
-		if(jobnamesElement.isJsonNull()) {
+		if(jobnamesElement.isJsonNull() && !jobnamesElement.getAsString().isEmpty()) {
 			return;
 		}
 		
 		String  jobnamesString = jobnamesElement.getAsString();
+		if(jobnamesString.isEmpty()) {
+			return;
+		}
 		String[] jobnames = jobnamesString.trim().split(",");
 		
 		//---------------------------------
 		// Resolve Joblabels
 		JsonElement joblabelsElement = settings.get("joblabels");
 		String[] joblabels = null;
-		if(!joblabelsElement.isJsonNull()) {
+		if(!joblabelsElement.isJsonNull() && !joblabelsElement.getAsString().isEmpty()) {
 			joblabels = joblabelsElement.getAsString().trim().split(",");
 		}
 		
@@ -109,13 +112,13 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		// Fetch Data
 		JsonArray resultArray = new JsonArray();
 		for(int i = 0; i < jobnames.length; i++) {
-			ResultSet result = db.preparedExecuteQuery("SELECT UC4.GET_JOB_STATUS(?) AS Status FROM DUAL", jobnames[i]);
+			ResultSet result = db.preparedExecuteQuery("SELECT UC4.GET_JOB_STATUS(?) AS WorkflowStatus FROM DUAL", jobnames[i].trim());
 			
 			try {
-				if(result.next()) {
+				if(result != null && result.next()) {
 					JsonObject object = new JsonObject();
 					object.addProperty("jobname", jobnames[i]);
-					object.addProperty("status", result.getString("Status"));
+					object.addProperty("status", result.getString(1));
 					
 					if(joblabels != null && i < joblabels.length) {
 						object.addProperty("label", joblabels[i]);
@@ -129,6 +132,8 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 				new CFWLog(logger)
 					.method("fetchData")
 					.severe("Error fetching Widget data.", e);
+			}finally {
+				db.close(result);
 			}
 		}
 		

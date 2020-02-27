@@ -11,5 +11,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/CoreFramework"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/CFW"/>
 	<classpathentry kind="lib" path="lib/ojdbc8.jar"/>
+	<classpathentry kind="lib" path="lib/ucp.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

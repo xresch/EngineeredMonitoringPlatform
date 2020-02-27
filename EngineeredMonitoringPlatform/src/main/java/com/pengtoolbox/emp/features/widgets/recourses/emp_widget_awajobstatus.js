@@ -18,9 +18,15 @@
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					var jobStats = data.payload;
+					
 					for(var key in jobStats){
 						var current = jobStats[key];
 						current.textstyle = "white"; 
+						if(current.status == null){
+							current.status == "UNKNOWN";
+							current.alertstyle = "cfw-gray"; 
+							continue;
+						}
 						switch(current.status.toUpperCase()){
 							case "RUNNING": 	current.alertstyle = "cfw-warning"; 
 												break;
@@ -30,6 +36,7 @@
 												break;
 						}
 					}
+					
 					var dataToRender = {
 						data: data.payload,
 						bgstylefield: 'alertstyle',
@@ -46,9 +53,14 @@
 					
 					//--------------------------
 					// Create Tiles
-					var alertRenderer = CFW.render.getRenderer('alerttiles');
-	
-					callback(widgetObject, alertRenderer.render(dataToRender));
+					
+					if(  data.payload == null || typeof data.payload == 'string'){
+						callback(widgetObject, "unknown");
+					}else{
+						var alertRenderer = CFW.render.getRenderer('alerttiles');
+						callback(widgetObject, alertRenderer.render(dataToRender));
+					}
+					
 				});
 			},
 			
