@@ -10,5 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CoreFramework"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/CFW"/>
+	<classpathentry kind="lib" path="lib/ojdbc8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

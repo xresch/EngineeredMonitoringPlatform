@@ -27,17 +27,18 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 	public static final String PERMISSION_AWAJOBSTATUS_PROD = "AWA Jobstatus Prod";
 	public static final String PERMISSION_AWAJOBSTATUS_PREPROD = "AWA Jobstatus Pre-Prod";
 	
-	public static final String CONFIG_AWA_PROD_DBURL = "AWA PROD DB URL";
+	public static final String CONFIG_AWA_PROD_DBHOST = "AWA PROD DB Host";
+	public static final String CONFIG_AWA_PROD_DBPORT = "AWA PROD DB Port";
 	public static final String CONFIG_AWA_PROD_DBNAME = "AWA PROD DB Name";
 	public static final String CONFIG_AWA_PROD_DBUSER = "AWA PROD DB User";
 	public static final String CONFIG_AWA_PROD_PASSWORD = "AWA PROD Password";
 	
-	public static final String CONFIG_AWA_PREPROD_DBURL = "AWA PRE-PROD DB URL";
+	public static final String CONFIG_AWA_PREPROD_DBHOST = "AWA PRE-PROD DB Host";
+	public static final String CONFIG_AWA_PREPROD_DBPORT = "AWA PRE-PROD DB Port";
 	public static final String CONFIG_AWA_PREPROD_DBNAME = "AWA PRE-PROD DB Name";
 	public static final String CONFIG_AWA_PREPROD_DBUSER = "AWA PRE-PROD DB User";
 	public static final String CONFIG_AWA_PREPROD_PASSWORD = "AWA PRE-PROD Password";
 
-	
 	@Override
 	public void register() {
 		//----------------------------------
@@ -47,7 +48,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		//-----------------------------------------
 		// 
 		//-----------------------------------------
-		CFW.Registry.Widgets.add(new WidgetAWAJobStatus());
+		CFW.Registry.Widgets.add(new AWAJobStatusWidget());
 		
 		//----------------------------------
 		// Register Objects
@@ -97,9 +98,15 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		// 
 		//-----------------------------------------
 		CFW.DB.Config.oneTimeCreate(
-			new Configuration("AWA Job Status", CONFIG_AWA_PROD_DBURL)
-				.description("The URL of the productive AWA Database instance.")
+			new Configuration("AWA Job Status", CONFIG_AWA_PROD_DBHOST)
+				.description("The host of the productive AWA Database instance.")
 				.type(FormFieldType.TEXT)
+		);
+		
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("AWA Job Status", CONFIG_AWA_PROD_DBPORT)
+				.description("The port of the productive AWA Database instance.")
+				.type(FormFieldType.NUMBER)
 		);
 		
 		CFW.DB.Config.oneTimeCreate(
@@ -125,16 +132,22 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		// 
 		//-----------------------------------------
 		CFW.DB.Config.oneTimeCreate(
-			new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBURL)
-				.description("The URL of the pre-productive AWA Database instance.")
+			new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBHOST)
+				.description("The host of the pre-productive AWA Database instance.")
 				.type(FormFieldType.TEXT)
 		);
 	
 		CFW.DB.Config.oneTimeCreate(
-				new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBURL)
-					.description("The name of the pre-productive database used to fetch the job status from.")
-					.type(FormFieldType.TEXT)
-			);
+			new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBPORT)
+				.description("The port of the pre-productive AWA Database instance.")
+				.type(FormFieldType.NUMBER)
+		);
+		
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBHOST)
+				.description("The name of the pre-productive database used to fetch the job status from.")
+				.type(FormFieldType.TEXT)
+		);
 			
 		CFW.DB.Config.oneTimeCreate(
 			new Configuration("AWA Job Status", CONFIG_AWA_PREPROD_DBUSER)
