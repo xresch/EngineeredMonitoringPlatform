@@ -181,7 +181,6 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "lang_en_widget_awajobstatus.properties"));
-		map.put(Locale.GERMAN, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "lang_de_widget_awajobstatus.properties"));
 		return map;
 	}
 

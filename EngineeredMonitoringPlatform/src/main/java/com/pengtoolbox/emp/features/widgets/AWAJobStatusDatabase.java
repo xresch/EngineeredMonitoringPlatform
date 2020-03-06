@@ -116,35 +116,13 @@ public class AWAJobStatusDatabase {
 					pooledSource = PoolDataSourceFactory.getPoolDataSource();
 					pooledSource.setConnectionFactoryClassName("oracle.jdbc.pool.OracleDataSource");
 					pooledSource.setURL(url);
-					//pooledSource.setDatabaseName(dbname);
 					pooledSource.setUser(username);
 					pooledSource.setPassword(password);
-					//pooledSource.setPortNumber(port);
-					//pooledSource.setServerName(servername);
 
 					pooledSource.setInitialPoolSize(5);
 					pooledSource.setMinPoolSize(5);
 					pooledSource.setMaxPoolSize(30);
 					
-//					pooledSource = new OracleConnectionPoolDataSource();
-//					pooledSource.setDriverType("thin");
-//					pooledSource.setServerName(servername);
-//					pooledSource.setNetworkProtocol("tcp");
-//					pooledSource.setDatabaseName(dbname);
-//					pooledSource.setPortNumber(port);
-//					pooledSource.setUser(username); 
-//					pooledSource.setPassword(password);
-//					
-//					Properties properties = pooledSource.getConnectionCacheProperties();
-//					if(properties == null) {
-//						properties = new Properties();
-//					}
-//					
-//					properties.put("InitialLimit", 5);
-//					properties.put("MinLimit", 5);
-//					properties.put("MaxLimit", 30);
-//					properties.put("AbandonedConnectionTimeout", 900);
-//					pooledSource.setConnectionCacheProperties(properties);
 					
 				} catch (SQLException e) {
 					new CFWLog(logger)

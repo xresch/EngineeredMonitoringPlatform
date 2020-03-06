@@ -1,7 +1,5 @@
 package com.pengtoolbox.emp.features.theusinator;
 
-import org.eclipse.jetty.servlet.ServletContextHandler;
-
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw._main.CFWAppFeature;
 import com.pengtoolbox.cfw._main.CFWApplicationExecutor;
@@ -11,7 +9,6 @@ import com.pengtoolbox.cfw.features.config.Configuration;
 import com.pengtoolbox.cfw.features.manual.FeatureManual;
 import com.pengtoolbox.cfw.features.manual.ManualPage;
 import com.pengtoolbox.cfw.features.usermgmt.Permission;
-import com.pengtoolbox.cfw.features.usermgmt.Role;
 import com.pengtoolbox.cfw.response.bootstrap.MenuItem;
 import com.pengtoolbox.emp._main.Main;
 
@@ -24,17 +21,24 @@ public class FeatureTheusinator extends CFWAppFeature {
 	
 	public static final String RESOURCE_PACKAGE = "com.pengtoolbox.emp.features.theusinator.resources";
 	
+	//-----------------------------------------
+	// PROD
+	//-----------------------------------------
 	public static final String PERMISSION_THEUSINATOR_PROD = "Theusinator Prod";
-	public static final String PERMISSION_THEUSINATOR_PREPROD = "Theusinator Pre-Prod";
 	
 	public static final String CONFIG_SPM_PROD_URL = "SPM Production URL";
 	public static final String CONFIG_SPM_PROD_APIUSER = "SPM Production API User";
 	public static final String CONFIG_SPM_PROD_PASSWORD = "SPM Production Password";
+		
+	//-----------------------------------------
+	// PRE PROD
+	//-----------------------------------------
+	public static final String PERMISSION_THEUSINATOR_PREPROD = "Theusinator Pre-Prod";
 	
 	public static final String CONFIG_SPM_PREPROD_URL = "SPM Pre-Production URL";
 	public static final String CONFIG_SPM_PREPROD_APIUSER = "SPM Pre-Production API User";
 	public static final String CONFIG_SPM_PREPROD_PASSWORD = "SPM Pre-Production Password";
-
+	
 	
 	@Override
 	public void register() {
@@ -205,7 +209,6 @@ public class FeatureTheusinator extends CFWAppFeature {
 				.description("The password of the API User.")
 				.type(FormFieldType.PASSWORD)
 		);
-
 	
 		//-----------------------------------------
 		// 
@@ -227,6 +230,7 @@ public class FeatureTheusinator extends CFWAppFeature {
 				.description("The password of the API User.")
 				.type(FormFieldType.PASSWORD)
 		);
+		
 		
 	}
 

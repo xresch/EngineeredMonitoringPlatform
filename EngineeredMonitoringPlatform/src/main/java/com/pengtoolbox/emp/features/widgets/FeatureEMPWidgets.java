@@ -1,19 +1,11 @@
 package com.pengtoolbox.emp.features.widgets;
 
-import org.eclipse.jetty.servlet.ServletContextHandler;
-
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw._main.CFWAppFeature;
 import com.pengtoolbox.cfw._main.CFWApplicationExecutor;
-import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.datahandling.CFWField.FormFieldType;
 import com.pengtoolbox.cfw.features.config.Configuration;
-import com.pengtoolbox.cfw.features.manual.FeatureManual;
-import com.pengtoolbox.cfw.features.manual.ManualPage;
 import com.pengtoolbox.cfw.features.usermgmt.Permission;
-import com.pengtoolbox.cfw.features.usermgmt.Role;
-import com.pengtoolbox.cfw.response.bootstrap.MenuItem;
-import com.pengtoolbox.emp._main.Main;
 
 /**************************************************************************************************************
  * 
@@ -40,6 +32,18 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 	public static final String CONFIG_AWA_PREPROD_DBTYPE 	= "AWA PRE-PROD DB Type";
 	public static final String CONFIG_AWA_PREPROD_DBUSER 	= "AWA PRE-PROD DB User";
 	public static final String CONFIG_AWA_PREPROD_PASSWORD 	= "AWA PRE-PROD Password";
+	
+	public static final String CONFIG_SPM_PREPROD_DB_HOST = "SPM Pre-Production DB Host";
+	public static final String CONFIG_SPM_PREPROD_DB_PORT = "SPM Pre-Production DB Port";
+	public static final String CONFIG_SPM_PREPROD_DB_NAME = "SPM Pre-Production DB Name";
+	public static final String CONFIG_SPM_PREPROD_DB_USER = "SPM Pre-Production DB User";
+	public static final String CONFIG_SPM_PREPROD_DB_PASSWORD = "SPM Pre-Production DB Password";
+	
+	public static final String CONFIG_SPM_PROD_DB_HOST = "SPM Production DB Host";
+	public static final String CONFIG_SPM_PROD_DB_PORT = "SPM Production DB Port";
+	public static final String CONFIG_SPM_PROD_DB_NAME = "SPM Production DB Name";
+	public static final String CONFIG_SPM_PROD_DB_USER = "SPM Production DB User";
+	public static final String CONFIG_SPM_PROD_DB_PASSWORD = "SPM Production DB Password";
 
 	@Override
 	public void register() {
@@ -51,7 +55,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		// 
 		//-----------------------------------------
 		CFW.Registry.Widgets.add(new AWAJobStatusWidget());
-		
+		CFW.Registry.Widgets.add(new SPMMonitorStatusWidget());
 		//----------------------------------
 		// Register Objects
 		//CFW.Registry.Objects.addCFWObject(CPUSampleSignature.class);
@@ -79,7 +83,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 	public void initializeDB() {
 		
 		AWAJobStatusDatabase.initialize();
-		
+		SPMDatabase.initialize();
 		//-----------------------------------------
 		// 
 		//-----------------------------------------
@@ -181,6 +185,74 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 				.type(FormFieldType.PASSWORD)
 		);
 		
+
+		
+		//-----------------------------------------
+		// 
+		//-----------------------------------------
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_DB_HOST)
+				.description("The fully qualified hostname of the SPM database.")
+				.type(FormFieldType.TEXT)
+		);
+		
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_DB_PORT)
+				.description("The port of the SPM database.")
+				.type(FormFieldType.TEXT)
+		);
+		
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_DB_NAME)
+				.description("The name of the SPM database.")
+				.type(FormFieldType.TEXT)
+		);
+
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_DB_USER)
+				.description("The username of the user that will access the DB.")
+				.type(FormFieldType.TEXT)
+		);
+
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_DB_PASSWORD)
+				.description("The password of the DB User.")
+				.type(FormFieldType.PASSWORD)
+		);
+		
+		//-----------------------------------------
+		// 
+		//-----------------------------------------
+		
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_DB_HOST)
+				.description("The fully qualified hostname of the SPM database.")
+				.type(FormFieldType.TEXT)
+		);
+		
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_DB_PORT)
+				.description("The port of the SPM database.")
+				.type(FormFieldType.TEXT)
+		);
+	
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_DB_NAME)
+				.description("The name of the SPM database.")
+				.type(FormFieldType.TEXT)
+		);
+		
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_DB_USER)
+				.description("The username of the user that will access the DB.")
+				.type(FormFieldType.TEXT)
+		);
+
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_DB_PASSWORD)
+				.description("The password of the DB User.")
+				.type(FormFieldType.PASSWORD)
+		);
 	}
 
 	@Override
