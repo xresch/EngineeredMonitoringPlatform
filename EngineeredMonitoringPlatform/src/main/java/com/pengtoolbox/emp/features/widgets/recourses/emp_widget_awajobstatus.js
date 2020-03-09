@@ -45,7 +45,7 @@
 						titledelimiter: ' - ', 
 						visiblefields: ['jobname', 'status'], 
 						rendererSettings:{
-							alerttiles: {
+							tiles: {
 								sizefactor: widgetObject.JSON_SETTINGS.sizefactor,
 								showlabels: widgetObject.JSON_SETTINGS.showlabels
 							}
@@ -57,7 +57,7 @@
 					if(  data.payload == null || typeof data.payload == 'string'){
 						callback(widgetObject, "unknown");
 					}else{
-						var alertRenderer = CFW.render.getRenderer('alerttiles');
+						var alertRenderer = CFW.render.getRenderer('tiles');
 						callback(widgetObject, alertRenderer.render(dataToRender));
 					}
 					
