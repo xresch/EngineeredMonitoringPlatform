@@ -55,7 +55,7 @@ public class Main implements CFWAppInterface {
 	        //###################################################################
 	        // Startup
 	        //###################################################################
-	        app.setDefaultURL("/theusinator?env=preprod", true);
+	        app.setDefaultURL("/dashboard/list", true);
 	        
 	        try {
 				app.start();
