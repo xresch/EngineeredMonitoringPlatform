@@ -56,27 +56,8 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		//-----------------------------------------
 		CFW.Registry.Widgets.add(new AWAJobStatusWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusWidget());
-		//----------------------------------
-		// Register Objects
-		//CFW.Registry.Objects.addCFWObject(CPUSampleSignature.class);
-
-
-    	//----------------------------------
-    	// Register Manual Pages
-//		ManualPage theusinator = new ManualPage("Theusinator").faicon("fas fa-tachometer-alt")
-//				.addPermission(PERMISSION_AWAJOBSTATUS_PROD)
-//				.addPermission(PERMISSION_AWAJOBSTATUS_PREPROD);
-//		
-//		Main.TOP_MANUAL_PAGE.addChild(theusinator);
-//		
-//			theusinator.addChild(
-//				new ManualPage("Introduction")
-//					.faicon("fas fa-star")
-//					.addPermission(PERMISSION_AWAJOBSTATUS_PROD)
-//					.addPermission(PERMISSION_AWAJOBSTATUS_PREPROD)
-//					.content(HandlingType.JAR_RESOURCE, RESOURCE_PACKAGE, "z_manual_intro.html")
-//			);
-					
+		CFW.Registry.Widgets.add(new SPMLegendWidget());
+							
 	}
 
 	@Override
