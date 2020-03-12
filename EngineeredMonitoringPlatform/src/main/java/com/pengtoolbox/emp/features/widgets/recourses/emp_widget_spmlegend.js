@@ -24,12 +24,12 @@
 			menulabel: CFWL('cfw_widget_smplegend', "SPM Legend"),
 			description: CFWL('cfw_widget_smplegend_desc', "Displays a legend."),
 			createWidgetInstance: function (widgetObject, callback) {		
-				var html = '<div>  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div> 100% </div>'
-					+'<div>  <div class="cfw-color-box bg-cfw-good">&nbsp;</div> >= 75% </div>'
-					+'<div>  <div class="cfw-color-box bg-cfw-warning">&nbsp;</div> >= 50% </div>'
-					+'<div>  <div class="cfw-color-box bg-cfw-emergency">&nbsp;</div> >= 25% </div>'
-					+'<div>  <div class="cfw-color-box bg-cfw-danger">&nbsp;</div> < 25% </div>'
-					+'<div>  <div class="cfw-color-box bg-cfw-gray">&nbsp;</div> No Data </div>'
+				var html = '<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div> 100% </div>'
+					+'<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-good">&nbsp;</div> >= 75% </div>'
+					+'<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-warning">&nbsp;</div> >= 50% </div>'
+					+'<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-emergency">&nbsp;</div> >= 25% </div>'
+					+'<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-danger">&nbsp;</div> < 25% </div>'
+					+'<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-gray">&nbsp;</div> No Data </div>'
 					;
 				callback(widgetObject, html);
 			},

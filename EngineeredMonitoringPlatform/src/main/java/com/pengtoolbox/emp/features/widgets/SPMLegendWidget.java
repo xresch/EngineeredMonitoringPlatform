@@ -40,7 +40,14 @@ public class SPMLegendWidget extends WidgetDefinition {
 	}
 
 	@Override
-	public ArrayList<FileDefinition> getCSSFiles() { return null; }
+	public ArrayList<FileDefinition> getCSSFiles() { 
+		
+		FileDefinition css = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widgets.css");
+		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
+		array.add(css);
+		return array; 
+		
+	}
 
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
