@@ -77,7 +77,7 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		//---------------------------------
 		// Resolve Jobnames
 		JsonElement jobnamesElement = settings.get("jobnames");
-		if(jobnamesElement.isJsonNull() && !jobnamesElement.getAsString().isEmpty()) {
+		if(jobnamesElement.isJsonNull() || jobnamesElement.getAsString().isEmpty()) {
 			return;
 		}
 		
@@ -183,18 +183,5 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "lang_en_widget_awajobstatus.properties"));
 		return map;
 	}
-
-	@Override
-	public boolean hasPermission() {
-		
-		if(CFW.Context.Request.hasPermission(FeatureDashboard.PERMISSION_DASHBOARDING)
-		|| CFW.Context.Request.hasPermission(FeatureDashboard.PERMISSION_DASHBOARD_ADMIN)) {
-			return true;
-		}
-		
-		return false;
-	}
-
-
 
 }
