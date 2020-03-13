@@ -11,7 +11,7 @@
 	CFW.dashboard.registerWidget("emp_awajobstatus",
 		{
 			category: "Monitoring",
-			menuicon: "fas fa-gears",
+			menuicon: "fas fa-cogs",
 			menulabel: CFWL('cfw_dashboard_widget_awajobstatus', "AWA Job Status"),
 			description: CFWL('cfw_dashboard_widget_awajobstatus_desc', "Fetches the status of one or multiple AWA Jobs."),
 			createWidgetInstance: function (widgetObject, callback) {

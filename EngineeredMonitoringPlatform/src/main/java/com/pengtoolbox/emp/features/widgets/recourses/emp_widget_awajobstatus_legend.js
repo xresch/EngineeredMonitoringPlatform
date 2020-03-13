@@ -17,18 +17,16 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_smplegend",
+	CFW.dashboard.registerWidget("emp_awajobstatus_legend",
 		{
 			category: "Monitoring",
 			menuicon: "fas fa-info-circle",
-			menulabel: CFWL('cfw_widget_smplegend', "SPM Legend"),
-			description: CFWL('cfw_widget_smplegend_desc', "Displays a legend."),
+			menulabel: CFWL('cfw_widget_awajobstatuslegend', "AWA JobStatus Legend"),
+			description: CFWL('cfw_widget_awajobstatuslegend_desc', "Displays a legend for the colors of the AWA job status."),
 			createWidgetInstance: function (widgetObject, callback) {		
-				var html = '<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div> 100% </div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-good">&nbsp;</div> >= 75% </div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-warning">&nbsp;</div> >= 50% </div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-emergency">&nbsp;</div> >= 25% </div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-danger">&nbsp;</div> < 25% </div>'
+				var html = '<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div> Ended OK </div>'
+					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-warning">&nbsp;</div> Running </div>'
+					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-danger">&nbsp;</div> Issue </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-gray">&nbsp;</div> No Data </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-darkgray">&nbsp;</div> Disabled </div>'
 					;

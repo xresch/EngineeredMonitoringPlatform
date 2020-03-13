@@ -11,7 +11,7 @@
 	CFW.dashboard.registerWidget("emp_spmmonitorstatus",
 		{
 			category: "Monitoring",
-			menuicon: "fas fa-gears",
+			menuicon: "fas fa-cogs",
 			menulabel: CFWL('cfw_widget_spmmonitorstatus', "SPM Monitor Status"),
 			description: CFWL('cfw_widget_spmmonitorstatus_desc', "Fetches the status of one or multiple SPM Monitors."),
 			createWidgetInstance: function (widgetObject, callback) {

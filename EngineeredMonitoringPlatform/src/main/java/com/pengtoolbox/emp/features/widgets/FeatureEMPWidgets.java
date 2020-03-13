@@ -55,6 +55,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		// 
 		//-----------------------------------------
 		CFW.Registry.Widgets.add(new AWAJobStatusWidget());
+		CFW.Registry.Widgets.add(new AWAJobStatusLegendWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusWidget());
 		CFW.Registry.Widgets.add(new SPMLegendWidget());
 							

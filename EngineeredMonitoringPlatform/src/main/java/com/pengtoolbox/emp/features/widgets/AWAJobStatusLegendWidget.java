@@ -8,14 +8,13 @@ import com.google.gson.JsonObject;
 import com.pengtoolbox.cfw.caching.FileDefinition;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.datahandling.CFWObject;
-import com.pengtoolbox.cfw.features.dashboard.FeatureDashboard;
 import com.pengtoolbox.cfw.features.dashboard.WidgetDefinition;
 import com.pengtoolbox.cfw.response.JSONResponse;
 
-public class SPMLegendWidget extends WidgetDefinition {
+public class AWAJobStatusLegendWidget extends WidgetDefinition {
 
 	@Override
-	public String getWidgetType() {return "emp_smplegend";}
+	public String getWidgetType() {return "emp_awajobstatus_legend";}
 
 	@Override
 	public CFWObject getSettings() {
@@ -27,7 +26,7 @@ public class SPMLegendWidget extends WidgetDefinition {
 
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmlegend.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_awajobstatus_legend.js");
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add(js);
 		return array;
