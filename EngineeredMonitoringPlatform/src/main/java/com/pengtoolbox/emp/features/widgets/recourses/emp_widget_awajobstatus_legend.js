@@ -24,7 +24,8 @@
 			menulabel: CFWL('cfw_widget_awajobstatuslegend', "AWA Job Status Legend"),
 			description: CFWL('cfw_widget_awajobstatuslegend_desc', "Displays a legend for the colors used by the AWA job status widget."),
 			createWidgetInstance: function (widgetObject, callback) {		
-				var html = '<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div> Ended OK </div>'
+				var html = 
+					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div> Ended OK </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-warning">&nbsp;</div> Running </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-danger">&nbsp;</div> Issue </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-gray">&nbsp;</div> No Data </div>'
