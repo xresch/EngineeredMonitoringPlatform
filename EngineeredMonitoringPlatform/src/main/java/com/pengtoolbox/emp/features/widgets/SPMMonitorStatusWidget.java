@@ -75,6 +75,12 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 						.setDescription("{!cfw_widget_spmmonitorstatus_disable_desc!}")
 						.setValue(false)
 				)
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
+						.setLabel("{!cfw_widget_spmmonitorstatus_sampledata!}")
+						.setDescription("{!cfw_widget_spmmonitorstatus_sampledata_desc!}")
+						.setValue(false)
+				)
+				
 	
 		;
 	}
@@ -82,10 +88,15 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 	@Override
 	public void fetchData(JSONResponse response, JsonObject settings) { 
 		//---------------------------------
-		// Test and Debug
-		// response.getContent().append(getMockupResponse());
-		// return;
+		// Example Data
+		JsonElement sampleDataElement = settings.get("sampledata");
 		
+		if(sampleDataElement != null 
+		&& !sampleDataElement.isJsonNull() 
+		&& sampleDataElement.getAsBoolean()) {
+			createSampleData(response);
+			return;
+		}
 		//---------------------------------
 		// Resolve Jobnames
 		JsonElement monitorsElement = settings.get("JSON_MONITORS");
@@ -179,6 +190,36 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 				db.close(result);
 				db.close(nameResult);
 			}
+		}
+		
+		response.getContent().append(resultArray.toString());
+		
+	}
+	
+	public void createSampleData(JSONResponse response) { 
+
+		JsonArray resultArray = new JsonArray();
+		
+		String[] monitorNames = new String[] {
+				"[AAA] Test Monitor", "[BUM] Bäng Tätsch", "[FOO] Foobar", 
+				"[PAN] Page Analyzer", "[BMW] Bayrischer Mist Wagen", "[Short] Cut",
+				"Just a Monitor", "[Rick] Roll that Astley! ", "ABC",
+				"DEV", "TEST", "PROD", };
+		for(int i = 0; i < monitorNames.length; i++) {
+			String name = monitorNames[i];
+			//--------------------------------
+			// Return Status
+			JsonObject object = new JsonObject();
+			object.addProperty("MONITOR_ID", i);
+			object.addProperty("MONITOR_NAME", name);
+			object.addProperty("PROJECT_ID", i);
+			object.addProperty("PROJECT_NAME", "Pseudo Project");
+			object.addProperty("MEASURE_NAME", "Overall Health");
+			object.addProperty("LOCATION_NAME", "Winterthur");
+			object.addProperty("VALUE", (Math.random() > 0.7) ? 100 : Math.ceil(Math.random()*99));
+			
+			resultArray.add(object);
+				
 		}
 		
 		response.getContent().append(resultArray.toString());

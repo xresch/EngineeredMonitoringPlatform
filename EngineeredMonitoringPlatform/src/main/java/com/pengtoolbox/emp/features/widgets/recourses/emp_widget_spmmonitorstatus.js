@@ -81,16 +81,8 @@
 			},
 			
 			onSave: function (form, widgetObject) {
-				var settingsForm = $(form);
 				widgetObject.JSON_SETTINGS = CFW.format.formToObject(form);
-				
-//				widgetObject.JSON_SETTINGS.jobnames = settingsForm.find('input[name="jobnames"]').val();
-//				widgetObject.JSON_SETTINGS.joblabels = settingsForm.find('input[name="joblabels"]').val();
-//				widgetObject.JSON_SETTINGS.environment = settingsForm.find('select[name="environment"]').val();
-//				widgetObject.JSON_SETTINGS.sizefactor = settingsForm.find('select[name="sizefactor"]').val();
-//				widgetObject.JSON_SETTINGS.showlabels = ( settingsForm.find('input[name="showlabels"]:checked').val() == "true" )
-				
-				return true;		
+				return true;	
 			}
 		}
 	);	

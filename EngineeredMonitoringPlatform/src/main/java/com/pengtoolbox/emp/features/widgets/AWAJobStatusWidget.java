@@ -10,14 +10,12 @@ import java.util.logging.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.caching.FileDefinition;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.datahandling.CFWField;
 import com.pengtoolbox.cfw.datahandling.CFWField.FormFieldType;
-import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.datahandling.CFWObject;
-import com.pengtoolbox.cfw.features.dashboard.FeatureDashboard;
+import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.dashboard.WidgetDefinition;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
@@ -63,16 +61,34 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 						.setDescription("{!cfw_widget_awajobstatus_showlabels_desc!}")
 						.setValue(true)
 				)
+				
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
+						.setLabel("{!cfw_widget_awajobstatus_disable!}")
+						.setDescription("{!cfw_widget_awajobstatus_disable_desc!}")
+						.setValue(false)
+				)
+				
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
+						.setLabel("{!cfw_widget_awajobstatus_sampledata!}")
+						.setDescription("{!cfw_widget_awajobstatus_sampledata_desc!}")
+						.setValue(false)
+				)
 	
 		;
 	}
-
+		
 	@Override
 	public void fetchData(JSONResponse response, JsonObject settings) { 
 		//---------------------------------
-		// Test and Debug
-		// response.getContent().append(getMockupResponse());
-		// return;
+		// Example Data
+		JsonElement sampleDataElement = settings.get("sampledata");
+		
+		if(sampleDataElement != null 
+		&& !sampleDataElement.isJsonNull() 
+		&& sampleDataElement.getAsBoolean()) {
+			createSampleData(response);
+			return;
+		}
 		
 		//---------------------------------
 		// Resolve Jobnames
@@ -141,29 +157,31 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		
 	}
 	
-	private String getMockupResponse() {
-		return "["
-		+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"JP_0003_225\", \"status\":\"RUNNING\"},"
-		+ "{ \"jobname\":\"JP_0002_B\", \"label\":\"Job B\", \"status\":\"RUNNING\"},"
-		+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"status\":\"ISSUE\"},"
-		+ "{ \"jobname\":\"JP_0003_V\", \"label\":\"JP_0003_V\", \"status\":\"ENDED OK\"},"
-		+ "{ \"jobname\":\"JP_0003_C\", \"label\":\"Some Very Long Label with blanks for breaks\", \"status\":\"ISSUE\"},"
-		+ "{ \"jobname\":\"JP_0_A\", \"label\":\"JP__A\", \"status\":\"RUNNING\"},"
-		+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"JP_0003_225\", \"status\":\"RUNNING\"},"
-		+ "{ \"jobname\":\"JP_0002_B\", \"label\":\"Job B\", \"status\":\"ENDED OK\"},"
-		+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"status\":\"ISSUE\"},"
-		+ "{ \"jobname\":\"JP_0003_V\", \"label\":\"JP_0003_V\", \"status\":\"ENDED OK\"},"
-		+ "{ \"jobname\":\"JP_0003_Chjkl\", \"label\":\"The Holy C\", \"status\":\"ENDED OK\"},"
-		+ "{ \"jobname\":\"JP_0003_A\", \"label\":\"JP_0003_A\", \"status\":\"RUNNING\"},"
-		+ "{ \"jobname\":\"JP_0003_225fksdfghuw\", \"label\":\"JP_0003_225fksdfghuw\", \"status\":\"ENDED OK\"},"
-		+ "{ \"jobname\":\"JP_0002_B\", \"label\":\"Job B\", \"status\":\"ENDED OK\"},"
-		+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"status\":\"ISSUE\"},"
-		+ "{ \"jobname\":\"JP_0003_Vhjklh\", \"label\":\"JP_0003_Vhjklh\", \"status\":\"ENDED OK\"},"
-		+ "{ \"jobname\":\"JP_01\", \"label\":\"JP_01\", \"status\":\"ISSUE\"},"
-		+ "{ \"jobname\":\"JP_0003_A\", \"label\":\"JP_0003_A\", \"status\":\"RUNNING\"}"
-		+"]";
-	}
+	public void createSampleData(JSONResponse response) { 
+		
+		response.getContent().append("["
+			+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"JP_0003_225\", \"status\":\"RUNNING\"},"
+			+ "{ \"jobname\":\"JP_0002_B\", \"label\":\"Job B\", \"status\":\"RUNNING\"},"
+			+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"status\":\"ISSUE\"},"
+			+ "{ \"jobname\":\"JP_0003_V\", \"label\":\"JP_0003_V\", \"status\":\"ENDED OK\"},"
+			+ "{ \"jobname\":\"JP_0003_C\", \"label\":\"Some Very Long Label with blanks for breaks\", \"status\":\"ISSUE\"},"
+			+ "{ \"jobname\":\"JP_0_A\", \"label\":\"JP__A\", \"status\":\"RUNNING\"},"
+			+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"JP_0003_225\", \"status\":\"RUNNING\"},"
+			+ "{ \"jobname\":\"JP_0002_B\", \"label\":\"Job B\", \"status\":\"ENDED OK\"},"
+			+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"status\":\"ISSUE\"},"
+			+ "{ \"jobname\":\"JP_0003_V\", \"label\":\"JP_0003_V\", \"status\":\"ENDED OK\"},"
+			+ "{ \"jobname\":\"JP_0003_Chjkl\", \"label\":\"The Holy C\", \"status\":\"ENDED OK\"},"
+			+ "{ \"jobname\":\"JP_0003_A\", \"label\":\"JP_0003_A\", \"status\":\"RUNNING\"},"
+			+ "{ \"jobname\":\"JP_0003_225fksdfghuw\", \"label\":\"JP_0003_225fksdfghuw\", \"status\":\"ENDED OK\"},"
+			+ "{ \"jobname\":\"JP_0002_B\", \"label\":\"Job B\", \"status\":\"ENDED OK\"},"
+			+ "{ \"jobname\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"status\":\"ISSUE\"},"
+			+ "{ \"jobname\":\"JP_0003_Vhjklh\", \"label\":\"JP_0003_Vhjklh\", \"status\":\"ENDED OK\"},"
+			+ "{ \"jobname\":\"JP_01\", \"label\":\"JP_01\", \"status\":\"ISSUE\"},"
+			+ "{ \"jobname\":\"JP_0003_A\", \"label\":\"JP_0003_A\", \"status\":\"RUNNING\"}"
+			+"]");
 
+	}
+	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();

@@ -37,7 +37,6 @@
 				//return CFW.dashboard.getSettingsForm(widgetObject);
 			},
 			onSave: function (form, widgetObject) {
-				var settingsForm = $(form);
 				widgetObject.JSON_SETTINGS = CFW.format.formToObject(form);
 				return true;
 			}
