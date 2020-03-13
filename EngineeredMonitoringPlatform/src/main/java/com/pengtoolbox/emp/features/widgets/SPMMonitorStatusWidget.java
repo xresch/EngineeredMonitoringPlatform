@@ -44,52 +44,9 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 							
 							@Override
 							public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
-								
 								String environment = request.getParameter("environment");
 								
-								if(searchValue.length() < 3) {
-									return null;
-								}
-								//---------------------------
-								// Get DB
-								DBInterface db;
-								
-								if(environment.equals("Prod")) {
-									db = SPMDatabase.getProd();
-								}else {
-									db = SPMDatabase.getPreProd();
-								}
-								
-								if(db == null) {
-									CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The choosen environment '"+environment+"' is not configured.");
-									return null;
-								}
-								
-								ResultSet result = db.preparedExecuteQuery(
-									CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus_autocomplete_sql.sql"),
-									"%"+searchValue+"%",
-									"%"+searchValue+"%");
-								
-								LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
-								try {
-									if(result != null) {
-										for(int i = 0;i < this.getMaxResults() && result.next();i++) {
-											int monitorID = result.getInt("MonitorID");
-											String monitorName = result.getString("MonitorName");
-											String projectName = result.getString("ProjectName");
-											suggestions.put(monitorID, projectName +" &gt;&gt; "+ monitorName);	
-										}
-									}
-								
-								} catch (SQLException e) {
-									new CFWLog(logger)
-										.method("fetchData")
-										.severe("Error fetching Widget data.", e);
-								}finally {
-									db.close(result);
-								}
-								
-								return suggestions;
+								return SPMDatabase.autocompleteMonitors(environment, searchValue, this.getMaxResults());
 							}
 						})			
 				)
@@ -112,6 +69,11 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 						.setLabel("{!cfw_widget_spmmonitorstatus_showlabels!}")
 						.setDescription("{!cfw_widget_spmmonitorstatus_showlabels_desc!}")
 						.setValue(true)
+				)
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
+						.setLabel("{!cfw_widget_spmmonitorstatus_disable!}")
+						.setDescription("{!cfw_widget_spmmonitorstatus_disable_desc!}")
+						.setValue(false)
 				)
 	
 		;

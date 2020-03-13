@@ -21,8 +21,8 @@
 		{
 			category: "Monitoring",
 			menuicon: "fas fa-info-circle",
-			menulabel: CFWL('cfw_widget_awajobstatuslegend', "AWA JobStatus Legend"),
-			description: CFWL('cfw_widget_awajobstatuslegend_desc', "Displays a legend for the colors of the AWA job status."),
+			menulabel: CFWL('cfw_widget_awajobstatuslegend', "AWA Job Status Legend"),
+			description: CFWL('cfw_widget_awajobstatuslegend_desc', "Displays a legend for the colors used by the AWA job status widget."),
 			createWidgetInstance: function (widgetObject, callback) {		
 				var html = '<div class="spm-legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div> Ended OK </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-warning">&nbsp;</div> Running </div>'

@@ -24,7 +24,8 @@
 						current.textstyle = "white"; 
 
 						current.VALUE = current.VALUE.toFixed(1);
-						if (current.VALUE == 100) 		{ current.alertstyle = "cfw-excellent"; } 
+						if(widgetObject.JSON_SETTINGS.disable) { current.alertstyle = "cfw-darkgray"; }
+						else if (current.VALUE == 100) 		{ current.alertstyle = "cfw-excellent"; } 
 						
 						else if (current.VALUE >= 75) 	{ current.alertstyle = "cfw-good"; } 
 						else if (current.VALUE >= 50) 	{ current.alertstyle = "cfw-warning"; } 

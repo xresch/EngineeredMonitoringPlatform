@@ -1,7 +1,9 @@
 package com.pengtoolbox.emp.features.widgets;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 import com.google.common.base.Strings;
@@ -10,6 +12,7 @@ import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.config.ConfigChangeListener;
 import com.pengtoolbox.cfw.logging.CFWLog;
+import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.pengtoolbox.emp.features.theusinator.FeatureTheusinator;
 
 import oracle.ucp.jdbc.PoolDataSource;
@@ -128,6 +131,53 @@ public class SPMDatabase {
 		};
 
 		return db;
+	}
+	
+	public static LinkedHashMap<Object, Object> autocompleteMonitors(String environment, String searchValue, int maxResults) {
+
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		//---------------------------
+		// Get DB
+		DBInterface db;
+		
+		if(environment.equals("Prod")) {
+			db = SPMDatabase.getProd();
+		}else {
+			db = SPMDatabase.getPreProd();
+		}
+		
+		if(db == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The choosen environment '"+environment+"' is not configured.");
+			return null;
+		}
+		
+		ResultSet result = db.preparedExecuteQuery(
+			CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus_autocomplete_sql.sql"),
+			"%"+searchValue+"%",
+			"%"+searchValue+"%");
+		
+		LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
+		try {
+			if(result != null) {
+				for(int i = 0;i < maxResults && result.next();i++) {
+					int monitorID = result.getInt("MonitorID");
+					String monitorName = result.getString("MonitorName");
+					String projectName = result.getString("ProjectName");
+					suggestions.put(monitorID, projectName +" &gt;&gt; "+ monitorName);	
+				}
+			}
+		
+		} catch (SQLException e) {
+			new CFWLog(logger)
+				.method("fetchData")
+				.severe("Error fetching Widget data.", e);
+		}finally {
+			db.close(result);
+		}
+		
+		return suggestions;
 	}
 
 }
