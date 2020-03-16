@@ -55,22 +55,22 @@ public class FeatureTheusinator extends CFWAppFeature {
 		
 		CFW.Registry.Components.addRegularMenuItem(
 				(MenuItem)new MenuItem("Theusinator")
-					.faicon("fas fa-tachometer-alt")
-				, null);
+					.faicon("fas fa-grip-horizontal")
+				, "Dashboards");
 		
 		CFW.Registry.Components.addRegularMenuItem(
 				(MenuItem)new MenuItem("Production")
 					.faicon("fas fa-cogs")
 					.addPermission(PERMISSION_THEUSINATOR_PROD)
 					.href("/app/theusinator?env=prod")	
-				, "Theusinator");
+				, "Dashboards | Theusinator");
 		
 		CFW.Registry.Components.addRegularMenuItem(
 				(MenuItem)new MenuItem("Pre-Production")
 					.faicon("fas fa-flask")
 					.addPermission(PERMISSION_THEUSINATOR_PREPROD)
 					.href("/app/theusinator?env=preprod")	
-				, "Theusinator");
+				, "Dashboards | Theusinator");
 		
     	//----------------------------------
     	// Register Manual Pages
