@@ -49,6 +49,13 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 						.setValue("Pre-Prod")
 				)
 				
+				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
+						.setLabel("{!cfw_widget_spmmonitorstatus_renderer!}")
+						.setDescription("{!cfw_widget_spmmonitorstatus_renderer_desc!}")
+						.setOptions(new String[]{"Tiles", "Panels", "Table"})
+						.setValue("Tiles")
+				)
+				
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
 						.setLabel("{!cfw_widget_awajobstatus_sizefactor!}")
 						.setDescription("{!cfw_widget_awajobstatus_sizefactor_desc!}")

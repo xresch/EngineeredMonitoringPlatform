@@ -9,7 +9,7 @@ import com.pengtoolbox.cfw.features.usermgmt.Permission;
 
 /**************************************************************************************************************
  * 
- * @author Reto Scheiwiller, ï¿½ 2019 
+ * @author Reto Scheiwiller, © 2019 
  * @license Creative Commons: Attribution-NonCommercial-NoDerivatives 4.0 International
  **************************************************************************************************************/
 public class FeatureEMPWidgets extends CFWAppFeature {
@@ -56,6 +56,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		//-----------------------------------------
 		CFW.Registry.Widgets.add(new AWAJobStatusWidget());
 		CFW.Registry.Widgets.add(new AWAJobStatusLegendWidget());
+		CFW.Registry.Widgets.add(new SPMProjectStatusWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusWidget());
 		CFW.Registry.Widgets.add(new SPMLegendWidget());
 							

@@ -149,12 +149,12 @@ public class SPMDatabase {
 		}
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The choosen environment '"+environment+"' is not configured.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment '"+environment+"' is not configured.");
 			return null;
 		}
 		
 		ResultSet result = db.preparedExecuteQuery(
-			CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus_autocomplete_sql.sql"),
+			CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_spm_monitor_autocomplete.sql"),
 			"%"+searchValue+"%",
 			"%"+searchValue+"%");
 		
@@ -166,6 +166,51 @@ public class SPMDatabase {
 					String monitorName = result.getString("MonitorName");
 					String projectName = result.getString("ProjectName");
 					suggestions.put(monitorID, projectName +" &gt;&gt; "+ monitorName);	
+				}
+			}
+		
+		} catch (SQLException e) {
+			new CFWLog(logger)
+				.method("fetchData")
+				.severe("Error fetching Widget data.", e);
+		}finally {
+			db.close(result);
+		}
+		
+		return suggestions;
+	}
+	
+	public static LinkedHashMap<Object, Object> autocompleteProjects(String environment, String searchValue, int maxResults) {
+
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		//---------------------------
+		// Get DB
+		DBInterface db;
+		
+		if(environment.equals("Prod")) {
+			db = SPMDatabase.getProd();
+		}else {
+			db = SPMDatabase.getPreProd();
+		}
+		
+		if(db == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment '"+environment+"' is not configured.");
+			return null;
+		}
+		
+		ResultSet result = db.preparedExecuteQuery(
+			CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_spm_project_autocomplete.sql"),
+			"%"+searchValue+"%");
+		
+		LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
+		try {
+			if(result != null) {
+				for(int i = 0;i < maxResults && result.next();i++) {
+					int projectID = result.getInt("ProjectID");
+					String projectName = result.getString("ProjectName");
+					suggestions.put(projectID, projectName);	
 				}
 			}
 		

@@ -180,6 +180,10 @@ function fireZoomChange(selector) {
 	
 	ZOOM = $(selector).val();
 	storeLocalValue('ZOOM', ZOOM);
+        if (ZOOM == 0.33) {
+		$('#tidBox').prop('checked', false);
+		$('.tidDiv').css('display', 'none');
+	}
 	draw();
 };
 
@@ -1407,8 +1411,10 @@ function drawTile(projectId) {
 	
 	htmlString += '<div style="width: 100%; height: 60%; text-align: center; padding-top: ' + 15 * ZOOM + 'px;">' + tid + '</div>';
 	
-	htmlString += '<div class="tidDiv" style="width: 50%; max-height: 40%; text-align: left; position: absolute; bottom: ' + 3 * ZOOM + 'px; font-size: ' + 9 * ZOOM + 'px; display: none">' + name + '</div>';
-	
+	if (ZOOM != "0.33") {
+		htmlString += '<div class="tidDiv" style="width: 50%; max-height: 40%; text-align: left; position: absolute; bottom: ' + 3 * ZOOM + 'px; font-size: ' + 9 * ZOOM + 'px; display: none">' + name + '</div>';
+	}
+
 	if(typeof(PROJECT_LIST[projectId].Tag) != '') {
 		htmlString += '<div class="customTagDiv" style="width: 50%; height: 10%; text-align: right; position: absolute; bottom: ' + 3 * ZOOM + 'px; font-size: ' + 12 * ZOOM + 'px; right:' + 4 * ZOOM +'px; display: none">' + PROJECT_LIST[projectId].Tag + '</div>';
 	};

@@ -61,15 +61,28 @@
 							tiles: {
 								sizefactor: widgetObject.JSON_SETTINGS.sizefactor,
 								showlabels: widgetObject.JSON_SETTINGS.showlabels
+							},
+							table: {
+								narrow: 	true,
+								striped: 	false,
+								hover: 		false,
+								filterable: false,
 							}
 					}};
 					
+					if(widgetObject.JSON_SETTINGS.renderer == "Table"){
+						dataToRender.visiblefields = ['PROJECT_NAME', 'MONITOR_NAME', 'VALUE']; 
+					}
 					//--------------------------
 					// Create Tiles
 					if(  data.payload == null || typeof data.payload == 'string'){
 						callback(widgetObject, "unknown");
 					}else{
-						var alertRenderer = CFW.render.getRenderer('tiles');
+						
+						var renderType = widgetObject.JSON_SETTINGS.renderer;
+						if(renderType == null){ renderType = 'tiles'};
+						
+						var alertRenderer = CFW.render.getRenderer(renderType.toLowerCase());
 						callback(widgetObject, alertRenderer.render(dataToRender));
 					}
 					

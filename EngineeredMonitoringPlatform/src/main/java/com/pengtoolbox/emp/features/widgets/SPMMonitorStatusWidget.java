@@ -33,6 +33,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 	private static Logger logger = CFWLog.getLogger(SPMMonitorStatusWidget.class.getName());
 	@Override
 	public String getWidgetType() {return "emp_spmmonitorstatus";}
+		
 
 	@Override
 	public CFWObject getSettings() {
@@ -57,7 +58,12 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 						.setOptions(new String[]{"Prod", "Pre-Prod"})
 						.setValue("Pre-Prod")
 				)
-				
+				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
+						.setLabel("{!cfw_widget_spmmonitorstatus_renderer!}")
+						.setDescription("{!cfw_widget_spmmonitorstatus_renderer_desc!}")
+						.setOptions(new String[]{"Tiles", "Panels", "Table"})
+						.setValue("Tiles")
+				)
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
 						.setLabel("{!cfw_widget_spmmonitorstatus_sizefactor!}")
 						.setDescription("{!cfw_widget_spmmonitorstatus_sizefactor_desc!}")
@@ -132,7 +138,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 			
 			String monitorID = entry.getKey().trim();
 			ResultSet result = db.preparedExecuteQuery(
-					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus_sql.sql"),
+					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus.sql"),
 					entry.getKey().trim());
 			ResultSet nameResult = null;
 			
@@ -201,7 +207,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 		JsonArray resultArray = new JsonArray();
 		
 		String[] monitorNames = new String[] {
-				"[AAA] Test Monitor", "[BUM] BÃ¤ng TÃ¤tsch", "[FOO] Foobar", 
+				"[AAA] Test Monitor", "[BUM] Bäng Tätsch", "[FOO] Foobar", 
 				"[PAN] Page Analyzer", "[BMW] Bayrischer Mist Wagen", "[Short] Cut",
 				"Just a Monitor", "[Rick] Roll that Astley! ", "ABC",
 				"DEV", "TEST", "PROD", };
