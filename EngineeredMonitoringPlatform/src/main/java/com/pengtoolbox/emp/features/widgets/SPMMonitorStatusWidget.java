@@ -161,7 +161,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 					//--------------------------------
 					// Return No Data as -1
 					nameResult = db.preparedExecuteQuery(
-							CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitordetails_sql.sql"),
+							CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitordetails.sql"),
 							monitorID);
 					
 					if(nameResult != null && nameResult.next()) {
@@ -207,7 +207,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 		JsonArray resultArray = new JsonArray();
 		
 		String[] monitorNames = new String[] {
-				"[AAA] Test Monitor", "[BUM] Bäng Tätsch", "[FOO] Foobar", 
+				"[AAA] Test Monitor", "[BUM] Bï¿½ng Tï¿½tsch", "[FOO] Foobar", 
 				"[PAN] Page Analyzer", "[BMW] Bayrischer Mist Wagen", "[Short] Cut",
 				"Just a Monitor", "[Rick] Roll that Astley! ", "ABC",
 				"DEV", "TEST", "PROD", };
