@@ -67,7 +67,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
 						.setLabel("{!cfw_widget_spmmonitorstatus_sizefactor!}")
 						.setDescription("{!cfw_widget_spmmonitorstatus_sizefactor_desc!}")
-						.setOptions(new String[]{"0.5", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
+						.setOptions(new String[]{"0.25", "0.5", "0.75", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
 						.setValue("1")
 				)
 				

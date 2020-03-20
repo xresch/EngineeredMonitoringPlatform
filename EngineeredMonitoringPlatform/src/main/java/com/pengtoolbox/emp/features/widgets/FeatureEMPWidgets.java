@@ -9,7 +9,7 @@ import com.pengtoolbox.cfw.features.usermgmt.Permission;
 
 /**************************************************************************************************************
  * 
- * @author Reto Scheiwiller, © 2019 
+ * @author Reto Scheiwiller, ï¿½ 2019 
  * @license Creative Commons: Attribution-NonCommercial-NoDerivatives 4.0 International
  **************************************************************************************************************/
 public class FeatureEMPWidgets extends CFWAppFeature {
@@ -32,6 +32,13 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 	public static final String CONFIG_AWA_PREPROD_DBTYPE 	= "AWA PRE-PROD DB Type";
 	public static final String CONFIG_AWA_PREPROD_DBUSER 	= "AWA PRE-PROD DB User";
 	public static final String CONFIG_AWA_PREPROD_PASSWORD 	= "AWA PRE-PROD Password";
+	
+	public static final String CONFIG_AWA_DEV_DBHOST 	= "AWA DEV DB Host";
+	public static final String CONFIG_AWA_DEV_DBPORT 	= "AWA DEV DB Port";
+	public static final String CONFIG_AWA_DEV_DBNAME 	= "AWA DEV DB Name";
+	public static final String CONFIG_AWA_DEV_DBTYPE 	= "AWA DEV DB Type";
+	public static final String CONFIG_AWA_DEV_DBUSER 	= "AWA DEV DB User";
+	public static final String CONFIG_AWA_DEV_PASSWORD 	= "AWA DEV Password";
 	
 	public static final String CONFIG_SPM_PREPROD_DB_HOST = "SPM Pre-Production DB Host";
 	public static final String CONFIG_SPM_PREPROD_DB_PORT = "SPM Pre-Production DB Port";
@@ -168,7 +175,47 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 				.type(FormFieldType.PASSWORD)
 		);
 		
+		//-----------------------------------------
+		// 
+		//-----------------------------------------
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("AWA Job Status", CONFIG_AWA_DEV_DBHOST)
+				.description("The host of the AWA Database instance.")
+				.type(FormFieldType.TEXT)
+		);
+	
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("AWA Job Status", CONFIG_AWA_DEV_DBPORT)
+				.description("The port of the AWA Database instance.")
+				.type(FormFieldType.NUMBER)
+		);
+		
+		CFW.DB.Config.oneTimeCreate(
+				new Configuration("AWA Job Status", CONFIG_AWA_DEV_DBNAME)
+					.description("The Service Name or SID of the database used to fetch the job status from.")
+					.type(FormFieldType.TEXT)
+			);
+		
+		CFW.DB.Config.oneTimeCreate(
+				new Configuration("AWA Job Status", CONFIG_AWA_DEV_DBTYPE)
+					.description("The type of the oracle service consumed.")
+					.type(FormFieldType.SELECT)
+					.options(new String[] {"Service Name", "SID"})
+					.value("SID")
+			);	
+			
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("AWA Job Status", CONFIG_AWA_DEV_DBUSER)
+				.description("The username of the user that will access the DB.")
+				.type(FormFieldType.TEXT)
+		);
 
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration("AWA Job Status", CONFIG_AWA_DEV_PASSWORD)
+				.description("The password of the DB User.")
+				.type(FormFieldType.PASSWORD)
+		);
+		
 		
 		//-----------------------------------------
 		// 

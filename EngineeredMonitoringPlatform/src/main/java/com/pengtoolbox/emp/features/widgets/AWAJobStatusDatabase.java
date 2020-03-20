@@ -23,22 +23,30 @@ public class AWAJobStatusDatabase {
 	private static boolean isInitialized = false;
 	private static DBInterface DB_PREPROD;
 	private static DBInterface DB_PROD;
+	private static DBInterface DB_DEV;
 	
 	public static void initialize() {
 		
 		ConfigChangeListener listener = new ConfigChangeListener(
+				FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST, 
+				FeatureEMPWidgets.CONFIG_AWA_PROD_DBPORT, 
+				FeatureEMPWidgets.CONFIG_AWA_PROD_DBNAME, 
+				FeatureEMPWidgets.CONFIG_AWA_PROD_DBTYPE,
+				FeatureEMPWidgets.CONFIG_AWA_PROD_DBUSER, 
+				FeatureEMPWidgets.CONFIG_AWA_PROD_PASSWORD,
 				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBHOST,
 				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBPORT, 
 				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBNAME, 
 				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBTYPE,
 				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBUSER, 
 				FeatureEMPWidgets.CONFIG_AWA_PREPROD_PASSWORD,
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST, 
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBPORT, 
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBNAME, 
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBTYPE,
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBUSER, 
-				FeatureEMPWidgets.CONFIG_AWA_PROD_PASSWORD
+				FeatureEMPWidgets.CONFIG_AWA_DEV_DBHOST,
+				FeatureEMPWidgets.CONFIG_AWA_DEV_DBPORT, 
+				FeatureEMPWidgets.CONFIG_AWA_DEV_DBNAME, 
+				FeatureEMPWidgets.CONFIG_AWA_DEV_DBTYPE,
+				FeatureEMPWidgets.CONFIG_AWA_DEV_DBUSER, 
+				FeatureEMPWidgets.CONFIG_AWA_DEV_PASSWORD
+				
 				) {
 			
 			@Override
@@ -57,6 +65,19 @@ public class AWAJobStatusDatabase {
 		
 		DB_PROD = null;
 		DB_PREPROD = null;
+		DB_DEV = null;
+		
+		if(CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST) != null
+		&& !CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST).isEmpty()) {
+			DB_PROD = initializeDBInterface(
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST), 
+					CFW.DB.Config.getConfigAsInt(   FeatureEMPWidgets.CONFIG_AWA_PROD_DBPORT), 
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBNAME), 
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBTYPE),
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBUSER), 
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_PASSWORD)
+				);
+		}
 		
 		if(CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBHOST) != null
 		&&	!CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBHOST).isEmpty()) {
@@ -70,17 +91,18 @@ public class AWAJobStatusDatabase {
 				);
 		}	
 		
-		if(CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST) != null
-		&& !CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST).isEmpty()) {
-			DB_PROD = initializeDBInterface(
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST), 
-					CFW.DB.Config.getConfigAsInt(   FeatureEMPWidgets.CONFIG_AWA_PROD_DBPORT), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBNAME), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBTYPE),
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBUSER), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_PASSWORD)
+		if(CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBHOST) != null
+		&& !CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBHOST).isEmpty()) {
+			DB_DEV = initializeDBInterface(
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBHOST), 
+					CFW.DB.Config.getConfigAsInt(   FeatureEMPWidgets.CONFIG_AWA_DEV_DBPORT), 
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBNAME), 
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBTYPE),
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBUSER), 
+					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_PASSWORD)
 				);
 		}
+		
 	}
 	
 	
@@ -90,6 +112,11 @@ public class AWAJobStatusDatabase {
 	}
 	
 	public static DBInterface getPreProd() {
+		if(!isInitialized) { initialize(); }
+		return DB_PREPROD;
+	}
+	
+	public static DBInterface getDev() {
 		if(!isInitialized) { initialize(); }
 		return DB_PREPROD;
 	}

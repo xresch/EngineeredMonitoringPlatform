@@ -45,7 +45,7 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_awajobstatus_environment!}")
 						.setDescription("{!cfw_widget_awajobstatus_environment_desc!}")
-						.setOptions(new String[]{"Prod", "Pre-Prod"})
+						.setOptions(new String[]{"Prod", "Pre-Prod", "Dev"})
 						.setValue("Pre-Prod")
 				)
 				
@@ -59,7 +59,7 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
 						.setLabel("{!cfw_widget_awajobstatus_sizefactor!}")
 						.setDescription("{!cfw_widget_awajobstatus_sizefactor_desc!}")
-						.setOptions(new String[]{"0.5", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
+						.setOptions(new String[]{"0.25", "0.5", "0.75", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
 						.setValue("1")
 				)
 				
@@ -127,8 +127,10 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		}
 		if(environmentElement.getAsString().equals("Prod")) {
 			db = AWAJobStatusDatabase.getProd();
-		}else {
+		}else if (environmentElement.getAsString().equals("Pre-Prod")){
 			db = AWAJobStatusDatabase.getPreProd();
+		}else {
+			db = AWAJobStatusDatabase.getDev();
 		}
 			
 		//---------------------------------
