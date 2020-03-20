@@ -118,7 +118,7 @@ public class AWAJobStatusDatabase {
 	
 	public static DBInterface getDev() {
 		if(!isInitialized) { initialize(); }
-		return DB_PREPROD;
+		return DB_DEV;
 	}
 	
 	public static DBInterface initializeDBInterface(String servername, int port, String name, String type, String username, String password) {
