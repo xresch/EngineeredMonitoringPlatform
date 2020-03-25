@@ -52,7 +52,8 @@
 						rendererSettings:{
 							tiles: {
 								sizefactor: widgetObject.JSON_SETTINGS.sizefactor,
-								showlabels: widgetObject.JSON_SETTINGS.showlabels
+								showlabels: widgetObject.JSON_SETTINGS.showlabels,
+								borderstyle: widgetObject.JSON_SETTINGS.borderstyle
 							},
 							table: {
 								narrow: 	true,

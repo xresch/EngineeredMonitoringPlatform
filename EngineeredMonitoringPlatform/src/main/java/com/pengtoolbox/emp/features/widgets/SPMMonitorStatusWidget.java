@@ -71,11 +71,19 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 						.setValue("1")
 				)
 				
+				.addField(CFWField.newString(FormFieldType.SELECT, "borderstyle")
+						.setLabel("{!cfw_widget_spmmonitorstatus_borderstyle!}")
+						.setDescription("{!cfw_widget_spmmonitorstatus_borderstyle_desc!}")
+						.setOptions(new String[]{"None", "Round", "Superround", "Asymmetric", "Superasymmetric", "Ellipsis"})
+						.setValue("None")
+				)
+				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showlabels")
 						.setLabel("{!cfw_widget_spmmonitorstatus_showlabels!}")
 						.setDescription("{!cfw_widget_spmmonitorstatus_showlabels_desc!}")
 						.setValue(true)
 				)
+				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
 						.setLabel("{!cfw_widget_spmmonitorstatus_disable!}")
 						.setDescription("{!cfw_widget_spmmonitorstatus_disable_desc!}")
@@ -207,7 +215,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 		JsonArray resultArray = new JsonArray();
 		
 		String[] monitorNames = new String[] {
-				"[AAA] Test Monitor", "[BUM] B�ng T�tsch", "[FOO] Foobar", 
+				"[AAA] Test Monitor", "[BUM] B&auml;ng T&auml;tsch", "[FOO] Foobar", 
 				"[PAN] Page Analyzer", "[BMW] Bayrischer Mist Wagen", "[Short] Cut",
 				"Just a Monitor", "[Rick] Roll that Astley! ", "ABC",
 				"DEV", "TEST", "PROD", };

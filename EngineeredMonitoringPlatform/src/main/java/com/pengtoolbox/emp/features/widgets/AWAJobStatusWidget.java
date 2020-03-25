@@ -55,12 +55,19 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 						.setOptions(new String[]{"Tiles", "Panels", "Table"})
 						.setValue("Tiles")
 				)
-				
+								
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
 						.setLabel("{!cfw_widget_awajobstatus_sizefactor!}")
 						.setDescription("{!cfw_widget_awajobstatus_sizefactor_desc!}")
 						.setOptions(new String[]{"0.25", "0.5", "0.75", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
 						.setValue("1")
+				)
+				
+				.addField(CFWField.newString(FormFieldType.SELECT, "borderstyle")
+						.setLabel("{!cfw_widget_spmmonitorstatus_borderstyle!}")
+						.setDescription("{!cfw_widget_spmmonitorstatus_borderstyle_desc!}")
+						.setOptions(new String[]{"None", "Round", "Superround", "Asymmetric", "Superasymmetric", "Ellipsis"})
+						.setValue("None")
 				)
 				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showlabels")
