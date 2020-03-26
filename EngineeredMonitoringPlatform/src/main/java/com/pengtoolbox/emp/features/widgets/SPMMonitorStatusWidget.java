@@ -145,7 +145,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 		for(Entry<String, JsonElement> entry : monitorsObject.entrySet()) {
 			
 			String monitorID = entry.getKey().trim();
-			ResultSet result = db.preparedExecuteQuery(
+			ResultSet result = db.preparedExecuteQuerySilent(
 					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus.sql"),
 					entry.getKey().trim());
 			ResultSet nameResult = null;
@@ -168,7 +168,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 					
 					//--------------------------------
 					// Return No Data as -1
-					nameResult = db.preparedExecuteQuery(
+					nameResult = db.preparedExecuteQuerySilent(
 							CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitordetails.sql"),
 							monitorID);
 					

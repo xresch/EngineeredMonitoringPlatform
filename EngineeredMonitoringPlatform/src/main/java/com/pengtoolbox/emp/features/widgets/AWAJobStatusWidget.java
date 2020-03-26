@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.caching.FileDefinition;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.datahandling.CFWField;
@@ -144,22 +145,27 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		// Fetch Data
 		JsonArray resultArray = new JsonArray();
 		for(int i = 0; i < jobnames.length; i++) {
-			ResultSet result = db.preparedExecuteQuery("SELECT UC4.GET_JOB_STATUS(?) AS WorkflowStatus FROM DUAL", jobnames[i].trim());
+			ResultSet result = db.preparedExecuteQuerySilent("SELECT UC4.GET_JOB_STATUS(?) AS WorkflowStatus FROM DUAL", jobnames[i].trim());
 			
 			try {
+				JsonObject object = new JsonObject();
+				object.addProperty("jobname", jobnames[i]);
+				
 				if(result != null && result.next()) {
-					JsonObject object = new JsonObject();
-					object.addProperty("jobname", jobnames[i]);
 					object.addProperty("status", result.getString(1));
 					
-					if(joblabels != null && i < joblabels.length) {
-						object.addProperty("label", joblabels[i]);
-					}else {
-						object.addProperty("label", jobnames[i]);
-					}
-
-					resultArray.add(object);
+				}else {
+					object.addProperty("status", "UNKNOWN");
 				}
+				
+				if(joblabels != null && i < joblabels.length) {
+					object.addProperty("label", joblabels[i]);
+				}else {
+					object.addProperty("label", jobnames[i]);
+				}
+
+				resultArray.add(object);
+				
 			} catch (SQLException e) {
 				new CFWLog(logger)
 					.method("fetchData")

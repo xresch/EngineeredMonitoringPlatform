@@ -39,6 +39,8 @@
 												break;
 							case "ISSUE": 		current.alertstyle = "cfw-danger"; 
 												break;
+							case "UNKNOWN": 	current.alertstyle = "cfw-gray"; 
+												break;
 						}
 					}
 					
@@ -70,7 +72,7 @@
 					// Create Tiles
 					
 					if(  data.payload == null || typeof data.payload == 'string'){
-						callback(widgetObject, "unknown");
+						callback(widgetObject, "");
 					}else{
 						var renderType = widgetObject.JSON_SETTINGS.renderer;
 						if(renderType == null){ renderType = 'tiles'};

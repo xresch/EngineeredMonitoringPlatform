@@ -144,7 +144,7 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 		for(Entry<String, JsonElement> entry : projectssObject.entrySet()) {
 			
 			String projectID = entry.getKey().trim();
-			ResultSet result = db.preparedExecuteQuery(
+			ResultSet result = db.preparedExecuteQuerySilent(
 					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmprojectstatus.sql"),
 					entry.getKey().trim());
 			ResultSet nameResult = null;
@@ -163,7 +163,7 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 					
 					//--------------------------------
 					// Return No Data as -1
-					nameResult = db.preparedExecuteQuery(
+					nameResult = db.preparedExecuteQuerySilent(
 							CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmprojectdetails.sql"),
 							projectID);
 					
