@@ -46,13 +46,8 @@ public class FeatureTheusinator extends CFWAppFeature {
 		// Register Package
 		CFW.Files.addAllowedPackage(RESOURCE_PACKAGE);
 		
-		//----------------------------------
-		// Register Objects
-		//CFW.Registry.Objects.addCFWObject(CPUSampleSignature.class);
-
     	//----------------------------------
     	// Register Menus
-		
 		CFW.Registry.Components.addRegularMenuItem(
 				(MenuItem)new MenuItem("Theusinator")
 					.faicon("fas fa-grip-horizontal")

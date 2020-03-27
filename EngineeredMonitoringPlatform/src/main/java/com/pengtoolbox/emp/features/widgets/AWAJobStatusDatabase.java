@@ -165,8 +165,9 @@ public class AWAJobStatusDatabase {
 					return transactionConnection.get();
 				}else {
 					synchronized (pooledSource) {
-						
-						return  pooledSource.getConnection();
+						Connection connection = pooledSource.getConnection();
+						addOpenConnection(connection);
+						return connection;
 					}
 				}				
 			}

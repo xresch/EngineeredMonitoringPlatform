@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.caching.FileDefinition;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.datahandling.CFWField;
@@ -30,13 +29,13 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(CFWField.newString(FormFieldType.TEXT, "jobnames")
+				.addField(CFWField.newString(FormFieldType.TEXTAREA, "jobnames")
 						.setLabel("{!cfw_widget_awajobstatus_jobnames!}")
 						.setDescription("{!cfw_widget_awajobstatus_jobnames_desc!}")
 						.setValue("")			
 				)
 				
-				.addField(CFWField.newString(FormFieldType.TEXT, "joblabels")
+				.addField(CFWField.newString(FormFieldType.TEXTAREA, "joblabels")
 						.setLabel("{!cfw_widget_awajobstatus_joblabels!}")
 						.setDescription("{!cfw_widget_awajobstatus_joblabels_desc!}")
 						.setValue("")
