@@ -3,20 +3,19 @@ package com.pengtoolbox.emp.features.widgets;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
-import com.google.common.base.Strings;
 import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.config.ConfigChangeListener;
+import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.pengtoolbox.emp.features.theusinator.FeatureTheusinator;
-
-import oracle.ucp.jdbc.PoolDataSource;
-import oracle.ucp.jdbc.PoolDataSourceFactory;
+import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
 
 
 public class SPMDatabase {
@@ -24,8 +23,9 @@ public class SPMDatabase {
 	private static Logger logger = CFWLog.getLogger(SPMDatabase.class.getName());
 	
 	private static boolean isInitialized = false;
-	private static DBInterface DB_PREPROD;
-	private static DBInterface DB_PROD;
+
+	// Contains ContextSettings id and the associated database interface
+	private static HashMap<Integer, DBInterface> dbInterfaces = new HashMap<Integer, DBInterface>();
 	
 	public static void initialize() {
 		
@@ -55,43 +55,38 @@ public class SPMDatabase {
 	}
 	
 	private static void createEnvironments() {
+		// Clear environments
+		dbInterfaces = new HashMap<Integer, DBInterface>();
 		
-		DB_PROD = null;
-		DB_PREPROD = null;
-		
-		if(!Strings.isNullOrEmpty(CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBHOST)) ) {
-			DB_PREPROD = initializeDBInterface(
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_HOST), 
-					CFW.DB.Config.getConfigAsInt(   FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_PORT), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_NAME), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_USER), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_PASSWORD)
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(EnvironmentSPM.SETTINGS_TYPE);
+		System.out.println("SPM settingsArray.size(): "+settingsArray.size());
+		for(AbstractContextSettings settings : settingsArray) {
+			EnvironmentSPM current = (EnvironmentSPM)settings;
+			System.out.println("SPM current.isDBDefined():"+current.isDBDefined());
+			if(current.isDBDefined()) {
+				System.out.println("SPM current.getWrapper().name():"+current.getWrapper().name());
+				DBInterface db = initializeDBInterface(
+						current.dbHost(), 
+						current.dbPort(), 
+						current.dbName(), 
+						current.dbUser(), 
+						current.dbPassword()
 				);
-		}	
-		
-		if(!Strings.isNullOrEmpty(CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_SPM_PROD_DB_HOST)) ) {
-			DB_PROD = initializeDBInterface(
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_SPM_PROD_DB_HOST), 
-					CFW.DB.Config.getConfigAsInt(   FeatureEMPWidgets.CONFIG_SPM_PROD_DB_PORT), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_SPM_PROD_DB_NAME), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_SPM_PROD_DB_USER), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_SPM_PROD_DB_PASSWORD)
-				);
+				
+				dbInterfaces.put(current.getWrapper().id(), db);
+			}
+			
 		}
+
 	}
 	
-	
-	public static DBInterface getProd() {
+	public static DBInterface getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
-		return DB_PROD;
+		return dbInterfaces.get(id);
 	}
 	
-	public static DBInterface getPreProd() {
-		if(!isInitialized) { initialize(); }
-		return DB_PREPROD;
-	}
 	
-	public static DBInterface initializeDBInterface(String servername, int port, String name, String username, String password) {
+	public static DBInterface initializeDBInterface(String servername, int port, String dbName, String username, String password) {
 		
 		@SuppressWarnings("deprecation")
 		DBInterface db = new DBInterface() {
@@ -104,7 +99,7 @@ public class SPMDatabase {
 					pooledSource.setServerName(servername);
 					pooledSource.setPortNumber(port);
 					
-					pooledSource.setDatabaseName(name);
+					pooledSource.setDatabaseName(dbName);
 					pooledSource.setUser(username);
 					pooledSource.setPassword(password);
 					pooledSource.setMultiSubnetFailover(true);
@@ -134,7 +129,7 @@ public class SPMDatabase {
 		return db;
 	}
 	
-	public static LinkedHashMap<Object, Object> autocompleteMonitors(String environment, String searchValue, int maxResults) {
+	public static LinkedHashMap<Object, Object> autocompleteMonitors(int environmentID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
 			return null;
@@ -143,14 +138,10 @@ public class SPMDatabase {
 		// Get DB
 		DBInterface db;
 		
-		if(environment.equals("Prod")) {
-			db = SPMDatabase.getProd();
-		}else {
-			db = SPMDatabase.getPreProd();
-		}
+		db = SPMDatabase.getEnvironment(environmentID);
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment '"+environment+"' is not configured.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
 			return null;
 		}
 		
@@ -181,7 +172,7 @@ public class SPMDatabase {
 		return suggestions;
 	}
 	
-	public static LinkedHashMap<Object, Object> autocompleteProjects(String environment, String searchValue, int maxResults) {
+	public static LinkedHashMap<Object, Object> autocompleteProjects(int environmentID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
 			return null;
@@ -190,14 +181,10 @@ public class SPMDatabase {
 		// Get DB
 		DBInterface db;
 		
-		if(environment.equals("Prod")) {
-			db = SPMDatabase.getProd();
-		}else {
-			db = SPMDatabase.getPreProd();
-		}
+		db = SPMDatabase.getEnvironment(environmentID);
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment '"+environment+"' is not configured.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
 			return null;
 		}
 		

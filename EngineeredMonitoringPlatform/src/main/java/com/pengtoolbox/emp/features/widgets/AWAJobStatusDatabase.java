@@ -2,17 +2,17 @@ package com.pengtoolbox.emp.features.widgets;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Logger;
-
-import javax.sql.PooledConnection;
 
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.config.ConfigChangeListener;
+import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
 import com.pengtoolbox.cfw.logging.CFWLog;
+import com.pengtoolbox.emp.features.environments.EnvironmentAWA;
 
-import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 import oracle.ucp.jdbc.PoolDataSource;
 import oracle.ucp.jdbc.PoolDataSourceFactory;
 
@@ -21,9 +21,9 @@ public class AWAJobStatusDatabase {
 	private static Logger logger = CFWLog.getLogger(AWAJobStatusDatabase.class.getName());
 	
 	private static boolean isInitialized = false;
-	private static DBInterface DB_PREPROD;
-	private static DBInterface DB_PROD;
-	private static DBInterface DB_DEV;
+	
+	// Contains ContextSettings id and the associated database interface	
+	private static HashMap<Integer, DBInterface> dbInterfaces = new HashMap<Integer, DBInterface>(); 
 	
 	public static void initialize() {
 		
@@ -62,63 +62,37 @@ public class AWAJobStatusDatabase {
 	}
 	
 	private static void createEnvironments() {
+		// Clear environments
+		dbInterfaces = new HashMap<Integer, DBInterface>();
 		
-		DB_PROD = null;
-		DB_PREPROD = null;
-		DB_DEV = null;
-		
-		if(CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST) != null
-		&& !CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST).isEmpty()) {
-			DB_PROD = initializeDBInterface(
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST), 
-					CFW.DB.Config.getConfigAsInt(   FeatureEMPWidgets.CONFIG_AWA_PROD_DBPORT), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBNAME), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBTYPE),
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_DBUSER), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PROD_PASSWORD)
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(EnvironmentAWA.SETTINGS_TYPE);
+		System.out.println("AWA settingsArray.size(): "+settingsArray.size());
+		for(AbstractContextSettings settings : settingsArray) {
+			EnvironmentAWA current = (EnvironmentAWA)settings;
+			System.out.println("AWA current.isDBDefined():"+current.isDBDefined());
+			if(current.isDBDefined()) {
+				System.out.println("AWA current.getWrapper().name():"+current.getWrapper().name());
+				DBInterface db = initializeDBInterface(
+						current.dbHost(), 
+						current.dbPort(), 
+						current.dbName(), 
+						current.dbType(),
+						current.dbUser(), 
+						current.dbPassword()
 				);
+				
+				dbInterfaces.put(current.getWrapper().id(), db);
+			}
+			
 		}
-		
-		if(CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBHOST) != null
-		&&	!CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBHOST).isEmpty()) {
-			DB_PREPROD = initializeDBInterface(
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBHOST), 
-					CFW.DB.Config.getConfigAsInt(   FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBPORT), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBNAME), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBTYPE),
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBUSER), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_PREPROD_PASSWORD)
-				);
-		}	
-		
-		if(CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBHOST) != null
-		&& !CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBHOST).isEmpty()) {
-			DB_DEV = initializeDBInterface(
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBHOST), 
-					CFW.DB.Config.getConfigAsInt(   FeatureEMPWidgets.CONFIG_AWA_DEV_DBPORT), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBNAME), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBTYPE),
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_DBUSER), 
-					CFW.DB.Config.getConfigAsString(FeatureEMPWidgets.CONFIG_AWA_DEV_PASSWORD)
-				);
-		}
+
 		
 	}
 	
 	
-	public static DBInterface getProd() {
+	public static DBInterface getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
-		return DB_PROD;
-	}
-	
-	public static DBInterface getPreProd() {
-		if(!isInitialized) { initialize(); }
-		return DB_PREPROD;
-	}
-	
-	public static DBInterface getDev() {
-		if(!isInitialized) { initialize(); }
-		return DB_DEV;
+		return dbInterfaces.get(id);
 	}
 	
 	public static DBInterface initializeDBInterface(String servername, int port, String name, String type, String username, String password) {

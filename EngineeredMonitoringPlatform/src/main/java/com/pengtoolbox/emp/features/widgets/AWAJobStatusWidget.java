@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.caching.FileDefinition;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.datahandling.CFWField;
@@ -19,6 +20,8 @@ import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.dashboard.WidgetDefinition;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
+import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.pengtoolbox.emp.features.environments.EnvironmentAWA;
 
 public class AWAJobStatusWidget extends WidgetDefinition {
 
@@ -45,7 +48,7 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_awajobstatus_environment!}")
 						.setDescription("{!cfw_widget_awajobstatus_environment_desc!}")
-						.setOptions(new String[]{"Prod", "Pre-Prod", "Dev"})
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentAWA.SETTINGS_TYPE))
 						.setValue("Pre-Prod")
 				)
 				
@@ -132,12 +135,12 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		if(environmentElement.isJsonNull()) {
 			return;
 		}
-		if(environmentElement.getAsString().equals("Prod")) {
-			db = AWAJobStatusDatabase.getProd();
-		}else if (environmentElement.getAsString().equals("Pre-Prod")){
-			db = AWAJobStatusDatabase.getPreProd();
-		}else {
-			db = AWAJobStatusDatabase.getDev();
+		
+		db = SPMDatabase.getEnvironment(environmentElement.getAsInt());
+		
+		if(db == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "AWA Job Status: The chosen environment seems not configured correctly.");
+			return;
 		}
 			
 		//---------------------------------

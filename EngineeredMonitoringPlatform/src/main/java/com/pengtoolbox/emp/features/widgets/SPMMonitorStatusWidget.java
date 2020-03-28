@@ -27,6 +27,7 @@ import com.pengtoolbox.cfw.features.dashboard.WidgetDefinition;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
 
 public class SPMMonitorStatusWidget extends WidgetDefinition {
 
@@ -47,7 +48,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 							public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
 								String environment = request.getParameter("environment");
 								
-								return SPMDatabase.autocompleteMonitors(environment, searchValue, this.getMaxResults());
+								return SPMDatabase.autocompleteMonitors(Integer.parseInt(environment), searchValue, this.getMaxResults());
 							}
 						})			
 				)
@@ -55,7 +56,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_spmmonitorstatus_environment!}")
 						.setDescription("{!cfw_widget_spmmonitorstatus_environment_desc!}")
-						.setOptions(new String[]{"Prod", "Pre-Prod"})
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentSPM.SETTINGS_TYPE))
 						.setValue("Pre-Prod")
 				)
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
@@ -129,14 +130,10 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 			return;
 		}
 		
-		if(environmentElement.getAsString().equals("Prod")) {
-			db = SPMDatabase.getProd();
-		}else {
-			db = SPMDatabase.getPreProd();
-		}
+		db = SPMDatabase.getEnvironment(environmentElement.getAsInt());
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment '"+environmentElement.getAsString()+"' is not configured.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitoring Status: The chosen environment seems not configured correctly.");
 			return;
 		}	
 		//---------------------------------
