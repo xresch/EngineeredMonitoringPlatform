@@ -4,6 +4,8 @@ import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.datahandling.CFWField;
 import com.pengtoolbox.cfw.datahandling.CFWField.FormFieldType;
 import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
+import com.pengtoolbox.cfw.features.dashboard.DashboardWidget;
+import com.pengtoolbox.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 
 /**************************************************************************************************************
@@ -61,9 +63,20 @@ public class EnvironmentSPM extends AbstractContextSettings {
 			
 	@Override
 	public boolean isDeletable(int id) {
-		// TODO Auto-generated method stub
-		//CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Cannot be deleted, is still in use.");
-		return true;
+
+		int count = new DashboardWidget()
+			.selectCount()
+			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
+			.custom("AND (\"TYPE\"='emp_spmprojectstatus' OR \"TYPE\"='emp_spmmonitorstatus')")
+			.getCount();
+		
+		if(count == 0) {
+			return true;
+		}else {
+			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The SPM Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			return false;
+		}
+
 	}
 	
 	public boolean isDBDefined() {

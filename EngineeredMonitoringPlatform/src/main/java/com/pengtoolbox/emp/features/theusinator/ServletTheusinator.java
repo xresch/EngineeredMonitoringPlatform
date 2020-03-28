@@ -35,13 +35,7 @@ public class ServletTheusinator extends HttpServlet
 	@Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
-		String env = request.getParameter("env");
-		if(env != null 
-		&& ( 
-			(env.toLowerCase().equals("prod") && CFW.Context.Request.hasPermission(FeatureTheusinator.PERMISSION_THEUSINATOR_PROD))
-			|| (env.toLowerCase().equals("preprod") && CFW.Context.Request.hasPermission(FeatureTheusinator.PERMISSION_THEUSINATOR_PREPROD))
-			)
-		){
+		if( CFW.Context.Request.hasPermission(FeatureTheusinator.PERMISSION_THEUSINATOR) ){
 			
 			String service = request.getParameter("service");
 			
@@ -68,7 +62,6 @@ public class ServletTheusinator extends HttpServlet
 			}
 			
 		}else {
-			System.out.println("Denied:"+env);
 			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Access denied!!!");
 		}
         

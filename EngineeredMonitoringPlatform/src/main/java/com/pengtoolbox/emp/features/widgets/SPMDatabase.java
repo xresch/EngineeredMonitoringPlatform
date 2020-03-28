@@ -11,8 +11,9 @@ import java.util.logging.Logger;
 import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.db.DBInterface;
-import com.pengtoolbox.cfw.features.config.ConfigChangeListener;
 import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
+import com.pengtoolbox.cfw.features.contextsettings.ContextSettings;
+import com.pengtoolbox.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
@@ -28,27 +29,18 @@ public class SPMDatabase {
 	private static HashMap<Integer, DBInterface> dbInterfaces = new HashMap<Integer, DBInterface>();
 	
 	public static void initialize() {
-		
-		ConfigChangeListener listener = new ConfigChangeListener(
-				FeatureEMPWidgets.CONFIG_SPM_PROD_DB_HOST,
-				FeatureEMPWidgets.CONFIG_SPM_PROD_DB_PORT,
-				FeatureEMPWidgets.CONFIG_SPM_PROD_DB_NAME,
-				FeatureEMPWidgets.CONFIG_SPM_PROD_DB_USER,
-				FeatureEMPWidgets.CONFIG_SPM_PROD_DB_PASSWORD,
-				FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_HOST,
-				FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_PORT,
-				FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_NAME,
-				FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_USER,
-				FeatureEMPWidgets.CONFIG_SPM_PREPROD_DB_PASSWORD
-			) {
+	
+		ContextSettingsChangeListener listener = 
+				new ContextSettingsChangeListener(EnvironmentSPM.SETTINGS_TYPE) {
 			
 			@Override
-			public void onChange() {
-				SPMDatabase.createEnvironments();
+			public void onChange(AbstractContextSettings setting) {
+				EnvironmentSPM env = (EnvironmentSPM)setting;
+				SPMDatabase.createEnvironment(env);
 			}
 		};
 		
-		CFW.DB.Config.addChangeListener(listener);
+		CFW.DB.ContextSettings.addChangeListener(listener);
 		
 		createEnvironments();
 		isInitialized = true;
@@ -59,25 +51,31 @@ public class SPMDatabase {
 		dbInterfaces = new HashMap<Integer, DBInterface>();
 		
 		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(EnvironmentSPM.SETTINGS_TYPE);
-		System.out.println("SPM settingsArray.size(): "+settingsArray.size());
+
 		for(AbstractContextSettings settings : settingsArray) {
 			EnvironmentSPM current = (EnvironmentSPM)settings;
-			System.out.println("SPM current.isDBDefined():"+current.isDBDefined());
-			if(current.isDBDefined()) {
-				System.out.println("SPM current.getWrapper().name():"+current.getWrapper().name());
-				DBInterface db = initializeDBInterface(
-						current.dbHost(), 
-						current.dbPort(), 
-						current.dbName(), 
-						current.dbUser(), 
-						current.dbPassword()
-				);
-				
-				dbInterfaces.put(current.getWrapper().id(), db);
-			}
+			createEnvironment(current);
 			
 		}
+	}
+	
+	private static void createEnvironment(EnvironmentSPM environment) {
 
+		dbInterfaces.remove(environment.getWrapper().id());
+		
+		System.out.println("SPM current.isDBDefined():"+environment.isDBDefined());
+		if(environment.isDBDefined()) {
+			System.out.println("SPM current.getWrapper().name():"+environment.getWrapper().name());
+			DBInterface db = initializeDBInterface(
+					environment.dbHost(), 
+					environment.dbPort(), 
+					environment.dbName(), 
+					environment.dbUser(), 
+					environment.dbPassword()
+			);
+			
+			dbInterfaces.put(environment.getWrapper().id(), db);
+		}
 	}
 	
 	public static DBInterface getEnvironment(int id) {

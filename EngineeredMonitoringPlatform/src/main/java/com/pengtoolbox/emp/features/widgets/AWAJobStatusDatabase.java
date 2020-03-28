@@ -10,8 +10,10 @@ import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.config.ConfigChangeListener;
 import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
+import com.pengtoolbox.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.emp.features.environments.EnvironmentAWA;
+import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
 
 import oracle.ucp.jdbc.PoolDataSource;
 import oracle.ucp.jdbc.PoolDataSourceFactory;
@@ -27,35 +29,17 @@ public class AWAJobStatusDatabase {
 	
 	public static void initialize() {
 		
-		ConfigChangeListener listener = new ConfigChangeListener(
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBHOST, 
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBPORT, 
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBNAME, 
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBTYPE,
-				FeatureEMPWidgets.CONFIG_AWA_PROD_DBUSER, 
-				FeatureEMPWidgets.CONFIG_AWA_PROD_PASSWORD,
-				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBHOST,
-				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBPORT, 
-				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBNAME, 
-				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBTYPE,
-				FeatureEMPWidgets.CONFIG_AWA_PREPROD_DBUSER, 
-				FeatureEMPWidgets.CONFIG_AWA_PREPROD_PASSWORD,
-				FeatureEMPWidgets.CONFIG_AWA_DEV_DBHOST,
-				FeatureEMPWidgets.CONFIG_AWA_DEV_DBPORT, 
-				FeatureEMPWidgets.CONFIG_AWA_DEV_DBNAME, 
-				FeatureEMPWidgets.CONFIG_AWA_DEV_DBTYPE,
-				FeatureEMPWidgets.CONFIG_AWA_DEV_DBUSER, 
-				FeatureEMPWidgets.CONFIG_AWA_DEV_PASSWORD
-				
-				) {
+		ContextSettingsChangeListener listener = 
+				new ContextSettingsChangeListener(EnvironmentAWA.SETTINGS_TYPE) {
 			
 			@Override
-			public void onChange() {
-				AWAJobStatusDatabase.createEnvironments();
+			public void onChange(AbstractContextSettings setting) {
+				EnvironmentAWA env = (EnvironmentAWA)setting;
+				AWAJobStatusDatabase.createEnvironment(env);
 			}
 		};
 		
-		CFW.DB.Config.addChangeListener(listener);
+		CFW.DB.ContextSettings.addChangeListener(listener);
 		
 		createEnvironments();
 		isInitialized = true;
@@ -66,27 +50,32 @@ public class AWAJobStatusDatabase {
 		dbInterfaces = new HashMap<Integer, DBInterface>();
 		
 		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(EnvironmentAWA.SETTINGS_TYPE);
-		System.out.println("AWA settingsArray.size(): "+settingsArray.size());
+
 		for(AbstractContextSettings settings : settingsArray) {
 			EnvironmentAWA current = (EnvironmentAWA)settings;
-			System.out.println("AWA current.isDBDefined():"+current.isDBDefined());
-			if(current.isDBDefined()) {
-				System.out.println("AWA current.getWrapper().name():"+current.getWrapper().name());
-				DBInterface db = initializeDBInterface(
-						current.dbHost(), 
-						current.dbPort(), 
-						current.dbName(), 
-						current.dbType(),
-						current.dbUser(), 
-						current.dbPassword()
-				);
-				
-				dbInterfaces.put(current.getWrapper().id(), db);
-			}
+			createEnvironment(current);
 			
 		}
+	}
+	
+	private static void createEnvironment(EnvironmentAWA environment) {
 
+		dbInterfaces.remove(environment.getWrapper().id());
 		
+		System.out.println("AWA current.isDBDefined():"+environment.isDBDefined());
+		if(environment.isDBDefined()) {
+			System.out.println("AWA current.getWrapper().name():"+environment.getWrapper().name());
+			DBInterface db = initializeDBInterface(
+					environment.dbHost(), 
+					environment.dbPort(), 
+					environment.dbName(), 
+					environment.dbType(), 
+					environment.dbUser(), 
+					environment.dbPassword()
+			);
+			
+			dbInterfaces.put(environment.getWrapper().id(), db);
+		}
 	}
 	
 	

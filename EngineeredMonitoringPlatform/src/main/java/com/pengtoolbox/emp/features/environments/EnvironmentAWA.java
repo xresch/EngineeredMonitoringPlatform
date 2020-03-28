@@ -1,8 +1,12 @@
 package com.pengtoolbox.emp.features.environments;
 
+import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.datahandling.CFWField;
 import com.pengtoolbox.cfw.datahandling.CFWField.FormFieldType;
 import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
+import com.pengtoolbox.cfw.features.dashboard.DashboardWidget;
+import com.pengtoolbox.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
+import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 
 /**************************************************************************************************************
  * 
@@ -54,12 +58,23 @@ public class EnvironmentAWA extends AbstractContextSettings {
 		this.addFields(url, dbHost, dbPort, dbName, dbType, dbUser, dbPassword);
 	}
 		
-			
+	
 	@Override
 	public boolean isDeletable(int id) {
-		// TODO Auto-generated method stub
-		//CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Cannot be deleted, is still in use.");
-		return true;
+		
+		int count = new DashboardWidget()
+			.selectCount()
+			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
+			.and(DashboardWidgetFields.TYPE, "emp_awajobstatus")
+			.getCount();
+		
+		if(count == 0) {
+			return true;
+		}else {
+			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The AWA Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			return false;
+		}
+
 	}
 	
 	public boolean isDBDefined() {
