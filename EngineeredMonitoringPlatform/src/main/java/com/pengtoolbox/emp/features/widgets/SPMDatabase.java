@@ -34,7 +34,7 @@ public class SPMDatabase {
 				new ContextSettingsChangeListener(EnvironmentSPM.SETTINGS_TYPE) {
 			
 			@Override
-			public void onChange(AbstractContextSettings setting) {
+			public void onChange(AbstractContextSettings setting, boolean isNew) {
 				EnvironmentSPM env = (EnvironmentSPM)setting;
 				SPMDatabase.createEnvironment(env);
 			}

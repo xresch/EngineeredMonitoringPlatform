@@ -8,12 +8,10 @@ import java.util.logging.Logger;
 
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.db.DBInterface;
-import com.pengtoolbox.cfw.features.config.ConfigChangeListener;
 import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
 import com.pengtoolbox.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.emp.features.environments.EnvironmentAWA;
-import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
 
 import oracle.ucp.jdbc.PoolDataSource;
 import oracle.ucp.jdbc.PoolDataSourceFactory;
@@ -33,7 +31,7 @@ public class AWAJobStatusDatabase {
 				new ContextSettingsChangeListener(EnvironmentAWA.SETTINGS_TYPE) {
 			
 			@Override
-			public void onChange(AbstractContextSettings setting) {
+			public void onChange(AbstractContextSettings setting, boolean isNew) {
 				EnvironmentAWA env = (EnvironmentAWA)setting;
 				AWAJobStatusDatabase.createEnvironment(env);
 			}

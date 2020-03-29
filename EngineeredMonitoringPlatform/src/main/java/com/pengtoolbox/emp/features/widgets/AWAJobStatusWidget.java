@@ -136,7 +136,7 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 			return;
 		}
 		
-		db = SPMDatabase.getEnvironment(environmentElement.getAsInt());
+		db = AWAJobStatusDatabase.getEnvironment(environmentElement.getAsInt());
 		
 		if(db == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "AWA Job Status: The chosen environment seems not configured correctly.");
