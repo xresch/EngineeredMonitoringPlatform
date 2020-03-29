@@ -31,18 +31,7 @@ public class FeatureTheusinator extends CFWAppFeature {
 	// PROD
 	//-----------------------------------------
 	public static final String PERMISSION_THEUSINATOR = "Theusinator";
-	
-	public static final String CONFIG_SPM_PROD_URL = "SPM Production URL";
-	public static final String CONFIG_SPM_PROD_APIUSER = "SPM Production API User";
-	public static final String CONFIG_SPM_PROD_PASSWORD = "SPM Production Password";
-		
-	//-----------------------------------------
-	// PRE PROD
-	//-----------------------------------------
-	public static final String CONFIG_SPM_PREPROD_URL = "SPM Pre-Production URL";
-	public static final String CONFIG_SPM_PREPROD_APIUSER = "SPM Pre-Production API User";
-	public static final String CONFIG_SPM_PREPROD_PASSWORD = "SPM Pre-Production Password";
-	
+
 	
 	@Override
 	public void register() {
@@ -59,13 +48,11 @@ public class FeatureTheusinator extends CFWAppFeature {
 				public ArrayList<HierarchicalHTMLItem> createDynamicItems() {
 					
 					ArrayList<AbstractContextSettings> environments = CFW.DB.ContextSettings.getContextSettingsForType(EnvironmentSPM.SETTINGS_TYPE);
-					System.out.println("environments.size(): "+environments.size());
 					
 					ArrayList<HierarchicalHTMLItem> childitems = new ArrayList<HierarchicalHTMLItem>();
 					
 					for(AbstractContextSettings current : environments) {
 						EnvironmentSPM spmEnv = (EnvironmentSPM)current;
-						System.out.println("spmEnv.getWrapper().name(): "+spmEnv.getWrapper().name());
 						childitems.add(
 							(MenuItem)new MenuItem(spmEnv.getWrapper().name())
 								.addPermission(PERMISSION_THEUSINATOR)
@@ -187,50 +174,7 @@ public class FeatureTheusinator extends CFWAppFeature {
 					.description("View and analyze productive SPM Monitoring status using the Theusinator Dashboard."),
 				true,
 				true);
-							
-		//-----------------------------------------
-		// 
-		//-----------------------------------------
-		CFW.DB.Config.oneTimeCreate(
-			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_URL)
-				.description("The URL of the productive SPM instance.")
-				.type(FormFieldType.TEXT)
-		);
-	
-		CFW.DB.Config.oneTimeCreate(
-			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_APIUSER)
-				.description("The username of the user that will access the API.")
-				.type(FormFieldType.TEXT)
-		);
-
-		CFW.DB.Config.oneTimeCreate(
-			new Configuration("Silk Performance Manager", CONFIG_SPM_PROD_PASSWORD)
-				.description("The password of the API User.")
-				.type(FormFieldType.PASSWORD)
-		);
-	
-		//-----------------------------------------
-		// 
-		//-----------------------------------------
-		CFW.DB.Config.oneTimeCreate(
-			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_URL)
-				.description("The URL of the pre-productive SPM instance.")
-				.type(FormFieldType.TEXT)
-		);
-	
-		CFW.DB.Config.oneTimeCreate(
-			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_APIUSER)
-				.description("The username of the user that will access the API.")
-				.type(FormFieldType.TEXT)
-		);
-
-		CFW.DB.Config.oneTimeCreate(
-			new Configuration("Silk Performance Manager", CONFIG_SPM_PREPROD_PASSWORD)
-				.description("The password of the API User.")
-				.type(FormFieldType.PASSWORD)
-		);
-		
-		
+									
 	}
 
 	@Override

@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
+import com.pengtoolbox.cfw.features.contextsettings.ContextSettings;
 import com.pengtoolbox.cfw.response.HTMLResponse;
 import com.pengtoolbox.cfw.response.PlaintextResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
 
 /**************************************************************************************************************
  * 
@@ -47,7 +49,7 @@ public class ServletTheusinator extends HttpServlet
 				
 				//html.addJSFileBottomSingle(new FileDefinition(HandlingType.JAR_RESOURCE, FileDefinition.CFW_JAR_RESOURCES_PATH+".js", "cfw_usermgmt.js"));
 				html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureTheusinator.RESOURCE_PACKAGE, "plotly.min.js");
-				html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureTheusinator.RESOURCE_PACKAGE, "jquery-ui.min.js");
+				//html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureTheusinator.RESOURCE_PACKAGE, "jquery-ui.min.js");
 				html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureTheusinator.RESOURCE_PACKAGE, "theusinator.js");
 				//html.addJSFileBottomAssembly(HandlingType.JAR_RESOURCE, FeatureTheusinator.RESOURCE_PACKAGE, "spm_custom.js");
 				
@@ -69,23 +71,23 @@ public class ServletTheusinator extends HttpServlet
 	
 	private void handleDataRequest(HttpServletRequest request, HttpServletResponse response) {
 		
+		PlaintextResponse plaintext = new PlaintextResponse();
+		
 		String service = request.getParameter("service");
 		String method = request.getParameter("method");
 		String sessionID = request.getParameter("sessionId");
 		String env = request.getParameter("env");
 
-		String spmURL = CFW.DB.Config.getConfigAsString(FeatureTheusinator.CONFIG_SPM_PREPROD_URL);
-		String spmUser = CFW.DB.Config.getConfigAsString(FeatureTheusinator.CONFIG_SPM_PREPROD_APIUSER);
-		String spmPassword = CFW.DB.Config.getConfigAsString(FeatureTheusinator.CONFIG_SPM_PREPROD_PASSWORD);
+		ContextSettings settings = CFW.DB.ContextSettings.selectByID(env);
 		
-		if(env.toLowerCase().equals("prod")) {
-			spmURL = CFW.DB.Config.getConfigAsString(FeatureTheusinator.CONFIG_SPM_PROD_URL);
-			spmUser = CFW.DB.Config.getConfigAsString(FeatureTheusinator.CONFIG_SPM_PROD_APIUSER);
-			spmPassword = CFW.DB.Config.getConfigAsString(FeatureTheusinator.CONFIG_SPM_PROD_PASSWORD);
+		if(settings == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The SPM environment seems not to be configured correctly.");
+			return;
 		}
 		
-		PlaintextResponse plaintext = new PlaintextResponse();
-		
+		EnvironmentSPM spm = new EnvironmentSPM();
+		spm.mapJsonFields(settings.settings());
+						
 		String queryString = request.getQueryString().replaceAll("service=.*?&|&service=.*?", "")
 									.replaceAll("env=.*?&|&env=.*?", "");
 		
@@ -94,10 +96,10 @@ public class ServletTheusinator extends HttpServlet
 			case "sccsystem": 			
 				
 				switch(method.toLowerCase()) {
-					case "logonuser": 			sendGETRequest(request, plaintext, spmURL+"/services/sccsystem?method=logonUser&username="+URLEncoder.encode(spmUser)+"&plainPW="+URLEncoder.encode(spmPassword));			
+					case "logonuser": 			sendGETRequest(request, plaintext, spm.url()+"/services/sccsystem?method=logonUser&username="+URLEncoder.encode(spm.apiUser())+"&plainPW="+URLEncoder.encode(spm.apiUserPassword()));			
 												break;
 	  										
-					default: 					sendGETRequest(request, plaintext, spmURL+"/services/"+service+"?"+queryString);	
+					default: 					sendGETRequest(request, plaintext, spm.url()+"/services/"+service+"?"+queryString);	
 												break;
 				}
 				break;
@@ -105,18 +107,18 @@ public class ServletTheusinator extends HttpServlet
 			case "sccentities": 			
 				switch(method.toLowerCase()) {
 					case "getcurrentuser": 			String username = CFW.Context.Request.getUser().username();
-													sendGETRequest(request, plaintext, spmURL+"/services/sccentities?method=getUsers&sessionId="+sessionID+"&login="+username);				
+													sendGETRequest(request, plaintext, spm.url()+"/services/sccentities?method=getUsers&sessionId="+sessionID+"&login="+username);				
 													break;
 						
 					
-					default: 						sendGETRequest(request, plaintext, spmURL+"/services/"+service+"?"+queryString);	
+					default: 						sendGETRequest(request, plaintext, spm.url()+"/services/"+service+"?"+queryString);	
 													break;
 				}
 				break;	
 
 
 				
-			default: 			sendGETRequest(request, plaintext, spmURL+"/services/"+service+"?"+queryString);	
+			default: 			sendGETRequest(request, plaintext, spm.url()+"/services/"+service+"?"+queryString);	
 								break;
 								
 		}
