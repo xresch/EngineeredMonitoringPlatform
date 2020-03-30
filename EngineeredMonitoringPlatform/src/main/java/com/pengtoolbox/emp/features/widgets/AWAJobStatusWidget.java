@@ -49,7 +49,6 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 						.setLabel("{!cfw_widget_awajobstatus_environment!}")
 						.setDescription("{!cfw_widget_awajobstatus_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentAWA.SETTINGS_TYPE))
-						.setValue("Pre-Prod")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")

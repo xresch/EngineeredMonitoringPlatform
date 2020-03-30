@@ -55,9 +55,8 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 						.setLabel("{!cfw_widget_spmmonitorstatus_environment!}")
 						.setDescription("{!cfw_widget_spmmonitorstatus_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentSPM.SETTINGS_TYPE))
-						.setValue("Pre-Prod")
 				)
-				
+				 
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
 						.setLabel("{!cfw_widget_spmmonitorstatus_renderer!}")
 						.setDescription("{!cfw_widget_spmmonitorstatus_renderer_desc!}")
