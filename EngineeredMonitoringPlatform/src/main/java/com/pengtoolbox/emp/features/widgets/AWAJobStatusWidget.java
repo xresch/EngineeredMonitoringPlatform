@@ -117,16 +117,16 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		if(jobnamesString.isEmpty()) {
 			return;
 		}
-		String[] jobnames = jobnamesString.trim().split(",");
-		
+		String[] jobnames = jobnamesString.trim().split("[,\t\r\n]+");
+
 		//---------------------------------
 		// Resolve Joblabels
 		JsonElement joblabelsElement = settings.get("joblabels");
 		String[] joblabels = null;
 		if(!joblabelsElement.isJsonNull() && !joblabelsElement.getAsString().isEmpty()) {
-			joblabels = joblabelsElement.getAsString().trim().split(",");
+			joblabels = joblabelsElement.getAsString().trim().split("[,\t\r\n]+");
 		}
-		
+
 		//---------------------------------
 		// Get DB
 		DBInterface db;
