@@ -64,7 +64,7 @@ public class ServletTheusinator extends HttpServlet
 			}
 			
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Access denied!!!");
+			CFW.Context.Request.addAlertMessage(MessageType.ERROR, CFW.L("cfw_core_error_accessdenied", "Access Denied!"));
 		}
         
     }
