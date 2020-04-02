@@ -1,4 +1,4 @@
-package com.pengtoolbox.emp.features.widgets;
+package com.pengtoolbox.emp.features.environments;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,11 +12,10 @@ import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
-import com.pengtoolbox.cfw.features.contextsettings.ContextSettings;
 import com.pengtoolbox.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
+import com.pengtoolbox.emp.features.widgets.FeatureEMPWidgets;
 
 
 public class SPMDatabase {
@@ -111,7 +110,7 @@ public class SPMDatabase {
 			
 			@Override
 			public Connection getConnection() throws SQLException {
-								
+				
 				if(transactionConnection.get() != null) {
 					return transactionConnection.get();
 				}else {

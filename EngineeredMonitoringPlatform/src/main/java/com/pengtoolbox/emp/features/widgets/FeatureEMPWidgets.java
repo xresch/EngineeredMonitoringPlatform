@@ -4,6 +4,8 @@ import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw._main.CFWAppFeature;
 import com.pengtoolbox.cfw._main.CFWApplicationExecutor;
 import com.pengtoolbox.cfw.features.usermgmt.Permission;
+import com.pengtoolbox.emp.features.environments.AWADatabase;
+import com.pengtoolbox.emp.features.environments.SPMDatabase;
 
 /**************************************************************************************************************
  * 
@@ -30,6 +32,8 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new AWAJobStatusLegendWidget());
 		CFW.Registry.Widgets.add(new SPMProjectStatusWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusWidget());
+		CFW.Registry.Widgets.add(new SPMMonitorStatusForProjectsWidget());
+		CFW.Registry.Widgets.add(new SPMMonitorStatusAllWidget());
 		CFW.Registry.Widgets.add(new SPMLegendWidget());
 							
 	}
@@ -37,7 +41,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		
-		AWAJobStatusDatabase.initialize();
+		AWADatabase.initialize();
 		SPMDatabase.initialize();
 		//-----------------------------------------
 		// 

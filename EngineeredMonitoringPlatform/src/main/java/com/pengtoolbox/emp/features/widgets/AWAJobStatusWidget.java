@@ -21,6 +21,7 @@ import com.pengtoolbox.cfw.features.dashboard.WidgetDefinition;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.pengtoolbox.emp.features.environments.AWADatabase;
 import com.pengtoolbox.emp.features.environments.EnvironmentAWA;
 
 public class AWAJobStatusWidget extends WidgetDefinition {
@@ -52,8 +53,8 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
-						.setLabel("{!cfw_widget_spmmonitorstatus_renderer!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_renderer_desc!}")
+						.setLabel("{!cfw_widget_spm_renderer!}")
+						.setDescription("{!cfw_widget_spm_renderer_desc!}")
 						.setOptions(new String[]{"Tiles", "Panels", "Table"})
 						.setValue("Tiles")
 				)
@@ -66,8 +67,8 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "borderstyle")
-						.setLabel("{!cfw_widget_spmmonitorstatus_borderstyle!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_borderstyle_desc!}")
+						.setLabel("{!cfw_widget_spm_borderstyle!}")
+						.setDescription("{!cfw_widget_spm_borderstyle_desc!}")
 						.setOptions(new String[]{"None", "Round", "Superround", "Asymmetric", "Superasymmetric", "Ellipsis"})
 						.setValue("None")
 				)
@@ -135,7 +136,7 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 			return;
 		}
 		
-		db = AWAJobStatusDatabase.getEnvironment(environmentElement.getAsInt());
+		db = AWADatabase.getEnvironment(environmentElement.getAsInt());
 		
 		if(db == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "AWA Job Status: The chosen environment seems not configured correctly.");

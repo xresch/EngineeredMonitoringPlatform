@@ -27,6 +27,7 @@ import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
+import com.pengtoolbox.emp.features.environments.SPMDatabase;
 
 public class SPMProjectStatusWidget extends WidgetDefinition {
 
@@ -37,9 +38,16 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
+				
+				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
+						.setLabel("{!cfw_widget_spm_environment!}")
+						.setDescription("{!cfw_widget_spm_environment_desc!}")
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentSPM.SETTINGS_TYPE))
+				)
+				
 				.addField(CFWField.newTagsSelector("JSON_PROJECTS")
-						.setLabel("{!cfw_widget_spmmonitorstatus_projects!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_projects_desc!}")
+						.setLabel("{!cfw_widget_spm_projects!}")
+						.setDescription("{!cfw_widget_spm_projects_desc!}")
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override
@@ -51,46 +59,47 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 						})			
 				)
 				
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_spmmonitorstatus_environment!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentSPM.SETTINGS_TYPE))
+				.addField(CFWField.newString(FormFieldType.SELECT, "measure")
+						.setLabel("{!cfw_widget_spm_measure!}")
+						.setDescription("{!cfw_widget_spm_measure_desc!}")
+						.setOptions(new String[]{"Overall Health", "Availability", "Accuracy", "Performance"})
+						.setValue("Overall Health")
 				)
-				 
+				
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
-						.setLabel("{!cfw_widget_spmmonitorstatus_renderer!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_renderer_desc!}")
+						.setLabel("{!cfw_widget_spm_renderer!}")
+						.setDescription("{!cfw_widget_spm_renderer_desc!}")
 						.setOptions(new String[]{"Tiles", "Panels", "Table"})
 						.setValue("Tiles")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
-						.setLabel("{!cfw_widget_spmmonitorstatus_sizefactor!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_sizefactor_desc!}")
+						.setLabel("{!cfw_widget_spm_sizefactor!}")
+						.setDescription("{!cfw_widget_spm_sizefactor_desc!}")
 						.setOptions(new String[]{"0.25", "0.5", "0.75", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
 						.setValue("1")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "borderstyle")
-						.setLabel("{!cfw_widget_spmmonitorstatus_borderstyle!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_borderstyle_desc!}")
+						.setLabel("{!cfw_widget_spm_borderstyle!}")
+						.setDescription("{!cfw_widget_spm_borderstyle_desc!}")
 						.setOptions(new String[]{"None", "Round", "Superround", "Asymmetric", "Superasymmetric", "Ellipsis"})
 						.setValue("None")
 				)
 				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showlabels")
-						.setLabel("{!cfw_widget_spmmonitorstatus_showlabels!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_showlabels_desc!}")
+						.setLabel("{!cfw_widget_spm_showlabels!}")
+						.setDescription("{!cfw_widget_spm_showlabels_desc!}")
 						.setValue(true)
 				)
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
-						.setLabel("{!cfw_widget_spmmonitorstatus_disable!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_disable_desc!}")
+						.setLabel("{!cfw_widget_spm_disable!}")
+						.setDescription("{!cfw_widget_spm_disable_desc!}")
 						.setValue(false)
 				)
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
-						.setLabel("{!cfw_widget_spmmonitorstatus_sampledata!}")
-						.setDescription("{!cfw_widget_spmmonitorstatus_sampledata_desc!}")
+						.setLabel("{!cfw_widget_spm_sampledata!}")
+						.setDescription("{!cfw_widget_spm_sampledata_desc!}")
 						.setValue(false)
 				)
 				
@@ -117,8 +126,10 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 			return;
 		}
 		
-		JsonObject  projectssObject = projectsElement.getAsJsonObject();
-				
+		JsonObject  projectsObject = projectsElement.getAsJsonObject();
+		if(projectsObject.size() == 0) {
+			return;
+		}		
 		//---------------------------------
 		// Get Environment
 		DBInterface db;
@@ -134,15 +145,25 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Project Status: The chosen environment seems not configured correctly.");
 			return;
 		}	
+		
+		//---------------------------------
+		// Get Measure
+		String measureName = "Overall Health";
+		JsonElement measureElement = settings.get("measure");
+		if(measureElement != null && !measureElement.isJsonNull()) {
+			measureName = measureElement.getAsString();
+		}
+		
 		//---------------------------------
 		// Fetch Data
 		JsonArray resultArray = new JsonArray();
-		for(Entry<String, JsonElement> entry : projectssObject.entrySet()) {
+		for(Entry<String, JsonElement> entry : projectsObject.entrySet()) {
 			
 			String projectID = entry.getKey().trim();
 			ResultSet result = db.preparedExecuteQuerySilent(
 					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmprojectstatus.sql"),
-					entry.getKey().trim());
+					entry.getKey().trim(),
+					measureName);
 			ResultSet nameResult = null;
 			
 			try {
@@ -152,6 +173,7 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 					JsonObject object = new JsonObject();
 					object.addProperty("PROJECT_ID", result.getString("ProjectID"));
 					object.addProperty("PROJECT_NAME", result.getString("ProjectName"));
+					object.addProperty("MEASURE_NAME", result.getString("MeasureName"));
 					object.addProperty("VALUE", result.getInt("Value"));
 					
 					resultArray.add(object);

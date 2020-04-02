@@ -4,12 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
-
-import javax.servlet.http.HttpServletRequest;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -17,12 +14,10 @@ import com.google.gson.JsonObject;
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.caching.FileDefinition;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
-import com.pengtoolbox.cfw.datahandling.CFWAutocompleteHandler;
 import com.pengtoolbox.cfw.datahandling.CFWField;
 import com.pengtoolbox.cfw.datahandling.CFWField.FormFieldType;
-import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.datahandling.CFWObject;
-import com.pengtoolbox.cfw.features.dashboard.FeatureDashboard;
+import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.dashboard.WidgetDefinition;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
@@ -30,11 +25,11 @@ import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
 import com.pengtoolbox.emp.features.environments.SPMDatabase;
 
-public class SPMMonitorStatusWidget extends WidgetDefinition {
+public class SPMMonitorStatusAllWidget extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(SPMMonitorStatusWidget.class.getName());
+	private static Logger logger = CFWLog.getLogger(SPMMonitorStatusAllWidget.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_spmmonitorstatus";}
+	public String getWidgetType() {return "emp_spmmonitorstatus_all";}
 		
 
 	@Override
@@ -45,21 +40,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 						.setDescription("{!cfw_widget_spm_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentSPM.SETTINGS_TYPE))
 				)
-				
-				.addField(CFWField.newTagsSelector("JSON_MONITORS")
-						.setLabel("{!cfw_widget_spm_monitors!}")
-						.setDescription("{!cfw_widget_spm_monitors_desc!}")
-						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-							
-							@Override
-							public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
-								String environment = request.getParameter("environment");
 								
-								return SPMDatabase.autocompleteMonitors(Integer.parseInt(environment), searchValue, this.getMaxResults());
-							}
-						})			
-				)
-				
 				.addField(CFWField.newString(FormFieldType.SELECT, "measure")
 						.setLabel("{!cfw_widget_spm_measure!}")
 						.setDescription("{!cfw_widget_spm_measure_desc!}")
@@ -73,11 +54,12 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 						.setOptions(new String[]{"Tiles", "Panels", "Table"})
 						.setValue("Tiles")
 				)
+				
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
 						.setLabel("{!cfw_widget_spm_sizefactor!}")
 						.setDescription("{!cfw_widget_spm_sizefactor_desc!}")
 						.setOptions(new String[]{"0.25", "0.5", "0.75", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
-						.setValue("1")
+						.setValue("0.5")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "borderstyle")
@@ -90,7 +72,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showlabels")
 						.setLabel("{!cfw_widget_spm_showlabels!}")
 						.setDescription("{!cfw_widget_spm_showlabels_desc!}")
-						.setValue(true)
+						.setValue(false)
 				)
 				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
@@ -121,17 +103,6 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 			createSampleData(response);
 			return;
 		}
-		//---------------------------------
-		// Resolve Jobnames
-		JsonElement monitorsElement = settings.get("JSON_MONITORS");
-		if(monitorsElement.isJsonNull()) {
-			return;
-		}
-		
-		JsonObject monitorsObject = monitorsElement.getAsJsonObject();
-		if(monitorsObject.size() == 0) {
-			return;
-		}
 		
 		//---------------------------------
 		// Get Environment
@@ -145,7 +116,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 		db = SPMDatabase.getEnvironment(environmentElement.getAsInt());
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitoring Status: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status All: The chosen environment seems not configured correctly.");
 			return;
 		}
 		
@@ -160,21 +131,20 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 		//---------------------------------
 		// Fetch Data
 		JsonArray resultArray = new JsonArray();
-		for(Entry<String, JsonElement> entry : monitorsObject.entrySet()) {
-			
-			String monitorID = entry.getKey().trim();
-			ResultSet result = db.preparedExecuteQuerySilent(
-					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus.sql"),
-					measureName,
-					entry.getKey().trim());
-			ResultSet nameResult = null;
-			
-			try {
-				if(result != null && result.next()) {
+
+		ResultSet result = db.preparedExecuteQuerySilent(
+				CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus_all.sql"),
+				measureName);
+
+		
+		try {
+			if(result != null) {
+				while(result.next()) {
+					
 					//--------------------------------
 					// Return Status
 					JsonObject object = new JsonObject();
-					object.addProperty("MONITOR_ID", monitorID);
+					object.addProperty("MONITOR_ID", result.getString("MonitorID"));
 					object.addProperty("MONITOR_NAME", result.getString("MonitorName"));
 					object.addProperty("PROJECT_ID", result.getString("ProjectID"));
 					object.addProperty("PROJECT_NAME", result.getString("ProjectName"));
@@ -183,50 +153,18 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 					object.addProperty("VALUE", result.getInt("Value"));
 					
 					resultArray.add(object);
-				}else {
-					
-					//--------------------------------
-					// Return No Data as -1
-					nameResult = db.preparedExecuteQuerySilent(
-							CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitordetails.sql"),
-							monitorID);
-					
-					if(nameResult != null && nameResult.next()) {
-						
-						JsonObject object = new JsonObject();
-						object.addProperty("MONITOR_ID", monitorID);
-						object.addProperty("MONITOR_NAME", nameResult.getString("MonitorName"));
-						object.addProperty("PROJECT_ID", nameResult.getString("ProjectID"));
-						object.addProperty("PROJECT_NAME", nameResult.getString("ProjectName"));
-						object.addProperty("IS_MONITOR_ACTIVE", (nameResult.getInt("MonitorIsActive") == 1) ? true : false);
-						object.addProperty("IS_PROJECT_ACTIVE", (nameResult.getInt("ProjectIsActive") == 1) ? true : false);
-						
-						object.addProperty("VALUE", -1);
-						resultArray.add(object);
-					}else {
-						//--------------------------------
-						// Return Error as -2
-						JsonObject object = new JsonObject();
-						object.addProperty("MONITOR_ID", monitorID);
-						object.addProperty("MONITOR_NAME", "Not Found");
-						object.addProperty("PROJECT_ID", "Unknown");
-						object.addProperty("PROJECT_NAME", "Unknown");
-						object.addProperty("VALUE", -2);
-						resultArray.add(object);
-					}
 				}
-			} catch (SQLException e) {
-				new CFWLog(logger)
-					.method("fetchData")
-					.severe("Error fetching Widget data.", e);
-			}finally {
-				db.close(result);
-				db.close(nameResult);
 			}
+			
+		} catch (SQLException e) {
+			new CFWLog(logger)
+				.method("fetchData")
+				.severe("Error fetching Widget data.", e);
+		}finally {
+			db.close(result);
 		}
-		
+				
 		response.getContent().append(resultArray.toString());
-		
 	}
 	
 	public void createSampleData(JSONResponse response) { 
@@ -234,18 +172,20 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 		JsonArray resultArray = new JsonArray();
 		
 		String[] monitorNames = new String[] {
-				"[AAA] Test Monitor", "[BUM] B&auml;ng T&auml;tsch", "[FOO] Foobar", 
+				"[AAA] Test Monitor", "[BUM] Bang Pew Pew", "[FOO] Foobar", 
 				"[PAN] Page Analyzer", "[BMW] Bayrischer Mist Wagen", "[Short] Cut",
 				"Just a Monitor", "[Rick] Roll that Astley! ", "ABC",
 				"DEV", "TEST", "PROD", };
-		for(int i = 0; i < monitorNames.length; i++) {
-			String name = monitorNames[i];
+		for(int count = 0; count < monitorNames.length*50; count++) {
+			int index = count % monitorNames.length;
+			String name = monitorNames[index];
 			//--------------------------------
 			// Return Status
 			JsonObject object = new JsonObject();
-			object.addProperty("MONITOR_ID", i);
+			
+			object.addProperty("MONITOR_ID", index);
 			object.addProperty("MONITOR_NAME", name);
-			object.addProperty("PROJECT_ID", i);
+			object.addProperty("PROJECT_ID", index);
 			object.addProperty("PROJECT_NAME", "Pseudo Project");
 			object.addProperty("MEASURE_NAME", "Overall Health");
 			object.addProperty("LOCATION_NAME", "Winterthur");
@@ -262,7 +202,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus_all.js");
 		array.add(js);
 		return array;
 	}

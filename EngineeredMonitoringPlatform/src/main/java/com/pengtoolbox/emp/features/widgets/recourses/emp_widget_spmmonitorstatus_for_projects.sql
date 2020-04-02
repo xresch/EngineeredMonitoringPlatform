@@ -25,8 +25,9 @@ SELECT [ProjectID]
   AND [MonitorIsActive] = 1
   AND [SeriesTime] >= DateADD(minute, -15, GETUTCDATE())
   AND [MeasureName] = ?
-  AND [MonitorID] = ?
+  AND [ProjectID] = ?
   )
 select r.*
 FROM rankedResults r
 WHERE r.rk = 1
+ORDER BY ProjectName, MonitorName

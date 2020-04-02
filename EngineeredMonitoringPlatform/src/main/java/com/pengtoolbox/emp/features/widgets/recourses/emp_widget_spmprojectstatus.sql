@@ -1,5 +1,6 @@
 SELECT p.projectName AS ProjectName,
 	   p.ProjectID_pk AS ProjectID,
+	   m.Name AS MeasureName,
 	   --r.Time_pk,
 	   sum(r.ValSum)/ sum(r.ValCount) Value, 
 	   sum(r.ValCount) ValCount, 
@@ -25,7 +26,7 @@ FROM SV_ExecutionSets s
 	 	 on p.ProjectID_pk = s.ProjectID_fk
 WHERE p.isActive = 1
      AND s.ProjectID_fk = ?
-	 AND m.Name ='Overall Health'
+	 AND m.Name = ?
 	 AND r.Time_pk >= DateADD(minute, -20, GETUTCDATE())
-GROUP BY p.ProjectName, p.ProjectID_pk
+GROUP BY p.ProjectName, p.ProjectID_pk, m.Name
 ORDER BY p.ProjectName DESC
