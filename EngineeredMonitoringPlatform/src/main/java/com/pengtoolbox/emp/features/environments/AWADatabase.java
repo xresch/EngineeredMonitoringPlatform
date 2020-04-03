@@ -27,12 +27,17 @@ public class AWADatabase {
 	public static void initialize() {
 		
 		ContextSettingsChangeListener listener = 
-				new ContextSettingsChangeListener(EnvironmentAWA.SETTINGS_TYPE) {
+				new ContextSettingsChangeListener(AWAEnvironment.SETTINGS_TYPE) {
 			
 			@Override
 			public void onChange(AbstractContextSettings setting, boolean isNew) {
-				EnvironmentAWA env = (EnvironmentAWA)setting;
+				AWAEnvironment env = (AWAEnvironment)setting;
 				AWADatabase.createEnvironment(env);
+			}
+
+			@Override
+			public void onDelete(AbstractContextSettings typeSettings) {
+				dbInterfaces.remove(typeSettings.getDefaultObject().id());
 			}
 		};
 		
@@ -46,22 +51,20 @@ public class AWADatabase {
 		// Clear environments
 		dbInterfaces = new HashMap<Integer, DBInterface>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(EnvironmentAWA.SETTINGS_TYPE);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(AWAEnvironment.SETTINGS_TYPE);
 
 		for(AbstractContextSettings settings : settingsArray) {
-			EnvironmentAWA current = (EnvironmentAWA)settings;
+			AWAEnvironment current = (AWAEnvironment)settings;
 			createEnvironment(current);
 			
 		}
 	}
 	
-	private static void createEnvironment(EnvironmentAWA environment) {
+	private static void createEnvironment(AWAEnvironment environment) {
 
-		dbInterfaces.remove(environment.getWrapper().id());
+		dbInterfaces.remove(environment.getDefaultObject().id());
 		
-		System.out.println("AWA current.isDBDefined():"+environment.isDBDefined());
 		if(environment.isDBDefined()) {
-			System.out.println("AWA current.getWrapper().name():"+environment.getWrapper().name());
 			DBInterface db = initializeDBInterface(
 					environment.dbHost(), 
 					environment.dbPort(), 
@@ -71,7 +74,7 @@ public class AWADatabase {
 					environment.dbPassword()
 			);
 			
-			dbInterfaces.put(environment.getWrapper().id(), db);
+			dbInterfaces.put(environment.getDefaultObject().id(), db);
 		}
 	}
 	

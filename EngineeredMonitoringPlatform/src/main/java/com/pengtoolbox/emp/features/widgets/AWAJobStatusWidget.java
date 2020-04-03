@@ -22,7 +22,7 @@ import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.pengtoolbox.emp.features.environments.AWADatabase;
-import com.pengtoolbox.emp.features.environments.EnvironmentAWA;
+import com.pengtoolbox.emp.features.environments.AWAEnvironment;
 
 public class AWAJobStatusWidget extends WidgetDefinition {
 
@@ -49,7 +49,7 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_awajobstatus_environment!}")
 						.setDescription("{!cfw_widget_awajobstatus_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentAWA.SETTINGS_TYPE))
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(AWAEnvironment.SETTINGS_TYPE))
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")

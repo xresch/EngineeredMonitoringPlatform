@@ -16,7 +16,7 @@ import com.pengtoolbox.cfw.response.bootstrap.DynamicItemCreator;
 import com.pengtoolbox.cfw.response.bootstrap.HierarchicalHTMLItem;
 import com.pengtoolbox.cfw.response.bootstrap.MenuItem;
 import com.pengtoolbox.emp._main.Main;
-import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
+import com.pengtoolbox.emp.features.environments.SPMEnvironment;
 
 /**************************************************************************************************************
  * 
@@ -47,16 +47,15 @@ public class FeatureTheusinator extends CFWAppFeature {
 				@Override
 				public ArrayList<HierarchicalHTMLItem> createDynamicItems() {
 					
-					ArrayList<AbstractContextSettings> environments = CFW.DB.ContextSettings.getContextSettingsForType(EnvironmentSPM.SETTINGS_TYPE);
-					
+					ArrayList<AbstractContextSettings> environments = CFW.DB.ContextSettings.getContextSettingsForType(SPMEnvironment.SETTINGS_TYPE);
 					ArrayList<HierarchicalHTMLItem> childitems = new ArrayList<HierarchicalHTMLItem>();
 					
 					for(AbstractContextSettings current : environments) {
-						EnvironmentSPM spmEnv = (EnvironmentSPM)current;
+						SPMEnvironment spmEnv = (SPMEnvironment)current;
 						childitems.add(
-							(MenuItem)new MenuItem(spmEnv.getWrapper().name())
+							(MenuItem)new MenuItem(spmEnv.getDefaultObject().name())
 								.addPermission(PERMISSION_THEUSINATOR)
-								.href("/app/theusinator?env="+spmEnv.getWrapper().id()) 
+								.href("/app/theusinator?env="+spmEnv.getDefaultObject().id()) 
 						);
 					}
 					return childitems;

@@ -30,12 +30,17 @@ public class SPMDatabase {
 	public static void initialize() {
 	
 		ContextSettingsChangeListener listener = 
-				new ContextSettingsChangeListener(EnvironmentSPM.SETTINGS_TYPE) {
+				new ContextSettingsChangeListener(SPMEnvironment.SETTINGS_TYPE) {
 			
 			@Override
 			public void onChange(AbstractContextSettings setting, boolean isNew) {
-				EnvironmentSPM env = (EnvironmentSPM)setting;
+				SPMEnvironment env = (SPMEnvironment)setting;
 				SPMDatabase.createEnvironment(env);
+			}
+			
+			@Override
+			public void onDelete(AbstractContextSettings typeSettings) {
+				dbInterfaces.remove(typeSettings.getDefaultObject().id());
 			}
 		};
 		
@@ -49,22 +54,21 @@ public class SPMDatabase {
 		// Clear environments
 		dbInterfaces = new HashMap<Integer, DBInterface>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(EnvironmentSPM.SETTINGS_TYPE);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(SPMEnvironment.SETTINGS_TYPE);
 
 		for(AbstractContextSettings settings : settingsArray) {
-			EnvironmentSPM current = (EnvironmentSPM)settings;
+			SPMEnvironment current = (SPMEnvironment)settings;
 			createEnvironment(current);
 			
 		}
 	}
 	
-	private static void createEnvironment(EnvironmentSPM environment) {
+	private static void createEnvironment(SPMEnvironment environment) {
 
-		dbInterfaces.remove(environment.getWrapper().id());
+		dbInterfaces.remove(environment.getDefaultObject().id());
 		
-		System.out.println("SPM current.isDBDefined():"+environment.isDBDefined());
 		if(environment.isDBDefined()) {
-			System.out.println("SPM current.getWrapper().name():"+environment.getWrapper().name());
+
 			DBInterface db = initializeDBInterface(
 					environment.dbHost(), 
 					environment.dbPort(), 
@@ -73,7 +77,7 @@ public class SPMDatabase {
 					environment.dbPassword()
 			);
 			
-			dbInterfaces.put(environment.getWrapper().id(), db);
+			dbInterfaces.put(environment.getDefaultObject().id(), db);
 		}
 	}
 	

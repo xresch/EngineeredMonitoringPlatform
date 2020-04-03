@@ -15,7 +15,7 @@ import com.pengtoolbox.cfw.features.contextsettings.ContextSettings;
 import com.pengtoolbox.cfw.response.HTMLResponse;
 import com.pengtoolbox.cfw.response.PlaintextResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
+import com.pengtoolbox.emp.features.environments.SPMEnvironment;
 
 /**************************************************************************************************************
  * 
@@ -85,7 +85,7 @@ public class ServletTheusinator extends HttpServlet
 			return;
 		}
 		
-		EnvironmentSPM spm = new EnvironmentSPM();
+		SPMEnvironment spm = new SPMEnvironment();
 		spm.mapJsonFields(settings.settings());
 						
 		String queryString = request.getQueryString().replaceAll("service=.*?&|&service=.*?", "")

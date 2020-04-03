@@ -22,7 +22,7 @@ import com.pengtoolbox.cfw.features.dashboard.WidgetDefinition;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
+import com.pengtoolbox.emp.features.environments.SPMEnvironment;
 import com.pengtoolbox.emp.features.environments.SPMDatabase;
 
 public class SPMMonitorStatusAllWidget extends WidgetDefinition {
@@ -38,7 +38,7 @@ public class SPMMonitorStatusAllWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_spm_environment!}")
 						.setDescription("{!cfw_widget_spm_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentSPM.SETTINGS_TYPE))
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(SPMEnvironment.SETTINGS_TYPE))
 				)
 								
 				.addField(CFWField.newString(FormFieldType.SELECT, "measure")

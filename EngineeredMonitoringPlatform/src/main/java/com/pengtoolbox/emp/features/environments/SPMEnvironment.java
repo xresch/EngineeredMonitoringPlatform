@@ -13,22 +13,29 @@ import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
  * @author Reto Scheiwiller, � 2019 
  * @license Creative Commons: Attribution-NonCommercial-NoDerivatives 4.0 International
  **************************************************************************************************************/
-public class EnvironmentAWA extends AbstractContextSettings {
+public class SPMEnvironment extends AbstractContextSettings {
 	
-	public static final String SETTINGS_TYPE = "AWA Environment";
+	public static final String SETTINGS_TYPE = "SPM Environment";
 	
 	public enum EnvironmentFields{
 		URL,
+		API_USER,
+		API_PASSWORD,
 		DB_HOST,
 		DB_PORT,
 		DB_NAME,
-		DB_TYPE,
 		DB_USER,
 		DB_PASSWORD
 	}
-	
+		
 	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.URL)
-			.setDescription("The url of the AWA web application including port number if required.");	
+			.setDescription("The url of the SPM web application including port number if required.");
+	
+	private CFWField<String> apiUser = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.API_USER)
+			.setDescription("The name of the user for fetching the API.");
+	
+	private CFWField<String> apiUserPassword = CFWField.newString(FormFieldType.PASSWORD, EnvironmentFields.API_PASSWORD)
+			.setDescription("The password of the API user.");
 	
 	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.DB_HOST)
 			.setDescription("The server name of the database host.");
@@ -39,39 +46,34 @@ public class EnvironmentAWA extends AbstractContextSettings {
 	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.DB_NAME)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbType = CFWField.newString(FormFieldType.SELECT, EnvironmentFields.DB_TYPE)
-			.setDescription("The type of the oracle service.")
-			.setOptions(new String[] {"Service Name", "SID"})
-			.setValue("SID");
-	
 	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.DB_USER)
 			.setDescription("The name of the user for accessing the database.");
 	
 	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, EnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.");
 	
-	public EnvironmentAWA() {
+	public SPMEnvironment() {
 		initializeFields();
 	}
 		
 	private void initializeFields() {
-		this.addFields(url, dbHost, dbPort, dbName, dbType, dbUser, dbPassword);
+		this.addFields(url, apiUser, apiUserPassword, dbHost, dbPort, dbName, dbUser, dbPassword);
 	}
 		
-	
+			
 	@Override
 	public boolean isDeletable(int id) {
-		
+
 		int count = new DashboardWidget()
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
-			.and(DashboardWidgetFields.TYPE, "emp_awajobstatus")
+			.custom("AND (\"TYPE\"='emp_spmprojectstatus' OR \"TYPE\"='emp_spmmonitorstatus')")
 			.getCount();
 		
 		if(count == 0) {
 			return true;
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The AWA Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The SPM Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
 			return false;
 		}
 
@@ -91,25 +93,34 @@ public class EnvironmentAWA extends AbstractContextSettings {
 		return url.getValue();
 	}
 	
-	public EnvironmentAWA url(String url) {
+	public SPMEnvironment url(String url) {
 		this.url.setValue(url);
 		return this;
 	}
 	
-	public String dbType() {
-		return dbType.getValue();
+	public String apiUser() {
+		return apiUser.getValue();
 	}
 	
-	public EnvironmentAWA dbType(String value) {
-		this.dbType.setValue(value);
+	public SPMEnvironment apiUser(String value) {
+		this.apiUser.setValue(value);
 		return this;
 	}
-			
+	
+	public String apiUserPassword() {
+		return apiUserPassword.getValue();
+	}
+	
+	public SPMEnvironment apiUserPassword(String value) {
+		this.apiUserPassword.setValue(value);
+		return this;
+	}
+		
 	public String dbHost() {
 		return dbHost.getValue();
 	}
 	
-	public EnvironmentAWA dbHost(String value) {
+	public SPMEnvironment dbHost(String value) {
 		this.dbHost.setValue(value);
 		return this;
 	}
@@ -118,7 +129,7 @@ public class EnvironmentAWA extends AbstractContextSettings {
 		return dbPort.getValue();
 	}
 	
-	public EnvironmentAWA dbPort(int value) {
+	public SPMEnvironment dbPort(int value) {
 		this.dbPort.setValue(value);
 		return this;
 	}
@@ -127,7 +138,7 @@ public class EnvironmentAWA extends AbstractContextSettings {
 		return dbName.getValue();
 	}
 	
-	public EnvironmentAWA dbName(String value) {
+	public SPMEnvironment dbName(String value) {
 		this.dbName.setValue(value);
 		return this;
 	}
@@ -136,7 +147,7 @@ public class EnvironmentAWA extends AbstractContextSettings {
 		return dbUser.getValue();
 	}
 	
-	public EnvironmentAWA dbUser(String value) {
+	public SPMEnvironment dbUser(String value) {
 		this.dbUser.setValue(value);
 		return this;
 	}
@@ -145,7 +156,7 @@ public class EnvironmentAWA extends AbstractContextSettings {
 		return dbPassword.getValue();
 	}
 	
-	public EnvironmentAWA dbPassword(String value) {
+	public SPMEnvironment dbPassword(String value) {
 		this.dbPassword.setValue(value);
 		return this;
 	}

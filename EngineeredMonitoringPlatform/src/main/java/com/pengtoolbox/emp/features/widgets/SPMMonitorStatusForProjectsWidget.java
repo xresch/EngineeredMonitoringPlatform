@@ -26,7 +26,7 @@ import com.pengtoolbox.cfw.features.dashboard.WidgetDefinition;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.pengtoolbox.emp.features.environments.EnvironmentSPM;
+import com.pengtoolbox.emp.features.environments.SPMEnvironment;
 import com.pengtoolbox.emp.features.environments.SPMDatabase;
 
 public class SPMMonitorStatusForProjectsWidget extends WidgetDefinition {
@@ -42,12 +42,12 @@ public class SPMMonitorStatusForProjectsWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_spm_environment!}")
 						.setDescription("{!cfw_widget_spm_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentSPM.SETTINGS_TYPE))
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(SPMEnvironment.SETTINGS_TYPE))
 				)
 				
 				.addField(CFWField.newTagsSelector("JSON_PROJECTS")
-						.setLabel("{!cfw_widget_spm_monitors!}")
-						.setDescription("{!cfw_widget_spm_monitors_desc!}")
+						.setLabel("{!cfw_widget_spm_projects!}")
+						.setDescription("{!cfw_widget_spm_projects_desc!}")
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override

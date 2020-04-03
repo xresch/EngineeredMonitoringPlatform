@@ -29,8 +29,8 @@ public class FeatureEnvironments extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Settings
-		CFW.Registry.ContextSettings.register(EnvironmentAWA.SETTINGS_TYPE, EnvironmentAWA.class);
-		CFW.Registry.ContextSettings.register(EnvironmentSPM.SETTINGS_TYPE, EnvironmentSPM.class);
+		CFW.Registry.ContextSettings.register(AWAEnvironment.SETTINGS_TYPE, AWAEnvironment.class);
+		CFW.Registry.ContextSettings.register(SPMEnvironment.SETTINGS_TYPE, SPMEnvironment.class);
     
 	}
 
