@@ -3,6 +3,7 @@ package com.pengtoolbox.emp.features.environments;
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.datahandling.CFWField;
 import com.pengtoolbox.cfw.datahandling.CFWField.FormFieldType;
+import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
 import com.pengtoolbox.cfw.features.dashboard.DashboardWidget;
 import com.pengtoolbox.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
@@ -17,7 +18,9 @@ public class SPMEnvironment extends AbstractContextSettings {
 	
 	public static final String SETTINGS_TYPE = "SPM Environment";
 	
-	public enum EnvironmentFields{
+	private DBInterface dbInstance = null;
+	
+	public enum SPMEnvironmentFields{
 		URL,
 		API_USER,
 		API_PASSWORD,
@@ -28,28 +31,28 @@ public class SPMEnvironment extends AbstractContextSettings {
 		DB_PASSWORD
 	}
 		
-	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.URL)
-			.setDescription("The url of the SPM web application including port number if required.");
+	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, SPMEnvironmentFields.URL)
+			.setDescription("The url of the SPM web application, including port number if required. Make sure to include http/https protocol to make sure links will work correctly.");
 	
-	private CFWField<String> apiUser = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.API_USER)
+	private CFWField<String> apiUser = CFWField.newString(FormFieldType.TEXT, SPMEnvironmentFields.API_USER)
 			.setDescription("The name of the user for fetching the API.");
 	
-	private CFWField<String> apiUserPassword = CFWField.newString(FormFieldType.PASSWORD, EnvironmentFields.API_PASSWORD)
+	private CFWField<String> apiUserPassword = CFWField.newString(FormFieldType.PASSWORD, SPMEnvironmentFields.API_PASSWORD)
 			.setDescription("The password of the API user.");
 	
-	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.DB_HOST)
+	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, SPMEnvironmentFields.DB_HOST)
 			.setDescription("The server name of the database host.");
 	
-	private CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, EnvironmentFields.DB_PORT)
+	private CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, SPMEnvironmentFields.DB_PORT)
 			.setDescription("The port used to access the database.");
 	
-	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.DB_NAME)
+	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, SPMEnvironmentFields.DB_NAME)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.DB_USER)
+	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, SPMEnvironmentFields.DB_USER)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, EnvironmentFields.DB_PASSWORD)
+	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, SPMEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.");
 	
 	public SPMEnvironment() {
@@ -160,5 +163,15 @@ public class SPMEnvironment extends AbstractContextSettings {
 		this.dbPassword.setValue(value);
 		return this;
 	}
+
+	public DBInterface getDBInstance() {
+		return dbInstance;
+	}
+
+	public void setDBInstance(DBInterface dbInstance) {
+		this.dbInstance = dbInstance;
+	}
+	
+	
 	
 }

@@ -45,7 +45,8 @@
 						visiblefields: ['PROJECT_ID', 'VALUE'], 
 						labels: {
 							PROJECT_NAME: 'Project',
-							PROJECT_ID: 'ID'
+							PROJECT_ID: 'ID',
+							PROJECT_URL: 'Link'
 						},
 						customizers: {
 					 		VALUE: function(record, value) { 
@@ -56,7 +57,14 @@
 					 			}else {
 					 				return "Unknown";
 					 			}
-							}
+							},
+							PROJECT_URL: function(record, value) { 
+					 			if(value != null && value != ""){
+					 				return  '<a class="btn btn-sm btn-primary ml-2" role="button" target="_blank" href="'+value+'" ><i class="fas fa-external-link-square-alt"></i> Open SPM Project</a>'; 
+					 			}else {
+					 				return "&nbsp;";
+					 			}
+							},
 					 	},
 						rendererSettings:{
 							tiles: {
@@ -72,9 +80,19 @@
 							}
 					}};
 					
+					//-----------------------------------
+					// Adjust RenderSettings for Table
 					if(widgetObject.JSON_SETTINGS.renderer == "Table"){
-						dataToRender.visiblefields = ['PROJECT_ID', 'PROJECT_NAME', 'VALUE']; 
+						dataToRender.visiblefields = ['PROJECT_NAME', 'MONITOR_NAME', 'VALUE']; 
+						dataToRender.customizers.PROJECT_NAME = function(record, value) { 
+				 			if(value != null && value != ""){
+				 				return  '<a style="color: inherit;" target="_blank" href="'+record.PROJECT_URL+'" >'+value+'</a>'; 
+				 			}else {
+				 				return "&nbsp;";
+				 			}
+						};
 					}
+					
 					//--------------------------
 					// Create Tiles
 					if(  data.payload == null || typeof data.payload == 'string'){

@@ -18,14 +18,14 @@ import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.pengtoolbox.emp.features.widgets.FeatureEMPWidgets;
 
 
-public class SPMDatabase {
+public class SPMEnvironmentManagement {
 	
-	private static Logger logger = CFWLog.getLogger(SPMDatabase.class.getName());
+	private static Logger logger = CFWLog.getLogger(SPMEnvironmentManagement.class.getName());
 	
 	private static boolean isInitialized = false;
 
 	// Contains ContextSettings id and the associated database interface
-	private static HashMap<Integer, DBInterface> dbInterfaces = new HashMap<Integer, DBInterface>();
+	private static HashMap<Integer, SPMEnvironment> environmentsWithDB = new HashMap<Integer, SPMEnvironment>();
 	
 	public static void initialize() {
 	
@@ -35,12 +35,12 @@ public class SPMDatabase {
 			@Override
 			public void onChange(AbstractContextSettings setting, boolean isNew) {
 				SPMEnvironment env = (SPMEnvironment)setting;
-				SPMDatabase.createEnvironment(env);
+				SPMEnvironmentManagement.createEnvironment(env);
 			}
 			
 			@Override
 			public void onDelete(AbstractContextSettings typeSettings) {
-				dbInterfaces.remove(typeSettings.getDefaultObject().id());
+				environmentsWithDB.remove(typeSettings.getDefaultObject().id());
 			}
 		};
 		
@@ -52,7 +52,7 @@ public class SPMDatabase {
 	
 	private static void createEnvironments() {
 		// Clear environments
-		dbInterfaces = new HashMap<Integer, DBInterface>();
+		environmentsWithDB = new HashMap<Integer, SPMEnvironment>();
 		
 		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(SPMEnvironment.SETTINGS_TYPE);
 
@@ -65,7 +65,7 @@ public class SPMDatabase {
 	
 	private static void createEnvironment(SPMEnvironment environment) {
 
-		dbInterfaces.remove(environment.getDefaultObject().id());
+		environmentsWithDB.remove(environment.getDefaultObject().id());
 		
 		if(environment.isDBDefined()) {
 
@@ -76,14 +76,14 @@ public class SPMDatabase {
 					environment.dbUser(), 
 					environment.dbPassword()
 			);
-			
-			dbInterfaces.put(environment.getDefaultObject().id(), db);
+			environment.setDBInstance(db);
+			environmentsWithDB.put(environment.getDefaultObject().id(), environment);
 		}
 	}
 	
-	public static DBInterface getEnvironment(int id) {
+	public static SPMEnvironment getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
-		return dbInterfaces.get(id);
+		return environmentsWithDB.get(id);
 	}
 	
 	
@@ -139,7 +139,7 @@ public class SPMDatabase {
 		// Get DB
 		DBInterface db;
 		
-		db = SPMDatabase.getEnvironment(environmentID);
+		db = SPMEnvironmentManagement.getEnvironment(environmentID).getDBInstance();
 		
 		if(db == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
@@ -182,7 +182,7 @@ public class SPMDatabase {
 		// Get DB
 		DBInterface db;
 		
-		db = SPMDatabase.getEnvironment(environmentID);
+		db = SPMEnvironmentManagement.getEnvironment(environmentID).getDBInstance();
 		
 		if(db == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");

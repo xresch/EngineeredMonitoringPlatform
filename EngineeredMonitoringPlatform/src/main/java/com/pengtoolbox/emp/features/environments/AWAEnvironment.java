@@ -3,6 +3,7 @@ package com.pengtoolbox.emp.features.environments;
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.datahandling.CFWField;
 import com.pengtoolbox.cfw.datahandling.CFWField.FormFieldType;
+import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
 import com.pengtoolbox.cfw.features.dashboard.DashboardWidget;
 import com.pengtoolbox.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
@@ -17,7 +18,9 @@ public class AWAEnvironment extends AbstractContextSettings {
 	
 	public static final String SETTINGS_TYPE = "AWA Environment";
 	
-	public enum EnvironmentFields{
+	private DBInterface dbInstance = null;
+	
+	public enum AWAEnvironmentFields{
 		URL,
 		DB_HOST,
 		DB_PORT,
@@ -27,27 +30,27 @@ public class AWAEnvironment extends AbstractContextSettings {
 		DB_PASSWORD
 	}
 	
-	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.URL)
+	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, AWAEnvironmentFields.URL)
 			.setDescription("The url of the AWA web application including port number if required.");	
 	
-	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.DB_HOST)
+	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, AWAEnvironmentFields.DB_HOST)
 			.setDescription("The server name of the database host.");
 	
-	private CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, EnvironmentFields.DB_PORT)
+	private CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, AWAEnvironmentFields.DB_PORT)
 			.setDescription("The port used to access the database.");
 	
-	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.DB_NAME)
+	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, AWAEnvironmentFields.DB_NAME)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbType = CFWField.newString(FormFieldType.SELECT, EnvironmentFields.DB_TYPE)
+	private CFWField<String> dbType = CFWField.newString(FormFieldType.SELECT, AWAEnvironmentFields.DB_TYPE)
 			.setDescription("The type of the oracle service.")
 			.setOptions(new String[] {"Service Name", "SID"})
 			.setValue("SID");
 	
-	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, EnvironmentFields.DB_USER)
+	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, AWAEnvironmentFields.DB_USER)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, EnvironmentFields.DB_PASSWORD)
+	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, AWAEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.");
 	
 	public AWAEnvironment() {

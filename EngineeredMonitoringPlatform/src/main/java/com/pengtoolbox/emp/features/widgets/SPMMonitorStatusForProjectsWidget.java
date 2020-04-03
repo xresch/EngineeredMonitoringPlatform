@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -27,7 +28,7 @@ import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.pengtoolbox.emp.features.environments.SPMEnvironment;
-import com.pengtoolbox.emp.features.environments.SPMDatabase;
+import com.pengtoolbox.emp.features.environments.SPMEnvironmentManagement;
 
 public class SPMMonitorStatusForProjectsWidget extends WidgetDefinition {
 
@@ -54,7 +55,7 @@ public class SPMMonitorStatusForProjectsWidget extends WidgetDefinition {
 							public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
 								String environment = request.getParameter("environment");
 								
-								return SPMDatabase.autocompleteProjects(Integer.parseInt(environment), searchValue, this.getMaxResults());
+								return SPMEnvironmentManagement.autocompleteProjects(Integer.parseInt(environment), searchValue, this.getMaxResults());
 							}
 						})			
 				)
@@ -135,17 +136,24 @@ public class SPMMonitorStatusForProjectsWidget extends WidgetDefinition {
 		
 		//---------------------------------
 		// Get Environment
-		DBInterface db;
-		String url = null;
 		JsonElement environmentElement = settings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}
 		
-		db = SPMDatabase.getEnvironment(environmentElement.getAsInt());
+		SPMEnvironment environment = SPMEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
+		if(environment == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status All: The chosen environment seems not configured correctly.");
+			return;
+		}
+		
+		//---------------------------------
+		// Get Database
+		DBInterface db;
+		db = environment.getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status for Projects: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status All: The db of the chosen environment seems not configured correctly.");
 			return;
 		}
 		
@@ -182,6 +190,13 @@ public class SPMMonitorStatusForProjectsWidget extends WidgetDefinition {
 						object.addProperty("MEASURE_NAME", result.getString("MeasureName"));
 						object.addProperty("LOCATION_NAME", result.getString("LocationName"));
 						object.addProperty("VALUE", result.getInt("Value"));
+						
+						String url = environment.url().trim();
+						if( !Strings.isNullOrEmpty(url) ) {
+							if( !url.startsWith("http")) { url = "http://"+url; }
+							if(url.endsWith("/")) { url = url.substring(0, url.length()-1); }
+							object.addProperty("PROJECT_URL", url+"/silk/DEF/Monitoring/Monitoring?pId="+result.getString("ProjectID"));
+						}
 						
 						resultArray.add(object);
 					}
@@ -221,6 +236,7 @@ public class SPMMonitorStatusForProjectsWidget extends WidgetDefinition {
 			object.addProperty("MEASURE_NAME", "Overall Health");
 			object.addProperty("LOCATION_NAME", "Winterthur");
 			object.addProperty("VALUE", (Math.random() > 0.7) ? 100 : Math.ceil(Math.random()*99));
+			object.addProperty("PROJECT_URL", "http://spm.just-an-example.com/silk/DEF/Monitoring/Monitoring?pId="+i);
 			
 			resultArray.add(object);
 				
