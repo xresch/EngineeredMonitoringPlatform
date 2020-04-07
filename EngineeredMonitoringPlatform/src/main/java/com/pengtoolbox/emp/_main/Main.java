@@ -8,6 +8,7 @@ import com.pengtoolbox.cfw._main.CFWApplicationExecutor;
 import com.pengtoolbox.cfw.features.manual.ManualPage;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.emp.features.environments.FeatureEnvironments;
+import com.pengtoolbox.emp.features.manual.FeatureEMPManual;
 import com.pengtoolbox.emp.features.theusinator.FeatureTheusinator;
 import com.pengtoolbox.emp.features.widgets.FeatureEMPWidgets;
 
@@ -21,7 +22,6 @@ public class Main implements CFWAppInterface {
 	public static Logger logger = CFWLog.getLogger(Main.class.getName());
 	protected static CFWLog log = new CFWLog(logger);
 	
-	public static final ManualPage TOP_MANUAL_PAGE = CFW.Registry.Manual.addManualPage(null, new ManualPage("Engineered Montitoring Platform(EMP)").faicon("fa fa-desktop"));
     public static void main( String[] args ) throws Exception
     {
     	CFW.initializeApp(new Main(), args);
@@ -35,9 +35,7 @@ public class Main implements CFWAppInterface {
 		CFW.Registry.Features.addFeature(FeatureEnvironments.class);
     	CFW.Registry.Features.addFeature(FeatureTheusinator.class);
     	CFW.Registry.Features.addFeature(FeatureEMPWidgets.class);
-    	
-		//----------------------------------
-		// Register Manual PAges
+    	CFW.Registry.Features.addFeature(FeatureEMPManual.class);
 		
 	}
 

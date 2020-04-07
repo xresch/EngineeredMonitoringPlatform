@@ -15,6 +15,7 @@ import com.pengtoolbox.emp.features.environments.SPMEnvironmentManagement;
 public class FeatureEMPWidgets extends CFWAppFeature {
 	
 	public static final String RESOURCE_PACKAGE = "com.pengtoolbox.emp.features.widgets.recourses";
+	public static final String MANUAL_PACKAGE = "com.pengtoolbox.emp.features.widgets.manual";
 	
 	public static final String PERMISSION_AWAJOBSTATUS = "AWA Jobstatus";
 	
@@ -24,7 +25,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		//----------------------------------
 		// Register Package
 		CFW.Files.addAllowedPackage(RESOURCE_PACKAGE);
-		
+		CFW.Files.addAllowedPackage(MANUAL_PACKAGE); 
 		//-----------------------------------------
 		// 
 		//-----------------------------------------
