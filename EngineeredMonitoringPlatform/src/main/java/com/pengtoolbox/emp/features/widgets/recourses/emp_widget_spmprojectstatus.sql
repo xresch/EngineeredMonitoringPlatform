@@ -27,6 +27,6 @@ FROM SV_ExecutionSets s
 WHERE p.isActive = 1
      AND s.ProjectID_fk = ?
 	 AND m.Name = ?
-	 AND r.Time_pk >= DateADD(minute, -20, GETUTCDATE())
+	 AND r.Time_pk >= DateADD(minute, -30, GETUTCDATE())
 GROUP BY p.ProjectName, p.ProjectID_pk, m.Name
 ORDER BY p.ProjectName DESC

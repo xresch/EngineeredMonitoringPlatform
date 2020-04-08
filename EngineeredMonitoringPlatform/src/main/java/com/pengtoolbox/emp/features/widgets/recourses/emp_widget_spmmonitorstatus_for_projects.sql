@@ -23,7 +23,7 @@ SELECT [ProjectID]
   WHERE [ProjectIsActive] = 1
   AND [Aggregation] <= 15
   AND [MonitorIsActive] = 1
-  AND [SeriesTime] >= DateADD(minute, -15, GETUTCDATE())
+  AND [SeriesTime] >= DateADD(minute, -30, GETUTCDATE())
   AND [MeasureName] = ?
   AND [ProjectID] = ?
   )
