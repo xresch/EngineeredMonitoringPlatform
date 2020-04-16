@@ -113,7 +113,7 @@ public class AWADatabase {
 					pooledSource.setMaxPoolSize(50);
 					pooledSource.setMaxStatements(20);
 					
-					pooledSource.setMaxConnectionReuseCount(50);;
+					pooledSource.setMaxConnectionReuseCount(50);
 					pooledSource.setTimeoutCheckInterval(30);
 					pooledSource.setConnectionWaitTimeout(60);
 					pooledSource.setAbandonedConnectionTimeout(20);
