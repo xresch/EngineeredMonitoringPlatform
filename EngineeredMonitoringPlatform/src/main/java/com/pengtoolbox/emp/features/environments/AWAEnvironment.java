@@ -51,7 +51,8 @@ public class AWAEnvironment extends AbstractContextSettings {
 			.setDescription("The name of the user for accessing the database.");
 	
 	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, AWAEnvironmentFields.DB_PASSWORD)
-			.setDescription("The password of the DB user.");
+			.setDescription("The password of the DB user.")
+			.enableEncryption("awa_DB_PW_Salt");
 	
 	public AWAEnvironment() {
 		initializeFields();

@@ -204,7 +204,7 @@ public class SPMMonitorStatusAllWidget extends WidgetDefinition {
 			object.addProperty("PROJECT_NAME", "Pseudo Project");
 			object.addProperty("MEASURE_NAME", "Overall Health");
 			object.addProperty("LOCATION_NAME", "Winterthur");
-			object.addProperty("VALUE", (Math.random() > 0.7) ? 100 : Math.ceil(Math.random()*99));
+			object.addProperty("VALUE", (Math.random() > 0.6) ? 100 : Math.ceil(Math.random()*99));
 			object.addProperty("PROJECT_URL", "http://spm.just-an-example.com/silk/DEF/Monitoring/Monitoring?pId="+index);
 			resultArray.add(object);
 				

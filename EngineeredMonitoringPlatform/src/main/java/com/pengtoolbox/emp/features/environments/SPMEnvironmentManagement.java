@@ -66,9 +66,9 @@ public class SPMEnvironmentManagement {
 	private static void createEnvironment(SPMEnvironment environment) {
 
 		environmentsWithDB.remove(environment.getDefaultObject().id());
-		
-		if(environment.isDBDefined()) {
 
+		if(environment.isDBDefined()) {
+			
 			DBInterface db = initializeDBInterface(
 					environment.dbHost(), 
 					environment.dbPort(), 

@@ -38,7 +38,8 @@ public class SPMEnvironment extends AbstractContextSettings {
 			.setDescription("The name of the user for fetching the API.");
 	
 	private CFWField<String> apiUserPassword = CFWField.newString(FormFieldType.PASSWORD, SPMEnvironmentFields.API_PASSWORD)
-			.setDescription("The password of the API user.");
+			.setDescription("The password of the API user.")
+			.enableEncryption("spm_API_PW_Salt");
 	
 	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, SPMEnvironmentFields.DB_HOST)
 			.setDescription("The server name of the database host.");
@@ -53,7 +54,8 @@ public class SPMEnvironment extends AbstractContextSettings {
 			.setDescription("The name of the user for accessing the database.");
 	
 	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, SPMEnvironmentFields.DB_PASSWORD)
-			.setDescription("The password of the DB user.");
+			.setDescription("The password of the DB user.")
+			.enableEncryption("spm_DB_PW_Salt");
 	
 	public SPMEnvironment() {
 		initializeFields();
