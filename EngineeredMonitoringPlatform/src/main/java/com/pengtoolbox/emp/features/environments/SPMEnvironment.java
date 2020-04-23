@@ -39,6 +39,7 @@ public class SPMEnvironment extends AbstractContextSettings {
 	
 	private CFWField<String> apiUserPassword = CFWField.newString(FormFieldType.PASSWORD, SPMEnvironmentFields.API_PASSWORD)
 			.setDescription("The password of the API user.")
+			.disableSecurity()
 			.enableEncryption("spm_API_PW_Salt");
 	
 	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, SPMEnvironmentFields.DB_HOST)
@@ -55,6 +56,7 @@ public class SPMEnvironment extends AbstractContextSettings {
 	
 	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, SPMEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.")
+			.disableSecurity()
 			.enableEncryption("spm_DB_PW_Salt");
 	
 	public SPMEnvironment() {
