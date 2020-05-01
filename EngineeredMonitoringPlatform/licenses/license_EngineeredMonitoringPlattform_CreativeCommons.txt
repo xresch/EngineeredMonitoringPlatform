@@ -1,10 +1,10 @@
 
-This license is for all code regarding the Page Analyzer, and all customizations in the custom_yslow.js.
+This license is for all code regarding the Engineered Monitoring Platform(EMP).
 All used third party components are licenced under their respective license.
 
 For clarifying the below CreativeCommons license, the following rules are superior to the below overcomplicated lawyer text:
-  - You are allowed to use and change the PageAnalyzer for your private or company internal purposes.
-  - You are not allowed to use any information gained from a PageAnalyzer analysis commercially without prior agreement with the licensor.
+  - You are allowed to use and change the Engineered Monitoring Platform for your private or company internal purposes.
+  - You are not allowed to use any information gained or collected from an Engineered Monitoring Platform instance commercially without prior agreement with the licensor.
 
 Licensors: 
 	- Reto Scheiwiller, reto.scheiwiller5[at]bluewin.ch, all rights reserved
