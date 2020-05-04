@@ -1,14 +1,13 @@
 package com.pengtoolbox.emp.features.theusinator;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+	
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.features.contextsettings.ContextSettings;
@@ -19,7 +18,7 @@ import com.pengtoolbox.emp.features.environments.SPMEnvironment;
 
 /**************************************************************************************************************
  * 
- * @author Reto Scheiwiller, © 2019 
+ * @author Reto Scheiwiller, ï¿½ 2019 
  * @license Creative Commons: Attribution-NonCommercial-NoDerivatives 4.0 International
  **************************************************************************************************************/
 public class ServletTheusinator extends HttpServlet

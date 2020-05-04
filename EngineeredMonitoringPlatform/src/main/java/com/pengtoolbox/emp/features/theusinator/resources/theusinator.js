@@ -2370,11 +2370,6 @@ function dynamicSort(property) {
  *************************************************************************************/
 function startTheusinator(){
 	
-	try{
-		window.stop();
-	} catch(exception) {
-		document.execCommand("Stop");
-	}
 	clearInterval(INTERVAL_ID);
 	clearInterval(ALIVE);
 	PROJECT_FILTER.val(retrieveLocalValue('searchFilter'));
