@@ -65,9 +65,12 @@
 							}
 					}};
 					
+					//--------------------------
+					// Adjust Settings for Table
 					if(widgetObject.JSON_SETTINGS.renderer == "Table"){
 						dataToRender.visiblefields = ['label','jobname', 'status']; 
 					}
+					
 					//--------------------------
 					// Create Tiles
 					

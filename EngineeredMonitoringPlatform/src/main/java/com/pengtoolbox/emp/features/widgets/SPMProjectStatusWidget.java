@@ -68,39 +68,39 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
-						.setLabel("{!cfw_widget_spm_renderer!}")
-						.setDescription("{!cfw_widget_spm_renderer_desc!}")
+						.setLabel("{!cfw_widget_displayas!}")
+						.setDescription("{!cfw_widget_displayas_desc!}")
 						.setOptions(new String[]{"Tiles", "Panels", "Table"})
 						.setValue("Tiles")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
-						.setLabel("{!cfw_widget_spm_sizefactor!}")
-						.setDescription("{!cfw_widget_spm_sizefactor_desc!}")
+						.setLabel("{!cfw_widget_sizefactor!}")
+						.setDescription("{!cfw_widget_sizefactor_desc!}")
 						.setOptions(new String[]{"0.25", "0.5", "0.75", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
 						.setValue("1")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "borderstyle")
-						.setLabel("{!cfw_widget_spm_borderstyle!}")
-						.setDescription("{!cfw_widget_spm_borderstyle_desc!}")
+						.setLabel("{!cfw_widget_borderstyle!}")
+						.setDescription("{!cfw_widget_borderstyle_desc!}")
 						.setOptions(new String[]{"None", "Round", "Superround", "Asymmetric", "Superasymmetric", "Ellipsis"})
 						.setValue("None")
 				)
 				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showlabels")
-						.setLabel("{!cfw_widget_spm_showlabels!}")
-						.setDescription("{!cfw_widget_spm_showlabels_desc!}")
+						.setLabel("{!cfw_widget_showlabels!}")
+						.setDescription("{!cfw_widget_showlabels_desc!}")
 						.setValue(true)
 				)
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
-						.setLabel("{!cfw_widget_spm_disable!}")
-						.setDescription("{!cfw_widget_spm_disable_desc!}")
+						.setLabel("{!cfw_widget_disable!}")
+						.setDescription("{!cfw_widget_disable_desc!}")
 						.setValue(false)
 				)
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
-						.setLabel("{!cfw_widget_spm_sampledata!}")
-						.setDescription("{!cfw_widget_spm_sampledata_desc!}")
+						.setLabel("{!cfw_widget_sampledata!}")
+						.setDescription("{!cfw_widget_sampledata_desc!}")
 						.setValue(false)
 				)
 				
@@ -285,7 +285,7 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "lang_en_widget_spmmonitorstatus.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "lang_en_emp_widgets.properties"));
 		return map;
 	}
 

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 	
 import com.pengtoolbox.cfw._main.CFW;
+import com.pengtoolbox.cfw._main.CFWHttp.CFWHttpResponse;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.features.contextsettings.ContextSettings;
 import com.pengtoolbox.cfw.response.HTMLResponse;
@@ -129,8 +130,12 @@ public class ServletTheusinator extends HttpServlet
 	 *************************************************************************************/
 	private static void sendGETRequest(HttpServletRequest request, PlaintextResponse plaintext, String url) {
 		
-		String result = CFW.HTTP.sendGETRequest(url);
-		plaintext.getContent().append(result);	
+		CFWHttpResponse result = CFW.HTTP.sendGETRequest(url);
+		if(result.getStatus() <= 299) {
+			plaintext.getContent().append(result.getResponseBody());	
+		} else {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The SPM API Call returned the HTTP Status "+result.getStatus());
+		}
 		//System.out.println("URL: "+url);
 		//System.out.println("result: "+result);
 	}
