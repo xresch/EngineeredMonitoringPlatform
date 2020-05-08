@@ -105,6 +105,12 @@ public class SPMEnvironmentManagement {
 					pooledSource.setPassword(password);
 					pooledSource.setMultiSubnetFailover(true);
 					
+					//----------------------------------
+					// Test connection
+					pooledSource.setLoginTimeout(5);
+					Connection connection = pooledSource.getConnection();
+					connection.close();
+					
 				} catch (Exception e) {
 					new CFWLog(logger)
 						.method("initialize")

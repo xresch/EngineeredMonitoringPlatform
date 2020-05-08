@@ -11,6 +11,7 @@ import com.pengtoolbox.cfw.db.DBInterface;
 import com.pengtoolbox.cfw.features.contextsettings.AbstractContextSettings;
 import com.pengtoolbox.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.pengtoolbox.cfw.logging.CFWLog;
+import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 
 import oracle.ucp.jdbc.PoolDataSource;
 import oracle.ucp.jdbc.PoolDataSourceFactory;
@@ -86,7 +87,6 @@ public class AWADatabase {
 	
 	public static DBInterface initializeDBInterface(String servername, int port, String name, String type, String username, String password) {
 		
-		@SuppressWarnings("deprecation")
 		DBInterface db = new DBInterface() {
 			
 			PoolDataSource pooledSource;
@@ -120,6 +120,11 @@ public class AWADatabase {
 					pooledSource.setMaxIdleTime(330);
 					pooledSource.setInactiveConnectionTimeout(600);
 					pooledSource.setTimeToLiveConnectionTimeout(3600);
+					
+					//----------------------------------
+					// Test connection
+					Connection connection = pooledSource.getConnection();
+					connection.close();
 					
 				} catch (SQLException e) {
 					new CFWLog(logger)
