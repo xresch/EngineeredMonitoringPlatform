@@ -30,11 +30,11 @@ import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.pengtoolbox.emp.features.environments.SPMEnvironment;
 import com.pengtoolbox.emp.features.environments.SPMEnvironmentManagement;
 
-public class SPMMonitorStatusWidget extends WidgetDefinition {
+public class SPMTimersForMonitorWidget extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(SPMMonitorStatusWidget.class.getName());
+	private static Logger logger = CFWLog.getLogger(SPMTimersForMonitorWidget.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_spmmonitorstatus";}
+	public String getWidgetType() {return "emp_spmtimersformonitorstatus";}
 		
 
 	@Override
@@ -47,8 +47,9 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 				)
 				
 				.addField(CFWField.newTagsSelector("JSON_MONITORS")
-						.setLabel("{!cfw_widget_spm_monitors!}")
-						.setDescription("{!cfw_widget_spm_monitors_desc!}")
+						.setLabel("{!cfw_widget_spm_monitor!}")
+						.setDescription("{!cfw_widget_spm_monitor_desc!}")
+						.addAttribute("maxTags", "1")
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override
@@ -60,13 +61,55 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 						})			
 				)
 				
-				.addField(CFWField.newString(FormFieldType.SELECT, "measure")
-						.setLabel("{!cfw_widget_spm_measure!}")
-						.setDescription("{!cfw_widget_spm_measure_desc!}")
-						.setOptions(new String[]{"Overall Health", "Availability", "Accuracy", "Performance"})
-						.setValue("Overall Health")
+				.addField(CFWField.newTagsSelector("JSON_TIMERNAMES")
+						.setLabel("{!cfw_widget_spm_counternames!}")
+						.setDescription("{!cfw_widget_spm_counternames_desc!}")	
+							.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+							
+							@Override
+							public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
+								String environment = request.getParameter("environment");
+								String monitors = request.getParameter("JSON_MONITORS");
+								
+								if(!Strings.isNullOrEmpty(monitors) && !monitors.equals("{}")) {
+									LinkedHashMap<String, String> monitorsMap = CFW.JSON.fromJsonLinkedHashMap(monitors);
+									int firstID = Integer.parseInt(monitorsMap.keySet().toArray()[0].toString());
+									return SPMEnvironmentManagement.autocompleteTimersForMonitor(Integer.parseInt(environment), firstID, searchValue, this.getMaxResults());
+								}else {
+									CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a monitor first");
+									return null;
+								}
+								
+								
+							}
+						})
 				)
 				
+				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_excellent")
+						.setLabel("{!cfw_widget_thresholdexcellent!}")
+						.setDescription("{!cfw_widget_thresholdexcellent_desc!}")
+						.setValue(null)
+				)
+				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_good")
+						.setLabel("{!cfw_widget_thresholdgood!}")
+						.setDescription("{!cfw_widget_thresholdgood_desc!}")
+						.setValue(null)
+				)
+				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_warning")
+						.setLabel("{!cfw_widget_thresholdwarning!}")
+						.setDescription("{!cfw_widget_thresholdwarning_desc!}")
+						.setValue(null)
+				)
+				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_emergency")
+						.setLabel("{!cfw_widget_thresholdemergency!}")
+						.setDescription("{!cfw_widget_thresholdemergency_desc!}")
+						.setValue(null)
+				)
+				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_danger")
+						.setLabel("{!cfw_widget_thresholddanger!}")
+						.setDescription("{!cfw_widget_thresholddanger_desc!}")
+						.setValue(null)
+				)
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
 						.setLabel("{!cfw_widget_displayas!}")
 						.setDescription("{!cfw_widget_displayas_desc!}")
@@ -121,8 +164,9 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 			createSampleData(response);
 			return;
 		}
+		
 		//---------------------------------
-		// Resolve Jobnames
+		// Resolve Monitors
 		JsonElement monitorsElement = settings.get("JSON_MONITORS");
 		if(monitorsElement.isJsonNull()) {
 			return;
@@ -130,6 +174,20 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 		
 		JsonObject monitorsObject = monitorsElement.getAsJsonObject();
 		if(monitorsObject.size() == 0) {
+			return;
+		}
+		
+		String monitorID = monitorsObject.keySet().toArray(new String[]{})[0];
+		
+		//---------------------------------
+		// Resolve CounterNames
+		JsonElement timerElement = settings.get("JSON_TIMERNAMES");
+		if(timerElement.isJsonNull()) {
+			return;
+		}
+		
+		JsonObject timersObject = timerElement.getAsJsonObject();
+		if(timersObject.size() == 0) {
 			return;
 		}
 		
@@ -155,25 +213,17 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status All: The db of the chosen environment seems not configured correctly.");
 			return;
 		}
-		
-		//---------------------------------
-		// Get Measure
-		String measureName = "Overall Health";
-		JsonElement measureElement = settings.get("measure");
-		if(measureElement != null && !measureElement.isJsonNull()) {
-			measureName = measureElement.getAsString();
-		}
-		
+				
 		//---------------------------------
 		// Fetch Data
 		JsonArray resultArray = new JsonArray();
-		for(Entry<String, JsonElement> entry : monitorsObject.entrySet()) {
+		for(Entry<String, JsonElement> entry : timersObject.entrySet()) {
 			
-			String monitorID = entry.getKey().trim();
+			String measureName = entry.getKey().trim();
 			ResultSet result = db.preparedExecuteQuerySilent(
-					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus.sql"),
-					measureName,
-					entry.getKey().trim());
+					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmtimersformonitor.sql"),
+					monitorID,
+					measureName);
 			ResultSet nameResult = null;
 			
 			try {
@@ -185,9 +235,9 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 					object.addProperty("MONITOR_NAME", result.getString("MonitorName"));
 					object.addProperty("PROJECT_ID", result.getString("ProjectID"));
 					object.addProperty("PROJECT_NAME", result.getString("ProjectName"));
-					object.addProperty("MEASURE_NAME", result.getString("MeasureName"));
+					object.addProperty("MEASURE_NAME", result.getString("MeasureName").split("/")[1]);
 					object.addProperty("LOCATION_NAME", result.getString("LocationName"));
-					object.addProperty("VALUE", result.getInt("Value"));
+					object.addProperty("VALUE", result.getFloat("Value"));
 					
 					String url = environment.url().trim();
 					if( !Strings.isNullOrEmpty(url) ) {
@@ -212,6 +262,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 						object.addProperty("MONITOR_NAME", nameResult.getString("MonitorName"));
 						object.addProperty("PROJECT_ID", nameResult.getString("ProjectID"));
 						object.addProperty("PROJECT_NAME", nameResult.getString("ProjectName"));
+						object.addProperty("MEASURE_NAME", measureName.split("/")[1]);
 						object.addProperty("IS_MONITOR_ACTIVE", (nameResult.getInt("MonitorIsActive") == 1) ? true : false);
 						object.addProperty("IS_PROJECT_ACTIVE", (nameResult.getInt("ProjectIsActive") == 1) ? true : false);
 						object.addProperty("VALUE", -1);
@@ -232,6 +283,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 						object.addProperty("MONITOR_NAME", "Not Found");
 						object.addProperty("PROJECT_ID", "Unknown");
 						object.addProperty("PROJECT_NAME", "Unknown");
+						object.addProperty("MEASURE_NAME", measureName.split("/")[1]);
 						object.addProperty("VALUE", -2);
 						resultArray.add(object);
 					}
@@ -255,20 +307,19 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 		JsonArray resultArray = new JsonArray();
 		
 		String[] monitorNames = new String[] {
-				"[AAA] Test Monitor", "[BUM] B&auml;ng T&auml;tsch", "[FOO] Foobar", 
-				"[PAN] Page Analyzer", "[BMW] Bayrischer Mist Wagen", "[Short] Cut",
-				"Just a Monitor", "[Rick] Roll that Astley! ", "ABC",
-				"DEV", "TEST", "PROD", };
+				"A Timer", "Another Timer", "Foobar Timer", 
+				"So many Timer", "Untimeable Timer", "Theusinators Favorite Timer",
+				"Countastic Timer", "Timeticulous!", "DEV", "TEST", "PROD", };
 		for(int i = 0; i < monitorNames.length; i++) {
 			String name = monitorNames[i];
 			//--------------------------------
 			// Return Status
 			JsonObject object = new JsonObject();
 			object.addProperty("MONITOR_ID", i);
-			object.addProperty("MONITOR_NAME", name);
+			object.addProperty("MONITOR_NAME", "Pseudo Monitor");
 			object.addProperty("PROJECT_ID", i);
 			object.addProperty("PROJECT_NAME", "Pseudo Project");
-			object.addProperty("MEASURE_NAME", "Overall Health");
+			object.addProperty("MEASURE_NAME", name);
 			object.addProperty("LOCATION_NAME", "Winterthur");
 			object.addProperty("VALUE", (Math.random() > 0.7) ? 100 : Math.ceil(Math.random()*99));
 			object.addProperty("PROJECT_URL", "http://spm.just-an-example.com/silk/DEF/Monitoring/Monitoring?pId="+i);
@@ -284,7 +335,7 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_spmtimersformonitor.js");
 		array.add(js);
 		return array;
 	}

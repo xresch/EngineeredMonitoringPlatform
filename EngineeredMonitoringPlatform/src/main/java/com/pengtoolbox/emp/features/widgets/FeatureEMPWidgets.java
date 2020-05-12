@@ -31,11 +31,18 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		//-----------------------------------------
 		CFW.Registry.Widgets.add(new AWAJobStatusWidget());
 		CFW.Registry.Widgets.add(new AWAJobStatusLegendWidget());
+		
 		CFW.Registry.Widgets.add(new SPMProjectStatusWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusForProjectsWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusAllWidget());
-		CFW.Registry.Widgets.add(new SPMLegendWidget());
+		CFW.Registry.Widgets.add(new SPMCounterForMonitorStatusWidget());
+		CFW.Registry.Widgets.add(new SPMCounterForProjectStatusWidget());
+		CFW.Registry.Widgets.add(new SPMTimersForMonitorWidget());
+		CFW.Registry.Widgets.add(new SPMTimersForProjectWidget());
+		CFW.Registry.Widgets.add(new SPMStatusLegendWidget());
+		CFW.Registry.Widgets.add(new SPMMeasureLegendWidget());
+		
 		CFW.Registry.Widgets.add(new WebexServiceStatusWidget());			
 		CFW.Registry.Widgets.add(new WebexServiceStatusLegendWidget());	
 	}

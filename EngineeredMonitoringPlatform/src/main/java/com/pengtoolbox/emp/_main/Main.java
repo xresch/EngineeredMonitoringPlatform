@@ -5,7 +5,6 @@ import java.util.logging.Logger;
 import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw._main.CFWAppInterface;
 import com.pengtoolbox.cfw._main.CFWApplicationExecutor;
-import com.pengtoolbox.cfw.features.manual.ManualPage;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.emp.features.environments.FeatureEnvironments;
 import com.pengtoolbox.emp.features.manual.FeatureEMPManual;

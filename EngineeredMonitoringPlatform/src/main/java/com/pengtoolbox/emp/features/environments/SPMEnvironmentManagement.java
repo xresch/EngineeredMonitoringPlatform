@@ -27,6 +27,9 @@ public class SPMEnvironmentManagement {
 	// Contains ContextSettings id and the associated database interface
 	private static HashMap<Integer, SPMEnvironment> environmentsWithDB = new HashMap<Integer, SPMEnvironment>();
 	
+	/************************************************************************
+	 * 
+	 ************************************************************************/
 	public static void initialize() {
 	
 		ContextSettingsChangeListener listener = 
@@ -50,6 +53,9 @@ public class SPMEnvironmentManagement {
 		isInitialized = true;
 	}
 	
+	/************************************************************************
+	 * 
+	 ************************************************************************/
 	private static void createEnvironments() {
 		// Clear environments
 		environmentsWithDB = new HashMap<Integer, SPMEnvironment>();
@@ -63,6 +69,9 @@ public class SPMEnvironmentManagement {
 		}
 	}
 	
+	/************************************************************************
+	 * 
+	 ************************************************************************/
 	private static void createEnvironment(SPMEnvironment environment) {
 
 		environmentsWithDB.remove(environment.getDefaultObject().id());
@@ -81,15 +90,19 @@ public class SPMEnvironmentManagement {
 		}
 	}
 	
+	/************************************************************************
+	 * 
+	 ************************************************************************/
 	public static SPMEnvironment getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
 		return environmentsWithDB.get(id);
 	}
 	
-	
+	/************************************************************************
+	 * 
+	 ************************************************************************/
 	public static DBInterface initializeDBInterface(String servername, int port, String dbName, String username, String password) {
 		
-		@SuppressWarnings("deprecation")
 		DBInterface db = new DBInterface() {
 			
 			SQLServerConnectionPoolDataSource pooledSource;
@@ -136,6 +149,9 @@ public class SPMEnvironmentManagement {
 		return db;
 	}
 	
+	/************************************************************************
+	 * 
+	 ************************************************************************/
 	public static LinkedHashMap<Object, Object> autocompleteMonitors(int environmentID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
@@ -179,6 +195,9 @@ public class SPMEnvironmentManagement {
 		return suggestions;
 	}
 	
+	/************************************************************************
+	 * 
+	 ************************************************************************/
 	public static LinkedHashMap<Object, Object> autocompleteProjects(int environmentID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
@@ -219,5 +238,184 @@ public class SPMEnvironmentManagement {
 		
 		return suggestions;
 	}
+	
+	/************************************************************************
+	 * 
+	 ************************************************************************/
+	public static LinkedHashMap<Object, Object> autocompleteCountersForMonitor(int environmentID,  int monitorID, String searchValue, int maxResults) {
 
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		//---------------------------
+		// Get DB
+		DBInterface db;
+		
+		db = SPMEnvironmentManagement.getEnvironment(environmentID).getDBInstance();
+		
+		if(db == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			return null;
+		}
+
+		ResultSet result = db.preparedExecuteQuery(
+			CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_spm_measuresformonitor_autocomplete.sql"),
+			"%Custom counter%"+searchValue+"%",
+			monitorID
+			);
+		
+		LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
+		try {
+			if(result != null) {
+				for(int i = 0;i < maxResults && result.next();i++) {
+					String measureName = result.getString("MeasureName");
+					suggestions.put(measureName, measureName.split("/")[1] );	
+				}
+			}
+		
+		} catch (SQLException e) {
+			new CFWLog(logger)
+				.method("fetchData")
+				.severe("Error fetching Widget data.", e);
+		}finally {
+			db.close(result);
+		}
+		
+		return suggestions;
+	}
+
+	/************************************************************************
+	 * 
+	 ************************************************************************/
+	public static LinkedHashMap<Object, Object> autocompleteTimersForMonitor(int environmentID,  int monitorID, String searchValue, int maxResults) {
+
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		//---------------------------
+		// Get DB
+		DBInterface db;
+		
+		db = SPMEnvironmentManagement.getEnvironment(environmentID).getDBInstance();
+		
+		if(db == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			return null;
+		}
+
+		ResultSet result = db.preparedExecuteQuery(
+			CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_spm_measuresformonitor_autocomplete.sql"),
+			"%Custom timer%"+searchValue+"%",
+			monitorID
+			);
+		
+		LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
+		try {
+			if(result != null) {
+				for(int i = 0;i < maxResults && result.next();i++) {
+					String measureName = result.getString("MeasureName");
+					suggestions.put(measureName, measureName.split("/")[1] );	
+				}
+			}
+		
+		} catch (SQLException e) {
+			new CFWLog(logger)
+				.method("fetchData")
+				.severe("Error fetching Widget data.", e);
+		}finally {
+			db.close(result);
+		}
+		
+		return suggestions;
+	}
+	/************************************************************************
+	 * 
+	 ************************************************************************/
+	public static LinkedHashMap<Object, Object> autocompleteCountersForProject(int environmentID,  int projectID, String searchValue, int maxResults) {
+
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		//---------------------------
+		// Get DB
+		DBInterface db;
+		
+		db = SPMEnvironmentManagement.getEnvironment(environmentID).getDBInstance();
+		
+		if(db == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			return null;
+		}
+
+		ResultSet result = db.preparedExecuteQuery(
+			CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_spm_measuresforproject_autocomplete.sql"),
+			"%Custom counter%"+searchValue+"%",
+			projectID
+			);
+		
+		LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
+		try {
+			if(result != null) {
+				for(int i = 0;i < maxResults && result.next();i++) {
+					String measureName = result.getString("MeasureName");
+					suggestions.put(measureName, measureName.split("/")[1] );	
+				}
+			}
+		
+		} catch (SQLException e) {
+			new CFWLog(logger)
+				.method("fetchData")
+				.severe("Error fetching Widget data.", e);
+		}finally {
+			db.close(result);
+		}
+		
+		return suggestions;
+	}
+	
+	public static LinkedHashMap<Object, Object> autocompleteTimersForProject(int environmentID,  int projectID, String searchValue, int maxResults) {
+
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		//---------------------------
+		// Get DB
+		DBInterface db;
+		
+		db = SPMEnvironmentManagement.getEnvironment(environmentID).getDBInstance();
+		
+		if(db == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			return null;
+		}
+
+		ResultSet result = db.preparedExecuteQuery(
+			CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_spm_measuresforproject_autocomplete.sql"),
+			"%Custom timer%"+searchValue+"%",
+			projectID
+			);
+		
+		LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
+		try {
+			if(result != null) {
+				for(int i = 0;i < maxResults && result.next();i++) {
+					String measureName = result.getString("MeasureName");
+					suggestions.put(measureName, measureName.split("/")[1] );	
+				}
+			}
+		
+		} catch (SQLException e) {
+			new CFWLog(logger)
+				.method("fetchData")
+				.severe("Error fetching Widget data.", e);
+		}finally {
+			db.close(result);
+		}
+		
+		return suggestions;
+	}
 }
