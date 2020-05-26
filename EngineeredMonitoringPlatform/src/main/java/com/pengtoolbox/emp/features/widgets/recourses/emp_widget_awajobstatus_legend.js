@@ -3,7 +3,7 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring");
+	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | AWA");
 	
 //	if (current.VALUE == 100) 		{ current.alertstyle = "cfw-excellent"; } 
 //	
@@ -19,7 +19,7 @@
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_awajobstatus_legend",
 		{
-			category: "Monitoring",
+			category: "Monitoring | AWA",
 			menuicon: "fas fa-info-circle",
 			menulabel: CFWL('cfw_widget_awajobstatuslegend', "AWA Job Status Legend"),
 			description: CFWL('cfw_widget_awajobstatuslegend_desc', "Displays a legend for the colors used by the AWA job status widget."),

@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.pengtoolbox.cfw._main.CFW;
-import com.pengtoolbox.cfw._main.CFWHttp.CFWHttpResponse;
 import com.pengtoolbox.cfw.caching.FileDefinition;
 import com.pengtoolbox.cfw.caching.FileDefinition.HandlingType;
 import com.pengtoolbox.cfw.datahandling.CFWField;
@@ -18,6 +17,7 @@ import com.pengtoolbox.cfw.features.dashboard.WidgetDefinition;
 import com.pengtoolbox.cfw.logging.CFWLog;
 import com.pengtoolbox.cfw.response.JSONResponse;
 import com.pengtoolbox.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.pengtoolbox.cfw.utils.CFWHttp.CFWHttpResponse;
 
 public class WebexServiceStatusWidget extends WidgetDefinition {
 
@@ -31,6 +31,7 @@ public class WebexServiceStatusWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.TEXT, "url")
 						.setLabel("{!cfw_widget_webexservicestatus_url!}")
 						.setDescription("{!cfw_widget_webexservicestatus_url_desc!}")
+						.allowHTML(true)
 						.setValue("")			
 				)
 				

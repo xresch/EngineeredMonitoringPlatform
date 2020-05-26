@@ -3,14 +3,14 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring");
+	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | SPM");
 	
 	/******************************************************************
 	 * 
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_spmcounterforprojectstatus",
 		{
-			category: "Monitoring",
+			category: "Monitoring | SPM",
 			menuicon: "fas fa-cogs",
 			menulabel: CFWL('cfw_widget_spmcounterforprojectstatus', "SPM Counters for Project Status"),
 			description: CFWL('cfw_widget_spmcounterforprojectstatus_desc', "Fetches the current count for the defined counters of a single project and displays it as defined by the threshold options."), 

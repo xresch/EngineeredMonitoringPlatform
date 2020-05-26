@@ -3,14 +3,14 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring");
+	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | SPM");
 	
 	/******************************************************************
 	 * 
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_spmtimersforprojectstatus",
 		{
-			category: "Monitoring",
+			category: "Monitoring | SPM",
 			menuicon: "fas fa-cogs",
 			menulabel: CFWL('cfw_widget_spmtimersforprojectstatus', "SPM Timers for Project"),
 			description: CFWL('cfw_widget_spmtimersforprojectstatus_desc', "Fetches the current value for the defined timers of a single project and displays it as defined by the threshold options."), 

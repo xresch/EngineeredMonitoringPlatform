@@ -67,14 +67,14 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring");
+	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | Webex");
 	
 	/******************************************************************
 	 * 
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_webexservicestatus",
 		{
-			category: "Monitoring",
+			category: "Monitoring | Webex",
 			menuicon: "fas fa-cogs",
 			menulabel: CFWL('cfw_widget_webexservicestatus', "Webex Service Status"),
 			description: CFWL('cfw_widget_webexservicestatus_desc', "Fetches the status of Webex services from the given Webex REST URL. (Example: https://service-status.webex.com/customer/dashServices/123)"),

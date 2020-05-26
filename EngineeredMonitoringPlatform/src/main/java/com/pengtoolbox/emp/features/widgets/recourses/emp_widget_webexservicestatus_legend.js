@@ -3,14 +3,14 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring");
+	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | Webex");
 		
 	/******************************************************************
 	 * 
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_webexservicestatus_legend",
 		{
-			category: "Monitoring",
+			category: "Monitoring | Webex",
 			menuicon: "fas fa-info-circle",
 			menulabel: CFWL('cfw_widget_webexservicestatuslegend', "Webex Service Status Legend"),
 			description: CFWL('cfw_widget_webexservicestatuslegend_desc', "Displays a legend for the colors used by the Webex Service Status widget."),

@@ -3,7 +3,7 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring");
+	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | SPM");
 	
 //	if (current.VALUE == 100) 		{ current.alertstyle = "cfw-excellent"; } 
 //	
@@ -19,7 +19,7 @@
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_smplegend",
 		{
-			category: "Monitoring",
+			category: "Monitoring | SPM",
 			menuicon: "fas fa-info-circle",
 			menulabel: CFWL('cfw_widget_smplegend', "SPM Legend"),
 			description: CFWL('cfw_widget_smplegend_desc', "Displays a legend for the colors used by the SPM monitors."),

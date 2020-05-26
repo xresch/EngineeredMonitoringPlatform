@@ -3,14 +3,14 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring");
+	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | AWA");
 	
 	/******************************************************************
 	 * 
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_awajobstatus",
 		{
-			category: "Monitoring",
+			category: "Monitoring | AWA",
 			menuicon: "fas fa-cogs",
 			menulabel: CFWL('cfw_widget_awajobstatus', "AWA Job Status"),
 			description: CFWL('cfw_widget_awajobstatus_desc', "Fetches the status of one or multiple AWA Jobs."),
