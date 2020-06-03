@@ -27,6 +27,12 @@ public class Main implements CFWAppInterface {
     }
     
 	@Override
+	public void settings() {
+		CFW.AppSettings.setEnableContextSettings(true);
+		CFW.AppSettings.setEnableDashboarding(true);
+	}
+	
+	@Override
 	public void register() {
     	
 		//----------------------------------
