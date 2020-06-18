@@ -6,6 +6,7 @@ import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw._main.CFWAppInterface;
 import com.pengtoolbox.cfw._main.CFWApplicationExecutor;
 import com.pengtoolbox.cfw.logging.CFWLog;
+import com.pengtoolbox.emp.features.api.FeatureEMPAPI;
 import com.pengtoolbox.emp.features.environments.FeatureEnvironments;
 import com.pengtoolbox.emp.features.manual.FeatureEMPManual;
 import com.pengtoolbox.emp.features.theusinator.FeatureTheusinator;
@@ -40,6 +41,7 @@ public class Main implements CFWAppInterface {
 		CFW.Registry.Features.addFeature(FeatureEnvironments.class);
     	CFW.Registry.Features.addFeature(FeatureTheusinator.class);
     	CFW.Registry.Features.addFeature(FeatureEMPWidgets.class);
+    	CFW.Registry.Features.addFeature(FeatureEMPAPI.class);
     	CFW.Registry.Features.addFeature(FeatureEMPManual.class);
 		
 	}

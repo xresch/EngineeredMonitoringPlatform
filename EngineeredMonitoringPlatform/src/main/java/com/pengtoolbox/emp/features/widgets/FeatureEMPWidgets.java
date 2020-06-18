@@ -4,7 +4,7 @@ import com.pengtoolbox.cfw._main.CFW;
 import com.pengtoolbox.cfw._main.CFWAppFeature;
 import com.pengtoolbox.cfw._main.CFWApplicationExecutor;
 import com.pengtoolbox.cfw.features.usermgmt.Permission;
-import com.pengtoolbox.emp.features.environments.AWADatabase;
+import com.pengtoolbox.emp.features.environments.AWAEnvironmentManagement;
 import com.pengtoolbox.emp.features.environments.SPMEnvironmentManagement;
 
 /**************************************************************************************************************
@@ -50,7 +50,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		
-		AWADatabase.initialize();
+		AWAEnvironmentManagement.initialize();
 		SPMEnvironmentManagement.initialize();
 		//-----------------------------------------
 		// 

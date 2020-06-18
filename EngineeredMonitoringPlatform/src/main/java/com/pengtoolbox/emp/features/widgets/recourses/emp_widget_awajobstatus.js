@@ -21,18 +21,34 @@
 					
 					for(var key in jobStats){
 						var current = jobStats[key];
+						var status = current.STATUS;
 						current.textstyle = "white"; 
-						if(current.status == null){
-							current.status == "UNKNOWN";
-							current.alertstyle = "cfw-gray"; 
-							continue;
+						if(status == null){
+							current.STATUS = "UNKNOWN"; 
 						}
+						
+						//--------------------
+						// Check Disabled
 						if(widgetObject.JSON_SETTINGS.disable) { 
 							current.alertstyle = "cfw-darkgray"; 
 							continue;
 						}
 						
-						switch(current.status.toUpperCase()){
+						//--------------------
+						// Check Last Run
+						var lastRunMinutes = widgetObject.JSON_SETTINGS.last_run_minutes;
+						if (lastRunMinutes != null && lastRunMinutes > 0){
+							var currentTimeMinutes = new Date().getTime() / 1000 / 60;
+							var endTimeMinutes = current.END_TIME /1000 / 60;
+							var delta = currentTimeMinutes - endTimeMinutes;
+							if(delta > lastRunMinutes){
+								current.STATUS = "OVERDUE ("+current.STATUS+")";
+							}
+						}
+						
+						//--------------------
+						// Add Colors
+						switch(current.STATUS.toUpperCase()){
 							case "RUNNING": 	current.alertstyle = "cfw-warning"; 
 												break;
 							case "ENDED OK": 	current.alertstyle = "cfw-excellent"; 
@@ -40,6 +56,12 @@
 							case "ISSUE": 		current.alertstyle = "cfw-danger"; 
 												break;
 							case "UNKNOWN": 	current.alertstyle = "cfw-gray"; 
+												break;
+							case "OVERDUE (RUNNING)":	
+							case "OVERDUE (ENDED OK)":
+							case "OVERDUE (ISSUE)":
+							case "OVERDUE (UNKNOWN)":
+												current.alertstyle = "cfw-emergency"; 
 												break;
 						}
 					}
@@ -50,7 +72,11 @@
 						textstylefield: 'textstyle',
 						titlefields: ['label'], 
 						titledelimiter: ' - ', 
-						visiblefields: ['jobname', 'status'], 
+						visiblefields: ['END_TIME', 'STATUS'], 
+						customizers: {
+							START_TIME: function(record, value) { return (value != null) ? new CFWDate(value).getDateFormatted("YYYY-MM-DD HH:mm") : '';},
+							END_TIME: function(record, value) { return (value != null) ? new CFWDate(value).getDateFormatted("YYYY-MM-DD HH:mm") : '';}
+						},
 						rendererSettings:{
 							tiles: {
 								sizefactor: widgetObject.JSON_SETTINGS.sizefactor,

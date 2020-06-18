@@ -1,6 +1,11 @@
 package com.pengtoolbox.emp.features.environments;
 
+import java.util.LinkedHashMap;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.pengtoolbox.cfw._main.CFW;
+import com.pengtoolbox.cfw.datahandling.CFWAutocompleteHandler;
 import com.pengtoolbox.cfw.datahandling.CFWField;
 import com.pengtoolbox.cfw.datahandling.CFWField.FormFieldType;
 import com.pengtoolbox.cfw.db.DBInterface;
@@ -27,7 +32,8 @@ public class AWAEnvironment extends AbstractContextSettings {
 		DB_NAME,
 		DB_TYPE,
 		DB_USER,
-		DB_PASSWORD
+		DB_PASSWORD,
+		CLIENT_ID
 	}
 	
 	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, AWAEnvironmentFields.URL)
@@ -55,12 +61,23 @@ public class AWAEnvironment extends AbstractContextSettings {
 			.disableSecurity()
 			.enableEncryption("awa_DB_PW_Salt");
 	
+	private CFWField<Integer> clientID = CFWField.newInteger(FormFieldType.NUMBER, AWAEnvironmentFields.CLIENT_ID)
+			.setDescription("The ID of the client. This relates to the db column AH_CLIENT. Start typing to get a complete list of client IDs.")
+			.setValue(0)
+			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+				
+				@Override
+				public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
+					return AWAEnvironmentManagement.autocompleteClient(request);
+				}
+			});
+	
 	public AWAEnvironment() {
 		initializeFields();
 	}
 		
 	private void initializeFields() {
-		this.addFields(url, dbHost, dbPort, dbName, dbType, dbUser, dbPassword);
+		this.addFields(url, dbHost, dbPort, dbName, dbType, dbUser, dbPassword, clientID);
 	}
 		
 	
@@ -153,6 +170,24 @@ public class AWAEnvironment extends AbstractContextSettings {
 	public AWAEnvironment dbPassword(String value) {
 		this.dbPassword.setValue(value);
 		return this;
+	}
+	
+	public Integer clientID() {
+		return clientID.getValue();
+	}
+	
+	public AWAEnvironment clientID(int value) {
+		this.clientID.setValue(value);
+		return this;
+	}
+	
+
+	public DBInterface getDBInstance() {
+		return dbInstance;
+	}
+
+	public void setDBInstance(DBInterface dbInstance) {
+		this.dbInstance = dbInstance;
 	}
 	
 }

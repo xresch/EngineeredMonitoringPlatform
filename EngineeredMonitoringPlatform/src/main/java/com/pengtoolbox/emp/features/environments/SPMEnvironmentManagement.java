@@ -93,6 +93,19 @@ public class SPMEnvironmentManagement {
 	/************************************************************************
 	 * 
 	 ************************************************************************/
+	public static LinkedHashMap<Integer, String> getEnvironmentsAsSelectOptions() {
+		if(!isInitialized) { initialize(); }
+		LinkedHashMap<Integer,String> options = new LinkedHashMap<Integer,String>();
+		
+		for(SPMEnvironment env : environmentsWithDB.values()) {
+			options.put(env.getDefaultObject().id(), env.getDefaultObject().name());
+		}
+		
+		return options;
+	}
+	/************************************************************************
+	 * 
+	 ************************************************************************/
 	public static SPMEnvironment getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
 		return environmentsWithDB.get(id);
@@ -188,6 +201,51 @@ public class SPMEnvironmentManagement {
 			new CFWLog(logger)
 				.method("fetchData")
 				.severe("Error fetching Widget data.", e);
+		}finally {
+			db.close(result);
+		}
+		
+		return suggestions;
+	}
+	
+	/************************************************************************
+	 * 
+	 ************************************************************************/
+	public static LinkedHashMap<Object, Object> autocompleteMonitorName(int environmentID, String searchValue, int maxResults) {
+
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		//---------------------------
+		// Get DB
+		DBInterface db;
+		
+		db = SPMEnvironmentManagement.getEnvironment(environmentID).getDBInstance();
+		
+		if(db == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			return null;
+		}
+		
+		ResultSet result = db.preparedExecuteQuery(
+			CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_spm_monitor_autocomplete.sql"),
+			"%"+searchValue+"%",
+			"%"+searchValue+"%");
+		
+		LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
+		try {
+			if(result != null) {
+				for(int i = 0;i < maxResults && result.next();i++) {
+					String monitorName = result.getString("MonitorName");
+					String projectName = result.getString("ProjectName");
+					suggestions.put(monitorName, projectName +" &gt;&gt; "+ monitorName);	
+				}
+			}
+		
+		} catch (SQLException e) {
+			new CFWLog(logger)
+				.method("fetchData")
+				.severe("Error fetching Monitor names.", e);
 		}finally {
 			db.close(result);
 		}
