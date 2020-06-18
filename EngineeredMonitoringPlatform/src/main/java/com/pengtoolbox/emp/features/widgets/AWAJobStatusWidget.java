@@ -165,6 +165,12 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 				JsonObject object = new JsonObject();
 				object.addProperty("JOBNAME", jobnames[i]);
 				
+				if(joblabels != null && i < joblabels.length) {
+					object.addProperty("LABEL", joblabels[i]);
+				}else {
+					object.addProperty("LABEL", jobnames[i]);
+				}
+				
 				if(result != null && result.next()){
 					Date startTime = result.getDate("START_TIME");
 					Date endTime = result.getDate("END_TIME");
@@ -183,12 +189,6 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 					object.addProperty("status", "UNKNOWN");
 				}
 				
-				if(joblabels != null && i < joblabels.length) {
-					object.addProperty("label", joblabels[i]);
-				}else {
-					object.addProperty("label", jobnames[i]);
-				}
-
 				resultArray.add(object);
 				
 			} catch (SQLException e) {
@@ -208,24 +208,24 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 		
 		long currentTime = new Date().getTime();
 		response.getContent().append("["
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"label\":\"JP_0003_225\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0002_B\", \"label\":\"Job B\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(1200*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(2120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_V\", \"label\":\"JP_0003_V\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(3120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_C\", \"label\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0_A\", \"label\":\"JP__A\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"label\":\"JP_0003_225\", \"STATUS\":\"OVERDUE\", \"END_TIME\":"+(currentTime-(4120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0002_B\", \"label\":\"Job B\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(9120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_V\", \"label\":\"JP_0003_V\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(34120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_Chjkl\", \"label\":\"The Holy C\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_A\", \"label\":\"JP_0003_A\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(1220*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225fksdfghuw\", \"label\":\"JP_0003_225fksdfghuw\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0002_B\", \"label\":\"Job B\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"label\":\"Crazy Job\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(620*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_Vhjklh\", \"label\":\"JP_0003_Vhjklh\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_01\", \"label\":\"JP_01\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(1440*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_A\", \"label\":\"JP_0003_A\", \"STATUS\":\"OVERDUE\", \"END_TIME\":"+(currentTime-(120*60000))+"}"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(1200*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(2120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_V\", \"LABEL\":\"JP_0003_V\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(3120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0_A\", \"LABEL\":\"JP__A\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"OVERDUE (UNKNOWN)\", \"END_TIME\":"+(currentTime-(4120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"OVERDUE (ENDED OK)\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(9120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_V\", \"LABEL\":\"JP_0003_V\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(34120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_Chjkl\", \"LABEL\":\"The Holy C\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_A\", \"LABEL\":\"JP_0003_A\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(1220*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225fksdfghuw\", \"LABEL\":\"JP_0003_225fksdfghuw\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(620*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_Vhjklh\", \"LABEL\":\"JP_0003_Vhjklh\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_01\", \"LABEL\":\"JP_01\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(1440*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_A\", \"LABEL\":\"JP_0003_A\", \"STATUS\":\"OVERDUE (ISSUE)\", \"END_TIME\":"+(currentTime-(120*60000))+"}"
 			+"]");
 
 	}

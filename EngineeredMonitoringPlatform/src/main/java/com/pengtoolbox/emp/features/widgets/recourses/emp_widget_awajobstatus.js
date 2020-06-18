@@ -61,6 +61,7 @@
 							case "OVERDUE (ENDED OK)":
 							case "OVERDUE (ISSUE)":
 							case "OVERDUE (UNKNOWN)":
+							case "OVERDUE":	
 												current.alertstyle = "cfw-emergency"; 
 												break;
 						}
@@ -70,7 +71,7 @@
 						data: data.payload,
 						bgstylefield: 'alertstyle',
 						textstylefield: 'textstyle',
-						titlefields: ['label'], 
+						titlefields: ['LABEL'], 
 						titledelimiter: ' - ', 
 						visiblefields: ['END_TIME', 'STATUS'], 
 						customizers: {
@@ -94,7 +95,7 @@
 					//--------------------------
 					// Adjust Settings for Table
 					if(widgetObject.JSON_SETTINGS.renderer == "Table"){
-						dataToRender.visiblefields = ['label','jobname', 'status']; 
+						dataToRender.visiblefields = ['LABEL','JOBNAME', 'STATUS']; 
 					}
 					
 					//--------------------------

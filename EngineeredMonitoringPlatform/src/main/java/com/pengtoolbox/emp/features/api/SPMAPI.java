@@ -159,7 +159,7 @@ public class SPMAPI {
 				);
 				
 		apiDef.setDescription(
-				"Returns information about service target violation and service uptime for a project.");
+				"Returns a list of service target violations for a project occurred in the specified timeframe.");
 
 		APISQLExecutor executor = new APISQLExecutor() {
 			@Override
