@@ -2,6 +2,7 @@ package com.pengtoolbox.emp.features.widgets;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -172,14 +173,16 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 				}
 				
 				if(result != null && result.next()){
-					Date startTime = result.getDate("START_TIME");
-					Date endTime = result.getDate("END_TIME");
+
+					OffsetDateTime startTime = result.getObject("START_TIME", OffsetDateTime.class);
+					OffsetDateTime endTime = result.getObject("END_TIME", OffsetDateTime.class);
+
 					object.addProperty("STATUS", result.getString("STATUS"));
 					object.addProperty("CLIENT_ID", result.getString("CLIENT_ID"));
 					//object.addProperty("NAME", result.getString("NAME"));
 					object.addProperty("TYPE", result.getString("TYPE"));
-					object.addProperty("START_TIME", (startTime != null) ? startTime.getTime() : null );
-					object.addProperty("END_TIME", (endTime != null) ? endTime.getTime() : null);
+					object.addProperty("START_TIME", (startTime != null) ? startTime.toInstant().toEpochMilli() : null );
+					object.addProperty("END_TIME", (endTime != null) ? endTime.toInstant().toEpochMilli() : null);
 					object.addProperty("HOST_DESTINATION", result.getString("HOST_DESTINATION"));
 					object.addProperty("HOST_SOURCE", result.getString("HOST_SOURCE"));
 					object.addProperty("DURATION_SECONDS", result.getString("DURATION_SECONDS"));
