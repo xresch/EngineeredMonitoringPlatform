@@ -1,0 +1,32 @@
+
+<h2>Configuration</h2>
+<p>Before Theusinator can show any data, you have to provide the URLs and user credentials of the Silk Performance Manager environments. </p>
+<ol>
+	<li>Create a User in SPM that has access to all projects with Administrator rights. </li>
+	<li>In EMP, login as an administrator and go to &quot;Admin &gt;&gt; Configuration &quot; and change the settings accordingly. </li>
+</ol>
+<img class="img-fluid" src="/cfw/jarresource?pkg=com.xreschemp.features.manual.theusinator&file=z_manual_setup_config.png">
+
+
+
+<h2>SPM Project Description</h2>
+<p>Before the environment and TID(Technical ID) can be shown on the various dashboards, the Project description has to be adjusted to a JSON like format, containing at least the fields "env" and "tid": </p>
+<ol>
+	<li>In Silk Performance Manager go to  &quot;Administration &gt;&gt; Projects &quot; and edit the project</li>
+	<li>Enter a description in this format: 
+	<pre><code>{"env": "yourEnvironment", "tid": "yourTID", "itso": "yourITSO", ...}</code></pre></li>
+	<li>Save the changes</li>
+	<li>Activate the project</li>
+</ol>
+
+<p> This is also the way to propagate data to the tab "Project Description" in the <a href="#" onclick="cfw_manual_loadPage('Engineered Montitoring Platform(EMP)|Theusinator|Details Modal');">Options Panel</a>.</p>
+
+
+
+
+<h2>Users</h2>
+<p>Create users under  &quot;Admin &gt;&gt; Manage Users &quot;. The username has to be the same as in Silk Performance Manager. Theusinator will fetch all the information by username through the SPM API.</p>
+
+<h2>Permissions</h2>
+<p>There are two permissions related to Theusinator. For a user to be able to access the dashboard, he needs a role that has the required permission.</p>
+<img class="img-fluid" src="/cfw/jarresource?pkg=com.xreschemp.features.manual.theusinator&file=z_manual_setup_permissions.png">

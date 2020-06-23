@@ -1,0 +1,85 @@
+
+<img class="img-fluid" src="/cfw/jarresource?pkg=com.xreschemp.features.manual.theusinator&file=z_manual_modal_screenshot.png">
+
+<p>Modals can be accessed from each of the four monitoring views:</p>
+<ul>
+	<li>Dashboard</li>
+	<li>Box</li>
+	<li>Health History</li>
+	<li>Status</li>
+</ul>
+<p>
+Clicking on any of the projects (tile or row in Health History View) will open a modal panel with
+additional information about the project. There are seven tabs, six of which show data for different
+measures of the project while the seventh provides some facts about the project (project description) and
+the option to add and remove a custom tag.
+</p>
+
+<h2>Measure Tabs</h2>
+<p>The six measure tabs are named:</p>
+<ul>
+	<li>Overall Health</li>
+	<li>Availability</li>
+	<li>Accuracy</li>
+	<li>Performance</li>
+	<li>Page Round Trip Time</li>
+	<li>Custom Timers</li>
+</ul>
+<p>
+They all show a table and two charts with data from the last twelve/twenty-four hours, depending on
+which time frame was selected in the option panel. 
+</p>
+
+<p>The table shows the following measures:</p>
+<ul>
+	<li>Average</li>
+	<li>Maximum</li>
+	<li>Minimum</li>
+	<li>Median</li>
+	<li>90th Percentile</li>
+	<li>Standard Deviation</li>
+</ul>
+
+<p>
+All of these measures relate to the averages and not the absolute values. This means that the maximum
+and minimum represent the extrema of the averages over the last twelve/twenty-four hours, not the actual
+maximum and minimum values that were recorded. This is the case because the table might otherwise
+show values which are not represented in the two charts. If a user wishes to see the actual extrema of a
+project in a specific time frame they can do so in the Graph View.
+</p>
+<p>
+The chart below the table simply shows the averages of the measure that is currently selected (current
+tab) over the last twelve/twenty-four hours. The user may choose between the following five chart types:
+</p>
+<ul>
+	<li>Area Chart</li>
+	<li>Bar Chart</li>
+	<li>Donut Chart</li>
+	<li>Line Chart</li>
+	<li>Pie Chart</li>
+</ul>
+<p>
+The chart in the right half of the modal panel will always show a donut chart with data from the last
+twelve/twenty-four hours. The user can hover over each of the slices to reveal the timestamp and the
+corresponding value. An Info icon can also be found in the top left of the right half which explains how
+to read the donut chart.
+</p>
+
+
+<h2>Project Description Tab</h2>
+
+<img class="img-fluid" src="/cfw/jarresource?pkg=com.xreschemp.features.manual.theusinator&file=z_manual_modal_projectdescription.png">
+<p>
+The Project Description tab features additional information about the project in the form of a table. This
+table is filled dynamically and depends on the project's description, which can be set by the SPM Team
+under "Administration >> Projects". These are currently set for all projects which were active at the
+time of writing this guide. If you activate other projects and wish to have the project description show
+up in the modal like in the image above, you have to add the information to the project description as 
+described in the manual page <a href="#" onclick="cfw_manual_loadPage('Engineered Montitoring Platform(EMP)|Theusinator|Setup');">Setup</a>.
+</p>
+
+<p>
+The custom tag which can be set in the other half of the modal panel will also be listed here. Users can
+set one custom tag per project which can be between one and eight characters long. These tags can be
+used for sorting and filtering and will also be visible in the tiles in the Dashboard and Box views.
+</p>

@@ -1,0 +1,94 @@
+
+<img class="img-fluid" src="/cfw/jarresource?pkg=com.xreschemp.features.manual.theusinator&file=z_manual_view_graph.png">
+
+<p>
+This view is not meant to be used as a monitoring tool but to provide more insights into a single project.
+In contrast to the other four views, this view can provide data of all measures which are available for
+the project. The time frame for which data is to be displayed can be chosen from a set of standard time
+frames, as well as through a date picker which allows for custom time frames. Additionally the time
+span for which multiple values are being merged into one can be selected from a set of options.
+</p>
+
+<p>The user can choose between five different chart types:</p>
+<ul>
+	<li>Area Chart</li>
+	<li>Bar Chart</li>
+	<li>Donut Chart</li>
+	<li>Line Chart</li>
+	<li>Pie Chart</li>
+</ul>
+
+<p>The following measures are available:</p>
+<ul>
+	<li>Overall Health</li>
+	<li>Accuracy</li>
+	<li>Availability</li>
+	<li>Page HTML download time (overall response time)</li>
+	<li>Page round trip time (overall response time)</li>
+	<li> Page server busy time (overall response time)</li>
+	<li>Performance</li>
+	<li>Transaction Response Time</li>
+</ul>
+
+<p>The user can choose between the following merge spans:</p>
+<ul>
+	<li>Weekly</li>
+	<li>Daily</li>
+	<li>Hourly</li>
+	<li>Quarter of an Hour</li>
+</ul>
+
+<p>For each of the aforementioned measures, the following data can be retrieved:</p>
+<ul>
+	<li>Average</li>
+	<li>boundCount1</li>
+	<li>boundCount2</li>
+	<li>max</li>
+	<li>min</li>
+	<li>sum</li>
+	<li>sumSquared</li>
+</ul>
+
+<p>The provided standard time frames are:</p>
+<ul>
+	<li>Last Year</li>
+	<li>Last Month</li>
+	<li>Last Week</li>
+	<li>Last 24 Hours</li>
+	<li>Last Hour</li>
+</ul>
+
+<p>Due to server side restrictions, not all time frames are compatible with all merge spans. The following
+combinations are allowed:</p>
+
+<table class="table table-responsive table-striped table-hover">
+<thead>
+	<tr>
+		<th>Merge Span</th>
+		<th>Allowed Time</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>Quarter of an hour</td>
+		<td>Up to two months (60 days)</td>
+	</tr>
+	<tr>
+		<td>Hourly</td>
+		<td>Up to three months (90 days)</td>
+	</tr>
+	<tr>
+		<td>Daily</td>
+		<td>Up to two years (730 days)</td>
+	</tr>
+	<tr>
+		<td>Weekly</td>
+		<td>Up to two years (730 days)</td>
+	</tr>
+</tbody>
+</table>
+
+<p>
+Even though time frames of up to two years are allowed, that does not necessarily mean that there are
+actually data points available for last two years.
+</p>
