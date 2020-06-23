@@ -16,8 +16,8 @@ import com.xresch.emp.features.widgets.FeatureEMPWidgets;
  **************************************************************************************************************/
 public class FeatureEMPManual extends CFWAppFeature {
 	
-	public static final String PACKAGE_RESOURCE_THEUS = "com.xreschemp.features.manual.theusinator";
-	public static final String PACKAGE_RESOURCE_WIDGETS = "com.xreschemp.features.manual.widgets";
+	public static final String PACKAGE_RESOURCE_THEUS = "com.xresch.emp.features.manual.theusinator";
+	public static final String PACKAGE_RESOURCE_WIDGETS = "com.xresch.emp.features.manual.widgets";
 		
 	public static final ManualPage TOP_PAGE = CFW.Registry.Manual.addManualPage(null, new ManualPage("Engineered Montitoring Platform(EMP)").faicon("fa fa-desktop"));
 	

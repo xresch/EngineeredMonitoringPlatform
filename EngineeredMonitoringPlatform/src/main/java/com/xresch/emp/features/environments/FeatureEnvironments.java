@@ -19,7 +19,7 @@ import com.xresch.emp._main.Main;
  **************************************************************************************************************/
 public class FeatureEnvironments extends CFWAppFeature {
 	
-	//public static final String RESOURCE_PACKAGE = "com.xreschemp.features.theusinator.resources";	
+	//public static final String RESOURCE_PACKAGE = "com.xresch.emp.features.theusinator.resources";	
 	
 	@Override
 	public void register() {

@@ -14,8 +14,8 @@ import com.xresch.emp.features.environments.SPMEnvironmentManagement;
  **************************************************************************************************************/
 public class FeatureEMPAPI extends CFWAppFeature {
 	
-	public static final String RESOURCE_PACKAGE = "com.xreschemp.features.api.resources";
-	public static final String MANUAL_PACKAGE = "com.xreschemp.features.api.manual";
+	public static final String RESOURCE_PACKAGE = "com.xresch.emp.features.api.resources";
+	public static final String MANUAL_PACKAGE = "com.xresch.emp.features.api.manual";
 	
 	@Override
 	public void register() {

@@ -14,8 +14,8 @@ import com.xresch.emp.features.environments.SPMEnvironmentManagement;
  **************************************************************************************************************/
 public class FeatureEMPWidgets extends CFWAppFeature {
 	
-	public static final String RESOURCE_PACKAGE = "com.xreschemp.features.widgets.recourses";
-	public static final String MANUAL_PACKAGE = "com.xreschemp.features.widgets.manual";
+	public static final String RESOURCE_PACKAGE = "com.xresch.emp.features.widgets.recourses";
+	public static final String MANUAL_PACKAGE = "com.xresch.emp.features.widgets.manual";
 	
 	public static final String PERMISSION_AWAJOBSTATUS = "AWA Jobstatus";
 	

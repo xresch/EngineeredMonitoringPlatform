@@ -47,7 +47,7 @@ public class ServletTheusinator extends HttpServlet
 	
 				html.addCSSFile(HandlingType.JAR_RESOURCE, FeatureTheusinator.RESOURCE_PACKAGE, "theusinator.css");
 				
-				//html.addJSFileBottomSingle(new FileDefinition(HandlingType.JAR_RESOURCE, FileDefinition.CFW_JAR_RESOURCES_PATH+".js", "cfw_usermgmt.js"));
+				//html.addJSFileBottomSingle(new FileDefinition(HandlingType.JAR_RESOURCE, FeatureCore.RESOURCE_PACKAGE+".js", "cfw_usermgmt.js"));
 				html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureTheusinator.RESOURCE_PACKAGE, "plotly.min.js");
 				//html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureTheusinator.RESOURCE_PACKAGE, "jquery-ui.min.js");
 				html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureTheusinator.RESOURCE_PACKAGE, "theusinator.js");
