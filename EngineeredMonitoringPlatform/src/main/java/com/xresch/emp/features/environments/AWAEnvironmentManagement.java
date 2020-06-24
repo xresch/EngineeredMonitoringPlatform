@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +13,8 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
+import com.xresch.cfw.features.core.AutocompleteList;
+import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
@@ -157,9 +158,10 @@ public class AWAEnvironmentManagement {
 		return db;
 	}
 
-	public static LinkedHashMap<Object, Object> autocompleteClient(HttpServletRequest request){
+	public static AutocompleteResult autocompleteClient(HttpServletRequest request){
 		
-		LinkedHashMap<Object, Object> autocompleteValues = new LinkedHashMap<Object, Object>();
+		AutocompleteList list = new AutocompleteList();
+		
 		AWAEnvironment environment = new AWAEnvironment();
 		environment.mapRequestParameters(request);
 		
@@ -180,9 +182,11 @@ public class AWAEnvironmentManagement {
 					+ "ORDER BY COUNT DESC");
 			
 			try {
+				
 				while(result != null && result.next()) {
 					Object client = (Object) result.getString("AH_CLIENT");
-					autocompleteValues.put(client, client);
+					Integer count = result.getInt("COUNT");
+					list.addItem(client, client, count+" Entries");
 				}
 			} catch (SQLException e) {
 				new CFWLog(logger)
@@ -194,6 +198,6 @@ public class AWAEnvironmentManagement {
 			CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please specify database first to get autocomplete values.");
 		}
 		
-		return autocompleteValues;
+		return new AutocompleteResult(list);
 	}
 }

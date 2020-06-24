@@ -13,6 +13,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
+import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.widgets.FeatureEMPWidgets;
@@ -165,7 +166,7 @@ public class SPMEnvironmentManagement {
 	/************************************************************************
 	 * 
 	 ************************************************************************/
-	public static LinkedHashMap<Object, Object> autocompleteMonitors(int environmentID, String searchValue, int maxResults) {
+	public static AutocompleteResult autocompleteMonitors(int environmentID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
 			return null;
@@ -205,13 +206,13 @@ public class SPMEnvironmentManagement {
 			db.close(result);
 		}
 		
-		return suggestions;
+		return new AutocompleteResult(suggestions);
 	}
 	
 	/************************************************************************
 	 * 
 	 ************************************************************************/
-	public static LinkedHashMap<Object, Object> autocompleteMonitorName(int environmentID, String searchValue, int maxResults) {
+	public static AutocompleteResult autocompleteMonitorName(int environmentID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
 			return null;
@@ -250,13 +251,13 @@ public class SPMEnvironmentManagement {
 			db.close(result);
 		}
 		
-		return suggestions;
+		return new AutocompleteResult(suggestions);
 	}
 	
 	/************************************************************************
 	 * 
 	 ************************************************************************/
-	public static LinkedHashMap<Object, Object> autocompleteProjects(int environmentID, String searchValue, int maxResults) {
+	public static AutocompleteResult autocompleteProjects(int environmentID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
 			return null;
@@ -294,13 +295,13 @@ public class SPMEnvironmentManagement {
 			db.close(result);
 		}
 		
-		return suggestions;
+		return new AutocompleteResult(suggestions);
 	}
 	
 	/************************************************************************
 	 * 
 	 ************************************************************************/
-	public static LinkedHashMap<Object, Object> autocompleteCountersForMonitor(int environmentID,  int monitorID, String searchValue, int maxResults) {
+	public static AutocompleteResult autocompleteCountersForMonitor(int environmentID,  int monitorID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
 			return null;
@@ -340,13 +341,13 @@ public class SPMEnvironmentManagement {
 			db.close(result);
 		}
 		
-		return suggestions;
+		return new AutocompleteResult(suggestions);
 	}
 
 	/************************************************************************
 	 * 
 	 ************************************************************************/
-	public static LinkedHashMap<Object, Object> autocompleteTimersForMonitor(int environmentID,  int monitorID, String searchValue, int maxResults) {
+	public static AutocompleteResult autocompleteTimersForMonitor(int environmentID,  int monitorID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
 			return null;
@@ -386,12 +387,12 @@ public class SPMEnvironmentManagement {
 			db.close(result);
 		}
 		
-		return suggestions;
+		return new AutocompleteResult(suggestions);
 	}
 	/************************************************************************
 	 * 
 	 ************************************************************************/
-	public static LinkedHashMap<Object, Object> autocompleteCountersForProject(int environmentID,  int projectID, String searchValue, int maxResults) {
+	public static AutocompleteResult autocompleteCountersForProject(int environmentID,  int projectID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
 			return null;
@@ -431,10 +432,10 @@ public class SPMEnvironmentManagement {
 			db.close(result);
 		}
 		
-		return suggestions;
+		return new AutocompleteResult(suggestions);
 	}
 	
-	public static LinkedHashMap<Object, Object> autocompleteTimersForProject(int environmentID,  int projectID, String searchValue, int maxResults) {
+	public static AutocompleteResult autocompleteTimersForProject(int environmentID,  int projectID, String searchValue, int maxResults) {
 
 		if(searchValue.length() < 3) {
 			return null;
@@ -474,6 +475,6 @@ public class SPMEnvironmentManagement {
 			db.close(result);
 		}
 		
-		return suggestions;
+		return new AutocompleteResult(suggestions);
 	}
 }

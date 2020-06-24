@@ -1,16 +1,16 @@
 package com.xresch.emp.features.api;
 
 import java.sql.Timestamp;
-import java.util.LinkedHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.common.base.Strings;
 import com.xresch.cfw._main.CFW;
-import com.xresch.cfw.datahandling.CFWAutocompleteHandler;
 import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
+import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.features.core.AutocompleteResult;
+import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 import com.xresch.emp.features.environments.SPMEnvironmentManagement;
@@ -40,7 +40,7 @@ public class SPMAPI_EnvTimeframeProjectInputs extends CFWObject {
 			.setValue(0)
 			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 				@Override
-				public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
+				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
 					String environmentID = request.getParameter("ENVIRONMENT_ID");
 					if(Strings.isNullOrEmpty(environmentID)) {
 						CFW.Context.Request.addAlertMessage(MessageType.INFO, "Select an environment to get suggestions.");

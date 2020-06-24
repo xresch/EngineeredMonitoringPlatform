@@ -1,15 +1,14 @@
 package com.xresch.emp.features.environments;
 
-import java.util.LinkedHashMap;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.xresch.cfw._main.CFW;
-import com.xresch.cfw.datahandling.CFWAutocompleteHandler;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
+import com.xresch.cfw.features.core.AutocompleteResult;
+import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -67,7 +66,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 				
 				@Override
-				public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
+				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
 					return AWAEnvironmentManagement.autocompleteClient(request);
 				}
 			});

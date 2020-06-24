@@ -18,11 +18,12 @@ import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
-import com.xresch.cfw.datahandling.CFWAutocompleteHandler;
 import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
+import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.db.DBInterface;
+import com.xresch.cfw.features.core.AutocompleteResult;
+import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
@@ -53,7 +54,7 @@ public class SPMTimersForMonitorWidget extends WidgetDefinition {
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override
-							public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
+							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
 								String environment = request.getParameter("environment");
 								
 								return SPMEnvironmentManagement.autocompleteMonitors(Integer.parseInt(environment), searchValue, this.getMaxResults());
@@ -67,7 +68,7 @@ public class SPMTimersForMonitorWidget extends WidgetDefinition {
 							.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override
-							public LinkedHashMap<Object, Object> getAutocompleteData(HttpServletRequest request, String searchValue) {
+							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
 								String environment = request.getParameter("environment");
 								String monitors = request.getParameter("JSON_MONITORS");
 								
