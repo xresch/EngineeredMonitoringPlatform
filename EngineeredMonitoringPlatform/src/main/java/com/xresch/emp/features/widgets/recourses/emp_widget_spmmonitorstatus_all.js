@@ -14,8 +14,8 @@
 			menuicon: "fas fa-cogs",
 			menulabel: CFWL('cfw_widget_spmmonitorstatus_all', "SPM Monitor Status All"),
 			description: CFWL('cfw_widget_spmmonitorstatus_all_desc', "Fetches the status of all the monitors of the selected SPM environment."),
-			defaultwidth: 10,
-			defaultheight: 10,
+			defaultwidth: 16,
+			defaultheight: 24,
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){

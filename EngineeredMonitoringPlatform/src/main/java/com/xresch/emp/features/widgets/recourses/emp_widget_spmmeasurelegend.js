@@ -24,8 +24,8 @@
 			menulabel: CFWL('cfw_widget_smpmeasurelegend', "SPM Measure Legend"),
 			description: CFWL('cfw_widget_smpmeasurelegend_desc', "Displays a legend for the colors used by the SPM monitors(Timers and Counters)."),
 			defaulttitle: "",
-			defaultwidth: 12,
-			defaultheight: 1,
+			defaultwidth: 32,
+			defaultheight: 4,
 			createWidgetInstance: function (widgetObject, callback) {		
 				var html = 
 					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div> Excellent </div>'

@@ -15,8 +15,8 @@
 			menulabel: CFWL('cfw_widget_webexservicestatuslegend', "Webex Service Status Legend"),
 			description: CFWL('cfw_widget_webexservicestatuslegend_desc', "Displays a legend for the colors used by the Webex Service Status widget."),
 			defaulttitle: "",
-			defaultwidth: 8,
-			defaultheight: 1,
+			defaultwidth: 32,
+			defaultheight: 4,
 			createWidgetInstance: function (widgetObject, callback) {		
 				var html = 
 					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div>Operational</div>'
