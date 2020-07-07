@@ -5,8 +5,9 @@ Copyright 2020  Reto Scheiwiller, reto.scheiwiller5[at]bluewin.ch, all rights re
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software including the rights to use, copy and modify the Software for private or company internal purposes, subject to the following conditions:
   - DO copy, use, modify or extend the Software for private or company internal purposes.
+  - DO NOT sell the Software or any part of it.
   - DO NOT to use any information gained or collected from or with the Software commercially by selling these to another party like a customer.
-  - DO NOT merge or publish any part of the Software to a publicly accessible location without prior permission granted by the copyright owner.
+  - DO NOT merge or publish any part of the Software to a publicly accessible location without prior written permission granted by the copyright owner.
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
