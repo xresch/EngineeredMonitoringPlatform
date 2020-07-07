@@ -1,6 +1,6 @@
 
 This license is for all code regarding the Engineered Monitoring Platform(EMP).
-All used third party components are licenced under their respective license.
+All used third party components are licensed under their respective license.
 
 For clarifying the below CreativeCommons license, the following rules are superior to the below overcomplicated lawyer text:
   - You are allowed to use and change the Engineered Monitoring Platform for your private or company internal purposes.
