@@ -20,10 +20,15 @@
 					var monitorStats = [];
 					
 					//---------------------------------
-					// Check for Error
+					// Check for Data and Errors
+					if(CFW.utils.isNullOrEmpty(data.payload)){
+						callback(widgetObject, '');
+						return;
+					}
 					if(data.payload.error != undefined){
+					
 						callback(widgetObject, "<p><b>Prometheus Error: </b>"+data.payload.error+'</p>');
-						return
+						return;
 					}
 					
 					//---------------------------------
@@ -34,9 +39,8 @@
 						for(index in prometheusData.result){
 
 							var current = prometheusData.result[index];
-							console.log(current);
 							var item = Object.assign({}, current.metric);
-							item.time = current.value[0];
+							item.time = current.value[0] * 1000;
 							
 							item.value = current.value[1];
 							if(!isNaN(item.value)){
@@ -111,10 +115,15 @@
 						bgstylefield: 'alertstyle',
 						textstylefield: 'textstyle',
 						titlefields: ['value'], 
+						visiblefields: [],
 						titledelimiter: ' - ', 
-						visiblefields: [], 
+						
 						labels: {},
 						customizers: {
+							value: function(record, value) {
+								if(value == null) return '';
+								return (settings.suffix == null) ? value : value+" "+settings.suffix;
+							},
 							time: function(record, value) { return (value != null) ? new CFWDate(value).getDateFormatted("YYYY-MM-DD HH:mm") : '';},
 						},
 						rendererSettings:{
@@ -132,27 +141,28 @@
 					}};
 					
 					//-----------------------------------
-					// Adjust RenderSettings for Table
-					if(widgetObject.JSON_SETTINGS.renderer == "Table"){
-						dataToRender.visiblefields = ['PROJECT_NAME', 'MONITOR_NAME', 'MEASURE_NAME', 'VALUE']; 
-						dataToRender.customizers.PROJECT_NAME = function(record, value) { 
-				 			if(value != null && value != ""){
-				 				return  '<a style="color: inherit;" target="_blank" href="'+record.PROJECT_URL+'" >'+value+'</a>'; 
-				 			}else {
-				 				return "&nbsp;";
-				 			}
-						};
+					// Adjust RenderSettings
+					var renderType = widgetObject.JSON_SETTINGS.renderer;
+					if(renderType == null){ renderType = 'tiles'};
+					
+					if(renderType.toLowerCase() != "tiles" && dataToRender.data.length > 0){
+						
+						var visiblefields = Object.keys(dataToRender.data[0]);
+						//remove alertstyle and textstyle
+						visiblefields.pop();
+						visiblefields.pop();
+						dataToRender.visiblefields = visiblefields;
+						// add first field to title
+						dataToRender.titlefields.push(visiblefields[0]); 			
 					}
+					
 					
 					//--------------------------
 					// Create Tiles
 					if(  data.payload == null || typeof data.payload == 'string'){
 						callback(widgetObject, "unknown");
 					}else{
-						
-						var renderType = widgetObject.JSON_SETTINGS.renderer;
-						if(renderType == null){ renderType = 'tiles'};
-						
+												
 						var alertRenderer = CFW.render.getRenderer(renderType.toLowerCase());
 						callback(widgetObject, alertRenderer.render(dataToRender));
 					}

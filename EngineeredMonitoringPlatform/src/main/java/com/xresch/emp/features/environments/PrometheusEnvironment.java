@@ -114,7 +114,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 	public CFWHttpResponse query(String prometheusQuery) {
 		
 		String queryURL = getAPIUrlVersion1() + "/query?query="+CFW.HTTP.encode(prometheusQuery);
-		System.out.println("queryURL: "+queryURL);
+
 		return CFW.HTTP.sendGETRequest(queryURL);
 	}
 	

@@ -5,8 +5,12 @@ http://localhost:9090/api/v1/query?query=avg%20by%20(instance,mode)%20(irate(win
 http://localhost:9090/api/v1/query_range?query=avg%20by%20(instance,mode)%20(irate(windows_cpu_time_total{instance=%22localhost:9182%22}[5m])%20*100)&start=2020-07-08T00:00:00.000Z&end=2020-07-10T10:00:00.000Z&step=1m
 http://localhost:9090/api/v1/query_range?query=avg%20by%20(instance,mode)%20(irate(windows_cpu_time_total{instance=%22localhost:9182%22}[5m])%20*100)&start=1594191480&end=1594291480&step=1m
 
-// CPU Usage for instance
+// Windows Exporter: CPU Usage for instance
 100 - (avg by (instance) (irate(windows_cpu_time_total{mode="idle", instance="localhost:9182"}[5m])) * 100)
 
-// CPU Statistics for instance
+// Windows Exporter: CPU Statistics for instance
 avg by (instance,mode) (irate(windows_cpu_time_total{instance="localhost:9182"}[5m]) *100)
+
+
+// Windows Exporter: Disk Space Used %
+(windows_logical_disk_size_bytes - windows_logical_disk_free_bytes) / windows_logical_disk_size_bytes * 100
