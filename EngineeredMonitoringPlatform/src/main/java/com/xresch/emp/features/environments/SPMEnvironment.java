@@ -74,7 +74,7 @@ public class SPMEnvironment extends AbstractContextSettings {
 		int count = new DashboardWidget()
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
-			.custom("AND (\"TYPE\"='emp_spmprojectstatus' OR \"TYPE\"='emp_spmmonitorstatus')")
+			.custom("AND (\"TYPE\" LIKE 'emp_spm%')")
 			.getCount();
 		
 		if(count == 0) {

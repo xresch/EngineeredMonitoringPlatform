@@ -17,7 +17,7 @@ import com.xresch.emp._main.Main;
  * @author Reto Scheiwiller, (c) Copyright 2019 
  * @license Creative Commons: Attribution-NonCommercial-NoDerivatives 4.0 International
  **************************************************************************************************************/
-public class FeatureEnvironments extends CFWAppFeature {
+public class FeatureEMPEnvironments extends CFWAppFeature {
 	
 	//public static final String RESOURCE_PACKAGE = "com.xresch.emp.features.theusinator.resources";	
 	
@@ -30,12 +30,17 @@ public class FeatureEnvironments extends CFWAppFeature {
 		//----------------------------------
 		// Register Settings
 		CFW.Registry.ContextSettings.register(AWAEnvironment.SETTINGS_TYPE, AWAEnvironment.class);
+		CFW.Registry.ContextSettings.register(PrometheusEnvironment.SETTINGS_TYPE, PrometheusEnvironment.class);
 		CFW.Registry.ContextSettings.register(SPMEnvironment.SETTINGS_TYPE, SPMEnvironment.class);
     
 	}
 
 	@Override
 	public void initializeDB() {
+		
+		AWAEnvironmentManagement.initialize();
+		PrometheusEnvironmentManagement.initialize();
+		SPMEnvironmentManagement.initialize();
 	
 	}
 

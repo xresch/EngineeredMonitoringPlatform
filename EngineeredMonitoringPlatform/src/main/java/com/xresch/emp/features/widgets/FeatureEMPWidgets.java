@@ -5,6 +5,7 @@ import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.emp.features.environments.AWAEnvironmentManagement;
+import com.xresch.emp.features.environments.PrometheusEnvironment;
 import com.xresch.emp.features.environments.SPMEnvironmentManagement;
 
 /**************************************************************************************************************
@@ -32,6 +33,8 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new AWAJobStatusWidget());
 		CFW.Registry.Widgets.add(new AWAJobStatusLegendWidget());
 		
+		CFW.Registry.Widgets.add(new PrometheusGeneralQueryWidget());
+		
 		CFW.Registry.Widgets.add(new SPMProjectStatusWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusForProjectsWidget());
@@ -50,8 +53,6 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		
-		AWAEnvironmentManagement.initialize();
-		SPMEnvironmentManagement.initialize();
 		//-----------------------------------------
 		// 
 		//-----------------------------------------

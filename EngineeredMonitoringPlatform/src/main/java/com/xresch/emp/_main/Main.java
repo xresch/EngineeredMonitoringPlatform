@@ -7,7 +7,7 @@ import com.xresch.cfw._main.CFWAppInterface;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.emp.features.api.FeatureEMPAPI;
-import com.xresch.emp.features.environments.FeatureEnvironments;
+import com.xresch.emp.features.environments.FeatureEMPEnvironments;
 import com.xresch.emp.features.manual.FeatureEMPManual;
 import com.xresch.emp.features.theusinator.FeatureTheusinator;
 import com.xresch.emp.features.widgets.FeatureEMPWidgets;
@@ -38,7 +38,7 @@ public class Main implements CFWAppInterface {
     	
 		//----------------------------------
 		// Register Objects
-		CFW.Registry.Features.addFeature(FeatureEnvironments.class);
+		CFW.Registry.Features.addFeature(FeatureEMPEnvironments.class);
     	CFW.Registry.Features.addFeature(FeatureTheusinator.class);
     	CFW.Registry.Features.addFeature(FeatureEMPWidgets.class);
     	CFW.Registry.Features.addFeature(FeatureEMPAPI.class);
