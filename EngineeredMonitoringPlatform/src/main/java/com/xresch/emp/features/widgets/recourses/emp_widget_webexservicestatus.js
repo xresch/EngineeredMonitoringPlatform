@@ -3,7 +3,7 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	function prepareComponentStyles(components, isDisabled){
+	function emp_widget_webex_prepareComponentStyles(components, isDisabled){
 		
 		for(var key in components){
 			var current = components[key];
@@ -31,14 +31,14 @@
 			//----------------------------------
 			// Iterate Children
 			if(current.components.length > 0){
-				prepareComponentStyles(current.components, isDisabled);
+				emp_widget_webex_prepareComponentStyles(current.components, isDisabled);
 			}
 		}
 	}
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	function creatSubComponentHTML(rendererSettings, record, components){
+	function emp_widget_webex_creatSubComponentHTML(rendererSettings, record, components){
 		
 		//-------------------------------
 		// Check Data
@@ -53,6 +53,7 @@
 		deepCopyRenderSettings.data = components;
 		
 		deepCopyRenderSettings.rendererSettings.tiles.showlabels = false;
+		deepCopyRenderSettings.rendererSettings.tiles.popover = true;
 		deepCopyRenderSettings.rendererSettings.tiles.border = '1px solid #2f2f2f';
 		
 		//--------------------------
@@ -101,7 +102,7 @@
 										
 					//-------------------------------
 					// Prepare Styling
-					prepareComponentStyles(components, widgetObject.JSON_SETTINGS.disable);
+					emp_widget_webex_prepareComponentStyles(components, widgetObject.JSON_SETTINGS.disable);
 					
 					//-------------------------------
 					// Prepare Rendering
@@ -117,13 +118,14 @@
 							components: "Children"
 						},
 						customizers: {
-							components: function(record, value) { return (value.length == 0) ? null : creatSubComponentHTML(dataToRender, record, value); }
+							components: function(record, value) { return (value.length == 0) ? null : emp_widget_webex_creatSubComponentHTML(dataToRender, record, value); }
 						},
 						rendererSettings:{
 							tiles: {
 								sizefactor:  settings.sizefactor,
 								showlabels:  settings.showlabels,
-								borderstyle: settings.borderstyle
+								borderstyle: settings.borderstyle,
+								popover: false
 							},
 							table: {
 								narrow: 	true,
