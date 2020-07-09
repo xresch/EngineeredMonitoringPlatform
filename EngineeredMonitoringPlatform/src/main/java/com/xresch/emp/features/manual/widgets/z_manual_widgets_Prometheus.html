@@ -1,0 +1,49 @@
+
+<h2>Prometheus Widgets Setup</h2>
+<p>
+Before the Prometheus widgets can be used, at least one Prometheus environment has to be defined by a user with admin permissions.
+The environments can be added in the Context Settings found under &quot;Admin &gt;&gt; Context Settings&quot;.
+</p>
+
+<h2>Widgets</h2>
+<h3>General - Query</h3>
+<p>
+The General Query widget can be used to execute an instant query and display its results as tiles, panels or as a table.
+You can define thresholds for the values you retrieved to indicate a status with various colors.
+</p>
+
+<img class="img-fluid" src="/cfw/jarresource?pkg=com.xresch.emp.features.manual.widgets&file=z_manual_widgets_Prometheus_screenshot_generalquery.jpg">
+
+
+<h2>Useful Queries</h2>
+
+<h3>Windows Exporter Queries</h3>
+
+<div class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Query</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>CPU Usage(%) by Instance</td>
+				<td><pre><code>100 - (avg by (instance) (irate(windows_cpu_time_total{mode="idle"}[5m])) * 100)</code></pre></td>
+			</tr>
+			<tr>
+				<td>CPU Statistics(%) for Instance(user, system, idle...)</td>
+				<td><pre><code>avg by (instance,mode) (irate(windows_cpu_time_total{instance="localhost:9182"}[5m]) *100)</code></pre></td>
+			</tr>
+			<tr>
+				<td>Disk Space Used %</td>
+				<td><pre><code>(windows_logical_disk_size_bytes - windows_logical_disk_free_bytes) / windows_logical_disk_size_bytes * 100</code></pre></td>
+			</tr>
+			<tr>
+				<td>Free Disk Space (GB) for Instance</td>
+				<td><pre><code>windows_logical_disk_free_bytes{instance="localhost:9182"} / 1000000000</code></pre></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

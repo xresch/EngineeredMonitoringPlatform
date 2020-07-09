@@ -154,14 +154,21 @@ public class FeatureEMPManual extends CFWAppFeature {
 		
 		parent.addChild(
 				new ManualPage("AWA Widgets")
-					.faicon("fas fa-cogs")
+					.faicon("fas fa-desktop")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCE_WIDGETS, "z_manual_widgets_AWA.html")
 			);
 		
 		parent.addChild(
+				new ManualPage("Prometheus Widgets")
+					.faicon("fas fa-desktop")
+					.addPermission(FeatureManual.PERMISSION_MANUAL)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCE_WIDGETS, "z_manual_widgets_Prometheus.html")
+			);
+		
+		parent.addChild(
 			new ManualPage("SPM Widgets")
-				.faicon("fas fa-star")
+				.faicon("fas fa-desktop")
 				.addPermission(FeatureManual.PERMISSION_MANUAL)
 				.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCE_WIDGETS, "z_manual_widgets_SPM.html")
 		);

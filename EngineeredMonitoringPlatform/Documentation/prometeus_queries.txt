@@ -11,6 +11,5 @@ http://localhost:9090/api/v1/query_range?query=avg%20by%20(instance,mode)%20(ira
 // Windows Exporter: CPU Statistics for instance
 avg by (instance,mode) (irate(windows_cpu_time_total{instance="localhost:9182"}[5m]) *100)
 
-
 // Windows Exporter: Disk Space Used %
 (windows_logical_disk_size_bytes - windows_logical_disk_free_bytes) / windows_logical_disk_size_bytes * 100
