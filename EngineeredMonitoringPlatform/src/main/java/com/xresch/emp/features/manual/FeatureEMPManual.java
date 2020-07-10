@@ -31,15 +31,15 @@ public class FeatureEMPManual extends CFWAppFeature {
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE_THEUS);
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE_WIDGETS);
 		//----------------------------------
-		// Register Manuals
-		registerTheusinatorManual();	
-		
+		// Register Manuals	
 		ManualPage widgetsPage = new ManualPage("Dashboard Widgets").faicon("fas fa-th-large")
 				.addPermission(FeatureManual.PERMISSION_MANUAL)
 				.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCE_WIDGETS, "z_manual_intro.html");
 		
 		TOP_PAGE.addChild(widgetsPage);
 		registerWidgetsManual(widgetsPage);
+		
+		registerTheusinatorManual();
 	}
 	
 	/**********************************************************************
