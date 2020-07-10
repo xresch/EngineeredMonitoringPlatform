@@ -75,7 +75,7 @@ public class PrometheusGeneralQueryWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
 						.setLabel("{!cfw_widget_displayas!}")
 						.setDescription("{!cfw_widget_displayas_desc!}")
-						.setOptions(new String[]{"Tiles", "Panels", "Table"})
+						.setOptions(new String[]{"Tiles", "Panels", "Table", "Chart"})
 						.setValue("Tiles")
 				)
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")

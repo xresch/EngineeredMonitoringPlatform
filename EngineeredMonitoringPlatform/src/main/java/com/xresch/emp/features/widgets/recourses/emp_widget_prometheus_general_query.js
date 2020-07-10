@@ -17,11 +17,15 @@
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
+					
+					var settings = widgetObject.JSON_SETTINGS;
+					var renderType = (settings.renderer == null) ? "tiles" : settings.renderer.toLowerCase() ;
+					var chartLabelFields = null;
 					var monitorStats = [];
 					
 					//---------------------------------
 					// Check for Data and Errors
-					if(CFW.utils.isNullOrEmpty(data.payload)){
+					if(CFW.utils.isNullOrEmpty(data.payload) || typeof data.payload == 'string'){
 						callback(widgetObject, '');
 						return;
 					}
@@ -39,19 +43,34 @@
 						for(index in prometheusData.result){
 
 							var current = prometheusData.result[index];
-							var item = Object.assign({}, current.metric);
-							item.time = current.value[0] * 1000;
-							
-							item.value = current.value[1];
-							if(!isNaN(item.value)){
-								item.value = parseFloat(item.value).toFixed(1);
+							if(renderType == 'chart'){ chartLabelFields = Object.keys(current.metric)}
+							if(current.value != undefined){
+								//----------------------------------
+								// handle Instant Value
+								var item = Object.assign({}, current.metric);
+								item.time = current.value[0] * 1000;
+								item.value = current.value[1];
+								if(!isNaN(item.value)){
+									item.value = parseFloat(item.value).toFixed(1);
+								}
+								monitorStats.push(item);
+							}else if(current.values != undefined){
+								//----------------------------------
+								// Handle Range Values
+								for(index in current.values){
+									value = current.values[index];
+									var item = Object.assign({}, current.metric);
+									item.time = value[0] * 1000;
+									item.value = value[1];
+									if(!isNaN(item.value)){
+										item.value = parseFloat(item.value).toFixed(1);
+									}
+									monitorStats.push(item);
+								}
 							}
-							monitorStats.push(item);
 						}
 					}
 
-
-					var settings = widgetObject.JSON_SETTINGS;
 					var excellentVal = settings.threshold_excellent;
 					var goodVal = settings.threshold_good;
 					var warningVal = settings.threshold_warning;
@@ -137,36 +156,35 @@
 								striped: 	false,
 								hover: 		false,
 								filterable: false,
+							},
+							chart: {
+								xfield: 'time',
+								yfield: 'value'
 							}
 					}};
 					
 					//-----------------------------------
 					// Adjust RenderSettings
-					var renderType = widgetObject.JSON_SETTINGS.renderer;
-					if(renderType == null){ renderType = 'tiles'};
-					
-					if(renderType.toLowerCase() != "tiles" && dataToRender.data.length > 0){
-						
-						var visiblefields = Object.keys(dataToRender.data[0]);
-						//remove alertstyle and textstyle
-						visiblefields.pop();
-						visiblefields.pop();
-						dataToRender.visiblefields = visiblefields;
-						// add first field to title
-						dataToRender.titlefields.push(visiblefields[0]); 			
+					if(dataToRender.data.length > 0){
+						if( (renderType == "table" || renderType == "panels")){
+							
+							var visiblefields = Object.keys(dataToRender.data[0]);
+							//remove alertstyle and textstyle
+							visiblefields.pop();
+							visiblefields.pop();
+							dataToRender.visiblefields = visiblefields;
+							// add first field to title
+							dataToRender.titlefields.push(visiblefields[0]); 			
+						}else if(renderType == "chart"){
+							dataToRender.titlefields = chartLabelFields;
+						}
 					}
 					
 					
 					//--------------------------
-					// Create Tiles
-					if(  data.payload == null || typeof data.payload == 'string'){
-						callback(widgetObject, "unknown");
-					}else{
-												
-						var alertRenderer = CFW.render.getRenderer(renderType.toLowerCase());
-						callback(widgetObject, alertRenderer.render(dataToRender));
-					}
-					
+					// Render Widget
+					var alertRenderer = CFW.render.getRenderer(renderType);
+					callback(widgetObject, alertRenderer.render(dataToRender));
 				});
 			},
 			
