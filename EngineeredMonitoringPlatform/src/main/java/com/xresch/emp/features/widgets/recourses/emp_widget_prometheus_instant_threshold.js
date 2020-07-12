@@ -11,7 +11,7 @@
 	CFW.dashboard.registerWidget("emp_prometheus_instant_threshold",
 		{
 			category: "Monitoring | Prometheus",
-			menuicon: "fas fa-cogs",
+			menuicon: "fas fa-thermometer-half",
 			menulabel: CFWL('emp_widget_prometheus_instant_threshold', "Instant Threshold"),
 			description: CFWL('emp_widget_prometheus_instant_threshold_desc', "A prometheus query that will be used to retrieve the last value(instant) of the matched metrics and colors it by the specified threshold."), 
 			createWidgetInstance: function (widgetObject, callback) {
@@ -20,7 +20,6 @@
 					
 					var settings = widgetObject.JSON_SETTINGS;
 					var renderType = (settings.renderer == null) ? "tiles" : settings.renderer.toLowerCase() ;
-					var chartLabelFields = null;
 					var monitorStats = [];
 					
 					//---------------------------------
@@ -43,7 +42,6 @@
 						for(index in prometheusData.result){
 
 							var current = prometheusData.result[index];
-							if(renderType == 'chart'){ chartLabelFields = Object.keys(current.metric)}
 							if(current.value != undefined){
 								//----------------------------------
 								// handle Instant Value
@@ -175,8 +173,6 @@
 							dataToRender.visiblefields = visiblefields;
 							// add first field to title
 							dataToRender.titlefields.push(visiblefields[0]); 			
-						}else if(renderType == "chart"){
-							dataToRender.titlefields = chartLabelFields;
 						}
 					}
 					

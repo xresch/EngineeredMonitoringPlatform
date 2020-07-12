@@ -22,11 +22,11 @@ import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 import com.xresch.emp.features.environments.PrometheusEnvironment;
 import com.xresch.emp.features.environments.PrometheusEnvironmentManagement;
 
-public class PrometheusInstantThresholdWidget extends WidgetDefinition {
+public class PrometheusRangeChartWidget extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(PrometheusInstantThresholdWidget.class.getName());
+	private static Logger logger = CFWLog.getLogger(PrometheusRangeChartWidget.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_prometheus_instant_threshold";}
+	public String getWidgetType() {return "emp_prometheus_range_chart";}
 		
 
 	@Override
@@ -38,71 +38,18 @@ public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 				)
 				.addField(CFWField.newString(FormFieldType.TEXT, "query")
-						.setLabel("{!emp_widget_prometheus_instant_query!}")
-						.setDescription("{!emp_widget_prometheus_instant_query_desc!}")
+						.setLabel("{!emp_widget_prometheus_range_query!}")
+						.setDescription("{!emp_widget_prometheus_range_query_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 				)
-				.addField(CFWField.newString(FormFieldType.TEXT, "suffix")
-						.setLabel("{!emp_widget_prometheus_suffix!}")
-						.setDescription("{!emp_widget_prometheus_suffix_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
-				)
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_excellent")
-						.setLabel("{!cfw_widget_thresholdexcellent!}")
-						.setDescription("{!cfw_widget_thresholdexcellent_desc!}")
-						.setValue(null)
-				)
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_good")
-						.setLabel("{!cfw_widget_thresholdgood!}")
-						.setDescription("{!cfw_widget_thresholdgood_desc!}")
-						.setValue(null)
-				)
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_warning")
-						.setLabel("{!cfw_widget_thresholdwarning!}")
-						.setDescription("{!cfw_widget_thresholdwarning_desc!}")
-						.setValue(null)
-				)
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_emergency")
-						.setLabel("{!cfw_widget_thresholdemergency!}")
-						.setDescription("{!cfw_widget_thresholdemergency_desc!}")
-						.setValue(null)
-				)
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_danger")
-						.setLabel("{!cfw_widget_thresholddanger!}")
-						.setDescription("{!cfw_widget_thresholddanger_desc!}")
-						.setValue(null)
-				)
-				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
-						.setLabel("{!cfw_widget_displayas!}")
-						.setDescription("{!cfw_widget_displayas_desc!}")
-						.setOptions(new String[]{"Tiles", "Panels", "Table"})
-						.setValue("Tiles")
-				)
-				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
-						.setLabel("{!cfw_widget_sizefactor!}")
-						.setDescription("{!cfw_widget_sizefactor_desc!}")
-						.setOptions(new String[]{"0.25", "0.5", "0.75", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
-						.setValue("1")
+			
+				.addField(CFWField.newString(FormFieldType.SELECT, "chart_type")
+						.setLabel("{!cfw_widget_charttype!}")
+						.setDescription("{!cfw_widget_charttype_desc!}")
+						.setOptions(new String[]{"Line", "Bar", "Scatter"})
+						.setValue("Line")
 				)
 				
-				.addField(CFWField.newString(FormFieldType.SELECT, "borderstyle")
-						.setLabel("{!cfw_widget_borderstyle!}")
-						.setDescription("{!cfw_widget_borderstyle_desc!}")
-						.setOptions(new String[]{"None", "Round", "Superround", "Asymmetric", "Superasymmetric", "Ellipsis"})
-						.setValue("None")
-				)
-				
-				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showlabels")
-						.setLabel("{!cfw_widget_showlabels!}")
-						.setDescription("{!cfw_widget_showlabels_desc!}")
-						.setValue(true)
-				)
-				
-				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
-						.setLabel("{!cfw_widget_disable!}")
-						.setDescription("{!cfw_widget_disable_desc!}")
-						.setValue(false)
-				)
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
 						.setLabel("{!cfw_widget_sampledata!}")
 						.setDescription("{!cfw_widget_sampledata_desc!}")
@@ -167,7 +114,7 @@ public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_instant_threshold.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_range_chart.js");
 		array.add(js);
 		return array;
 	}

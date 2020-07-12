@@ -34,6 +34,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new AWAJobStatusLegendWidget());
 		
 		CFW.Registry.Widgets.add(new PrometheusInstantThresholdWidget());
+		CFW.Registry.Widgets.add(new PrometheusRangeChartWidget());
 		
 		CFW.Registry.Widgets.add(new SPMProjectStatusWidget());
 		CFW.Registry.Widgets.add(new SPMMonitorStatusWidget());
