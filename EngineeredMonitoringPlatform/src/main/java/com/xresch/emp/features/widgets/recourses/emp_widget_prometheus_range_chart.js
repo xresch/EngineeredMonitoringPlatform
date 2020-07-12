@@ -82,7 +82,10 @@
 							chart: {
 								charttype: settings.chart_type.toLowerCase(),
 								xfield: 'time',
-								yfield: 'value'
+								yfield: 'value',
+								stacked: settings.stacked,
+								ymin: settings.ymin,
+								ymax: settings.ymax,
 							}
 					}};
 										

@@ -155,10 +155,6 @@
 								hover: 		false,
 								filterable: false,
 							},
-							chart: {
-								xfield: 'time',
-								yfield: 'value'
-							}
 					}};
 					
 					//-----------------------------------

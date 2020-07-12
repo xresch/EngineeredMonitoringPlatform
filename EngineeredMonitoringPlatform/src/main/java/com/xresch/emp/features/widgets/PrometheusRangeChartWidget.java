@@ -50,6 +50,21 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 						.setValue("Line")
 				)
 				
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "stacked")
+						.setLabel("{!cfw_widget_chartstacked!}")
+						.setDescription("{!cfw_widget_chartstacked_desc!}")
+						.setValue(false)
+				)
+				.addField(CFWField.newInteger(FormFieldType.NUMBER, "ymin")
+						.setLabel("{!cfw_widget_chart_ymin!}")
+						.setDescription("{!cfw_widget_chart_ymin_desc!}")
+				)
+				
+				.addField(CFWField.newInteger(FormFieldType.NUMBER, "ymax")
+						.setLabel("{!cfw_widget_chart_ymax!}")
+						.setDescription("{!cfw_widget_chart_ymax_desc!}")
+				)
+				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
 						.setLabel("{!cfw_widget_sampledata!}")
 						.setDescription("{!cfw_widget_sampledata_desc!}")
