@@ -3,17 +3,17 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | Prometheus | General");
+	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | Prometheus");
 	
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_prometheus_general_query",
+	CFW.dashboard.registerWidget("emp_prometheus_instant_threshold",
 		{
-			category: "Monitoring | Prometheus | General",
+			category: "Monitoring | Prometheus",
 			menuicon: "fas fa-cogs",
-			menulabel: CFWL('emp_widget_prometheus_general_query', "Query"),
-			description: CFWL('emp_widget_prometheus_general_query_desc', "This widget uses a prometheus query to fetch the last value(instant) of the matched metrics."), 
+			menulabel: CFWL('emp_widget_prometheus_instant_threshold', "Instant Threshold"),
+			description: CFWL('emp_widget_prometheus_instant_threshold_desc', "A prometheus query that will be used to retrieve the last value(instant) of the matched metrics and colors it by the specified threshold."), 
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){

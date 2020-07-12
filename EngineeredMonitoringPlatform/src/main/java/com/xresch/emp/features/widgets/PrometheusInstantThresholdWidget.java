@@ -22,11 +22,11 @@ import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 import com.xresch.emp.features.environments.PrometheusEnvironment;
 import com.xresch.emp.features.environments.PrometheusEnvironmentManagement;
 
-public class PrometheusGeneralQueryWidget extends WidgetDefinition {
+public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(PrometheusGeneralQueryWidget.class.getName());
+	private static Logger logger = CFWLog.getLogger(PrometheusInstantThresholdWidget.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_prometheus_general_query";}
+	public String getWidgetType() {return "emp_prometheus_instant_threshold";}
 		
 
 	@Override
@@ -38,8 +38,8 @@ public class PrometheusGeneralQueryWidget extends WidgetDefinition {
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 				)
 				.addField(CFWField.newString(FormFieldType.TEXT, "query")
-						.setLabel("{!emp_widget_prometheus_instant_query!}")
-						.setDescription("{!emp_widget_prometheus_instant_query_desc!}")
+						.setLabel("{!emp_widget_prometheus_instant_threshold!}")
+						.setDescription("{!emp_widget_prometheus_instant_threshold_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 				)
 				.addField(CFWField.newString(FormFieldType.TEXT, "suffix")
@@ -167,7 +167,7 @@ public class PrometheusGeneralQueryWidget extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_general_query.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_instant_threshold.js");
 		array.add(js);
 		return array;
 	}
