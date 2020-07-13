@@ -80,8 +80,6 @@
 					// Set Colors for Thresholds
 					for(var key in monitorStats){
 						var current = monitorStats[key];
-						current.textstyle = "white"; 
-						current.alertstyle = "cfw-gray";
 						
 						current.alertstyle =  CFW.colors.getThresholdStyle(current.value
 								,excellentVal
@@ -91,6 +89,9 @@
 								,dangerVal
 								,settings.disable);
 						
+						if(current.alertstyle != "cfw-none"){
+							current.textstyle = "white"; 
+						}
 					}
 					
 					//---------------------------

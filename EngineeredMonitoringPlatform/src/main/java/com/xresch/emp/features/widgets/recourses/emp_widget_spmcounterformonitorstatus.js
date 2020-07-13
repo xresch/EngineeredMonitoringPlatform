@@ -19,56 +19,30 @@
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					var monitorStats = data.payload;
 					var settings = widgetObject.JSON_SETTINGS;
+					
 					var excellentVal = settings.threshold_excellent;
 					var goodVal = settings.threshold_good;
 					var warningVal = settings.threshold_warning;
 					var emergencyVal = settings.threshold_emergency;
 					var dangerVal = settings.threshold_danger;
 					
-					//---------------------------
-					// Find Threshold direction
-					var direction = 'HIGH_TO_LOW';
-					var thresholds = [excellentVal, goodVal, warningVal, emergencyVal, dangerVal];
-					var firstDefined = null;
-					
-					for(var i = 0; i < thresholds.length; i++){
-						var current = thresholds[i];
-						if (!CFW.utils.isNullOrEmpty(current)){
-							if(firstDefined == null){
-								firstDefined = current;
-							}else{
-								if(current != null && firstDefined < current ){
-									direction = 'LOW_TO_HIGH';
-								}
-								break;
-							}
-						}
-					}
 					
 					//---------------------------
 					// Set Colors for Thresholds
 					for(var key in monitorStats){
 						var current = monitorStats[key];
-						current.textstyle = "white"; 
-
 						current.VALUE = current.VALUE.toFixed(1);
-						if(direction == 'HIGH_TO_LOW'){
-							
-							if(settings.disable) { current.alertstyle = "cfw-darkgray"; }
-							else if (!CFW.utils.isNullOrEmpty(excellentVal) && current.VALUE >= excellentVal) 	{ current.alertstyle = "cfw-excellent"; } 
-							else if (!CFW.utils.isNullOrEmpty(goodVal) && current.VALUE >= goodVal) 			{ current.alertstyle = "cfw-good"; } 
-							else if (!CFW.utils.isNullOrEmpty(warningVal) && current.VALUE >= warningVal) 		{ current.alertstyle = "cfw-warning"; } 
-							else if (!CFW.utils.isNullOrEmpty(emergencyVal) && current.VALUE >= emergencyVal) 	{ current.alertstyle = "cfw-emergency"; } 
-							else if (!CFW.utils.isNullOrEmpty(dangerVal) && current.VALUE >= dangerVal)  		{ current.alertstyle = "cfw-danger"; } 
-							else 																				{ current.alertstyle = "cfw-gray"; } 
-						}else{
-							if(settings.disable) { current.alertstyle = "cfw-darkgray"; }
-							else if (!CFW.utils.isNullOrEmpty(dangerVal) && current.VALUE >= dangerVal)  		{ current.alertstyle = "cfw-danger"; } 
-							else if (!CFW.utils.isNullOrEmpty(emergencyVal) && current.VALUE >= emergencyVal) 	{ current.alertstyle = "cfw-emergency"; } 
-							else if (!CFW.utils.isNullOrEmpty(warningVal) && current.VALUE >= warningVal) 		{ current.alertstyle = "cfw-warning"; } 
-							else if (!CFW.utils.isNullOrEmpty(goodVal) && current.VALUE >= goodVal) 			{ current.alertstyle = "cfw-good"; } 
-							else if (!CFW.utils.isNullOrEmpty(excellentVal) && current.VALUE >= excellentVal) 	{ current.alertstyle = "cfw-excellent"; } 
-							else 																				{ current.alertstyle = "cfw-gray"; } 
+						
+						current.alertstyle =  CFW.colors.getThresholdStyle(current.VALUE
+								,excellentVal
+								,goodVal
+								,warningVal
+								,emergencyVal
+								,dangerVal
+								,settings.disable);
+						
+						if(current.alertstyle != "cfw-none"){
+							current.textstyle = "white"; 
 						}
 					}
 					
