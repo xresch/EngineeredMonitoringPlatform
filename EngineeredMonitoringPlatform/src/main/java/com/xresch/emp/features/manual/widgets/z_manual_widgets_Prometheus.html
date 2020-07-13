@@ -6,7 +6,7 @@ The environments can be added in the Context Settings found under &quot;Admin &g
 </p>
 
 <h2>Widgets</h2>
-<h3>General - Query</h3>
+<h3>Instant Threshhold</h3>
 <p>
 The General Query widget can be used to execute an instant query and display its results as tiles, panels or as a table.
 You can define thresholds for the values you retrieved to indicate a status with various colors.
@@ -16,6 +16,9 @@ You can define thresholds for the values you retrieved to indicate a status with
 
 
 <h2>Useful Queries</h2>
+<p>
+The following section contains a list of useful queries. For instant queries, put them in braces and append a range selector like &quot;[30m:15s]&quot; to use them as a range query.
+</p>
 
 <h3>Windows Exporter Queries</h3>
 
@@ -43,6 +46,29 @@ You can define thresholds for the values you retrieved to indicate a status with
 			<tr>
 				<td>Free Disk Space (GB) for Instance</td>
 				<td><pre><code>windows_logical_disk_free_bytes{instance="localhost:9182"} / 1000000000</code></pre></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<h3>Hotspot JVM Queries</h3>
+
+<div class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Query</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>JVM Total Memory Used(MB)</td>
+				<td><pre><code>(jvm_memory_bytes_used / 1000000)[30m:15s]</code></pre></td>
+			</tr>
+			<tr>
+				<td>Old Gen Memory Used(MB)</td>
+				<td><pre><code>(jvm_memory_pool_bytes_used{pool="PS Old Gen"} / 1000000)[30m:15s]</code></pre></td>
 			</tr>
 		</tbody>
 	</table>
