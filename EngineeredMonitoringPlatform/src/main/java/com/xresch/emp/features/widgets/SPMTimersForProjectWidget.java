@@ -25,6 +25,7 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
+import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -84,31 +85,8 @@ public class SPMTimersForProjectWidget extends WidgetDefinition {
 						})
 				)
 				
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_excellent")
-						.setLabel("{!cfw_widget_thresholdexcellent!}")
-						.setDescription("{!cfw_widget_thresholdexcellent_desc!}")
-						.setValue(null)
-				)
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_good")
-						.setLabel("{!cfw_widget_thresholdgood!}")
-						.setDescription("{!cfw_widget_thresholdgood_desc!}")
-						.setValue(null)
-				)
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_warning")
-						.setLabel("{!cfw_widget_thresholdwarning!}")
-						.setDescription("{!cfw_widget_thresholdwarning_desc!}")
-						.setValue(null)
-				)
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_emergency")
-						.setLabel("{!cfw_widget_thresholdemergency!}")
-						.setDescription("{!cfw_widget_thresholdemergency_desc!}")
-						.setValue(null)
-				)
-				.addField(CFWField.newFloat(FormFieldType.NUMBER, "threshold_danger")
-						.setLabel("{!cfw_widget_thresholddanger!}")
-						.setDescription("{!cfw_widget_thresholddanger_desc!}")
-						.setValue(null)
-				)
+				.addAllFields(WidgetSettingsFactory.createThresholdFields())
+				
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
 						.setLabel("{!cfw_widget_displayas!}")
 						.setDescription("{!cfw_widget_displayas_desc!}")
