@@ -58,6 +58,7 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 				.addField(CFWField.newInteger(FormFieldType.NUMBER, "ymin")
 						.setLabel("{!cfw_widget_chart_ymin!}")
 						.setDescription("{!cfw_widget_chart_ymin_desc!}")
+						.setValue(0)
 				)
 				
 				.addField(CFWField.newInteger(FormFieldType.NUMBER, "ymax")
