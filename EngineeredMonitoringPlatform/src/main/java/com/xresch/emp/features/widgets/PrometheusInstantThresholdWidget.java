@@ -146,8 +146,8 @@ public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_instant_threshold.js");
-		array.add(js);
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_commonFunctions.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_instant_threshold.js") );
 		return array;
 	}
 

@@ -55,6 +55,13 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 						.setDescription("{!cfw_widget_chartstacked_desc!}")
 						.setValue(false)
 				)
+				
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "show_legend")
+						.setLabel("{!cfw_widget_chartshowlegend!}")
+						.setDescription("{!cfw_widget_chartshowlegend_desc!}")
+						.setValue(false)
+				)
+				
 				.addField(CFWField.newInteger(FormFieldType.NUMBER, "ymin")
 						.setLabel("{!cfw_widget_chart_ymin!}")
 						.setDescription("{!cfw_widget_chart_ymin_desc!}")
@@ -130,8 +137,8 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_range_chart.js");
-		array.add(js);
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_commonFunctions.js") );
+		array.add(  new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_range_chart.js") );
 		return array;
 	}
 

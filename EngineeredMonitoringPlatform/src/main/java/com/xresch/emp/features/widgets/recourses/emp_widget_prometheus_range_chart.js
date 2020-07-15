@@ -20,7 +20,7 @@
 					
 					var settings = widgetObject.JSON_SETTINGS;
 					var chartLabelFields = null;
-					var monitorStats = [];
+					
 					
 					//---------------------------------
 					// Check for Data and Errors
@@ -36,41 +36,7 @@
 					
 					//---------------------------------
 					// Prepare Prometheus data
-					var prometheusData = data.payload.data; 
-					if(prometheusData != null && prometheusData.result != null){
-
-						for(index in prometheusData.result){
-
-							var current = prometheusData.result[index];
-							chartLabelFields = Object.keys(current.metric);
-							
-							if(current.value != undefined){
-								//----------------------------------
-								// handle Instant Value
-								var item = Object.assign({}, current.metric);
-								item.time = current.value[0] * 1000;
-								item.value = current.value[1];
-								if(!isNaN(item.value)){
-									item.value = parseFloat(item.value).toFixed(1);
-								}
-								monitorStats.push(item);
-							}else if(current.values != undefined){
-								//----------------------------------
-								// Handle Range Values
-								for(index in current.values){
-									value = current.values[index];
-									var item = Object.assign({}, current.metric);
-									item.time = value[0] * 1000;
-									item.value = value[1];
-									if(!isNaN(item.value)){
-										item.value = parseFloat(item.value).toFixed(1);
-									}
-									monitorStats.push(item);
-								}
-							}
-						}
-					}
-
+					var monitorStats = emp_widget_prometheus_prepareData(data.payload);
 					
 					//---------------------------
 					// Render Settings
@@ -84,6 +50,7 @@
 								xfield: 'time',
 								yfield: 'value',
 								stacked: settings.stacked,
+								showlegend: settings.show_legend,
 								ymin: settings.ymin,
 								ymax: settings.ymax,
 							}
