@@ -1,0 +1,76 @@
+[
+	{
+		"status": "success",
+		"data": {
+			"resultType": "vector",
+			"result": [
+				{
+					"metric": {
+						"instance": "myserver:9182",
+						"job": "example_job",
+						"volume": "C:"
+					},
+					"value": [
+						1594821066.464,
+						"46.14569686382971"
+					]
+				},
+				{
+					"metric": {
+						"instance": "myserver:9182",
+						"job": "example_job",
+						"volume": "F:"
+					},
+					"value": [
+						1594821066.464,
+						"93.828031900265835"
+					]
+				},
+				{
+					"metric": {
+						"instance": "myserver:9182",
+						"job": "example_job",
+						"volume": "M:"
+					},
+					"value": [
+						1594821066.464,
+						"23.01399585403586"
+					]
+				},
+				{
+					"metric": {
+						"instance": "myserver:9182",
+						"job": "example_job",
+						"volume": "P:"
+					},
+					"value": [
+						1594821066.464,
+						"76.07008760951189"
+					]
+				},
+				{
+					"metric": {
+						"instance": "myserver:9182",
+						"job": "example_job",
+						"volume": "X:"
+					},
+					"value": [
+						1594821066.464,
+						"50.63908213715105"
+					]
+				},
+				{
+					"metric": {
+						"instance": "myserver:9182",
+						"job": "example_job",
+						"volume": "Z:"
+					},
+					"value": [
+						1594821066.464,
+						"6.442688142293808"
+					]
+				}
+			]
+		}
+	}
+]

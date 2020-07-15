@@ -37,7 +37,7 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 						.setDescription("{!cfw_widget_spm_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 				)
-				.addField(CFWField.newString(FormFieldType.TEXT, "query")
+				.addField(CFWField.newString(FormFieldType.TEXTAREA, "query")
 						.setLabel("{!emp_widget_prometheus_range_query!}")
 						.setDescription("{!emp_widget_prometheus_range_query_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
@@ -104,7 +104,7 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 			return;
 		}
 		
-		String prometheusQuery = queryElement.getAsString();
+		String prometheusQuerys = queryElement.getAsString();
 		
 		//---------------------------------
 		// Get Environment
@@ -119,18 +119,22 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 			return;
 		}
 	
-		CFWHttpResponse queryResult = environment.query(prometheusQuery);
-		if(queryResult != null) {
-			response.getContent().append(queryResult.getResponseBody());	
+		JsonArray resultArray = new JsonArray();
+		String[] queryArray = prometheusQuerys.trim().split("\r\n|\n");
+		for(int i = 0; i < queryArray.length; i++) {
+			JsonObject queryResult = environment.query(queryArray[i]);
+			
+			if(queryResult != null) {
+				resultArray.add(queryResult);
+			}
 		}
 		
+		response.getContent().append(resultArray.toString());	
 	}
 	
 	public void createSampleData(JSONResponse response) { 
 
-		JsonArray resultArray = new JsonArray();
-				
-		response.getContent().append(resultArray.toString());
+		response.getContent().append(CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_range_chart_sample.json") );
 		
 	}
 	

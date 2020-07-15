@@ -19,25 +19,21 @@
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					
 					var settings = widgetObject.JSON_SETTINGS;
-					var chartLabelFields = null;
+					 null;
 					
 					
 					//---------------------------------
 					// Check for Data and Errors
-					if(CFW.utils.isNullOrEmpty(data.payload) || typeof data.payload == 'string'){
+					if(CFW.utils.isNullOrEmpty(data.payload) || typeof data.payload == 'string' || data.payload.length == null){
 						callback(widgetObject, '');
-						return;
-					}
-					if(data.payload.error != undefined){
-					
-						callback(widgetObject, "<p><b>Prometheus Error: </b>"+data.payload.error+'</p>');
 						return;
 					}
 					
 					//---------------------------------
 					// Prepare Prometheus data
 					var monitorStats = emp_widget_prometheus_prepareData(data.payload);
-					
+					var chartLabelFields = emp_widget_prometheus_getChartLabelFields(data.payload);
+					console.log(chartLabelFields);
 					//---------------------------
 					// Render Settings
 					var dataToRender = {

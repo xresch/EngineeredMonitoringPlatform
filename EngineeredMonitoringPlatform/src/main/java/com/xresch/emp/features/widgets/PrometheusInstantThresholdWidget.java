@@ -128,18 +128,19 @@ public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 			return;
 		}
 	
-		CFWHttpResponse queryResult = environment.query(prometheusQuery);
+		JsonObject queryResult = environment.query(prometheusQuery);
+		JsonArray array = new JsonArray();
+
 		if(queryResult != null) {
-			response.getContent().append(queryResult.getResponseBody());	
+			array.add(queryResult);
 		}
 		
+		response.getContent().append(CFW.JSON.toJSON(array));	
 	}
 	
 	public void createSampleData(JSONResponse response) { 
 
-		JsonArray resultArray = new JsonArray();
-				
-		response.getContent().append(resultArray.toString());
+		response.getContent().append(CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_instant_threshold_sample.json") );
 		
 	}
 	

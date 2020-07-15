@@ -1,5 +1,6 @@
 package com.xresch.emp.features.environments;
 
+import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
@@ -111,11 +112,20 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		return this;
 	}
 	
-	public CFWHttpResponse query(String prometheusQuery) {
+	public JsonObject query(String prometheusQuery) {
 		
 		String queryURL = getAPIUrlVersion1() + "/query?query="+CFW.HTTP.encode(prometheusQuery);
-
-		return CFW.HTTP.sendGETRequest(queryURL);
+		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
+		if(queryResult != null) {
+			JsonObject json = CFW.JSON.fromJson(queryResult.getResponseBody());
+			if(json.get("error") != null) {
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
+				return null;
+			}
+			
+			return json;
+		}
+		return null;
 	}
 	
 	
