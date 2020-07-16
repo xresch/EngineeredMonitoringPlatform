@@ -63,7 +63,6 @@ function emp_widget_prometheus_getChartLabelFields(responsePayload){
 	for(var i = 0; i < responsePayload.length; i++){
 		var prometheusData = responsePayload[i].data; 
 		if(prometheusData != null && prometheusData.result != null){
-			console.log(Object.keys(prometheusData.result[0].metric));
 			chartLabelFields = _.concat(chartLabelFields, Object.keys(prometheusData.result[0].metric) );
 		}
 	}

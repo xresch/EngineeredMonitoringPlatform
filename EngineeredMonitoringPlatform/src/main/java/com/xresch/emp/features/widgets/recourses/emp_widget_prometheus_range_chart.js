@@ -33,7 +33,7 @@
 					// Prepare Prometheus data
 					var monitorStats = emp_widget_prometheus_prepareData(data.payload);
 					var chartLabelFields = emp_widget_prometheus_getChartLabelFields(data.payload);
-					console.log(chartLabelFields);
+
 					//---------------------------
 					// Render Settings
 					var dataToRender = {
