@@ -39,8 +39,8 @@ Here some useful tricks when working with this widget:
 				<td>Use PromQL label_replace() function to add additional labels. Can be useful to distinct multiple query results. 
 				Following fetches the Old Gen Bytes used and committed and adds a an additional label name.
 				
-<pre><code>label_replace((jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "used", "pool", ".*")[30m:1m]
-label_replace((jvm_memory_pool_bytes_committed{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "committed", "pool", ".*")[30m:1m]
+<pre><code>label_replace((jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "used", "pool", ".*")
+label_replace((jvm_memory_pool_bytes_committed{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "committed", "pool", ".*")
 </code></pre>
 			</tr>
 			
@@ -49,11 +49,11 @@ label_replace((jvm_memory_pool_bytes_committed{pool="PS Old Gen", instance="loca
 				<td>
 Use PromQL aggregation operators like sum() to remove existing labels. Can be useful to shorten series titles. 
 Following is an example that removes all labels except pool and sums the leftovers, which in this case is only one result.
-<pre><code>(sum by(pool)(jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"}) / 1000000)[30m:1m]
+<pre><code>(sum by(pool)(jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"}) / 1000000)
 </code></pre>
 Here a more advanced example using the previous result:				
-<pre><code>label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"}) / 1000000), "name", "used", "pool", ".*")[30m:1m]
-label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS Old Gen",  instance="localhost:8888"}) / 1000000), "name", "committed", "pool", ".*")[30m:1m]
+<pre><code>label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"}) / 1000000), "name", "used", "pool", ".*")
+label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS Old Gen",  instance="localhost:8888"}) / 1000000), "name", "committed", "pool", ".*")
 </code></pre>
 			</tr>
 		</tbody>
@@ -62,7 +62,7 @@ label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS 
 
 <h2>Query Examples</h2>
 <p>
-The following section contains a list of useful queries. For instant queries, put them in braces and append a range selector like &quot;[30m:15s]&quot; to use them as a range query.
+The following section contains a list of useful queries.
 </p>
 
 <h3>Windows Exporter Queries</h3>
@@ -95,11 +95,11 @@ The following section contains a list of useful queries. For instant queries, pu
 			</tr>
 			<tr>
 				<td>Disk Read (MB/sec)</td>
-				<td><pre><code>sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhost:9182"}[1m]) / 1000000)[30m:1m]</code></pre></td>
+				<td><pre><code>sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhost:9182"}[1m]) / 1000000)</code></pre></td>
 			</tr>
 			<tr>
 				<td>Disk write (MB/sec)</td>
-				<td><pre><code>avg by(volume)(irate(windows_logical_disk_write_bytes_total{instance="localhost:9182"}[1m]) / 1000000)[30m:1m]</code></pre></td>
+				<td><pre><code>avg by(volume)(irate(windows_logical_disk_write_bytes_total{instance="localhost:9182"}[1m]) / 1000000)</code></pre></td>
 			</tr>
 
 
@@ -120,13 +120,13 @@ The following section contains a list of useful queries. For instant queries, pu
 		<tbody>
 			<tr>
 				<td>JVM Total Memory Used(MB)</td>
-				<td><pre><code>(jvm_memory_bytes_used / 1000000)[30m:15s]</code></pre></td>
+				<td><pre><code>(jvm_memory_bytes_used / 1000000)</code></pre></td>
 			</tr>
 			<tr>
 				<td>Old Gen Memory Used and Committed(MB)</td>
 				<td>
-<pre><code>label_replace((jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "used", "pool", ".*")[30m:1m]
-label_replace((jvm_memory_pool_bytes_committed{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "committed", "pool", ".*")[30m:1m]
+<pre><code>label_replace((jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "used", "pool", ".*")
+label_replace((jvm_memory_pool_bytes_committed{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "committed", "pool", ".*")
 </code></pre>
 				</td>
 			</tr>
@@ -134,8 +134,8 @@ label_replace((jvm_memory_pool_bytes_committed{pool="PS Old Gen", instance="loca
 			<tr>
 				<td>Eden Space Memory Used and Committed(MB)</td>
 				<td>
-<pre><code>label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_used{pool="PS Eden Space", instance="localhost:8888"}) / 1000000), "name", "used", "pool", ".*")[30m:1m]
-label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS Eden Space",  instance="localhost:8888"}) / 1000000), "name", "committed", "pool", ".*")[30m:1m]
+<pre><code>label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_used{pool="PS Eden Space", instance="localhost:8888"}) / 1000000), "name", "used", "pool", ".*")
+label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS Eden Space",  instance="localhost:8888"}) / 1000000), "name", "committed", "pool", ".*")
 </code></pre>
 				</td>
 			</tr>
@@ -143,7 +143,7 @@ label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS 
 			<tr>
 				<td>GC PS Scavenge Duration(ms)</td>
 				<td>
-<pre><code>(increase(jvm_gc_collection_seconds_sum{gc="PS Scavenge",instance="localhost:8888",job="cfw_localhost"}[1m]) / increase(jvm_gc_collection_seconds_count{gc="PS Scavenge",instance="localhost:8888",job="cfw_localhost"}[1m])*1000)[30m:1m]
+<pre><code>(increase(jvm_gc_collection_seconds_sum{gc="PS Scavenge",instance="localhost:8888",job="cfw_localhost"}[1m]) / increase(jvm_gc_collection_seconds_count{gc="PS Scavenge",instance="localhost:8888",job="cfw_localhost"}[1m])*1000)
 </code></pre>
 				</td>
 			</tr>
@@ -151,7 +151,7 @@ label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS 
 			<tr>
 				<td>GC PS MarkSweep Duration(ms)</td>
 				<td>
-<pre><code>(increase(jvm_gc_collection_seconds_sum{gc="PS MarkSweep",instance="localhost:8888",job="cfw_localhost"}[1m]) / increase(jvm_gc_collection_seconds_count{gc="PS MarkSweep",instance="localhost:8888",job="cfw_localhost"}[1m])*1000)[30m:1m]
+<pre><code>(increase(jvm_gc_collection_seconds_sum{gc="PS MarkSweep",instance="localhost:8888",job="cfw_localhost"}[1m]) / increase(jvm_gc_collection_seconds_count{gc="PS MarkSweep",instance="localhost:8888",job="cfw_localhost"}[1m])*1000)
 </code></pre>
 				</td>
 			</tr>	
@@ -159,7 +159,7 @@ label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS 
 			<tr>
 				<td>CPU Usage % (User & System)</td>
 				<td>
-<pre><code>avg by (instance) (irate(process_cpu_seconds_total{instance="localhost:8888"}[1m])*100)[30m:1m]
+<pre><code>avg by (instance) (irate(process_cpu_seconds_total{instance="localhost:8888"}[1m])*100)
 </code></pre>
 				</td>
 			</tr>							
