@@ -93,6 +93,16 @@ The following section contains a list of useful queries. For instant queries, pu
 				<td>Free Disk Space (GB) for Instance</td>
 				<td><pre><code>windows_logical_disk_free_bytes{instance="localhost:9182"} / 1000000000</code></pre></td>
 			</tr>
+			<tr>
+				<td>Disk Read (MB/sec)</td>
+				<td><pre><code>sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhost:9182"}[1m]) / 1000000)[30m:1m]</code></pre></td>
+			</tr>
+			<tr>
+				<td>Disk write (MB/sec)</td>
+				<td><pre><code>avg by(volume)(irate(windows_logical_disk_write_bytes_total{instance="localhost:9182"}[1m]) / 1000000)[30m:1m]</code></pre></td>
+			</tr>
+
+
 		</tbody>
 	</table>
 </div>

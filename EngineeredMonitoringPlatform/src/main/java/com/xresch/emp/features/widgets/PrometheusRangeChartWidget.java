@@ -118,11 +118,16 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Prometheus Widget: The chosen environment seems not configured correctly.");
 			return;
 		}
-	
+		
+		//---------------------------------
+		// Get Environment
+		long earliest = settings.get("timeframe_earliest").getAsLong();
+		long latest = settings.get("timeframe_latest").getAsLong();
+		
 		JsonArray resultArray = new JsonArray();
 		String[] queryArray = prometheusQuerys.trim().split("\r\n|\n");
 		for(int i = 0; i < queryArray.length; i++) {
-			JsonObject queryResult = environment.query(queryArray[i]);
+			JsonObject queryResult = environment.queryRange(queryArray[i], earliest, latest);
 			
 			if(queryResult != null) {
 				resultArray.add(queryResult);

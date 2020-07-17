@@ -128,6 +128,25 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		return null;
 	}
 	
-	
+	public JsonObject queryRange(String prometheusQuery,long earliestMillis, long latestMillis) {
+		
+		String queryURL = getAPIUrlVersion1() 
+				+ "/query_range?query="+CFW.HTTP.encode(prometheusQuery)
+				+"&start="+(earliestMillis/1000)
+				+"&end="+(latestMillis/1000)
+				+"&step="+CFW.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
+		
+		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
+		if(queryResult != null) {
+			JsonObject json = CFW.JSON.fromJson(queryResult.getResponseBody());
+			if(json.get("error") != null) {
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
+				return null;
+			}
+			
+			return json;
+		}
+		return null;
+	}
 	
 }
