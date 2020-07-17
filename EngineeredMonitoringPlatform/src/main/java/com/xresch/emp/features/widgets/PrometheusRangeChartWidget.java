@@ -46,8 +46,8 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "chart_type")
 						.setLabel("{!cfw_widget_charttype!}")
 						.setDescription("{!cfw_widget_charttype_desc!}")
-						.setOptions(new String[]{"Line", "Bar", "Scatter"})
-						.setValue("Line")
+						.setOptions(new String[]{"Area", "Line", "Bar", "Scatter"})
+						.setValue("Area")
 				)
 				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "stacked")
