@@ -128,7 +128,14 @@ public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 			return;
 		}
 	
-		JsonObject queryResult = environment.query(prometheusQuery);
+		//---------------------------------
+		// Timeframe
+		//long earliest = settings.get("timeframe_earliest").getAsLong();
+		long latest = settings.get("timeframe_latest").getAsLong();
+		
+		//---------------------------------
+		// Fetch Data
+		JsonObject queryResult = environment.query(prometheusQuery, latest);
 		JsonArray array = new JsonArray();
 
 		if(queryResult != null) {

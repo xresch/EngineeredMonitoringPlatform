@@ -120,10 +120,12 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 		}
 		
 		//---------------------------------
-		// Get Environment
+		// Timeframe
 		long earliest = settings.get("timeframe_earliest").getAsLong();
 		long latest = settings.get("timeframe_latest").getAsLong();
 		
+		//---------------------------------
+		// Fetch Data
 		JsonArray resultArray = new JsonArray();
 		String[] queryArray = prometheusQuerys.trim().split("\r\n|\n");
 		for(int i = 0; i < queryArray.length; i++) {

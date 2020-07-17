@@ -14,6 +14,7 @@
 			menuicon: "fas fa-thermometer-half",
 			menulabel: CFWL('emp_widget_prometheus_instant_threshold', "Instant Threshold"),
 			description: CFWL('emp_widget_prometheus_instant_threshold_desc', "A prometheus query that will be used to retrieve the last value(instant) of the matched metrics and colors it by the specified threshold."), 
+			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){

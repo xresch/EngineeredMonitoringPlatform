@@ -112,9 +112,12 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		return this;
 	}
 	
-	public JsonObject query(String prometheusQuery) {
+	public JsonObject query(String prometheusQuery, long latestMillis) {
 		
-		String queryURL = getAPIUrlVersion1() + "/query?query="+CFW.HTTP.encode(prometheusQuery);
+		String queryURL = getAPIUrlVersion1() 
+				+ "/query?query="+CFW.HTTP.encode(prometheusQuery)
+				+ "&time="+(latestMillis/1000);
+		
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
 			JsonObject json = CFW.JSON.fromJson(queryResult.getResponseBody());
@@ -128,7 +131,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		return null;
 	}
 	
-	public JsonObject queryRange(String prometheusQuery,long earliestMillis, long latestMillis) {
+	public JsonObject queryRange(String prometheusQuery, long earliestMillis, long latestMillis) {
 		
 		String queryURL = getAPIUrlVersion1() 
 				+ "/query_range?query="+CFW.HTTP.encode(prometheusQuery)
