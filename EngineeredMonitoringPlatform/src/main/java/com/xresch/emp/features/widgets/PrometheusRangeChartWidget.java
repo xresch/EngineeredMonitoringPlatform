@@ -38,10 +38,11 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 						.setDescription("{!cfw_widget_spm_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 				)
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, "query")
+				.addField((CFWField)CFWField.newString(FormFieldType.TEXTAREA, "query")
 						.setLabel("{!emp_widget_prometheus_range_query!}")
 						.setDescription("{!emp_widget_prometheus_range_query_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
+						.addCssClass("textarea-nowrap")
 				)
 			
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())

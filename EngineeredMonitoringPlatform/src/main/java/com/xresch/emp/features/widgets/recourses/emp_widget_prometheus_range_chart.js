@@ -50,6 +50,7 @@
 								showlegend: settings.show_legend,
 								ymin: settings.ymin,
 								ymax: settings.ymax,
+								pointradius: settings.pointradius,
 							}
 					}};
 										
