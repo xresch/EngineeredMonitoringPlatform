@@ -15,6 +15,7 @@ import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
+import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -43,35 +44,7 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 				)
 			
-				.addField(CFWField.newString(FormFieldType.SELECT, "chart_type")
-						.setLabel("{!cfw_widget_charttype!}")
-						.setDescription("{!cfw_widget_charttype_desc!}")
-						.setOptions(new String[]{"Area", "Line", "Bar", "Scatter"})
-						.setValue("Area")
-				)
-				
-				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "stacked")
-						.setLabel("{!cfw_widget_chartstacked!}")
-						.setDescription("{!cfw_widget_chartstacked_desc!}")
-						.setValue(false)
-				)
-				
-				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "show_legend")
-						.setLabel("{!cfw_widget_chartshowlegend!}")
-						.setDescription("{!cfw_widget_chartshowlegend_desc!}")
-						.setValue(false)
-				)
-				
-				.addField(CFWField.newInteger(FormFieldType.NUMBER, "ymin")
-						.setLabel("{!cfw_widget_chart_ymin!}")
-						.setDescription("{!cfw_widget_chart_ymin_desc!}")
-						.setValue(0)
-				)
-				
-				.addField(CFWField.newInteger(FormFieldType.NUMBER, "ymax")
-						.setLabel("{!cfw_widget_chart_ymax!}")
-						.setDescription("{!cfw_widget_chart_ymax_desc!}")
-				)
+				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
 				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
 						.setLabel("{!cfw_widget_sampledata!}")
