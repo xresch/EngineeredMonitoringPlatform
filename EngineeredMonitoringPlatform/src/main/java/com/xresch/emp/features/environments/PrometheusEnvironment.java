@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.google.common.base.Strings;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
@@ -12,6 +13,7 @@ import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.db.CFWSQL;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
+import com.xresch.cfw.features.core.AutocompleteItem;
 import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
@@ -121,6 +123,9 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		return this;
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public JsonObject query(String prometheusQuery, long latestMillis) {
 		
 		String queryURL = getAPIUrlVersion1() 
@@ -140,13 +145,20 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		return null;
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public JsonObject queryRange(String prometheusQuery, long earliestMillis, long latestMillis) {
 		
+		String interval = CFW.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
+		
+		prometheusQuery = prometheusQuery.replace("[interval]", "["+( (interval.endsWith("s")) ? "1m" : interval )+"]");
+		System.out.println(prometheusQuery);
 		String queryURL = getAPIUrlVersion1() 
 				+ "/query_range?query="+CFW.HTTP.encode(prometheusQuery)
 				+"&start="+(earliestMillis/1000)
 				+"&end="+(latestMillis/1000)
-				+"&step="+CFW.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
+				+"&step="+interval;
 		
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
@@ -161,7 +173,9 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		return null;
 	}
 	
-	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public static AutocompleteResult autocompleteQuery(String searchValue, int limit) {
 		
 		if(searchValue.length() < 3) {
@@ -175,11 +189,9 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		
 		String likeString = "%"+lastLine+"%";
 		
-		System.out.println("likeString:"+likeString);
-		
 		ResultSet resultSet = new CFWSQL(null)
 			.loadSQLResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_autocompleteQuery.sql", 
-					likeString, 
+					"%query\":\""+likeString, 
 					likeString, 
 					limit)
 			.getResultSet();
@@ -192,11 +204,14 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 					String widgetName = resultSet.getString("TITLE");
 					JsonObject json = CFW.JSON.fromJson(resultSet.getString("JSON_SETTINGS"));
 					
-					String query = json.get("query").getAsString();
-					if(!Strings.isNullOrEmpty(widgetName)) {
-						suggestions.addItem(query, query, "Source Dashboard: "+dashboardName+", Widget: "+widgetName);
-					}else {
-						suggestions.addItem(query, query, "Source Dashboard: "+dashboardName);
+					JsonElement queryElement = json.get("query");
+					if(!queryElement.isJsonNull()) {
+						String query = queryElement.getAsString();
+						if(!Strings.isNullOrEmpty(widgetName)) {
+							suggestions.addItem(new AutocompleteItem(query, query, "Source Dashboard: "+dashboardName+", Widget: "+widgetName).setMethodReplace(lastLine));
+						}else {
+							suggestions.addItem(new AutocompleteItem(query, query, "Source Dashboard: "+dashboardName).setMethodReplace(lastLine));
+						}
 					}
 				}
 			} catch (SQLException e) {

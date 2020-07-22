@@ -5,6 +5,19 @@ Before the Prometheus widgets can be used, at least one Prometheus environment h
 The environments can be added in the Context Settings found under &quot;Admin &gt;&gt; Context Settings&quot;.
 </p>
 
+
+<h2>The [interval] Placeholder</h2>
+<p>
+For widgets querying a time range, it is recommended to use the &quot;[interval]&quot; placeholder to define Prometheus Range Vector Selectors.
+The placeholder will be replaced with an interval that gives you a good granularity based on the selected timeframe while keeping performance in mind.
+This also will ensure that the data displayed will be accurate.
+</p>
+<pre><code>//Query with the a regular Prometheus Range Vector Selector  
+sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhost:9182"}[5m]) / 1000000)
+//Same as above with the placeholder used in EMP 
+sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhost:9182"}[interval]) / 1000000)</code></pre>
+
+
 <h2>Widgets</h2>
 <h3>Instant Threshold</h3>
 <p>
@@ -81,11 +94,11 @@ The following section contains a list of useful queries.
 		<tbody>
 			<tr>
 				<td>CPU Usage(%) by Instance</td>
-				<td><pre><code>100 - (avg by (instance) (irate(windows_cpu_time_total{mode="idle"}[5m])) * 100)</code></pre></td>
+				<td><pre><code>100 - (avg by (instance) (irate(windows_cpu_time_total{mode="idle"}[interval])) * 100)</code></pre></td>
 			</tr>
 			<tr>
 				<td>CPU Statistics(%) for Instance(user, system, idle...)</td>
-				<td><pre><code>avg by (instance,mode) (irate(windows_cpu_time_total{instance="localhost:9182"}[5m]) *100)</code></pre></td>
+				<td><pre><code>avg by (instance,mode) (irate(windows_cpu_time_total{instance="localhost:9182"}[interval]) *100)</code></pre></td>
 			</tr>
 			<tr>
 				<td>Disk Space Used %</td>
@@ -97,13 +110,20 @@ The following section contains a list of useful queries.
 			</tr>
 			<tr>
 				<td>Disk Read (MB/sec)</td>
-				<td><pre><code>sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhost:9182"}[1m]) / 1000000)</code></pre></td>
+				<td><pre><code>sum by(volume)(irate(windows_logical_disk_read_bytes_total{instance="localhost:9182"}[interval]) / 1000000)</code></pre></td>
 			</tr>
 			<tr>
-				<td>Disk write (MB/sec)</td>
-				<td><pre><code>avg by(volume)(irate(windows_logical_disk_write_bytes_total{instance="localhost:9182"}[1m]) / 1000000)</code></pre></td>
+				<td>Disk Write (MB/sec)</td>
+				<td><pre><code>avg by(volume)(irate(windows_logical_disk_write_bytes_total{instance="localhost:9182"}[interval]) / 1000000)</code></pre></td>
 			</tr>
-
+			<tr>
+				<td>Disk Read (MB)</td>
+				<td><pre><code>sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhost:9182"}[interval]) / 1000000)</code></pre></td>
+			</tr>
+			<tr>
+				<td>Disk Write (MB)</td>
+				<td><pre><code>avg by(volume)(increase(windows_logical_disk_write_bytes_total{instance="localhost:9182"}[interval]) / 1000000)</code></pre></td>
+			</tr>
 
 		</tbody>
 	</table>
@@ -145,7 +165,7 @@ label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS 
 			<tr>
 				<td>GC PS Scavenge Duration(ms)</td>
 				<td>
-<pre><code>(increase(jvm_gc_collection_seconds_sum{gc="PS Scavenge",instance="localhost:8888",job="cfw_localhost"}[1m]) / increase(jvm_gc_collection_seconds_count{gc="PS Scavenge",instance="localhost:8888",job="cfw_localhost"}[1m])*1000)
+<pre><code>(increase(jvm_gc_collection_seconds_sum{gc="PS Scavenge",instance="localhost:8888",job="cfw_localhost"}[interval]) / increase(jvm_gc_collection_seconds_count{gc="PS Scavenge",instance="localhost:8888",job="cfw_localhost"}[interval])*1000)
 </code></pre>
 				</td>
 			</tr>
@@ -153,7 +173,7 @@ label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS 
 			<tr>
 				<td>GC PS MarkSweep Duration(ms)</td>
 				<td>
-<pre><code>(increase(jvm_gc_collection_seconds_sum{gc="PS MarkSweep",instance="localhost:8888",job="cfw_localhost"}[1m]) / increase(jvm_gc_collection_seconds_count{gc="PS MarkSweep",instance="localhost:8888",job="cfw_localhost"}[1m])*1000)
+<pre><code>(increase(jvm_gc_collection_seconds_sum{gc="PS MarkSweep",instance="localhost:8888",job="cfw_localhost"}[interval]) / increase(jvm_gc_collection_seconds_count{gc="PS MarkSweep",instance="localhost:8888",job="cfw_localhost"}[interval])*1000)
 </code></pre>
 				</td>
 			</tr>	
@@ -161,7 +181,7 @@ label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS 
 			<tr>
 				<td>CPU Usage % (User & System)</td>
 				<td>
-<pre><code>avg by (instance) (irate(process_cpu_seconds_total{instance="localhost:8888"}[1m])*100)
+<pre><code>avg by (instance) (irate(process_cpu_seconds_total{instance="localhost:8888"}[interval])*100)
 </code></pre>
 				</td>
 			</tr>							
