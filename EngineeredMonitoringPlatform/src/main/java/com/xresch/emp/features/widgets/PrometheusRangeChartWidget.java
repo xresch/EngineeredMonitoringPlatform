@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+
+import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -14,6 +17,11 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.features.core.AutocompleteList;
+import com.xresch.cfw.features.core.AutocompleteResult;
+import com.xresch.cfw.features.core.CFWAutocompleteHandler;
+import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
@@ -42,7 +50,44 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 						.setLabel("{!emp_widget_prometheus_range_query!}")
 						.setDescription("{!emp_widget_prometheus_range_query_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
+						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+							
+							@Override
+							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+								
+								if(searchValue.length() < 3) {
+									return null;
+								}
+								String[] splitted = searchValue.split("\r\n|\n");
+								
+								String likeString = "%"+splitted[splitted.length-1]+"%";
+								System.out.println("likeString:"+likeString);
+								
+								ArrayList<CFWObject> widgets = new DashboardWidget()
+									.select(DashboardWidgetFields.TITLE,
+											DashboardWidgetFields.JSON_SETTINGS)
+									.where(DashboardWidgetFields.TYPE, "emp_prometheus_range_chart")
+									.and().like(DashboardWidgetFields.JSON_SETTINGS, "%query\":\""+likeString)
+									.or().like(DashboardWidgetFields.TITLE, likeString)
+									.limit(this.getMaxResults())
+									.getAsObjectList();
+								
+								AutocompleteList suggestions = new AutocompleteList();
+								for(CFWObject object : widgets) {
+									DashboardWidget widget = (DashboardWidget)object;
+									JsonObject json = CFW.JSON.fromJson(widget.settings());
+									String query = json.get("query").getAsString();
+									if(!Strings.isNullOrEmpty(widget.title())) {
+										suggestions.addItem(query, query, "Widget: "+widget.title());
+									}else {
+										suggestions.addItem(query, query);
+									}
+								}
+								return new AutocompleteResult(suggestions);
+							}
+						})
 						.addCssClass("textarea-nowrap")
+						
 				)
 			
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
