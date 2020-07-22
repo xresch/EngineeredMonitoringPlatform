@@ -1,15 +1,24 @@
 package com.xresch.emp.features.environments;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.google.common.base.Strings;
 import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
-import com.xresch.cfw.db.DBInterface;
+import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.db.CFWSQL;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
+import com.xresch.cfw.features.core.AutocompleteList;
+import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
+import com.xresch.emp.features.widgets.FeatureEMPWidgets;
 
 /**************************************************************************************************************
  * 
@@ -150,6 +159,55 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 			return json;
 		}
 		return null;
+	}
+	
+	
+	public static AutocompleteResult autocompleteQuery(String searchValue, int limit) {
+		
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		String[] splitted = searchValue.split("\r\n|\n");
+		String lastLine = splitted[splitted.length-1];
+		if(lastLine.length() > 50) {
+			return null;
+		}
+		
+		String likeString = "%"+lastLine+"%";
+		
+		System.out.println("likeString:"+likeString);
+		
+		ResultSet resultSet = new CFWSQL(null)
+			.loadSQLResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_prometheus_autocompleteQuery.sql", 
+					likeString, 
+					likeString, 
+					limit)
+			.getResultSet();
+		
+		AutocompleteList suggestions = new AutocompleteList();
+		if(resultSet != null) {
+			try {
+				while(resultSet.next()) {
+					String dashboardName = resultSet.getString("DASHBOARD_NAME");
+					String widgetName = resultSet.getString("TITLE");
+					JsonObject json = CFW.JSON.fromJson(resultSet.getString("JSON_SETTINGS"));
+					
+					String query = json.get("query").getAsString();
+					if(!Strings.isNullOrEmpty(widgetName)) {
+						suggestions.addItem(query, query, "Source Dashboard: "+dashboardName+", Widget: "+widgetName);
+					}else {
+						suggestions.addItem(query, query, "Source Dashboard: "+dashboardName);
+					}
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				CFW.DB.close(resultSet);
+			}
+		}
+		
+		return new AutocompleteResult(suggestions);
 	}
 	
 }

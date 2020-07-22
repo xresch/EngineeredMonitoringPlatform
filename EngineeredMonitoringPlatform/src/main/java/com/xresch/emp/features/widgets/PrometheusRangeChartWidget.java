@@ -51,39 +51,9 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 						.setDescription("{!emp_widget_prometheus_range_query_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-							
 							@Override
 							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-								
-								if(searchValue.length() < 3) {
-									return null;
-								}
-								String[] splitted = searchValue.split("\r\n|\n");
-								
-								String likeString = "%"+splitted[splitted.length-1]+"%";
-								System.out.println("likeString:"+likeString);
-								
-								ArrayList<CFWObject> widgets = new DashboardWidget()
-									.select(DashboardWidgetFields.TITLE,
-											DashboardWidgetFields.JSON_SETTINGS)
-									.where(DashboardWidgetFields.TYPE, "emp_prometheus_range_chart")
-									.and().like(DashboardWidgetFields.JSON_SETTINGS, "%query\":\""+likeString)
-									.or().like(DashboardWidgetFields.TITLE, likeString)
-									.limit(this.getMaxResults())
-									.getAsObjectList();
-								
-								AutocompleteList suggestions = new AutocompleteList();
-								for(CFWObject object : widgets) {
-									DashboardWidget widget = (DashboardWidget)object;
-									JsonObject json = CFW.JSON.fromJson(widget.settings());
-									String query = json.get("query").getAsString();
-									if(!Strings.isNullOrEmpty(widget.title())) {
-										suggestions.addItem(query, query, "Widget: "+widget.title());
-									}else {
-										suggestions.addItem(query, query);
-									}
-								}
-								return new AutocompleteResult(suggestions);
+								return PrometheusEnvironment.autocompleteQuery(searchValue, this.getMaxResults());
 							}
 						})
 						.addCssClass("textarea-nowrap")
