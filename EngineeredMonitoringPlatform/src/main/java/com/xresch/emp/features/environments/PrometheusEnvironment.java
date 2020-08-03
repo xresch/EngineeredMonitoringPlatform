@@ -153,7 +153,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		String interval = CFW.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
 		
 		prometheusQuery = prometheusQuery.replace("[interval]", "["+( (interval.endsWith("s")) ? "1m" : interval )+"]");
-		System.out.println(prometheusQuery);
+
 		String queryURL = getAPIUrlVersion1() 
 				+ "/query_range?query="+CFW.HTTP.encode(prometheusQuery)
 				+"&start="+(earliestMillis/1000)

@@ -15,7 +15,6 @@ import com.xresch.emp.features.widgets.FeatureEMPWidgets;
 /**************************************************************************************************************
  * 
  * @author Reto Scheiwiller, (c) Copyright 2019 
- * @license Creative Commons: Attribution-NonCommercial-NoDerivatives 4.0 International
  **************************************************************************************************************/
 public class Main implements CFWAppInterface {
 	
@@ -57,16 +56,16 @@ public class Main implements CFWAppInterface {
 	}
 	
 	@Override
-	public void startApp(CFWApplicationExecutor app) {
+	public void startApp(CFWApplicationExecutor executor) {
 	    	
 	        	        
 	        //###################################################################
 	        // Startup
 	        //###################################################################
-	        app.setDefaultURL("/dashboard/list", true);
+	        executor.setDefaultURL("/dashboard/list", true);
 	        
 	        try {
-				app.start();
+				executor.start();
 			} catch (Exception e) {
 				new CFWLog(logger)
 				.method("startApp")

@@ -67,8 +67,6 @@ public class PrometheusRangeChartWidget extends WidgetDefinition {
 						.setDescription("{!cfw_widget_sampledata_desc!}")
 						.setValue(false)
 				)
-				
-	
 		;
 	}
 
