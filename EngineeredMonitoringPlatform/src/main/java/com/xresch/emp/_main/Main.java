@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWAppInterface;
 import com.xresch.cfw._main.CFWApplicationExecutor;
+import com.xresch.cfw._main.CFWExtensionApplication;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.emp.features.api.FeatureEMPAPI;
 import com.xresch.emp.features.environments.FeatureEMPEnvironments;
@@ -16,6 +17,7 @@ import com.xresch.emp.features.widgets.FeatureEMPWidgets;
  * 
  * @author Reto Scheiwiller, (c) Copyright 2019 
  **************************************************************************************************************/
+@CFWExtensionApplication
 public class Main implements CFWAppInterface {
 	
 	public static Logger logger = CFWLog.getLogger(Main.class.getName());
