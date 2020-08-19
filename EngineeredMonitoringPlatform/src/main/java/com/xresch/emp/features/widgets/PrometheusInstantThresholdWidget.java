@@ -42,12 +42,10 @@ public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.TEXT, "query")
 						.setLabel("{!emp_widget_prometheus_instant_query!}")
 						.setDescription("{!emp_widget_prometheus_instant_query_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 				)
 				.addField(CFWField.newString(FormFieldType.TEXT, "suffix")
 						.setLabel("{!emp_widget_prometheus_suffix!}")
 						.setDescription("{!emp_widget_prometheus_suffix_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
 				)
 				
 				.addAllFields(WidgetSettingsFactory.createThresholdFields())
