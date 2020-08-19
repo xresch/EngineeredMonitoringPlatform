@@ -109,7 +109,7 @@ public class SPMProjectStatusWidget extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
 		//---------------------------------
 		// Example Data
 		JsonElement sampleDataElement = settings.get("sampledata");

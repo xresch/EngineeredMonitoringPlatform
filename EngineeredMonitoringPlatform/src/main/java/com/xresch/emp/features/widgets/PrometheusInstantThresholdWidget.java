@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -19,7 +21,6 @@ import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 import com.xresch.emp.features.environments.PrometheusEnvironment;
 import com.xresch.emp.features.environments.PrometheusEnvironmentManagement;
 
@@ -93,7 +94,7 @@ public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
 		
 		//---------------------------------
 		// Example Data

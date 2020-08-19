@@ -129,7 +129,7 @@ public class SPMCounterForProjectStatusWidget extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
 		
 		//---------------------------------
 		// Example Data
