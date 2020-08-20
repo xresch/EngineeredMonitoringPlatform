@@ -11,7 +11,7 @@
 	CFW.dashboard.registerWidget("emp_awajobstatus",
 		{
 			category: "Monitoring | AWA",
-			menuicon: "fas fa-cogs",
+			menuicon: "fas fa-traffic-light",
 			menulabel: CFWL('cfw_widget_awajobstatus', "AWA Job Status"),
 			description: CFWL('cfw_widget_awajobstatus_desc', "Fetches the status of one or multiple AWA Jobs."),
 			createWidgetInstance: function (widgetObject, callback) {
@@ -47,24 +47,9 @@
 						}
 						
 						//--------------------
-						// Add Colors
-						switch(current.STATUS.toUpperCase()){
-							case "RUNNING": 	current.alertstyle = "cfw-warning"; 
-												break;
-							case "ENDED OK": 	current.alertstyle = "cfw-excellent"; 
-												break;
-							case "ISSUE": 		current.alertstyle = "cfw-danger"; 
-												break;
-							case "UNKNOWN": 	current.alertstyle = "cfw-gray"; 
-												break;
-							case "OVERDUE (RUNNING)":	
-							case "OVERDUE (ENDED OK)":
-							case "OVERDUE (ISSUE)":
-							case "OVERDUE (UNKNOWN)":
-							case "OVERDUE":	
-												current.alertstyle = "cfw-emergency"; 
-												break;
-						}
+						// Get Status Color
+						current.alertstyle = emp_widget_awa_getStatusStyle(current.STATUS);
+						
 					}
 					
 					var dataToRender = {

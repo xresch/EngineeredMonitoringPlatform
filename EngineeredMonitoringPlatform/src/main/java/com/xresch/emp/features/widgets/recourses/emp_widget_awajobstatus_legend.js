@@ -20,7 +20,7 @@
 			createWidgetInstance: function (widgetObject, callback) {		
 				var html = 
 					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div>Ended OK</div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-warning">&nbsp;</div>Running</div>'
+					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-warning">&nbsp;</div>Running/Waiting</div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-emergency">&nbsp;</div>Overdue</div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-danger">&nbsp;</div>Issue</div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-gray">&nbsp;</div>Unknown</div>'

@@ -4,9 +4,6 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.features.usermgmt.Permission;
-import com.xresch.emp.features.environments.AWAEnvironmentManagement;
-import com.xresch.emp.features.environments.PrometheusEnvironment;
-import com.xresch.emp.features.environments.SPMEnvironmentManagement;
 
 /**************************************************************************************************************
  * 
@@ -31,7 +28,7 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 		// 
 		//-----------------------------------------
 		CFW.Registry.Widgets.add(new AWAJobStatusWidget());
-		CFW.Registry.Widgets.add(new AWAJobsWithIssuesWidget());
+		CFW.Registry.Widgets.add(new AWAJobsWithStatusWidget());
 		CFW.Registry.Widgets.add(new AWAJobStatusLegendWidget());
 		
 		CFW.Registry.Widgets.add(new PrometheusInstantThresholdWidget());

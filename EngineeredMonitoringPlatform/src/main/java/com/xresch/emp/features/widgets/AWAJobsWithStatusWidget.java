@@ -29,11 +29,11 @@ import com.xresch.cfw.validation.NumberRangeValidator;
 import com.xresch.emp.features.environments.AWAEnvironment;
 import com.xresch.emp.features.environments.AWAEnvironmentManagement;
 
-public class AWAJobsWithIssuesWidget extends WidgetDefinition {
+public class AWAJobsWithStatusWidget extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(AWAJobsWithIssuesWidget.class.getName());
+	private static Logger logger = CFWLog.getLogger(AWAJobsWithStatusWidget.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_awajobswithissues";}
+	public String getWidgetType() {return "emp_awajobswithstatus";}
 
 	@Override
 	public CFWObject getSettings() {
@@ -45,9 +45,16 @@ public class AWAJobsWithIssuesWidget extends WidgetDefinition {
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(AWAEnvironment.SETTINGS_TYPE))
 				)
 				
+				.addField(CFWField.newString(FormFieldType.SELECT, "status")
+						.setLabel("{!cfw_widget_awajobstatus_status!}")
+						.setDescription("{!cfw_widget_awajobstatus_status_desc!}")
+						.setOptions(new String[]{"ENDED OK", "ISSUE"}) // Only AH supported, missing EH: "RUNNING", "WAITING"
+						.setValue("ISSUE")
+				)
+				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, "jobfilters")
-						.setLabel("{!cfw_widget_awajobswithissues!}")
-						.setDescription("{!cfw_widget_awajobswithissues_desc!}")
+						.setLabel("{!cfw_widget_awajobstatus_jobfilters!}")
+						.setDescription("{!cfw_widget_awajobstatus_jobfilters_desc!}")
 						.setValue("")			
 				)
 				
@@ -96,12 +103,12 @@ public class AWAJobsWithIssuesWidget extends WidgetDefinition {
 						.setDescription("{!cfw_widget_sampledata_desc!}")
 						.setValue(false)
 				)
-	
 		;
 	}
 		
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+		
 		//---------------------------------
 		// Example Data
 		JsonElement sampleDataElement = settings.get("sampledata");
@@ -111,6 +118,26 @@ public class AWAJobsWithIssuesWidget extends WidgetDefinition {
 		&& sampleDataElement.getAsBoolean()) {
 			createSampleData(response);
 			return;
+		}
+		
+		//---------------------------------
+		// Resolve Hours
+		JsonElement statusElement = settings.get("status");
+		
+		if(statusElement == null ) {
+			return;
+		}
+		
+		String status = statusElement.getAsString();
+		
+		// Return code docs: https://docs.automic.com/documentation/webhelp/english/ALL/components/AE/11/All%20Guides/Content/ucaaiy.htm
+		int lowerStatusCode = 0;
+		int upperStatusCode = 1700;
+		switch(status) {
+			case "RUNNING": 		lowerStatusCode = 0; 	 upperStatusCode = 1700; break;
+			case "WAITING": 		lowerStatusCode = 1700; upperStatusCode = 1799; break;
+			case "ISSUE": 			lowerStatusCode = 1800; upperStatusCode = 1899; break;
+			case "ENDED OK": 		lowerStatusCode = 1900; upperStatusCode = 1999; break;
 		}
 		
 		//---------------------------------
@@ -158,8 +185,10 @@ public class AWAJobsWithIssuesWidget extends WidgetDefinition {
 		for(int i = 0; i < jobfilters.length; i++) {
 
 			ResultSet result = db.preparedExecuteQuerySilent(
-					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_awa_jobswithissues.sql"),
+					CFW.Files.readPackageResource(FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_awa_jobswithstatus.sql"),
 					environment.clientID(),
+					lowerStatusCode,
+					upperStatusCode,
 					hours,
 					jobfilters[i].trim() );
 			try {
@@ -229,7 +258,7 @@ public class AWAJobsWithIssuesWidget extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_awajobswithissues.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPWidgets.RESOURCE_PACKAGE, "emp_widget_awajobswithstatus.js");
 		array.add(js);
 		return array;
 	}

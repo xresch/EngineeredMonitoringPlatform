@@ -8,12 +8,12 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_awajobswithissues",
+	CFW.dashboard.registerWidget("emp_awajobswithstatus",
 		{
 			category: "Monitoring | AWA",
-			menuicon: "fas fa-cogs",
-			menulabel: CFWL('cfw_widget_awajobswithissues', "AWA Jobs with Issues"),
-			description: CFWL('cfw_widget_awajobswithissues_desc', "Fetches the jobs with issues by the given filter(s)."),
+			menuicon: "fas fa-traffic-light",
+			menulabel: CFWL('cfw_widget_awajobswithstatus', "AWA Jobs with Status"),
+			description: CFWL('cfw_widget_awajobswithstatus_desc', "Fetches the jobs with the specified status and the given filter(s)."),
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
@@ -32,10 +32,12 @@
 						if(widgetObject.JSON_SETTINGS.disable) { 
 							current.alertstyle = "cfw-darkgray"; 
 							continue;
-						}else{
-							current.alertstyle = "cfw-danger"; 
 						}
-
+						
+						//--------------------
+						// Get Status Color
+						current.alertstyle = emp_widget_awa_getStatusStyle(current.STATUS);
+						
 					}
 					
 					var dataToRender = {
