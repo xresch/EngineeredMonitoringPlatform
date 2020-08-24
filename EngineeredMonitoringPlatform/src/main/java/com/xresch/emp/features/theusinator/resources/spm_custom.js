@@ -6,8 +6,6 @@ var FIRST_TOGGLE=true;
 var INITIAL_VIEW = getCookie("selectedView");
 var INITIAL_NAV_STATE = getCookie("navigationState");
 
-
-
 /**************************************************************************************
  * 
  *************************************************************************************/
@@ -183,7 +181,7 @@ function renderStatusOverview(parent){
 				
 				alertDiv.css('background-color', bgcolor);
 				
-				link = $($(this).find("td").html());
+				var link = $($(this).find("td").html());
 				link.html(link.find('font').text());
 				link.css('color', textcolor);
 				link.css('background-color', bgcolor);

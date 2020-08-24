@@ -298,7 +298,7 @@ function doFilter(searchField){
 	
 	storeLocalValue("searchFilter", input.value);
 	
-	filter = input.value.toUpperCase();
+	var filter = input.value.toUpperCase();
 	
 	//only filter direct children
 	table.find("> tbody > tr").each(function( index ) {
@@ -432,7 +432,7 @@ function getProjectsForUser(){
 			
 			//-------------------------
 			//Prepare for sorting
-			for(index in PROJECT_LIST) {
+			for(var index in PROJECT_LIST) {
 				
 				var sorter = {};
 				sorter.id = PROJECT_LIST[index].id;
@@ -669,7 +669,7 @@ function calculatePercentile(array, percent){
 	
 	if (Math.floor(index) == index) {
 		
-		percentile = (parseFloat(array[index-1]) + parseFloat(array[index])) / 2;
+		var percentile = (parseFloat(array[index-1]) + parseFloat(array[index])) / 2;
 		return percentile;
 	} else {
 		
@@ -1434,7 +1434,7 @@ function drawTile(projectId) {
 	if (oldValue != "") {
 		if(oldValue >= 25.00 && currentHealth < 25.00) {
 
-			blinkInterval = setInterval("blink('#" + projectId + "')", 1500);
+			var blinkInterval = setInterval("blink('#" + projectId + "')", 1500);
 			BLINK_INTERVALS.push(blinkInterval);
 		}
 	}
@@ -1706,7 +1706,7 @@ function fillMissingChartValues(projectId) {
 	
 	for (j = 0; j < timestamps.length; j++) {
 		
-		timestamp = timestamps[j]
+		var timestamp = timestamps[j];
 		
 		if (!(search(timestamp, loopable) ) ) {
 			
@@ -1845,10 +1845,10 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 			vals = fillMissingChartValues(CURRENT_MODAL_PROJECT);
 		}
 		
-		TESTER = div.get(0);
+		var TESTER = div.get(0);
 		
-		xVals = [];
-		yVals = [];
+		var xVals = [];
+		var yVals = [];
 		
 		vals.sort(dynamicSort('time'));
 		
@@ -2033,7 +2033,7 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 	
 	}];
 	
-	PIE = div.get(0);
+	var PIE = div.get(0);
 	Plotly.newPlot(PIE, data, layout, {displayModeBar: false});
 	targetDiv.append(htmlString);
 	targetDiv.append(div);
@@ -2125,7 +2125,7 @@ function drawChartArea(targetId, vals) {
  *************************************************************************************/
 function toggleModal(selector) {
 	
-	for(i = 0; i < BLINK_INTERVALS.length; i++) {
+	for(var i = 0; i < BLINK_INTERVALS.length; i++) {
 		clearInterval(BLINK_INTERVALS[i]);
 	}
 	BLINK_INTERVALS = [];
@@ -2274,12 +2274,12 @@ function drawModalTable(targetId) {
 		sumArray.push(loopable[i].value);
 	};
 	
-	avg = roundFloat(calculateAverage(sumArray));
-	min = roundFloat(calculateMinimum(sumArray));
-	max = roundFloat(calculateMaximum(sumArray));
-	median = roundFloat(calculatePercentile(sumArray, 0.5));
-	percent = roundFloat(calculatePercentile(sumArray, 0.9));
-	stdDev = roundFloat(calculateStdDeviation(sumArray));
+	var avg = roundFloat(calculateAverage(sumArray));
+	var min = roundFloat(calculateMinimum(sumArray));
+	var max = roundFloat(calculateMaximum(sumArray));
+	var median = roundFloat(calculatePercentile(sumArray, 0.5));
+	var percent = roundFloat(calculatePercentile(sumArray, 0.9));
+	var stdDev = roundFloat(calculateStdDeviation(sumArray));
 	
 	var rowstring = '<table class="customTable" style="border-bottom: 1px solid #e5e5e5;"><tr><td>Average: </td><td class="value">' + avg + 
 	'</td></tr><tr><td>Maximum: </td><td class="value">' + max + 
@@ -2891,31 +2891,31 @@ function setMergeSpanOptions() {
 		switch(CURRENT_TIME_FRAME) {
 			
 			case 'onehour':
-			
 				mergeOptions.eq(0).removeAttr('disabled');
-			
+				// fall through
+				
 			case 'oneday':
-			
 				mergeOptions.eq(0).removeAttr('disabled');
 				mergeOptions.eq(1).removeAttr('disabled');
-			
+				// fall through
+				
 			case 'oneweek':
-			
 				mergeOptions.eq(0).removeAttr('disabled');
 				mergeOptions.eq(1).removeAttr('disabled');
 				mergeOptions.eq(2).removeAttr('disabled');
+				// fall through
 				
 			case 'onemonth':
-			
 				mergeOptions.eq(0).removeAttr('disabled');
 				mergeOptions.eq(1).removeAttr('disabled');
 				mergeOptions.eq(2).removeAttr('disabled');
 				mergeOptions.eq(3).removeAttr('disabled');
-			
+				// fall through
+				
 			case 'oneyear':
-			
 				mergeOptions.eq(0).removeAttr('disabled');
 				mergeOptions.eq(1).removeAttr('disabled');
+				break;
 		}
 	}
 };

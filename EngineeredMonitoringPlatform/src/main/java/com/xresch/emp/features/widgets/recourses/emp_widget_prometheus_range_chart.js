@@ -19,9 +19,7 @@
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					
-					var settings = widgetObject.JSON_SETTINGS;
-					 null;
-					
+					var settings = widgetObject.JSON_SETTINGS;				
 					
 					//---------------------------------
 					// Check for Data and Errors

@@ -14,7 +14,7 @@ function emp_widget_prometheus_prepareData(responsePayload){
 		var prometheusData = responsePayload[i].data; 
 		if(prometheusData != null && prometheusData.result != null){
 		
-			for(index in prometheusData.result){
+			for(var index in prometheusData.result){
 		
 				var current = prometheusData.result[index];
 				if(current.value != undefined){
@@ -30,8 +30,8 @@ function emp_widget_prometheus_prepareData(responsePayload){
 				}else if(current.values != undefined){
 					//----------------------------------
 					// Handle Range Values
-					for(index in current.values){
-						value = current.values[index];
+					for(var subindex in current.values){
+						value = current.values[subindex];
 						var item = Object.assign({}, current.metric);
 						item.time = value[0] * 1000;
 						item.value = value[1];

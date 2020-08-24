@@ -9,7 +9,7 @@
 			var current = components[key];
 			current.textstyle = "white"; 
 			if(current.status == null){
-				current.status == "Unknown";
+				current.status = "Unknown";
 				current.alertstyle = "cfw-gray"; 
 				continue;
 			}

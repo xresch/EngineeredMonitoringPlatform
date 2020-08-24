@@ -20,7 +20,7 @@ import com.xresch.emp.features.widgets.FeatureEMPWidgets;
 @CFWExtensionApplication
 public class Main implements CFWAppInterface {
 	
-	public static Logger logger = CFWLog.getLogger(Main.class.getName());
+	private static final Logger logger = CFWLog.getLogger(Main.class.getName());
 	protected static CFWLog log = new CFWLog(logger);
 	
     public static void main( String[] args ) throws Exception
