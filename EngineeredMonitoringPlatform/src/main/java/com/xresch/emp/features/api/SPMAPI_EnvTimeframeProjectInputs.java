@@ -22,13 +22,11 @@ public class SPMAPI_EnvTimeframeProjectInputs extends CFWObject {
 	
 	private CFWField<Timestamp> earliestTime = CFWField.newTimestamp(FormFieldType.DATETIMEPICKER, "EARLIEST_TIME")
 			.setDescription("The unix time(milliseconds since 01.01.1970 UTC) of the earliest time included in the results.")
-			.addValidator(new NotNullOrEmptyValidator());
-			//.setValue(new Timestamp(System.currentTimeMillis()-1440*60000));
+			.addValidator(new NotNullOrEmptyValidator());		
 	
 	private CFWField<Timestamp> latestTime = CFWField.newTimestamp(FormFieldType.DATETIMEPICKER, "LATEST_TIME")
 			.setDescription("The unix time(milliseconds since 01.01.1970 UTC) of the earliest time included in the results.")
 			.addValidator(new NotNullOrEmptyValidator());
-			//.setValue(new Timestamp(System.currentTimeMillis()));
 	
 	private CFWField<Integer> environmentID = CFWField.newInteger(FormFieldType.SELECT, "ENVIRONMENT_ID")
 			.setDescription("The id of the environment.")
@@ -41,12 +39,12 @@ public class SPMAPI_EnvTimeframeProjectInputs extends CFWObject {
 			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 				@Override
 				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-					String environmentID = request.getParameter("ENVIRONMENT_ID");
-					if(Strings.isNullOrEmpty(environmentID)) {
+					String envID = request.getParameter("ENVIRONMENT_ID");
+					if(Strings.isNullOrEmpty(envID)) {
 						CFW.Context.Request.addAlertMessage(MessageType.INFO, "Select an environment to get suggestions.");
 						return null;
 					}
-					return SPMEnvironmentManagement.autocompleteProjects(Integer.parseInt(environmentID), searchValue, this.getMaxResults());
+					return SPMEnvironmentManagement.autocompleteProjects(Integer.parseInt(envID), searchValue, this.getMaxResults());
 				}
 			});
 	

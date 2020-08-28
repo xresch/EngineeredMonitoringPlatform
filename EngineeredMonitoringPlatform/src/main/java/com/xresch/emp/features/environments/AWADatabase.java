@@ -11,7 +11,6 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
 import oracle.ucp.jdbc.PoolDataSource;
 import oracle.ucp.jdbc.PoolDataSourceFactory;
@@ -25,6 +24,9 @@ public class AWADatabase {
 	// Contains ContextSettings id and the associated database interface	
 	private static HashMap<Integer, DBInterface> dbInterfaces = new HashMap<Integer, DBInterface>(); 
 	
+	private AWADatabase() {
+		// hide public constructor
+	}
 	public static void initialize() {
 		
 		ContextSettingsChangeListener listener = 

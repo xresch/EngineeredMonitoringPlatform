@@ -181,7 +181,6 @@ public class AWAJobStatusWidget extends WidgetDefinition {
 
 					object.addProperty("STATUS", result.getString("STATUS"));
 					object.addProperty("CLIENT_ID", result.getString("CLIENT_ID"));
-					//object.addProperty("NAME", result.getString("NAME"));
 					object.addProperty("TYPE", result.getString("TYPE"));
 					object.addProperty("START_TIME", (startTime != null) ? startTime.toInstant().toEpochMilli() : null );
 					object.addProperty("END_TIME", (endTime != null) ? endTime.toInstant().toEpochMilli() : null);

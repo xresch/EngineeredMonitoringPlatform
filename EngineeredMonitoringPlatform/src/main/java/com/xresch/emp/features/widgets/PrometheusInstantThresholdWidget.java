@@ -129,7 +129,6 @@ public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 	
 		//---------------------------------
 		// Timeframe
-		//long earliest = settings.get("timeframe_earliest").getAsLong();
 		long latest = settings.get("timeframe_latest").getAsLong();
 		
 		//---------------------------------
@@ -160,7 +159,7 @@ public class PrometheusInstantThresholdWidget extends WidgetDefinition {
 
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
-		return null;
+		return new ArrayList<FileDefinition>();
 	}
 
 	@Override

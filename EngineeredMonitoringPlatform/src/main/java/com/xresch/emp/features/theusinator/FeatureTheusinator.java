@@ -67,16 +67,7 @@ public class FeatureTheusinator extends CFWAppFeature {
 			.addPermission(PERMISSION_THEUSINATOR);
 		
 		CFW.Registry.Components.addRegularMenuItem(theusinatorMenu, "Dashboards");
-		
-//		CFW.Registry.Components.addRegularMenuItem(
-//				(MenuItem)new MenuItem("Production")
-//					.faicon("fas fa-cogs")
-//					.addPermission(PERMISSION_THEUSINATOR)
-//					.href("/app/theusinator?env=prod")	
-//				, "Dashboards | Theusinator");
-//		
-		
-					
+				
 	}
 
 	@Override

@@ -28,6 +28,10 @@ public class SPMEnvironmentManagement {
 	// Contains ContextSettings id and the associated database interface
 	private static HashMap<Integer, SPMEnvironment> environmentsWithDB = new HashMap<Integer, SPMEnvironment>();
 	
+	private SPMEnvironmentManagement() {
+		// hide public constructor
+	}
+	
 	/************************************************************************
 	 * 
 	 ************************************************************************/

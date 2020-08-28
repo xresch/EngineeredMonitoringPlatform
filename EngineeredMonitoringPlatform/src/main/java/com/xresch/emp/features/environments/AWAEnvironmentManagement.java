@@ -1,6 +1,5 @@
 package com.xresch.emp.features.environments;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,9 +17,6 @@ import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
-import oracle.ucp.jdbc.PoolDataSource;
-import oracle.ucp.jdbc.PoolDataSourceFactory;
-
 
 public class AWAEnvironmentManagement {
 	private static Logger logger = CFWLog.getLogger(AWAEnvironmentManagement.class.getName());
@@ -31,6 +27,9 @@ public class AWAEnvironmentManagement {
 	private static HashMap<Integer, AWAEnvironment> environmentsWithDB = new HashMap<Integer, AWAEnvironment>();
 	
 
+	private AWAEnvironmentManagement() {
+		//hide public constructor
+	}
 	public static void initialize() {
 		
 		ContextSettingsChangeListener listener = 

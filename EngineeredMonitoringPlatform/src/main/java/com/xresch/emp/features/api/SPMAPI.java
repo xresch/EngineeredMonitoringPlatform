@@ -13,6 +13,10 @@ import com.xresch.emp.features.environments.SPMEnvironmentManagement;
 
 public class SPMAPI {
 	
+	private SPMAPI() {
+		/*hide public constructor */
+	}
+	
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/

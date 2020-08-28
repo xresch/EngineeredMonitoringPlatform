@@ -19,13 +19,8 @@ import com.xresch.emp._main.Main;
  **************************************************************************************************************/
 public class FeatureEMPEnvironments extends CFWAppFeature {
 	
-	//public static final String RESOURCE_PACKAGE = "com.xresch.emp.features.theusinator.resources";	
-	
 	@Override
 	public void register() {
-		//----------------------------------
-		// Register Package
-		//CFW.Files.addAllowedPackage(RESOURCE_PACKAGE);
 		
 		//----------------------------------
 		// Register Settings

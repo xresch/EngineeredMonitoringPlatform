@@ -254,35 +254,36 @@ function updateTimeFrame(timeFrame) {
 		END_DATE = CURRENT_DATE;
 	};
 	
+	var time;
 	switch(timeFrame) {
 		
 		case "oneyear":
-			var time = CURRENT_TIME - oneYearsMillis;
+			time = CURRENT_TIME - oneYearsMillis;
 			START_DATE = new Date(parseInt(time));
 			break;
 			
 		case "onemonth":
-			var time = CURRENT_TIME + fullLastHour - (oneYearsMillis / 12);
+			time = CURRENT_TIME + fullLastHour - (oneYearsMillis / 12);
 			START_DATE = new Date(parseInt(time));
 			break;
 		
 		case "oneweek":
-			var time = CURRENT_TIME + fullLastHour - ((oneYearsMillis / (12 * 30)) * 7);
+			time = CURRENT_TIME + fullLastHour - ((oneYearsMillis / (12 * 30)) * 7);
 			START_DATE = new Date(parseInt(time));
 			break;
 		
 		case "oneday":
-			var time = CURRENT_TIME + fullLastHour - (oneYearsMillis / (12 * 30));
+			time = CURRENT_TIME + fullLastHour - (oneYearsMillis / (12 * 30));
 			START_DATE = new Date(parseInt(time));
 			break;
 		
 		case "halfday":
-			var time = CURRENT_TIME + fullLastHour - (oneYearsMillis / (12 * 30 * 2));
+			time = CURRENT_TIME + fullLastHour - (oneYearsMillis / (12 * 30 * 2));
 			START_DATE = new Date(parseInt(time));
 			break;
 			
 		case "onehour":
-			var time = CURRENT_TIME;
+			time = CURRENT_TIME;
 			START_DATE = new Date(parseInt(time));
 			break;
 	};
@@ -451,9 +452,9 @@ function getProjectsForUser(){
 			//Sort according to #sortSelector
 			projectArray.sort(dynamicSort(SORT_ORDER));
 			
-			var i = 0;
+			
 			var loopable = projectArray.length;
-			for (i = 0; i < loopable; i++) {
+			for (var i = 0; i < loopable; i++) {
 				
 				projectString += '<option value="' + projectArray[i].id + '">' + projectArray[i].fullName + '</option>';
 				SORTED_PROJECT_IDS.push(projectArray[i].id);
@@ -635,9 +636,9 @@ function getGroupsWithConfigRights() {
  *************************************************************************************/
 function setProjectConfigRightsForProjects(groupIds){
 	
-	var i = 0;
 	
-	for(i = 0; i < groupIds.length; i++) {
+	
+	for(var i = 0; i < groupIds.length; i++) {
 		
 		$.get("./theusinator?env="+ENVIRONMENT+"&service=sccentities&method=getGroupById&sessionId=" + SESSION + "&groupId=" + groupIds[i],
 	
@@ -907,12 +908,12 @@ function drawDashboardView() {
 	CURRENT_MEASURE_DATA = 'avg';
 	CURRENT_TIME_FRAME = 'onehour';
 	updateTimeFrame('onehour');
-	var i = 0;
+	
 	var loopable = SORTED_PROJECT_IDS.length;
 	
 	//-------------------------
 	//Get data for every project
-	for(i = 0; i< loopable; i++) {
+	for(var i = 0; i< loopable; i++) {
 		
 		var dataObject = {
 		timeFrame: 'onehour',
@@ -959,12 +960,12 @@ function drawBoxView() {
 	CURRENT_TIME_FRAME = DASHBOARD_TIME_FRAME_STRING;
 	CURRENT_MEASURE_DATA = 'avg';
 	updateTimeFrame(DASHBOARD_TIME_FRAME_STRING);
-	var i = 0;
+
 	var loopable = SORTED_PROJECT_IDS.length;
 	
 	//-------------------------
 	//Get data for every project
-	for(i = 0; i< loopable; i++) {
+	for(var i = 0; i< loopable; i++) {
 		
 		var dataObject = {
 		timeFrame: DASHBOARD_TIME_FRAME_STRING,
@@ -1013,12 +1014,12 @@ function drawHealthHistoryView() {
 	CURRENT_TIME_FRAME = DASHBOARD_TIME_FRAME_STRING;
 	CURRENT_MEASURE_DATA = 'avg';
 	updateTimeFrame(DASHBOARD_TIME_FRAME_STRING);
-	var i = 0;
+
 	var loopable = SORTED_PROJECT_IDS.length;
 	
 	//-------------------------
 	//Get data or every project
-	for(i = 0; i< loopable; i++) {
+	for(var i = 0; i< loopable; i++) {
 		
 		var dataObject = {
 		timeFrame: DASHBOARD_TIME_FRAME_STRING,
@@ -1036,9 +1037,8 @@ function drawHealthHistoryView() {
 	//-------------------------
 	//Table settings
 	var headerString = '<div style="display: flex; flex-wrap: nowrap; flex-direction: row-reverse; width: 100%;">';
-	var j = 0;
 	
-	for(j = 0; j < DASHBOARD_TIME_FRAME; j++) {
+	for(var j = 0; j < DASHBOARD_TIME_FRAME; j++) {
 		headerString += '<div style="height: 12px; width: 30px; flex: auto; margin: 3px; text-align: center;"><p>-' + j + '</p></div>';
 	};
 	
@@ -1071,12 +1071,12 @@ function drawStatusView() {
 	CURRENT_TIME_FRAME = DASHBOARD_TIME_FRAME_STRING;
 	CURRENT_MEASURE_DATA = 'avg';
 	updateTimeFrame(DASHBOARD_TIME_FRAME_STRING);
-	var i = 0;
+
 	var loopable = SORTED_PROJECT_IDS.length;
 	
 	//-------------------------
 	//Get data for every project
-	for(i = 0; i< loopable; i++) {
+	for(var i = 0; i< loopable; i++) {
 		
 		var dataObject = {
 		timeFrame: DASHBOARD_TIME_FRAME_STRING,
@@ -1381,23 +1381,19 @@ function drawTile(projectId) {
 	var count = PROJECT_LIST[projectId].timeseries['onehour'].length;			
 	var currentTile = $(".tile#" + id);
 	
+	var name = PROJECT_LIST[projectId].name; 
 	if (typeof(PROJECT_LIST[projectId].name) == 'undefined') {
-		var name = PROJECT_LIST[projectId].fullName;
-		
-	}else{
-		var name = PROJECT_LIST[projectId].name; 
+		name = PROJECT_LIST[projectId].fullName;
 	}
 	
+	var tid = PROJECT_LIST[projectId].tid;
 	if (typeof(PROJECT_LIST[projectId].tid) == 'undefined') {
 		var tid = '';
-	} else {
-		var tid = PROJECT_LIST[projectId].tid;
 	}
-	
-	var i = 0;
+
 	var loopable = PROJECT_LIST[projectId].timeseries['onehour'];
 	
-	for(i = 0; i < loopable.length; i++) {
+	for(var i = 0; i < loopable.length; i++) {
 		currentHealth += parseFloat(loopable[i].value);
 	};
 	
@@ -1598,10 +1594,9 @@ function drawBoxTile(projectId) {
 	
 	//-------------------------
 	// Prepare data
+	var name = PROJECT_LIST[projectId].name;
 	if (typeof(PROJECT_LIST[projectId].name) == 'undefined') {
-		var name = PROJECT_LIST[projectId].fullName;
-	}else{
-		var name = PROJECT_LIST[projectId].name;
+		name = PROJECT_LIST[projectId].fullName;
 	}
 	
 	var currentTile = $(".tile#" + projectId);
@@ -1619,10 +1614,8 @@ function drawBoxTile(projectId) {
 	};
 	
 	htmlString += '<div style="width: 100%;"><p style="margin: 2px;">' + name +'</p></div><div style="display: flex; flex-wrap: wrap; margin-left: ' + 4 * ZOOM + 'px;">';
-	
-	var i = 0;
-	
-	for(i = 0; i< results.length; i++) {
+
+	for(var i = 0; i< results.length; i++) {
 		
 		var color = getColor('Overall Health', results[i].value);
 		boxColors.push(color);
@@ -1694,17 +1687,16 @@ function fillMissingChartValues(projectId) {
 	var endTime = CURRENT_TIME;
 	var formatDate;
 	var loopable = PROJECT_LIST[projectId].timeseries[DASHBOARD_TIME_FRAME_STRING]
-	var i = 0;
+
 	
-	for (i = 0; i < DASHBOARD_TIME_FRAME; i++) {
+	for (var i = 0; i < DASHBOARD_TIME_FRAME; i++) {
 		
 		formatDate = new FormattedDate(new Date(endTime - (i * hourDiffInMs)));
 		timestamps.push(formatDate.FullDate());
 	};
+
 	
-	var j = 0;
-	
-	for (j = 0; j < timestamps.length; j++) {
+	for (var j = 0; j < timestamps.length; j++) {
 		
 		var timestamp = timestamps[j];
 		
@@ -1741,9 +1733,8 @@ function drawHistoryTable(projectId) {
 	var historyString = '<div style="display: flex; flex-wrap: nowrap; align-items: center; width: 100%;">';
 	var results = fillMissingChartValues(projectId);
 	
-	var i = 0;
-	
-	for(i = 0; i< results.length; i++) {
+
+	for(var i = 0; i< results.length; i++) {
 		
 		var color = getColor('Overall Health', results[i].value);
 		
@@ -2267,9 +2258,7 @@ function drawModalTable(targetId) {
 	
 	targetDiv.html('');
 	
-	var i = 0;
-	
-	for(i = 0; i < loopable.length; i++) {
+	for(var i = 0; i < loopable.length; i++) {
 		
 		sumArray.push(loopable[i].value);
 	};
@@ -2337,15 +2326,15 @@ function dynamicSort(property) {
     };
 	
     return function (a,b) {
-		
+		var result;
 		if((a[property] == undefined && b[property] == undefined) || (a[property] == '' && b[property] == '')) {
-			var result = 0;
+			result = 0;
 		} else if(a[property] == undefined || a[property] == '') {
-			var result = 1;
+			result = 1;
 		} else if(b[property] == undefined || b[property] == '') {
-			var result = -1
+			result = -1
 		}else {
-			var result = (a[property].toUpperCase() < b[property].toUpperCase()) ? -1 : (a[property].toUpperCase() > b[property].toUpperCase()) ? 1 : 0;
+			result = (a[property].toUpperCase() < b[property].toUpperCase()) ? -1 : (a[property].toUpperCase() > b[property].toUpperCase()) ? 1 : 0;
 		}
 
 		return result * sortOrder;
@@ -2485,17 +2474,20 @@ function refreshTimer() {
 			}
 			BLINK_INTERVALS = [];
 			
+			var i;
+			var loopable;
+			var dataObject;
+			var tile;
 			switch(CURRENT_VIEW) {
 				
 				case 'dashboard':
 				
 					updateTimeFrame('onehour');
-					var i = 0;
-					var loopable = SORTED_PROJECT_IDS.length;
+					loopable = SORTED_PROJECT_IDS.length;
 					
 					for(i = 0; i< loopable; i++) {
 						
-						var dataObject = {
+						dataObject = {
 						timeFrame: 'onehour',
 						projectId: SORTED_PROJECT_IDS[i],
 						view: 'dashboard',
@@ -2505,7 +2497,7 @@ function refreshTimer() {
 						fetchDataAndDrawTimeseriesSingleProject(dataObject);	
 					};
 					
-					var tile = $('.tile');
+					tile = $('.tile');
 						tile.css('background-color', '#e5e5e5');
 	
 					break;
@@ -2513,12 +2505,11 @@ function refreshTimer() {
 				case 'box':
 				
 					updateTimeFrame(DASHBOARD_TIME_FRAME_STRING);
-					var i = 0;
-					var loopable = SORTED_PROJECT_IDS.length;
+					loopable = SORTED_PROJECT_IDS.length;
 					
 					for(i = 0; i< loopable; i++) {
 						
-						var dataObject = {
+						dataObject = {
 						timeFrame: DASHBOARD_TIME_FRAME_STRING,
 						projectId: SORTED_PROJECT_IDS[i],
 						view: 'box',
@@ -2528,19 +2519,18 @@ function refreshTimer() {
 						fetchDataAndDrawTimeseriesSingleProject(dataObject);	
 					};
 					
-					var tile = $('.tile');
+					tile = $('.tile');
 					tile.css('background-color', '#e5e5e5');
 					break;
 					
 				case 'status':
 				
 					updateTimeFrame(DASHBOARD_TIME_FRAME_STRING);
-					var i = 0;
-					var loopable = SORTED_PROJECT_IDS.length;
+					loopable = SORTED_PROJECT_IDS.length;
 					
 					for(i = 0; i< loopable; i++) {
 						
-						var dataObject = {
+						dataObject = {
 						timeFrame: DASHBOARD_TIME_FRAME_STRING,
 						projectId: SORTED_PROJECT_IDS[i],
 						view: 'status',
@@ -2550,7 +2540,7 @@ function refreshTimer() {
 						fetchDataAndDrawTimeseriesSingleProject(dataObject);	
 					};
 					
-					var tile = $('.tile');
+					tile = $('.tile');
 					tile.css('background-color', '#e5e5e5');
 					tile.css('border', 'solid 0.5px #e5e5e5');
 					break;

@@ -21,8 +21,7 @@
 					
 					var settings = widgetObject.JSON_SETTINGS;
 					var renderType = (settings.renderer == null) ? "tiles" : settings.renderer.toLowerCase() ;
-					var monitorStats = [];
-					
+
 					//---------------------------------
 					// Check for Data and Errors
 					if(CFW.utils.isNullOrEmpty(data.payload) || typeof data.payload == 'string' || data.payload.length == null){

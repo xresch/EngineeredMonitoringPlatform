@@ -22,6 +22,9 @@ public class PrometheusEnvironmentManagement {
 	// Contains ContextSettings id and the associated database interface
 	private static HashMap<Integer, PrometheusEnvironment> environments = new HashMap<Integer, PrometheusEnvironment>();
 	
+	private PrometheusEnvironmentManagement() {
+		// hide public constructor
+	}
 	/************************************************************************
 	 * 
 	 ************************************************************************/

@@ -32,13 +32,13 @@ function emp_widget_prometheus_prepareData(responsePayload){
 					// Handle Range Values
 					for(var subindex in current.values){
 						var value = current.values[subindex];
-						var item = Object.assign({}, current.metric);
-						item.time = value[0] * 1000;
-						item.value = value[1];
-						if(!isNaN(item.value)){
-							item.value = parseFloat(item.value).toFixed(1);
+						var subitem = Object.assign({}, current.metric);
+						subitem.time = value[0] * 1000;
+						subitem.value = value[1];
+						if(!isNaN(subitem.value)){
+							subitem.value = parseFloat(subitem.value).toFixed(1);
 						}
-						monitorStats.push(item);
+						monitorStats.push(subitem);
 					}
 				}
 			}
