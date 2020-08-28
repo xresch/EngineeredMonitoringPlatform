@@ -32,7 +32,7 @@ public class FeatureEMPAPI extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-					
+		//do nothing			
 	}
 
 	@Override
@@ -43,9 +43,9 @@ public class FeatureEMPAPI extends CFWAppFeature {
 	}
 
 	@Override
-	public void startTasks() {}
+	public void startTasks() { /* do nothing */ }
 
 	@Override
-	public void stopFeature() {}
+	public void stopFeature() { /* do nothing */ }
 
 }

@@ -46,16 +46,17 @@ public class FeatureEMPEnvironments extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
+		/* do nothing */
 	}
 
 	@Override
 	public void startTasks() {
-
+		/* do nothing */
 	}
 
 	@Override
 	public void stopFeature() {
-
+		/* do nothing */
 	}
 
 }

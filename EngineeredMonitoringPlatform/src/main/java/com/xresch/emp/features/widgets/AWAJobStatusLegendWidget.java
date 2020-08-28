@@ -24,7 +24,7 @@ public class AWAJobStatusLegendWidget extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { }
+	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { /* do nothing */ }
 
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {

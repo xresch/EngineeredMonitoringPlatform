@@ -138,6 +138,7 @@ public class AWAJobsWithStatusWidget extends WidgetDefinition {
 			case "WAITING": 		lowerStatusCode = 1700; upperStatusCode = 1799; break;
 			case "ISSUE": 			lowerStatusCode = 1800; upperStatusCode = 1899; break;
 			case "ENDED OK": 		lowerStatusCode = 1900; upperStatusCode = 1999; break;
+			default: 				lowerStatusCode = -2; 	 upperStatusCode = -1; break;
 		}
 		
 		//---------------------------------

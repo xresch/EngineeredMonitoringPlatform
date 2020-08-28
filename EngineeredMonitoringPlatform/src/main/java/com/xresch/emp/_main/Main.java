@@ -49,12 +49,12 @@ public class Main implements CFWAppInterface {
 
 	@Override
 	public void initializeDB() {
-		
+		//do nothing
 	}
 	
 	@Override
 	public void stopApp() {
-		
+		//do nothing
 	}
 	
 	@Override
@@ -79,7 +79,7 @@ public class Main implements CFWAppInterface {
 
 	@Override
 	public void startTasks() {
-		// TODO Auto-generated method stub
+		//do nothing
 		
 	}
 

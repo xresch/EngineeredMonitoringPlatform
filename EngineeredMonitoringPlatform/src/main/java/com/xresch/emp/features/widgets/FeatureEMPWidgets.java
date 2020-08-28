@@ -65,17 +65,17 @@ public class FeatureEMPWidgets extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
-        //app.addAppServlet(ServletTheusinator.class,  "/theusinator");
+		/* do nothing */
 	}
 
 	@Override
 	public void startTasks() {
-
+		/* do nothing */
 	}
 
 	@Override
 	public void stopFeature() {
-
+		/* do nothing */
 	}
 
 }

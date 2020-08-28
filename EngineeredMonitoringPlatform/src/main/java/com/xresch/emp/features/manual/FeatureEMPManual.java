@@ -45,10 +45,10 @@ public class FeatureEMPManual extends CFWAppFeature {
 	/**********************************************************************
 	 * 
 	 **********************************************************************/
-	@Override public void initializeDB() {}
-	@Override public void addFeature(CFWApplicationExecutor app) { }
-	@Override public void startTasks() {}
-	@Override public void stopFeature() {}
+	@Override public void initializeDB() { /* do nothing */ }
+	@Override public void addFeature(CFWApplicationExecutor app) { /* do nothing */ }
+	@Override public void startTasks() { /* do nothing */ }
+	@Override public void stopFeature() { /* do nothing */ }
 
 	
 	/**********************************************************************
