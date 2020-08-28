@@ -93,7 +93,7 @@ function fireProjectChange(selector) {
 	CURRENT_PROJECT = $(selector).val();
 	storeLocalValue('CURRENT_PROJECT', CURRENT_PROJECT);
 	draw();
-};
+}
 
 /**************************************************************************************
  * Update data according to selected measure
@@ -107,7 +107,7 @@ function fireMeasureChange(selector) {
 	DISPLAY_MEASURE_NAME = CURRENT_MEASURE;
 	storeLocalValue('CURRENT_MEASURE', CURRENT_MEASURE);
 	draw();
-};
+}
 
 /**************************************************************************************
  * Update data according to selected merge span
@@ -120,7 +120,7 @@ function fireMergeSpanChange(selector) {
 	CURRENT_MERGE_SPAN = $(selector).val();
 	storeLocalValue('CURRENT_MERGE_SPAN', CURRENT_MERGE_SPAN);
 	draw();
-};
+}
 
 /**************************************************************************************
  * Update data according to selected measure data
@@ -133,7 +133,7 @@ function fireMeasureDataChange(selector) {
 	CURRENT_MEASURE_DATA = $(selector).val();
 	storeLocalValue('CURRENT_MEASURE_DATA', CURRENT_MEASURE_DATA);
 	draw();
-};
+}
 
 /**************************************************************************************
  * Update data according to selected time frame. Reset datepicker.
@@ -147,7 +147,7 @@ function fireTimeFrameChange(selector) {
 	storeLocalValue('CURRENT_TIME_FRAME', CURRENT_TIME_FRAME);
 	$('.datepickerField').val('');
 	draw();
-};
+}
 
 /**************************************************************************************
  * Update data according to selected time frame and reset refresh timer
@@ -168,7 +168,7 @@ function fireViewChange(selector) {
 	clearInterval(INTERVAL_ID);
 	refreshTimer();
 	draw();
-};
+}
 
 /**************************************************************************************
  * Change size of boxes in dashboard
@@ -185,7 +185,7 @@ function fireZoomChange(selector) {
 		$('.tidDiv').css('display', 'none');
 	}
 	draw();
-};
+}
 
 /**************************************************************************************
  * Change duration between refreshes
@@ -199,7 +199,7 @@ function fireRefreshChange(selector) {
 	storeLocalValue('REFRESH_TIME', REFRESH_TIME);
 	clearInterval(INTERVAL_ID);
 	refreshTimer();
-};
+}
 
 /**************************************************************************************
  * Change type of chart in graph view
@@ -216,9 +216,9 @@ function fireChartTypeChange(selector) {
 		drawChart(CURRENT_CHART_TYPE, targetId, PROJECT_LIST[CURRENT_MODAL_PROJECT].timeseries[DASHBOARD_TIME_FRAME_STRING]);
 	}else {
 		drawChart(CURRENT_CHART_TYPE, targetId, PROJECT_LIST[CURRENT_PROJECT].timeseries[CURRENT_TIME_FRAME]);
-	};
+	}
 	selectStyleMode(document.getElementById('styleModeDropdown'));
-};
+}
 
 /**************************************************************************************
  * Change order of projects in dashboard (by name, by tid, by environment, by custom tag)
@@ -231,7 +231,7 @@ function fireSortChange(selector) {
 	SORT_ORDER = $(selector).val();
 	storeLocalValue('SORT_ORDER', SORT_ORDER);
 	startTheusinator();
-};
+}
 
 /**************************************************************************************
  * Update selected time frame
@@ -286,8 +286,8 @@ function updateTimeFrame(timeFrame) {
 			time = CURRENT_TIME;
 			START_DATE = new Date(parseInt(time));
 			break;
-	};
-};
+	}
+}
 
 /**************************************************************************************
  * doFilter
@@ -343,7 +343,7 @@ function getSession(){
 			SESSION = $(data).find('logonUserReturn').text();
 			console.log("SESSION:"+SESSION)
 		})
-};
+}
 
 /**************************************************************************************
  * Send API GET request to get id of logged in spm user
@@ -355,7 +355,7 @@ function getUserId() {
 		function(data) {
 			SPM_USER_ID = $(data).find("id").text();
 		})
-};
+}
 
 /**************************************************************************************
  * Send API GET request to get all active projects for current user in current session
@@ -464,7 +464,7 @@ function getProjectsForUser(){
 			projectSelector.append(projectString);	
 		}
 	)
-};
+}
 
 /**************************************************************************************
  * Send API GET request to obtain desired data for charts and tables and draw content
@@ -598,7 +598,7 @@ function fetchDataAndDrawTimeseriesSingleProject(dataObject) {
 		}
 		}
 	)
-};
+}
 
 /**************************************************************************************
  * Get the Ids of the groups of which the user is administrator, super user or project 
@@ -677,7 +677,7 @@ function calculatePercentile(array, percent){
 		percentile = parseFloat(array[Math.floor(index)]);
 		return percentile;
 	}
-};
+}
 
 /**************************************************************************************
  * Calculate standard-deviation of array
@@ -687,9 +687,7 @@ function calculatePercentile(array, percent){
 function calculateStdDeviation(array){
 	
 	var average = calculateAverage(array);
-	var diffs = array.map(function(value) {
-		return value - average;
-	});
+
 	var squareDiffs = array.map(function(value) {
 		var diff = value - average;
 		return diff*diff;
@@ -697,7 +695,7 @@ function calculateStdDeviation(array){
 	
 	var avgSquareDiff = calculateAverage(squareDiffs);
 	return Math.sqrt(avgSquareDiff);
-};
+}
 
 /**************************************************************************************
  * Calculate average of array
@@ -712,10 +710,10 @@ function calculateAverage(array) {
 	for (var i= 0; i < loopable; i++) {
 		
 		sum = sum + parseFloat(array[i]);
-	};
+	}
 	
 	return sum/array.length;
-};
+}
 
 /**************************************************************************************
  * Calculate maximum of array
@@ -725,7 +723,7 @@ function calculateAverage(array) {
 function calculateMaximum(array) {
 	
 	return Math.max.apply(null, array);
-};
+}
 
 /**************************************************************************************
  * Calculate minimum of array
@@ -735,7 +733,7 @@ function calculateMaximum(array) {
 function calculateMinimum(array) {
 	
 	return Math.min.apply(null, array);
-};
+}
 
 /**************************************************************************************
  * Set christmas mode
@@ -886,7 +884,7 @@ function draw() {
 			
 		}, 100
 	)
-};
+}
 
 /**************************************************************************************
  * Get data and draw dashboard view
@@ -924,7 +922,7 @@ function drawDashboardView() {
 		};
 		RESULTS_DIV.append('<div class="tile filterable" id=' + dataObject.projectId + '></div>');
 		fetchDataAndDrawTimeseriesSingleProject(dataObject);	
-	};
+	}
 	
 	//-------------------------
 	//Tile settings
@@ -938,7 +936,7 @@ function drawDashboardView() {
 	tile.css("padding", 2 * ZOOM);
 	tile.css("border-radius", BORDER_RADIUS * ZOOM);
 	
-};
+}
 
 /**************************************************************************************
  * Get data and draw box view
@@ -976,7 +974,7 @@ function drawBoxView() {
 		};
 		RESULTS_DIV.append('<div class="tile bgtile filterable" id=' + dataObject.projectId + '></div>');
 		fetchDataAndDrawTimeseriesSingleProject(dataObject);	
-	};
+	}
 	
 	//-------------------------
 	//Tile settings
@@ -989,7 +987,7 @@ function drawBoxView() {
 	tile.css("padding", 2 * ZOOM);
 	tile.css("border", "5px solid #e5e5e5");
 	tile.css("border-radius", BORDER_RADIUS * ZOOM);
-};
+}
 
 /**************************************************************************************
  * Get data and draw health history view
@@ -1030,7 +1028,7 @@ function drawHealthHistoryView() {
 		};
 		table.append('<tr onclick="toggleModal(this)" style="cursor: pointer;" id="' + dataObject.projectId + '" class="filterable historyText"><td style="width: 23%; text-align: right;">' + PROJECT_LIST[SORTED_PROJECT_IDS[i]].fullName + '</td><td id="history" style="padding-right: 20px;"></td><td id="health"></td></tr>');
 		fetchDataAndDrawTimeseriesSingleProject(dataObject);	
-	};
+	}
 	
 	RESULTS_DIV.append(table);
 	
@@ -1040,7 +1038,7 @@ function drawHealthHistoryView() {
 	
 	for(var j = 0; j < DASHBOARD_TIME_FRAME; j++) {
 		headerString += '<div style="height: 12px; width: 30px; flex: auto; margin: 3px; text-align: center;"><p>-' + j + '</p></div>';
-	};
+	}
 	
 	headerString += '</div>'
 	$('#historyLegend').append(headerString);
@@ -1049,7 +1047,7 @@ function drawHealthHistoryView() {
 		$("#historyTable tr td").css("font-weight", "bold");
 		$("#historyTable tr td").css("font-size", "18px");
 	}
-};
+}
 
 /**************************************************************************************
  * Get data and draw status view
@@ -1087,7 +1085,7 @@ function drawStatusView() {
 		};
 		RESULTS_DIV.append('<div class="tile bgtile filterable" id=' + dataObject.projectId + '></div>');
 		fetchDataAndDrawTimeseriesSingleProject(dataObject);	
-	};
+	}
 	
 	//-------------------------
 	//Tile settings
@@ -1100,7 +1098,7 @@ function drawStatusView() {
 	tile.css("padding", 2 * ZOOM);
 	tile.css("border", "5px solid #e5e5e5");
 	tile.css("border-radius", BORDER_RADIUS * ZOOM);
-};
+}
 
 /**************************************************************************************
  * Get data and draw graph view
@@ -1147,7 +1145,7 @@ function drawGraphView() {
 	}else{
 		RESULTS_DIV.append('<p>Please select a project.</p>');
 	}
-};
+}
 
 /**************************************************************************************
  * Add a custom tag to a project
@@ -1184,7 +1182,7 @@ function addTag(selector) {
 		input.val('');
 	}
 	
-};
+}
 
 /**************************************************************************************
  * Remove a custom tag from a project
@@ -1210,7 +1208,7 @@ function removeTag(selector) {
 		storeLocalValue(projectId, '');
 		draw();
 	}
-};
+}
 
 /**************************************************************************************
  * Set visibility of option panel options and set default
@@ -1243,7 +1241,7 @@ function toggleOptions() {
 	} else {
 		$('#halfDayRadio').prop('checked', true);
 	}
-};
+}
 
 /**************************************************************************************
  * Logic for checkboxes to hide custom tags, tid and environment in dashboard & box view
@@ -1265,7 +1263,7 @@ function handleCheckBoxClick() {
 		envDiv.css('display', 'none');
 		ENV_BOX = false;
 		storeLocalValue('ENV_BOX', false);
-	};
+	}
 	
 	if(tidBox.prop('checked')) {
 		tidDiv.css('display', '');
@@ -1275,7 +1273,7 @@ function handleCheckBoxClick() {
 		tidDiv.css('display', 'none');
 		TID_BOX = false;
 		storeLocalValue('TID_BOX', false);
-	};
+	}
 	
 	if(customTagBox.prop('checked')) {
 		customTagDiv.css('display', '');
@@ -1286,7 +1284,7 @@ function handleCheckBoxClick() {
 		CUSTOM_TAG_BOX = false;
 		storeLocalValue('CUSTOM_TAG_BOX', false);
 	}
-};
+}
 
 /**************************************************************************************
  * Change timeFrame in dashboard and status view to the last 12 or 24 hours
@@ -1314,7 +1312,7 @@ function handleRadioButtonClick(selector) {
 		storeLocalValue('DASHBOARD_TIME_FRAME_STRING', 'oneday');
 		draw();
 	}
-};
+}
 /**************************************************************************************
  * Set custom timeframe from a jquery-ui datepicker component
  * @param selector date string
@@ -1361,7 +1359,7 @@ function getDate(selector) {
 			fetchDataAndDrawTimeseriesSingleProject(dataObject);
 		}
 	}
-};
+}
 
 /**************************************************************************************
  * Color drawn tiles in dashboard view with color according to current health
@@ -1395,7 +1393,7 @@ function drawTile(projectId) {
 	
 	for(var i = 0; i < loopable.length; i++) {
 		currentHealth += parseFloat(loopable[i].value);
-	};
+	}
 	
 	currentHealth = roundFloat(currentHealth/count);
 	
@@ -1403,7 +1401,7 @@ function drawTile(projectId) {
 	// Prepare HTML string and add to DOM
 	if(typeof(PROJECT_LIST[projectId].environment) != 'undefined') {
 		htmlString += '<div class="envDiv" style="width: 100%; height: 10%; text-align: left; font-size: ' + 12 * ZOOM + 'px; display: none">' + PROJECT_LIST[projectId].environment + '</div>';
-	};
+	}
 	
 	htmlString += '<div style="width: 100%; height: 60%; text-align: center; padding-top: ' + 15 * ZOOM + 'px;">' + tid + '</div>';
 	
@@ -1413,7 +1411,7 @@ function drawTile(projectId) {
 
 	if(typeof(PROJECT_LIST[projectId].Tag) != '') {
 		htmlString += '<div class="customTagDiv" style="width: 50%; height: 10%; text-align: right; position: absolute; bottom: ' + 3 * ZOOM + 'px; font-size: ' + 12 * ZOOM + 'px; right:' + 4 * ZOOM +'px; display: none">' + PROJECT_LIST[projectId].Tag + '</div>';
-	};
+	}
 	currentTile.html(htmlString);
 	
 	if(!isNaN(currentHealth)) {
@@ -1436,7 +1434,7 @@ function drawTile(projectId) {
 	}
 	
 	storeLocalValue("p" + projectId, currentHealth);
-};
+}
 
 /**************************************************************************************
  * When used in combination with setInterval(), this function can be used to make 
@@ -1566,8 +1564,8 @@ function getColor(measureName, value) {
 				
 			}
 			break;
-	};
-};
+	}
+}
 /**************************************************************************************
  * Fill tile with donut chart with data from last 12/24 hours
  * @param projectId Id of project to draw tile for
@@ -1582,7 +1580,7 @@ function drawStatusTile(projectId) {
 	currentTile.attr('onclick', 'toggleModal(this)');
 	currentTile.css('background-color', '');
 	
-};
+}
 
 /**************************************************************************************
  * Fill tile with boxes with data from last 12/24 hours
@@ -1611,7 +1609,7 @@ function drawBoxTile(projectId) {
 	// Build HTML of tile
 	if(typeof(PROJECT_LIST[projectId].environment) != 'undefined') {
 		htmlString += '<div class="envDiv" style="width: 100%; height: 10%; text-align: left; font-size: ' + 9 * ZOOM + 'px; display: none"><p>' + PROJECT_LIST[projectId].environment + '</p></div>';
-	};
+	}
 	
 	htmlString += '<div style="width: 100%;"><p style="margin: 2px;">' + name +'</p></div><div style="display: flex; flex-wrap: wrap; margin-left: ' + 4 * ZOOM + 'px;">';
 
@@ -1621,16 +1619,16 @@ function drawBoxTile(projectId) {
 		boxColors.push(color);
 		htmlString += '<div class="smallBoxes" style="height: ' + 15 * ZOOM + 'px; width: ' + 15 * ZOOM + 'px; float: left; margin: ' + ZOOM + 'px; background-color: ' + color + '"></div>'
 		
-	};
+	}
 	
 	htmlString += '<div>'
 	
 	if(typeof(PROJECT_LIST[projectId].tid) != 'undefined') {
 		htmlString += '<div class="tidDiv" style="width: 50%; height: 10%; text-align: left; position: absolute; bottom: ' + 7 * ZOOM + 'px; font-size: ' + 16 * ZOOM + 'px; left: ' + 4 * ZOOM + 'px; display: none"><p>' + PROJECT_LIST[projectId].tid + '</p></div>';
-	};
+	}
 	if(typeof(PROJECT_LIST[projectId].Tag) != '') {
 		htmlString += '<div class="customTagDiv" style="width: 50%; height: 10%; text-align: right; position: absolute; bottom: ' + 7 * ZOOM + 'px; font-size: ' + 16 * ZOOM + 'px; right:' + 4 * ZOOM +'px; display: none"><p>' + PROJECT_LIST[projectId].Tag + '</p></div>';
-	};
+	}
 
 	//-------------------------
 	// Set tile attributes
@@ -1669,7 +1667,7 @@ function drawBoxTile(projectId) {
 		$('.smallBoxes').css('height', 12 * ZOOM);
 		$('.smallBoxes').css('width', 12 * ZOOM);
 	}
-};
+}
 
 /**************************************************************************************
  * For charts from the last 12 or 24 hours in dashboard/status views: get missing 
@@ -1693,7 +1691,7 @@ function fillMissingChartValues(projectId) {
 		
 		formatDate = new FormattedDate(new Date(endTime - (i * hourDiffInMs)));
 		timestamps.push(formatDate.FullDate());
-	};
+	}
 
 	
 	for (var j = 0; j < timestamps.length; j++) {
@@ -1707,7 +1705,7 @@ function fillMissingChartValues(projectId) {
 			project.value = -1;
 			loopable.push(project);
 		}
-	};
+	}
 	
 	loopable.sort(dynamicSort('time'));
 	
@@ -1718,7 +1716,7 @@ function fillMissingChartValues(projectId) {
 	}
 	
 	return loopable;
-};
+}
 
 /**************************************************************************************
  * Draw a table with health of the last 12/24 hours (like SPM Health History)
@@ -1743,7 +1741,7 @@ function drawHistoryTable(projectId) {
 		}
 		
 		historyString += '<div title="' + results[i].value + '" style="min-height: 15px; max-height: 30px; width: 30px; flex: auto; margin: 3px; background-color: ' + color + '"></div>';
-	};
+	}
 	
 	historyString += '</div>';
 	
@@ -1760,7 +1758,7 @@ function drawHistoryTable(projectId) {
 	}
 	
 	storeLocalValue("p" + projectId,  results[results.length - 1].value);
-};
+}
 
 /**************************************************************************************
  * Call functions to draw different charts
@@ -1799,8 +1797,8 @@ function drawChart(graphType, targetId, vals) {
 		
 			drawChartArea(targetId, vals);
 			break;
-	};
-};
+	}
+}
 
 /**************************************************************************************
  * Draw bar or line chart
@@ -1852,7 +1850,7 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 			}else {
 				yVals.push(undefined);
 			}
-		};
+		}
 		
 		//-------------------------
 		// draw chart
@@ -1873,8 +1871,8 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 		);	
 	} else {
 		targetDiv.append("No data available.");
-	};
-};
+	}
+}
 
 /**************************************************************************************
  * Draw donut/pie chart with current data
@@ -1957,7 +1955,7 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 			textArray.push(NaN);
 		}
 		
-	};
+	}
 	
 	if(typeof(targetId) == 'number') {
 		
@@ -2030,7 +2028,7 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 	targetDiv.append(div);
 	
 	$('#toggleHelp').tooltip();
-};
+}
 
 /**************************************************************************************
  * Draw area chart
@@ -2083,7 +2081,7 @@ function drawChartArea(targetId, vals) {
 			}else {
 				yVals.push(0);
 			}
-		};
+		}
 		
 		//-------------------------
 		// Draw chart
@@ -2106,8 +2104,8 @@ function drawChartArea(targetId, vals) {
 		);	
 	} else {
 		targetDiv.append("No data available.");
-	};
-};
+	}
+}
 
 /**************************************************************************************
  * Toggle a modal to display further measures, stop refreshing the dashboard
@@ -2136,7 +2134,7 @@ function toggleModal(selector) {
 	$('#monitorButton').attr('onclick', "window.location.href='/silk/DEF/Monitoring/Monitoring?pId=" + CURRENT_MODAL_PROJECT + "'");
 	updateModalBody('Overall Health');
 	
-};
+}
 
 /**************************************************************************************
  * Restarts the refresh timer after closing a modal
@@ -2145,7 +2143,7 @@ function toggleModal(selector) {
 function modalRestartRefresh() {
 	
 	refreshTimer();
-};
+}
 
 /**************************************************************************************
  * Update modal body according to current tab
@@ -2172,7 +2170,7 @@ function updateModalBody(tab) {
 		};
 		fetchDataAndDrawTimeseriesSingleProject(dataObject);
 	}	
-};
+}
 
 
 /**************************************************************************************
@@ -2202,7 +2200,7 @@ function drawProjectDescription() {
 		if(loopable[index] != '' && loopable[index] != undefined) {
 			rowstring += '<tr><td>' + index + '</td><td class="value">' + loopable[index] + '</td></tr>';
 		}
-	};
+	}
 	
 	if(rowstring.length == 0 &&  PROJECT_LIST[CURRENT_MODAL_PROJECT].Tag != '') {
 			rowstring += '<tr><td>Tag: </td><td class="value">' + PROJECT_LIST[CURRENT_MODAL_PROJECT].Tag + '</td></tr>';
@@ -2211,7 +2209,7 @@ function drawProjectDescription() {
 	table.append(rowstring);	
 	leftTable.append(table);
 	
-};
+}
 
 /**************************************************************************************
  * Draw content of modal. Default is table, line chart, donut chart; left charts may be changed
@@ -2238,8 +2236,8 @@ function drawModalContent(projectId) {
 				
 			} else {
 				leftTable.append("No data available.");
-			};
-};
+			}
+}
 
 /**************************************************************************************
  * Create table with additional measurements
@@ -2261,7 +2259,7 @@ function drawModalTable(targetId) {
 	for(var i = 0; i < loopable.length; i++) {
 		
 		sumArray.push(loopable[i].value);
-	};
+	}
 	
 	var avg = roundFloat(calculateAverage(sumArray));
 	var min = roundFloat(calculateMinimum(sumArray));
@@ -2279,7 +2277,7 @@ function drawModalTable(targetId) {
 	'</td></tr></table>';
 	
 	targetDiv.append(rowstring);
-};
+}
 
 /**************************************************************************************
  * Check if value is in array of objects
@@ -2296,8 +2294,8 @@ function search(searchKey, myArray){
         if (myArray[i].time === searchKey) {
             return true;
         }
-    };
-};
+    }
+}
 
 /**************************************************************************************
  * Round floats to two decimals
@@ -2307,7 +2305,7 @@ function search(searchKey, myArray){
 function roundFloat(value){
 	
 	return  parseFloat(value).toFixed(2);
-};
+}
 
 /**************************************************************************************
  * Function to sort array of objects by selected key
@@ -2323,7 +2321,7 @@ function dynamicSort(property) {
 		
         sortOrder = -1;
         property = property.substr(1);
-    };
+    }
 	
     return function (a,b) {
 		var result;
@@ -2338,8 +2336,8 @@ function dynamicSort(property) {
 		}
 
 		return result * sortOrder;
-    };
-};
+    }
+}
 
 /**************************************************************************************
  * Main function; gets session, the SPM user's ID, their projects, draws a view and 
@@ -2411,7 +2409,7 @@ function startTheusinator(){
 		$('#sortSelector option[value="' + retrieveLocalValue("SORT_ORDER") + '"]').attr('selected', 'selected');
 	}
 
-};
+}
 
 /**************************************************************************************
 * Object; Guarantees correct format of timestamps for use in AJAX calls to SPM API
@@ -2454,7 +2452,7 @@ function FormattedDate(Date) {
 	this.FullDate = function() {
 		return this.Year() + "-" + this.Month() + "-" + this.Day() + " " + this.Hours() + ":00:00.000";
 	};
-};
+}
 
 /**************************************************************************************
 * Function to set the refresh interval and update the data on refresh without redrawing
@@ -2495,7 +2493,7 @@ function refreshTimer() {
 						measureName: "Overall Health"
 						};
 						fetchDataAndDrawTimeseriesSingleProject(dataObject);	
-					};
+					}
 					
 					tile = $('.tile');
 						tile.css('background-color', '#e5e5e5');
@@ -2517,7 +2515,7 @@ function refreshTimer() {
 						measureName: "Overall Health"
 						};
 						fetchDataAndDrawTimeseriesSingleProject(dataObject);	
-					};
+					}
 					
 					tile = $('.tile');
 					tile.css('background-color', '#e5e5e5');
@@ -2538,7 +2536,7 @@ function refreshTimer() {
 						measureName: "Overall Health"
 						};
 						fetchDataAndDrawTimeseriesSingleProject(dataObject);	
-					};
+					}
 					
 					tile = $('.tile');
 					tile.css('background-color', '#e5e5e5');
@@ -2551,7 +2549,7 @@ function refreshTimer() {
 			}
 		}, REFRESH_TIME);
 	}
-};
+}
 
 /**************************************************************************************
 * Function to store a value in the local storage.
@@ -2561,7 +2559,7 @@ function refreshTimer() {
  *************************************************************************************/
 function storeLocalValue(cname, cvalue) {
 	window.localStorage.setItem(ENVIRONMENT+"-"+cname, cvalue);
-};
+}
 
 /**************************************************************************************
 * Function to get a cookie
@@ -2575,7 +2573,7 @@ function retrieveLocalValue(cname) {
     	return item;
     }
 	return "";
-};
+}
 
 /*******************************************************************************
  * Show Loading Animation
@@ -2590,7 +2588,7 @@ function showLoader(isVisible){
 	}else{
 		$("#loading").css("visibility", "hidden");
 	}
-};
+}
 
 /*******************************************************************************
  * Filter projects in dashboard
@@ -2717,7 +2715,7 @@ function filterProjects(selector) {
 			}
 		}
 	}
-};
+}
 
 /*******************************************************************************
  * Easter egg: set zoom to ridiculous level
@@ -2738,7 +2736,7 @@ function zoooom() {
 	}
 	
 	draw();
-};
+}
 
 /*******************************************************************************
  * Easter egg: Change display to draw a christmas design.
@@ -2760,7 +2758,7 @@ function hohoho() {
 	}
 	
 	draw();
-};
+}
 
 /*******************************************************************************
  * Easter egg: Change display to draw a april fools day design.
@@ -2782,7 +2780,7 @@ function primus_aprilis() {
 	}
 	
 	draw();
-};
+}
 
 /*******************************************************************************
  * Easter egg: Change display to draw an easter design.
@@ -2804,7 +2802,7 @@ function bunny() {
 	}
 	
 	draw();
-};
+}
 /*******************************************************************************
  * Draws a legend which explains the color mapping in status/dashboard view
  ******************************************************************************/
@@ -2815,7 +2813,7 @@ function drawLegend(){
 	
 	legend.attr("title", "Health");
 	legend.html(rowstring);
-};
+}
 
 /*******************************************************************************
  * Make an API call every 5 minutes to prevent the session from timing out.
@@ -2840,7 +2838,7 @@ function keepSessionAlive() {
 			}
 		)
 	}, 300000);
-};
+}
 
 /*******************************************************************************
  * Limit mergeSpan options to only provide sensible data and limit strain on 
@@ -2908,7 +2906,7 @@ function setMergeSpanOptions() {
 				break;
 		}
 	}
-};
+}
 
 /*******************************************************************************
  * Toggles text sizes in box and heaklth history view
