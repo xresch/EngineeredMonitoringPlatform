@@ -31,7 +31,7 @@ function emp_widget_prometheus_prepareData(responsePayload){
 					//----------------------------------
 					// Handle Range Values
 					for(var subindex in current.values){
-						value = current.values[subindex];
+						var value = current.values[subindex];
 						var item = Object.assign({}, current.metric);
 						item.time = value[0] * 1000;
 						item.value = value[1];

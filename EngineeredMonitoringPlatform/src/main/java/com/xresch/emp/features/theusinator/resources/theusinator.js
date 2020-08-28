@@ -1656,7 +1656,7 @@ function drawBoxTile(projectId) {
 
 		if(oldValue >= 25.00 && results[results.length -1].value < 25.00) {
 
-			blinkInterval = setInterval("blink('#" + projectId + "')", 1500);
+			var blinkInterval = setInterval("blink('#" + projectId + "')", 1500);
 			BLINK_INTERVALS.push(blinkInterval);
 		}
 	}
@@ -1852,7 +1852,7 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 		
 		vals.sort(dynamicSort('time'));
 		
-		for(index in vals) {
+		for(var index in vals) {
 			xVals.push(vals[index].time)
 			
 			if(vals[index].value != -1){
@@ -2075,10 +2075,10 @@ function drawChartArea(targetId, vals) {
 			vals = fillMissingChartValues(CURRENT_MODAL_PROJECT);
 		}
 		
-		TESTER = div.get(0);
+		var TESTER = div.get(0);
 		
-		xVals = [];
-		yVals = [];
+		var xVals = [];
+		var yVals = [];
 		
 		vals.sort(dynamicSort('time'));
 		
