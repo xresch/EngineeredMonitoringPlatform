@@ -72,7 +72,7 @@ public class AWAEnvironmentManagement {
 		environmentsWithDB.remove(environment.getDefaultObject().id());
 		
 		if(environment.isDBDefined()) {
-			DBInterface db = initializeDBInterface(
+			DBInterface db = AWADatabase.initializeDBInterface(
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 
@@ -92,71 +92,6 @@ public class AWAEnvironmentManagement {
 		return environmentsWithDB.get(id);
 	}
 	
-	public static DBInterface initializeDBInterface(String servername, int port, String name, String type, String username, String password) {
-		
-		DBInterface db = new DBInterface() {
-			
-			PoolDataSource pooledSource;
-			{
-				try {
-					
-					
-					String url = "";
-					if(type.trim().equals("SID")) {
-						//jdbc:oracle:thin:@myHost:myport:sid
-						url = "jdbc:oracle:thin:@"+servername+":"+port+":"+name;
-					}else {
-						//jdbc:oracle:thin:@//myHost:1521/service_name
-						url = "jdbc:oracle:thin:@//"+servername+":"+port+"/"+name;
-					}
-					
-					pooledSource = PoolDataSourceFactory.getPoolDataSource();
-					pooledSource.setConnectionFactoryClassName("oracle.jdbc.pool.OracleDataSource");
-					pooledSource.setURL(url);
-					pooledSource.setUser(username);
-					pooledSource.setPassword(password);
-					pooledSource.setInitialPoolSize(5);
-					pooledSource.setMinPoolSize(5);
-					pooledSource.setMaxPoolSize(50);
-					pooledSource.setMaxStatements(20);
-					
-					pooledSource.setMaxConnectionReuseCount(50);
-					pooledSource.setTimeoutCheckInterval(30);
-					pooledSource.setConnectionWaitTimeout(60);
-					pooledSource.setAbandonedConnectionTimeout(20);
-					pooledSource.setMaxIdleTime(330);
-					pooledSource.setInactiveConnectionTimeout(600);
-					pooledSource.setTimeToLiveConnectionTimeout(3600);
-					
-					//----------------------------------
-					// Test connection
-					Connection connection = pooledSource.getConnection();
-					connection.close();
-					
-				} catch (SQLException e) {
-					new CFWLog(logger)
-						.method("initialize")
-						.severe("Exception initializing Database.", e);
-				}
-			}
-			
-			@Override
-			public Connection getConnection() throws SQLException {
-				
-				if(transactionConnection.get() != null) {
-					return transactionConnection.get();
-				}else {
-					synchronized (pooledSource) {
-						Connection connection = pooledSource.getConnection();
-						addOpenConnection(connection);
-						return connection;
-					}
-				}				
-			}
-		};
-
-		return db;
-	}
 
 	public static AutocompleteResult autocompleteClient(HttpServletRequest request){
 		
@@ -167,7 +102,7 @@ public class AWAEnvironmentManagement {
 		
 		if(environment.isDBDefined()) {
 			
-			DBInterface db = initializeDBInterface(
+			DBInterface db = AWADatabase.initializeDBInterface(
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 
