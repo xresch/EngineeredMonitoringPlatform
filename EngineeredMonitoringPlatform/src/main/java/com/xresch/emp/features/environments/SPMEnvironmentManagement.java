@@ -144,7 +144,6 @@ public class SPMEnvironmentManagement {
 					
 				} catch (Exception e) {
 					new CFWLog(logger)
-						.method("initialize")
 						.severe("Exception initializing Database.", e);
 				}
 			}
@@ -204,7 +203,6 @@ public class SPMEnvironmentManagement {
 		
 		} catch (SQLException e) {
 			new CFWLog(logger)
-				.method("fetchData")
 				.severe("Error fetching Widget data.", e);
 		}finally {
 			db.close(result);
@@ -249,7 +247,6 @@ public class SPMEnvironmentManagement {
 		
 		} catch (SQLException e) {
 			new CFWLog(logger)
-				.method("fetchData")
 				.severe("Error fetching Monitor names.", e);
 		}finally {
 			db.close(result);
@@ -293,7 +290,6 @@ public class SPMEnvironmentManagement {
 		
 		} catch (SQLException e) {
 			new CFWLog(logger)
-				.method("fetchData")
 				.severe("Error fetching Widget data.", e);
 		}finally {
 			db.close(result);
@@ -339,7 +335,6 @@ public class SPMEnvironmentManagement {
 		
 		} catch (SQLException e) {
 			new CFWLog(logger)
-				.method("fetchData")
 				.severe("Error fetching Widget data.", e);
 		}finally {
 			db.close(result);
@@ -385,7 +380,6 @@ public class SPMEnvironmentManagement {
 		
 		} catch (SQLException e) {
 			new CFWLog(logger)
-				.method("fetchData")
 				.severe("Error fetching Widget data.", e);
 		}finally {
 			db.close(result);
@@ -430,7 +424,6 @@ public class SPMEnvironmentManagement {
 		
 		} catch (SQLException e) {
 			new CFWLog(logger)
-				.method("fetchData")
 				.severe("Error fetching Widget data.", e);
 		}finally {
 			db.close(result);
@@ -473,7 +466,6 @@ public class SPMEnvironmentManagement {
 		
 		} catch (SQLException e) {
 			new CFWLog(logger)
-				.method("fetchData")
 				.severe("Error fetching Widget data.", e);
 		}finally {
 			db.close(result);

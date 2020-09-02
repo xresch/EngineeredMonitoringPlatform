@@ -124,7 +124,6 @@ public class AWAEnvironmentManagement {
 				}
 			} catch (SQLException e) {
 				new CFWLog(logger)
-				.method("autocompleteClient")
 				.severe("Error reading SQL results.", e);
 				
 			}

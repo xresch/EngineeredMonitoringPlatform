@@ -130,7 +130,6 @@ public class AWADatabase {
 					
 				} catch (SQLException e) {
 					new CFWLog(logger)
-						.method("initialize")
 						.severe("Exception initializing Database.", e);
 				}
 			}

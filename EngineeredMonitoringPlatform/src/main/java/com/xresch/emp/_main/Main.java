@@ -70,7 +70,6 @@ public class Main implements CFWAppInterface {
 				executor.start();
 			} catch (Exception e) {
 				new CFWLog(logger)
-				.method("startApp")
 				.severe("Exception occured during startup.", e);
 			}
 		

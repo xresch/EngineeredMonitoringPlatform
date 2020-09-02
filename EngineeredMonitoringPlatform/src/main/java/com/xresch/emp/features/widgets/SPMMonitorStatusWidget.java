@@ -238,7 +238,6 @@ public class SPMMonitorStatusWidget extends WidgetDefinition {
 				}
 			} catch (SQLException e) {
 				new CFWLog(logger)
-					.method("fetchData")
 					.severe("Error fetching Widget data.", e);
 			}finally {
 				db.close(result);
