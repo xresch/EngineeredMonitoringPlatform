@@ -67,6 +67,24 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			
+			<!-- ================= DEPENDENCY ================== -->
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+							<excludeScope>provided</excludeScope>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
 		</plugins>
 
 	</build>
