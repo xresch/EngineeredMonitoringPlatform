@@ -7,11 +7,11 @@ import com.xresch.cfw._main.CFWAppInterface;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw._main.CFWExtensionApplication;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.emp.features.api.FeatureEMPAPI;
-import com.xresch.emp.features.environments.FeatureEMPEnvironments;
-import com.xresch.emp.features.manual.FeatureEMPManual;
-import com.xresch.emp.features.theusinator.FeatureTheusinator;
-import com.xresch.emp.features.widgets.FeatureEMPWidgets;
+import com.xresch.emp.features.awa.FeatureAWA;
+import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.prometheus.FeaturePrometheus;
+import com.xresch.emp.features.spm.FeatureSPM;
+import com.xresch.emp.features.webex.FeatureWebex;
 
 /**************************************************************************************************************
  * 
@@ -39,11 +39,12 @@ public class Main implements CFWAppInterface {
     	
 		//----------------------------------
 		// Register Objects
-		CFW.Registry.Features.addFeature(FeatureEMPEnvironments.class);
-    	CFW.Registry.Features.addFeature(FeatureTheusinator.class);
-    	CFW.Registry.Features.addFeature(FeatureEMPWidgets.class);
-    	CFW.Registry.Features.addFeature(FeatureEMPAPI.class);
-    	CFW.Registry.Features.addFeature(FeatureEMPManual.class);
+		CFW.Registry.Features.addFeature(FeatureAWA.class);
+    	CFW.Registry.Features.addFeature(FeatureSPM.class);
+    	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
+    	
+    	CFW.Registry.Features.addFeature(FeatureWebex.class);
+    	CFW.Registry.Features.addFeature(FeatureEMPCommon.class);
 		
 	}
 
