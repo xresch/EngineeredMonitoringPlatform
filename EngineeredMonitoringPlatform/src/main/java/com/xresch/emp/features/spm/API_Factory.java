@@ -8,7 +8,6 @@ import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.api.APIDefinition;
 import com.xresch.cfw.features.api.APIDefinitionSQL;
 import com.xresch.cfw.features.api.APISQLExecutor;
-import com.xresch.emp.features.webex.FeatureWebex;
 
 public class API_Factory {
 	
@@ -28,6 +27,8 @@ public class API_Factory {
 		apis.add(createGetServiceTargetInfoForProject());
 		apis.add(createGetServiceTargetViolationsForProject());
 		apis.add(createGetStatusForMonitor());
+		apis.add(createGetStatusForProject());
+		apis.add(createGetStatusForProjectMonitors());
 
 		return apis;
 	}
@@ -114,43 +115,6 @@ public class API_Factory {
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/
-	private static APIDefinitionSQL createGetStatusForMonitor() {
-	
-		APIDefinitionSQL apiDef = 
-				new APIDefinitionSQL(
-						API_Input_GetStatusForMonitor.class,
-						"SPM",
-						"getStatusForMonitor",
-						new String[] {"ENVIRONMENT_ID", "MONITOR_ID", "MEASURE"}
-				);
-				
-		apiDef.setDescription("Returns the current status for the selected monitor.");
-	
-		APISQLExecutor executor = new APISQLExecutor() {
-			@Override
-			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
-				API_Input_GetStatusForMonitor inputs = (API_Input_GetStatusForMonitor)object;
-				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
-				
-				if(environment != null) {
-					ResultSet result = environment.getDBInstance()
-						.preparedExecuteQuerySilent(
-							CFW.Files.readPackageResource(FeatureWebex.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus.sql"),
-							inputs.measureName(),
-							inputs.monitorID());
-					return result;
-				}
-				return null;
-			}
-		};
-			
-		apiDef.setSQLExecutor(executor);
-		return apiDef;
-	}
-
-	/***************************************************************************
-	 * 
-	 ***************************************************************************/
 	private static APIDefinitionSQL createGetServiceTargetInfoForProject() {
 
 		APIDefinitionSQL apiDef = 
@@ -216,6 +180,119 @@ public class API_Factory {
 							inputs.latestTime(),
 							inputs.projectID()
 							);
+					return result;
+				}
+				return null;
+			}
+		};
+			
+		apiDef.setSQLExecutor(executor);
+		return apiDef;
+	}
+
+	/***************************************************************************
+	 * 
+	 ***************************************************************************/
+	private static APIDefinitionSQL createGetStatusForMonitor() {
+	
+		APIDefinitionSQL apiDef = 
+				new APIDefinitionSQL(
+						API_Input_GetStatusForMonitor.class,
+						"SPM",
+						"getStatusForMonitor",
+						new String[] {"ENVIRONMENT_ID", "MONITOR_ID", "MEASURE"}
+				);
+				
+		apiDef.setDescription("Returns the current status for the selected monitor.");
+	
+		APISQLExecutor executor = new APISQLExecutor() {
+			@Override
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+				API_Input_GetStatusForMonitor inputs = (API_Input_GetStatusForMonitor)object;
+				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
+				
+				if(environment != null) {
+					ResultSet result = environment.getDBInstance()
+						.preparedExecuteQuerySilent(
+							CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus.sql"),
+							inputs.measureName(),
+							inputs.monitorID());
+					return result;
+				}
+				return null;
+			}
+		};
+			
+		apiDef.setSQLExecutor(executor);
+		return apiDef;
+	}
+	
+	/***************************************************************************
+	 * 
+	 ***************************************************************************/
+	private static APIDefinitionSQL createGetStatusForProject() {
+	
+		APIDefinitionSQL apiDef = 
+				new APIDefinitionSQL(
+						API_Input_GetStatusForProject.class,
+						"SPM",
+						"getStatusForProject",
+						new String[] {"ENVIRONMENT_ID", "PROJECT_ID", "MEASURE"}
+				);
+				
+		apiDef.setDescription("Returns the current status for the selected project.");
+	
+		APISQLExecutor executor = new APISQLExecutor() {
+			@Override
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+				API_Input_GetStatusForProject inputs = (API_Input_GetStatusForProject)object;
+				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
+				
+				if(environment != null) {
+					ResultSet result = environment.getDBInstance()
+						.preparedExecuteQuerySilent(
+							CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmprojectstatus.sql"),
+							inputs.projectID(),
+							inputs.measureName()
+							);
+					return result;
+				}
+				return null;
+			}
+		};
+			
+		apiDef.setSQLExecutor(executor);
+		return apiDef;
+	}
+	
+	/***************************************************************************
+	 * 
+	 ***************************************************************************/
+	private static APIDefinitionSQL createGetStatusForProjectMonitors() {
+	
+		APIDefinitionSQL apiDef = 
+				new APIDefinitionSQL(
+						API_Input_GetStatusForProject.class,
+						"SPM",
+						"getStatusForProjectMonitors",
+						new String[] {"ENVIRONMENT_ID", "PROJECT_ID", "MEASURE"}
+				);
+				
+		apiDef.setDescription("Returns the current status for all the monitors of the selected project.");
+	
+		APISQLExecutor executor = new APISQLExecutor() {
+			@Override
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+				API_Input_GetStatusForProject inputs = (API_Input_GetStatusForProject)object;
+				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
+				
+				if(environment != null) {
+					ResultSet result = environment.getDBInstance()
+						.preparedExecuteQuerySilent(
+							CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus_for_projects.sql"),
+							inputs.measureName(),
+							inputs.projectID()
+						);
 					return result;
 				}
 				return null;
