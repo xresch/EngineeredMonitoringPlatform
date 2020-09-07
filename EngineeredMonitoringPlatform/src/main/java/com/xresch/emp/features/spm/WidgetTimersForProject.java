@@ -30,7 +30,6 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
-import com.xresch.emp.features.webex.FeatureWebex;
 
 public class WidgetTimersForProject extends WidgetDefinition {
 
@@ -196,7 +195,7 @@ public class WidgetTimersForProject extends WidgetDefinition {
 			
 			String measureName = entry.getKey().trim();
 			ResultSet result = db.preparedExecuteQuerySilent(
-					CFW.Files.readPackageResource(FeatureWebex.RESOURCE_PACKAGE, "emp_widget_spmtimersforproject.sql"),
+					CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmtimersforproject.sql"),
 					projectID,
 					measureName);
 			
@@ -230,7 +229,7 @@ public class WidgetTimersForProject extends WidgetDefinition {
 					//--------------------------------
 					// Return No Data as -1
 					nameResult = db.preparedExecuteQuerySilent(
-							CFW.Files.readPackageResource(FeatureWebex.RESOURCE_PACKAGE, "emp_widget_spmprojectdetails.sql"),
+							CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmprojectdetails.sql"),
 							projectID);
 					
 					if(nameResult != null && nameResult.next()) {
@@ -308,7 +307,7 @@ public class WidgetTimersForProject extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureWebex.RESOURCE_PACKAGE, "emp_widget_spmtimersforproject.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmtimersforproject.js");
 		array.add(js);
 		return array;
 	}
@@ -321,7 +320,7 @@ public class WidgetTimersForProject extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.RESOURCE_PACKAGE, "lang_en_emp_widgets.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_widgets.properties"));
 		return map;
 	}
 

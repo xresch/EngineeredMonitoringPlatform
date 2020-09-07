@@ -197,7 +197,7 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 			
 			String measureName = entry.getKey().trim();
 			ResultSet result = db.preparedExecuteQuerySilent(
-					CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmcounterforprojectstatus.sql"),
+					CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmcounterforprojectstatus.sql"),
 					projectID,
 					measureName);
 			
@@ -231,7 +231,7 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 					//--------------------------------
 					// Return No Data as -1
 					nameResult = db.preparedExecuteQuerySilent(
-							CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmprojectdetails.sql"),
+							CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmprojectdetails.sql"),
 							projectID);
 					
 					if(nameResult != null && nameResult.next()) {
@@ -309,7 +309,7 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmcounterforprojectstatus.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmcounterforprojectstatus.js");
 		array.add(js);
 		return array;
 	}
@@ -322,7 +322,7 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.RESOURCE_PACKAGE, "lang_en_emp_widgets.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_widgets.properties"));
 		return map;
 	}
 

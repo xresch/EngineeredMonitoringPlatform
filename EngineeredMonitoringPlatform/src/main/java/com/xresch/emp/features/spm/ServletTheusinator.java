@@ -40,11 +40,11 @@ public class ServletTheusinator extends HttpServlet
 				HTMLResponse html = new HTMLResponse("Theusinator SPM Dashboard");
 				StringBuilder content = html.getContent();
 	
-				html.addCSSFile(HandlingType.JAR_RESOURCE, FeatureSPM.RESOURCE_PACKAGE, "theusinator.css");
-				html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureSPM.RESOURCE_PACKAGE, "plotly.min.js");
-				html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureSPM.RESOURCE_PACKAGE, "theusinator.js");
+				html.addCSSFile(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE, "theusinator.css");
+				html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE, "plotly.min.js");
+				html.addJSFileBottom(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE, "theusinator.js");
 
-				content.append(CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "theusinator.html"));
+				content.append(CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "theusinator.html"));
 				
 				html.addJavascriptCode("startTheusinator();");
 				

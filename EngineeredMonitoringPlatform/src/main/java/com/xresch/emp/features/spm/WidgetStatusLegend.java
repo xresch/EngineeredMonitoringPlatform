@@ -29,7 +29,7 @@ public class WidgetStatusLegend extends WidgetDefinition {
 
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmhealthlegend.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmhealthlegend.js");
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add(js);
 		return array;
@@ -38,7 +38,7 @@ public class WidgetStatusLegend extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() { 
 		
-		FileDefinition css = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.RESOURCE_PACKAGE, "emp_widgets.css");
+		FileDefinition css = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "emp_widgets.css");
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add(css);
 		return array; 

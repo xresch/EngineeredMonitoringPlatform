@@ -144,15 +144,15 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.getContent().append(CFW.Files.readPackageResource(FeaturePrometheus.RESOURCE_PACKAGE, "emp_widget_prometheus_instant_threshold_sample.json") );
+		response.getContent().append(CFW.Files.readPackageResource(FeaturePrometheus.PACKAGE_RESOURCE, "emp_widget_prometheus_instant_threshold_sample.json") );
 		
 	}
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeaturePrometheus.RESOURCE_PACKAGE, "emp_prometheus_commonFunctions.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeaturePrometheus.RESOURCE_PACKAGE, "emp_widget_prometheus_instant_threshold.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeaturePrometheus.PACKAGE_RESOURCE, "emp_prometheus_commonFunctions.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeaturePrometheus.PACKAGE_RESOURCE, "emp_widget_prometheus_instant_threshold.js") );
 		return array;
 	}
 
@@ -164,7 +164,7 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.RESOURCE_PACKAGE, "lang_en_emp_widgets.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_widgets.properties"));
 		return map;
 	}
 

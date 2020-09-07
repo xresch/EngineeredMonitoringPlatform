@@ -38,7 +38,7 @@ public class WidgetServiceStatusLegend extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() { 
 		
-		FileDefinition css = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.RESOURCE_PACKAGE, "emp_widgets.css");
+		FileDefinition css = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "emp_widgets.css");
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add(css);
 		return array; 

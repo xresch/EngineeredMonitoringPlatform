@@ -185,7 +185,7 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 		for(int i = 0; i < jobfilters.length; i++) {
 
 			ResultSet result = db.preparedExecuteQuerySilent(
-					CFW.Files.readPackageResource(FeatureAWA.RESOURCE_PACKAGE, "emp_awa_jobswithstatus.sql"),
+					CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_jobswithstatus.sql"),
 					environment.clientID(),
 					lowerStatusCode,
 					upperStatusCode,
@@ -257,8 +257,8 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.RESOURCE_PACKAGE, "emp_awa_commonFunctions.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.RESOURCE_PACKAGE, "emp_widget_awajobswithstatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.PACKAGE_RESOURCE, "emp_awa_commonFunctions.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.PACKAGE_RESOURCE, "emp_widget_awajobswithstatus.js") );
 		return array;
 	}
 
@@ -270,7 +270,7 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.RESOURCE_PACKAGE, "lang_en_emp_widgets.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_widgets.properties"));
 		return map;
 	}
 

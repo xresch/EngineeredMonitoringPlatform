@@ -185,7 +185,7 @@ public class EnvironmentManagerSPM {
 		}
 		
 		ResultSet result = db.preparedExecuteQuery(
-			CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_spm_monitor_autocomplete.sql"),
+			CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_spm_monitor_autocomplete.sql"),
 			"%"+searchValue+"%",
 			"%"+searchValue+"%");
 		
@@ -230,7 +230,7 @@ public class EnvironmentManagerSPM {
 		}
 		
 		ResultSet result = db.preparedExecuteQuery(
-			CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_spm_monitor_autocomplete.sql"),
+			CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_spm_monitor_autocomplete.sql"),
 			"%"+searchValue+"%",
 			"%"+searchValue+"%");
 		
@@ -274,7 +274,7 @@ public class EnvironmentManagerSPM {
 		}
 		
 		ResultSet result = db.preparedExecuteQuery(
-			CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_spm_project_autocomplete.sql"),
+			CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_spm_project_autocomplete.sql"),
 			"%"+searchValue+"%");
 		
 		LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
@@ -318,7 +318,7 @@ public class EnvironmentManagerSPM {
 		}
 
 		ResultSet result = db.preparedExecuteQuery(
-			CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_spm_measuresformonitor_autocomplete.sql"),
+			CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_spm_measuresformonitor_autocomplete.sql"),
 			"%Custom counter%"+searchValue+"%",
 			monitorID
 			);
@@ -363,7 +363,7 @@ public class EnvironmentManagerSPM {
 		}
 
 		ResultSet result = db.preparedExecuteQuery(
-			CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_spm_measuresformonitor_autocomplete.sql"),
+			CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_spm_measuresformonitor_autocomplete.sql"),
 			"%Custom timer%"+searchValue+"%",
 			monitorID
 			);
@@ -407,7 +407,7 @@ public class EnvironmentManagerSPM {
 		}
 
 		ResultSet result = db.preparedExecuteQuery(
-			CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_spm_measuresforproject_autocomplete.sql"),
+			CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_spm_measuresforproject_autocomplete.sql"),
 			"%Custom counter%"+searchValue+"%",
 			projectID
 			);
@@ -449,7 +449,7 @@ public class EnvironmentManagerSPM {
 		}
 
 		ResultSet result = db.preparedExecuteQuery(
-			CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_spm_measuresforproject_autocomplete.sql"),
+			CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_spm_measuresforproject_autocomplete.sql"),
 			"%Custom timer%"+searchValue+"%",
 			projectID
 			);

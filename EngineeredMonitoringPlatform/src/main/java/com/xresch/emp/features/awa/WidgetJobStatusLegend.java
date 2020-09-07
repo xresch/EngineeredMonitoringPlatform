@@ -29,7 +29,7 @@ public class WidgetJobStatusLegend extends WidgetDefinition {
 
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.RESOURCE_PACKAGE, "emp_widget_awajobstatus_legend.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.PACKAGE_RESOURCE, "emp_widget_awajobstatus_legend.js");
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add(js);
 		return array;
@@ -38,7 +38,7 @@ public class WidgetJobStatusLegend extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() { 
 		
-		FileDefinition css = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.RESOURCE_PACKAGE, "emp_widgets.css");
+		FileDefinition css = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "emp_widgets.css");
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add(css);
 		return array; 

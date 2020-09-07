@@ -57,7 +57,7 @@ public class API_Factory {
 				
 				if(environment != null) {
 					ResultSet result = environment.getDBInstance()
-					.preparedExecuteQuery(CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "getExecutionLogsForProject.sql"),
+					.preparedExecuteQuery(CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "getExecutionLogsForProject.sql"),
 							inputs.projectID(),
 							inputs.earliestTime(),
 							inputs.latestTime()
@@ -96,7 +96,7 @@ public class API_Factory {
 				
 				if(environment != null) {
 					ResultSet result = environment.getDBInstance()
-					.preparedExecuteQuery(CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "getExecutionLogsForMonitor.sql"),
+					.preparedExecuteQuery(CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "getExecutionLogsForMonitor.sql"),
 							inputs.projectID(),
 							inputs.monitorName(),
 							inputs.earliestTime(),
@@ -136,7 +136,7 @@ public class API_Factory {
 				
 				if(environment != null) {
 					ResultSet result = environment.getDBInstance()
-					.preparedExecuteQuery(CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "getServiceTargetInfoForProject.sql"),
+					.preparedExecuteQuery(CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "getServiceTargetInfoForProject.sql"),
 							inputs.earliestTime(),
 							inputs.latestTime(),
 							inputs.projectID()
@@ -175,7 +175,7 @@ public class API_Factory {
 				
 				if(environment != null) {
 					ResultSet result = environment.getDBInstance()
-					.preparedExecuteQuery(CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "getServiceTargetViolationsForProject.sql"),
+					.preparedExecuteQuery(CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "getServiceTargetViolationsForProject.sql"),
 							inputs.earliestTime(),
 							inputs.latestTime(),
 							inputs.projectID()
@@ -214,7 +214,7 @@ public class API_Factory {
 				if(environment != null) {
 					ResultSet result = environment.getDBInstance()
 						.preparedExecuteQuerySilent(
-							CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus.sql"),
+							CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmmonitorstatus.sql"),
 							inputs.measureName(),
 							inputs.monitorID());
 					return result;
@@ -251,7 +251,7 @@ public class API_Factory {
 				if(environment != null) {
 					ResultSet result = environment.getDBInstance()
 						.preparedExecuteQuerySilent(
-							CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmprojectstatus.sql"),
+							CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmprojectstatus.sql"),
 							inputs.projectID(),
 							inputs.measureName()
 							);
@@ -289,7 +289,7 @@ public class API_Factory {
 				if(environment != null) {
 					ResultSet result = environment.getDBInstance()
 						.preparedExecuteQuerySilent(
-							CFW.Files.readPackageResource(FeatureSPM.RESOURCE_PACKAGE, "emp_widget_spmmonitorstatus_for_projects.sql"),
+							CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmmonitorstatus_for_projects.sql"),
 							inputs.measureName(),
 							inputs.projectID()
 						);

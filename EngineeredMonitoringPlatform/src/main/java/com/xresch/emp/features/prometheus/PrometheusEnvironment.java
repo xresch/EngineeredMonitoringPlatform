@@ -190,7 +190,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		String likeString = "%"+lastLine+"%";
 		
 		ResultSet resultSet = new CFWSQL(null)
-			.loadSQLResource(FeatureWebex.RESOURCE_PACKAGE, "emp_widget_prometheus_autocompleteQuery.sql", 
+			.loadSQLResource(FeaturePrometheus.PACKAGE_RESOURCE, "emp_widget_prometheus_autocompleteQuery.sql", 
 					"%query\":\""+likeString, 
 					likeString, 
 					limit)

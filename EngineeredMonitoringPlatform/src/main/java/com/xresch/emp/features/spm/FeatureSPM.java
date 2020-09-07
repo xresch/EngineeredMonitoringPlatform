@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
+import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
+import com.xresch.cfw.features.manual.FeatureManual;
+import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.response.bootstrap.DynamicItemCreator;
 import com.xresch.cfw.response.bootstrap.HierarchicalHTMLItem;
 import com.xresch.cfw.response.bootstrap.MenuItem;
+import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************
  * 
@@ -18,7 +22,8 @@ import com.xresch.cfw.response.bootstrap.MenuItem;
  **************************************************************************************************************/
 public class FeatureSPM extends CFWAppFeature {
 	
-	public static final String RESOURCE_PACKAGE = "com.xresch.emp.features.spm.resources";
+	public static final String PACKAGE_MANUAL = "com.xresch.emp.features.spm.manual";
+	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.spm.resources";
 	
 	//-----------------------------------------
 	// PROD
@@ -30,8 +35,8 @@ public class FeatureSPM extends CFWAppFeature {
 	public void register() {
 		//----------------------------------
 		// Register Package
-		CFW.Files.addAllowedPackage(RESOURCE_PACKAGE);
-		
+		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
+		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
 		//----------------------------------
 		// Register Context Settings
 		CFW.Registry.ContextSettings.register(EnvironmentSPM.SETTINGS_TYPE, EnvironmentSPM.class);
@@ -48,6 +53,10 @@ public class FeatureSPM extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetTimersForProject());
 		CFW.Registry.Widgets.add(new WidgetStatusLegend());
 		CFW.Registry.Widgets.add(new WidgetMeasureLegend());
+		
+		//----------------------------------
+		// Register Manuals
+		registerSPMManual();
 		
     	//----------------------------------
     	// Register Menus
@@ -118,4 +127,101 @@ public class FeatureSPM extends CFWAppFeature {
 		/* do nothing */
 	}
 
+	/**********************************************************************
+	 * 
+	 **********************************************************************/
+	public void registerSPMManual() {
+		
+    	//----------------------------------
+    	// Add SPM Widgets Manual
+		FeatureEMPCommon.WIDGET_PAGE.addChild(
+				new ManualPage("SPM Widgets")
+					.faicon("fas fa-desktop")
+					.addPermission(FeatureManual.PERMISSION_MANUAL)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_SPM.html")
+			);
+    	//----------------------------------
+    	// Register Theusinator Manual
+		ManualPage theusinator = new ManualPage("Theusinator").faicon("fas fa-tachometer-alt")
+				.addPermission(FeatureSPM.PERMISSION_THEUSINATOR);
+		
+		FeatureEMPCommon.TOP_PAGE.addChild(theusinator);
+		
+			theusinator.addChild(
+				new ManualPage("Introduction")
+					.faicon("fas fa-star")
+					.addPermission(FeatureSPM.PERMISSION_THEUSINATOR)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_intro.html")
+			);
+			
+			theusinator.addChild(
+				new ManualPage("Setup")
+					.faicon("fas fa-check-square")
+					.addPermission(FeatureManual.PERMISSION_ADMIN_MANUAL)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_setup.html")
+			);
+			
+			//------------------------------
+			// Manual Pages for Views
+			ManualPage views =
+				new ManualPage("Views")
+						.faicon("fas fa-binoculars")
+						.addPermission(FeatureSPM.PERMISSION_THEUSINATOR)
+						.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_views.html");
+			
+			theusinator.addChild(views);
+			
+				views.addChild(
+					new ManualPage("Dashboard View")
+						.faicon("fas fa-digital-tachograph")
+						.addPermission(FeatureSPM.PERMISSION_THEUSINATOR)
+						.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_view_dashboard.html")
+				);
+				
+				views.addChild(
+					new ManualPage("Box View")
+						.faicon("fas fa-cubes")
+						.addPermission(FeatureSPM.PERMISSION_THEUSINATOR)
+						.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_view_box.html")
+				);
+				
+				views.addChild(
+					new ManualPage("Health History View")
+						.faicon("fas fa-heartbeat")
+						.addPermission(FeatureSPM.PERMISSION_THEUSINATOR)
+						.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_view_healthhistory.html")
+				);
+				
+				views.addChild(
+					new ManualPage("Status")
+						.faicon("fas fa-circle-notch")
+						.addPermission(FeatureSPM.PERMISSION_THEUSINATOR)
+						.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_view_status.html")
+				);
+				
+				views.addChild(
+					new ManualPage("Graph")
+						.faicon("fas fa-chart-bar")
+						.addPermission(FeatureSPM.PERMISSION_THEUSINATOR)
+						.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_view_graph.html")
+				);
+				
+			//------------------------------
+			// Manual Page Details Modal
+			theusinator.addChild(
+				new ManualPage("Details Modal")
+					.faicon("fas fa-search")
+					.addPermission(FeatureSPM.PERMISSION_THEUSINATOR)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_modal.html")
+			);
+			
+			//------------------------------
+			// Manual Page Details Modal
+			theusinator.addChild(
+				new ManualPage("Miscellaneous")
+					.faicon("fas fa-ellipsis-h")
+					.addPermission(FeatureSPM.PERMISSION_THEUSINATOR)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_theusinator_misc.html")
+			);
+	}
 }

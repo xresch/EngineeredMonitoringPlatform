@@ -39,13 +39,12 @@ public class Main implements CFWAppInterface {
     	
 		//----------------------------------
 		// Register Objects
+    	CFW.Registry.Features.addFeature(FeatureEMPCommon.class);
 		CFW.Registry.Features.addFeature(FeatureAWA.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
-    	
     	CFW.Registry.Features.addFeature(FeatureWebex.class);
-    	CFW.Registry.Features.addFeature(FeatureEMPCommon.class);
-		
+
 	}
 
 	@Override

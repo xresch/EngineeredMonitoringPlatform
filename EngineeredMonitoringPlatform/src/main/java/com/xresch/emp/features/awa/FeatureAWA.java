@@ -11,6 +11,7 @@ import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.response.bootstrap.MenuItem;
 import com.xresch.emp._main.Main;
+import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.prometheus.PrometheusEnvironment;
 import com.xresch.emp.features.prometheus.PrometheusEnvironmentManagement;
 import com.xresch.emp.features.spm.EnvironmentSPM;
@@ -23,7 +24,8 @@ import com.xresch.emp.features.spm.EnvironmentManagerSPM;
  **************************************************************************************************************/
 public class FeatureAWA extends CFWAppFeature {
 	
-	public static final String RESOURCE_PACKAGE = "com.xresch.emp.features.awa.resources";
+	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.awa.manual";
+	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.awa.resources";
 	
 	//public static final String PERMISSION_AWAJOBSTATUS = "AWA Jobstatus";
 	
@@ -31,7 +33,8 @@ public class FeatureAWA extends CFWAppFeature {
 	public void register() {
 		//----------------------------------
 		// Register Settings
-		CFW.Files.addAllowedPackage(RESOURCE_PACKAGE);
+		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
+		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		
 		//----------------------------------
 		// Register Context Settings
@@ -42,9 +45,16 @@ public class FeatureAWA extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetJobStatus());
 		CFW.Registry.Widgets.add(new WidgetJobsWithStatus());
 		CFW.Registry.Widgets.add(new WidgetJobStatusLegend());
-		
-
     
+		
+		//----------------------------------
+		// Register Manual Page
+		FeatureEMPCommon.WIDGET_PAGE.addChild(
+				new ManualPage("AWA Widgets")
+					.faicon("fas fa-desktop")
+					.addPermission(FeatureManual.PERMISSION_MANUAL)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_AWA.html")
+			);
 	}
 
 	@Override
