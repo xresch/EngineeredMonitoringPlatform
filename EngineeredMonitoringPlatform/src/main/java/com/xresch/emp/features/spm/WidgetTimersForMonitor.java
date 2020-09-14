@@ -63,8 +63,8 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 				)
 				
 				.addField(CFWField.newTagsSelector("JSON_TIMERNAMES")
-						.setLabel("{!cfw_widget_spm_counternames!}")
-						.setDescription("{!cfw_widget_spm_counternames_desc!}")	
+						.setLabel("{!cfw_widget_spm_timernames!}")
+						.setDescription("{!cfw_widget_spm_timernames_desc!}")	
 							.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override
