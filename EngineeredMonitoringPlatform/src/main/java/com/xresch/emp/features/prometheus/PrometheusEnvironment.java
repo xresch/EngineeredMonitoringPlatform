@@ -134,7 +134,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
-			JsonObject json = CFW.JSON.fromJson(queryResult.getResponseBody());
+			JsonObject json = CFW.JSON.fromJson(queryResult.getResponseBody()).getAsJsonObject();
 			if(json.get("error") != null) {
 				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
 				return null;
@@ -162,7 +162,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
-			JsonObject json = CFW.JSON.fromJson(queryResult.getResponseBody());
+			JsonObject json = CFW.JSON.fromJson(queryResult.getResponseBody()).getAsJsonObject();
 			if(json.get("error") != null) {
 				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
 				return null;
@@ -202,9 +202,9 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 				while(resultSet.next()) {
 					String dashboardName = resultSet.getString("DASHBOARD_NAME");
 					String widgetName = resultSet.getString("TITLE");
-					JsonObject json = CFW.JSON.fromJson(resultSet.getString("JSON_SETTINGS"));
+					JsonElement json = CFW.JSON.fromJson(resultSet.getString("JSON_SETTINGS"));
 					
-					JsonElement queryElement = json.get("query");
+					JsonElement queryElement = json.getAsJsonObject().get("query");
 					if(!queryElement.isJsonNull()) {
 						String query = queryElement.getAsString();
 						if(!Strings.isNullOrEmpty(widgetName)) {
