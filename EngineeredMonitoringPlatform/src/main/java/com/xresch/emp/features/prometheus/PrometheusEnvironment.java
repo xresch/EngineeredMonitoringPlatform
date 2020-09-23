@@ -2,7 +2,6 @@ package com.xresch.emp.features.prometheus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonElement;
@@ -10,7 +9,6 @@ import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
-import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.db.CFWSQL;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.core.AutocompleteItem;
@@ -20,7 +18,6 @@ import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
-import com.xresch.emp.features.webex.FeatureWebex;
 
 /**************************************************************************************************************
  * 
@@ -134,7 +131,8 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
-			JsonObject json = CFW.JSON.fromJson(queryResult.getResponseBody()).getAsJsonObject();
+			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
+			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
 				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
 				return null;
@@ -162,7 +160,8 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
-			JsonObject json = CFW.JSON.fromJson(queryResult.getResponseBody()).getAsJsonObject();
+			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
+			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
 				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
 				return null;
