@@ -41,7 +41,7 @@
 						bgstylefield: 'alertstyle',
 						textstylefield: 'textstyle',
 						titlefields: ['MONITOR_NAME'], 
-						titledelimiter: ' - ', 
+						titleformat: '{0}', 
 						visiblefields: ['PROJECT_NAME', 'VALUE'], 
 						labels: {
 							PROJECT_NAME: 'Project',

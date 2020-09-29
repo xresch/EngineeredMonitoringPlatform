@@ -45,7 +45,7 @@
 						bgstylefield: 'alertstyle',
 						textstylefield: 'textstyle',
 						titlefields: ['JOBNAME'], 
-						titledelimiter: ' - ', 
+						titleformat: '{0}', 
 						visiblefields: ['END_TIME', 'DURATION_SECONDS'], 
 						labels: {
 							DURATION_SECONDS: 'Duration(s)'

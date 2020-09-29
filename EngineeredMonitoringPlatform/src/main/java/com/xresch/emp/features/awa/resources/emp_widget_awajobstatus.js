@@ -57,7 +57,7 @@
 						bgstylefield: 'alertstyle',
 						textstylefield: 'textstyle',
 						titlefields: ['LABEL'], 
-						titledelimiter: ' - ', 
+						titleformat: '{0}', 
 						visiblefields: ['END_TIME', 'STATUS'], 
 						customizers: {
 							START_TIME: function(record, value) { return (value != null) ? new CFWDate(value).getDateFormatted("YYYY-MM-DD HH:mm") : '';},

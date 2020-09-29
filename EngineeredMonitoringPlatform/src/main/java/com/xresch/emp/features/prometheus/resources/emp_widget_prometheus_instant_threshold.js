@@ -65,7 +65,7 @@
 						textstylefield: 'textstyle',
 						titlefields: ['value'], 
 						visiblefields: [],
-						titledelimiter: ' - ', 
+						titleformat: '{0}', 
 						
 						labels: {},
 						customizers: {
@@ -100,7 +100,8 @@
 							visiblefields.pop();
 							dataToRender.visiblefields = visiblefields;
 							// add first field to title
-							dataToRender.titlefields.push(visiblefields[0]); 			
+							dataToRender.titlefields.push(visiblefields[0]); 	
+							dataToRender.titleformat = '{0} - {1}';
 						}
 					}
 					

@@ -53,7 +53,7 @@
 						bgstylefield: 'alertstyle',
 						textstylefield: 'textstyle',
 						titlefields: ['MEASURE_NAME'], 
-						titledelimiter: ' - ', 
+						titleformat: '{0}', 
 						visiblefields: ['MONITOR_NAME', 'VALUE'], 
 						labels: {
 							COUNTER_NAME: 'Counter',

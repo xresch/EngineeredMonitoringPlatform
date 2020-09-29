@@ -111,7 +111,7 @@
 						bgstylefield: 'alertstyle',
 						textstylefield: 'textstyle',
 						titlefields: ['componentName'], 
-						titledelimiter: ' - ', 
+						titleformat: '{0}', 
 						visiblefields: ['status', 'components'], 
 						labels: {
 							componentName: "Name",
