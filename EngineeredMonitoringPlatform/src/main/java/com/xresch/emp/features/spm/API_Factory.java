@@ -22,7 +22,7 @@ public class API_Factory {
 	
 	private static final CFWField<Long> RETURN_SERIESTIME =
 			CFWField.newLong(FormFieldType.NONE, "SeriesTime" )
-				.setDescription("The time of when the measure was taken(unix timestamp, milliseconds since 01.01.1970).");
+				.setDescription("The time when the measure was taken(unix timestamp, milliseconds since 01.01.1970).");
 	
 	private static final CFWField<Integer> RETURN_AGGREGATION =
 			CFWField.newInteger(FormFieldType.NONE, "Aggregation" )
@@ -34,7 +34,7 @@ public class API_Factory {
 	
 	private static final CFWField<Float> RETURN_VALUE =
 			CFWField.newFloat(FormFieldType.NONE, "Value" )
-				.setDescription("The measure value in percentage ranging from 0.0(worst) to 100.0(best).");
+				.setDescription("The average measure value in percentage ranging from 0.0(worst) to 100.0(best).");
 	
 	private static final CFWField<Integer> RETURN_MONITOR_ID =
 			CFWField.newInteger(FormFieldType.NONE, "MonitorID" )
@@ -393,6 +393,48 @@ public class API_Factory {
 				
 		apiDef.setDescription("Returns the current status for the selected project.");
 	
+		CFWField<Float> ValCount =
+				CFWField.newFloat(FormFieldType.NONE, "ValCount" )
+					.setDescription("Number of data points included in the value.");
+				
+		CFWField<Float> ValSum =
+				CFWField.newFloat(FormFieldType.NONE, "ValSum" )
+					.setDescription("Sum of all values.");
+		
+		CFWField<Float> ValSumSquare =
+				CFWField.newFloat(FormFieldType.NONE, "ValSumSquare" )
+					.setDescription("Sum of the square of all individual values.(useful for standard deviation and variance)");
+		
+		CFWField<Float> ValMin =
+				CFWField.newFloat(FormFieldType.NONE, "ValMin" )
+					.setDescription("The lowest value.");
+		
+		CFWField<Float> ValMax =
+				CFWField.newFloat(FormFieldType.NONE, "ValMax" )
+					.setDescription("The highest value.");
+		
+		CFWField<Float> BoundCount1 =
+				CFWField.newFloat(FormFieldType.NONE, "BoundCount1" )
+					.setDescription("Number of values lying below a defined lower boundary(equals ValCount if not defined).");
+		
+		CFWField<Float> BoundCount2 =
+				CFWField.newFloat(FormFieldType.NONE, "BoundCount2" )
+					.setDescription("Number of values lying below a defined upper boundary(equals ValCount if not defined).");
+		
+		apiDef.addOutputFields(
+				  RETURN_PROJECT_NAME
+				, RETURN_PROJECT_ID
+				, RETURN_MEASURE_NAME
+				, RETURN_VALUE
+				, ValCount
+				, ValSum
+				, ValSumSquare
+				, ValMin
+				, ValMax
+				, BoundCount1
+				, BoundCount2
+			);
+		
 		APISQLExecutor executor = new APISQLExecutor() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
