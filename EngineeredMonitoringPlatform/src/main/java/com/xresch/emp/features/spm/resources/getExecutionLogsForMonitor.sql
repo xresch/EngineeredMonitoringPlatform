@@ -1,11 +1,11 @@
-SELECT       g.LogTime AS TIMESTAMP, 
-             m.Name AS MONITOR_NAME, 
-             o.Name AS LOCATION_NAME, 
-             l.Message AS LOG_MESSAGE,
+SELECT       g.LogTime AS Timestamp, 
+             m.Name AS MonitorName, 
+             o.Name AS LocationName, 
+             l.Message AS LogMessage,
              CASE 
                    WHEN g.Status = 1 THEN 'OK' 
                    WHEN g.Status = 2 THEN 'WARNING' 
-                   WHEN g.Status = 3 THEN 'ERROR' END "STATUS"
+                   WHEN g.Status = 3 THEN 'ERROR' END "Status"
              
 FROM SV_Monitors m, 
      SV_Monitors_ExecServers x, 

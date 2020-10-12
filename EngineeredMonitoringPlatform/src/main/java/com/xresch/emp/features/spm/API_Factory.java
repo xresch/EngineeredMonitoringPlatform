@@ -4,12 +4,51 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.xresch.cfw._main.CFW;
+import com.xresch.cfw.datahandling.CFWField;
+import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.api.APIDefinition;
 import com.xresch.cfw.features.api.APIDefinitionSQL;
 import com.xresch.cfw.features.api.APISQLExecutor;
 
 public class API_Factory {
+	
+	//-------------------------------------------------
+	// General Return Fields
+	//-------------------------------------------------
+	private static final CFWField<Long> RETURN_TIMESTAMP =
+			CFWField.newLong(FormFieldType.NONE, "Timestamp" )
+			.setDescription("The time of the execution log (unix timestamp, milliseconds since 01.01.1970).");
+	
+	private static final CFWField<String> RETURN_MONITOR_NAME =
+			CFWField.newString(FormFieldType.NONE, "MonitorName" )
+			.setDescription("The name of the monitor.");
+	
+	private static final CFWField<String> RETURN_PROJECT_NAME =
+			CFWField.newString(FormFieldType.NONE, "ProjectName" )
+			.setDescription("The name of the project.");
+		
+	private static final CFWField<String> RETURN_LOCATION_NAME =
+			CFWField.newString(FormFieldType.NONE, "LocationName" )
+			.setDescription("The name of the location defined in SPM.");
+	
+	//-------------------------------------------------
+	// Execution Log Return Fields
+	//-------------------------------------------------
+	private static final CFWField<String> RETURN_LOG_MESSAGE =
+			CFWField.newString(FormFieldType.NONE, "LogMessage" )
+			.setDescription("The message of the execution log.");
+	
+	private static final CFWField<String> RETURN_STATUS =
+			CFWField.newString(FormFieldType.NONE, "Status" )
+			.setDescription("The status of the execution. Tells if the script was executed successfully. Does not give a status about if the monitored application is working.");
+	
+	//-------------------------------------------------
+	// Service Target Return Fields
+	//-------------------------------------------------
+	private static final CFWField<String> RETURN_RULE =
+			CFWField.newString(FormFieldType.NONE, "Rule" )
+			.setDescription("The name of the rule.");	
 	
 	private API_Factory() {
 		/*hide public constructor */
@@ -49,6 +88,14 @@ public class API_Factory {
 		apiDef.setDescription(
 				"Returns execution logs of the monitors for the specified project and timeframe.");
 
+		apiDef.addOutputFields(
+			RETURN_TIMESTAMP
+			, RETURN_MONITOR_NAME
+			, RETURN_LOCATION_NAME
+			, RETURN_LOG_MESSAGE
+			, RETURN_STATUS
+		);
+		
 		APISQLExecutor executor = new APISQLExecutor() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
@@ -88,6 +135,14 @@ public class API_Factory {
 		apiDef.setDescription(
 				"Returns execution logs of a single monitor for the specified timeframe.");
 	
+		apiDef.addOutputFields(
+				RETURN_TIMESTAMP
+				, RETURN_MONITOR_NAME
+				, RETURN_LOCATION_NAME
+				, RETURN_LOG_MESSAGE
+				, RETURN_STATUS
+			);
+		
 		APISQLExecutor executor = new APISQLExecutor() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
@@ -128,6 +183,31 @@ public class API_Factory {
 		apiDef.setDescription(
 				"Returns information about service target violation and service uptime for a project.");
 
+		CFWField<Integer> violation_count =
+				CFWField.newInteger(FormFieldType.NONE, "ViolationCount" )
+				.setDescription("The name of the rule.");
+		
+		CFWField<String> duration_avg =
+				CFWField.newString(FormFieldType.NONE, "DurationAvg" )
+				.setDescription("The average duration of the violations represented as hh:mm:ss.");
+		
+		CFWField<Integer> duration_avg_seconds =
+				CFWField.newInteger(FormFieldType.NONE, "DurationAvgSeconds" )
+				.setDescription("The average duration of the violations in seconds.");
+		
+		CFWField<String> availability =
+				CFWField.newString(FormFieldType.NONE, "Availability" )
+				.setDescription("The availability in percentage.");
+		
+		apiDef.addOutputFields(
+				RETURN_PROJECT_NAME
+				, RETURN_RULE
+				, violation_count
+				, duration_avg
+				, duration_avg_seconds
+				, availability
+			);
+		
 		APISQLExecutor executor = new APISQLExecutor() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
@@ -167,6 +247,32 @@ public class API_Factory {
 		apiDef.setDescription(
 				"Returns a list of service target violations for a project occurred in the specified timeframe.");
 
+		CFWField<Long> from =
+				CFWField.newLong(FormFieldType.NONE, "From" )
+				.setDescription("The start time of the violation(unix timestamp, milliseconds since 01.01.1970).");
+		
+		CFWField<Long> to =
+				CFWField.newLong(FormFieldType.NONE, "To" )
+				.setDescription("The end time of the violation(unix timestamp, milliseconds since 01.01.1970).");
+		
+		CFWField<String> duration =
+				CFWField.newString(FormFieldType.NONE, "Duration" )
+				.setDescription("The duration of the violation represented as hh:mm:ss.");
+		
+		CFWField<Integer> duration_seconds =
+				CFWField.newInteger(FormFieldType.NONE, "DurationSeconds" )
+				.setDescription("The duration of the violation in seconds.");
+		
+		
+		apiDef.addOutputFields(
+				RETURN_PROJECT_NAME
+				, RETURN_RULE
+				, from
+				, to
+				, duration
+				, duration_seconds
+			);
+		
 		APISQLExecutor executor = new APISQLExecutor() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {

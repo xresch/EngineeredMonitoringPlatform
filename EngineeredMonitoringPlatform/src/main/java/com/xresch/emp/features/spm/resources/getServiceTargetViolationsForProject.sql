@@ -5,14 +5,14 @@ DECLARE @latest DATETIME
 SET @latest = ?
 
 SELECT 
-ProjectName AS PROJECT,
-Name AS 'RULE',
-BeginsAt AS 'FROM', 
-EndsAt AS 'TO', 
-DURATION = CONVERT(VARCHAR(5), DATEDIFF(s, BeginsAt, EndsAt)/60/60)
+ProjectName AS ProjectName,
+Name AS 'Rule',
+BeginsAt AS 'From', 
+EndsAt AS 'to', 
+Duration = CONVERT(VARCHAR(5), DATEDIFF(s, BeginsAt, EndsAt)/60/60)
   + ':' + RIGHT('0' + CONVERT(VARCHAR(2), DATEDIFF(s, BeginsAt, EndsAt)/60%60), 2)
   + ':' + RIGHT('0' + CONVERT(VARCHAR(2), DATEDIFF(s, BeginsAt, EndsAt) % 60), 2),
-DURATION_SECONDS = DATEDIFF(s, BeginsAt, EndsAt)
+DurationSeconds = DATEDIFF(s, BeginsAt, EndsAt)
 FROM SV_V_FilteredIncidents
 WITH (NOLOCK)
 JOIN SCC_Projects
