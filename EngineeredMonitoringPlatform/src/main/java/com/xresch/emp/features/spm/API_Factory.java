@@ -18,37 +18,68 @@ public class API_Factory {
 	//-------------------------------------------------
 	private static final CFWField<Long> RETURN_TIMESTAMP =
 			CFWField.newLong(FormFieldType.NONE, "Timestamp" )
-			.setDescription("The time of the execution log (unix timestamp, milliseconds since 01.01.1970).");
+				.setDescription("The time of the execution log (unix timestamp, milliseconds since 01.01.1970).");
+	
+	private static final CFWField<Long> RETURN_SERIESTIME =
+			CFWField.newLong(FormFieldType.NONE, "SeriesTime" )
+				.setDescription("The time of when the measure was taken(unix timestamp, milliseconds since 01.01.1970).");
+	
+	private static final CFWField<Integer> RETURN_AGGREGATION =
+			CFWField.newInteger(FormFieldType.NONE, "Aggregation" )
+				.setDescription("The aggregation interval in minutes represented by this value. 0 if there was no aggregation.");
+	
+	private static final CFWField<Integer> RETURN_RK =
+			CFWField.newInteger(FormFieldType.NONE, "rk" )
+				.setDescription("Ranking value(used internally only).");
+	
+	private static final CFWField<Float> RETURN_VALUE =
+			CFWField.newFloat(FormFieldType.NONE, "Value" )
+				.setDescription("The measure value in percentage ranging from 0.0(worst) to 100.0(best).");
+	
+	private static final CFWField<Integer> RETURN_MONITOR_ID =
+			CFWField.newInteger(FormFieldType.NONE, "MonitorID" )
+				.setDescription("The id of the monitor.");
 	
 	private static final CFWField<String> RETURN_MONITOR_NAME =
 			CFWField.newString(FormFieldType.NONE, "MonitorName" )
-			.setDescription("The name of the monitor.");
+				.setDescription("The name of the monitor.");
+	
+	private static final CFWField<Integer> RETURN_PROJECT_ID =
+			CFWField.newInteger(FormFieldType.NONE, "ProjectID" )
+				.setDescription("The id of the project.");
 	
 	private static final CFWField<String> RETURN_PROJECT_NAME =
 			CFWField.newString(FormFieldType.NONE, "ProjectName" )
-			.setDescription("The name of the project.");
+				.setDescription("The name of the project.");
 		
+	private static final CFWField<Integer> RETURN_LOCATION_ID =
+			CFWField.newInteger(FormFieldType.NONE, "LocationID" )
+				.setDescription("The id of the location.");
+	
 	private static final CFWField<String> RETURN_LOCATION_NAME =
 			CFWField.newString(FormFieldType.NONE, "LocationName" )
-			.setDescription("The name of the location defined in SPM.");
+				.setDescription("The name of the location defined in SPM.");
 	
+	private static final CFWField<String> RETURN_MEASURE_NAME =
+			CFWField.newString(FormFieldType.NONE, "MeasureName" )
+				.setDescription("The name of the measure.");
 	//-------------------------------------------------
 	// Execution Log Return Fields
 	//-------------------------------------------------
 	private static final CFWField<String> RETURN_LOG_MESSAGE =
 			CFWField.newString(FormFieldType.NONE, "LogMessage" )
-			.setDescription("The message of the execution log.");
+				.setDescription("The message of the execution log.");
 	
 	private static final CFWField<String> RETURN_STATUS =
 			CFWField.newString(FormFieldType.NONE, "Status" )
-			.setDescription("The status of the execution. Tells if the script was executed successfully. Does not give a status about if the monitored application is working.");
+				.setDescription("The status of the execution. Tells if the script was executed successfully. Does not give a status if the monitored application is working.");
 	
 	//-------------------------------------------------
 	// Service Target Return Fields
 	//-------------------------------------------------
 	private static final CFWField<String> RETURN_RULE =
 			CFWField.newString(FormFieldType.NONE, "Rule" )
-			.setDescription("The name of the rule.");	
+				.setDescription("The name of the rule.");	
 	
 	private API_Factory() {
 		/*hide public constructor */
@@ -310,7 +341,21 @@ public class API_Factory {
 				);
 				
 		apiDef.setDescription("Returns the current status for the selected monitor.");
-	
+			
+		apiDef.addOutputFields(
+				RETURN_PROJECT_ID
+				, RETURN_PROJECT_NAME
+				, RETURN_MONITOR_ID
+				, RETURN_MONITOR_NAME
+				, RETURN_LOCATION_ID
+				, RETURN_LOCATION_NAME
+				, RETURN_MEASURE_NAME
+				, RETURN_SERIESTIME
+				, RETURN_AGGREGATION
+				, RETURN_VALUE
+				, RETURN_RK
+			);
+		
 		APISQLExecutor executor = new APISQLExecutor() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
@@ -386,6 +431,20 @@ public class API_Factory {
 				
 		apiDef.setDescription("Returns the current status for all the monitors of the selected project.");
 	
+		apiDef.addOutputFields(
+				RETURN_PROJECT_ID
+				, RETURN_PROJECT_NAME
+				, RETURN_MONITOR_ID
+				, RETURN_MONITOR_NAME
+				, RETURN_LOCATION_ID
+				, RETURN_LOCATION_NAME
+				, RETURN_MEASURE_NAME
+				, RETURN_SERIESTIME
+				, RETURN_AGGREGATION
+				, RETURN_VALUE
+				, RETURN_RK
+			);
+		
 		APISQLExecutor executor = new APISQLExecutor() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
