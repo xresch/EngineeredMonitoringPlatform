@@ -73,7 +73,7 @@
 								if(value == null) return '';
 								return (settings.suffix == null) ? value : value+" "+settings.suffix;
 							},
-							time: function(record, value) { return (value != null) ? new  moment.utc(value).format("YYYY-MM-DD HH:mm") : '';},
+							time: function(record, value) { return (value != null) ? new  moment(value).format("YYYY-MM-DD HH:mm") : '';},
 						},
 						rendererSettings:{
 							tiles: {

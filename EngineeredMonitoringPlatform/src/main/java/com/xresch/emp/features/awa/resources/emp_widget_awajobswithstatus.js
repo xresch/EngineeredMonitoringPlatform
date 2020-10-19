@@ -51,8 +51,8 @@
 							DURATION_SECONDS: 'Duration(s)'
 						},
 						customizers: {
-							START_TIME: function(record, value) { return (value != null) ? new  moment.utc(value).format("YYYY-MM-DD HH:mm") : '';},
-							END_TIME: function(record, value) { return (value != null) ? new  moment.utc(value).format("YYYY-MM-DD HH:mm") : '';}
+							START_TIME: function(record, value) { return (value != null) ? new  moment(value).format("YYYY-MM-DD HH:mm") : '';},
+							END_TIME: function(record, value) { return (value != null) ? new  moment(value).format("YYYY-MM-DD HH:mm") : '';}
 						},
 						rendererSettings:{
 							tiles: {
