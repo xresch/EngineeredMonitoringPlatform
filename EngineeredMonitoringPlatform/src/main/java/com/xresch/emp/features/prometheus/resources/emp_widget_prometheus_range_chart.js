@@ -39,7 +39,7 @@
 					var dataToRender = {
 						data: monitorStats,
 						titlefields: chartLabelFields, 
-						titleformat: '{0}', 
+						titleformat: null, 
 						rendererSettings:{
 							chart: {
 								charttype: settings.chart_type.toLowerCase(),
