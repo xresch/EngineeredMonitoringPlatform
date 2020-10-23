@@ -304,7 +304,7 @@ function doFilter(searchField){
 	//only filter direct children
 	table.find("> tbody > tr").each(function( index ) {
 		  var row = $(this);
-		  //console.log( index + ": " + row.text() );
+
 		  if (row.html().toUpperCase().indexOf(filter) > -1) {
 			row.css("display", "");
 			
@@ -341,7 +341,7 @@ function getSession(){
 		function(data) {
 			
 			SESSION = $(data).find('logonUserReturn').text();
-			console.log("SESSION:"+SESSION)
+
 		})
 }
 
