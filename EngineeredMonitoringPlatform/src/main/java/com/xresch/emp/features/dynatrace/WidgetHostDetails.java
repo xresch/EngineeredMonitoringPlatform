@@ -1,0 +1,185 @@
+package com.xresch.emp.features.dynatrace;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.logging.Logger;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.xresch.cfw._main.CFW;
+import com.xresch.cfw.caching.FileDefinition;
+import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.datahandling.CFWField;
+import com.xresch.cfw.datahandling.CFWField.FormFieldType;
+import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.features.core.AutocompleteResult;
+import com.xresch.cfw.features.core.CFWAutocompleteHandler;
+import com.xresch.cfw.features.dashboard.WidgetDefinition;
+import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.logging.CFWLog;
+import com.xresch.cfw.response.JSONResponse;
+import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.spm.EnvironmentManagerSPM;
+
+public class WidgetHostDetails extends WidgetDefinition {
+
+	private static Logger logger = CFWLog.getLogger(WidgetHostDetails.class.getName());
+	@Override
+	public String getWidgetType() {return "emp_dynatrace_hostdetails";}
+		
+
+	@Override
+	public CFWObject getSettings() {
+		return new CFWObject()
+				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
+						.setLabel("{!cfw_widget_dynatrace_environment!}")
+						.setDescription("{!cfw_widget_dynatrace_environment_desc!}")
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceManagedEnvironment.SETTINGS_TYPE))
+				)
+				
+				.addField(CFWField.newTagsSelector("JSON_HOST")
+						.setLabel("{!emp_widget_dynatrace_host!}")
+						.setDescription("{!emp_widget_dynatrace_host_desc!}")
+						.addAttribute("maxTags", "1")
+						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+							
+							@Override
+							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+								String environment = request.getParameter("environment");
+								
+								return DynatraceManagedEnvironment.autocompleteHosts(Integer.parseInt(environment), searchValue, this.getMaxResults());
+							}
+						})		
+				)
+				
+				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
+						.setLabel("{!cfw_widget_displayas!}")
+						.setDescription("{!cfw_widget_displayas_desc!}")
+						.setOptions(new String[]{"Tiles", "Panels", "Table"})
+						.setValue("Tiles")
+				)
+				
+				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
+						.setLabel("{!cfw_widget_sizefactor!}")
+						.setDescription("{!cfw_widget_sizefactor_desc!}")
+						.setOptions(new String[]{"0.25", "0.5", "0.75", "1", "1.25", "1.5", "1.75", "2.0", "2.5", "3.0"})
+						.setValue("1")
+				)
+				
+				.addField(CFWField.newString(FormFieldType.SELECT, "borderstyle")
+						.setLabel("{!cfw_widget_borderstyle!}")
+						.setDescription("{!cfw_widget_borderstyle_desc!}")
+						.setOptions(new String[]{"None", "Round", "Superround", "Asymmetric", "Superasymmetric", "Ellipsis"})
+						.setValue("None")
+				)
+				
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showlabels")
+						.setLabel("{!cfw_widget_showlabels!}")
+						.setDescription("{!cfw_widget_showlabels_desc!}")
+						.setValue(true)
+				)
+				
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
+						.setLabel("{!cfw_widget_disable!}")
+						.setDescription("{!cfw_widget_disable_desc!}")
+						.setValue(false)
+				)
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
+						.setLabel("{!cfw_widget_sampledata!}")
+						.setDescription("{!cfw_widget_sampledata_desc!}")
+						.setValue(false)
+				)
+				
+	
+		;
+	}
+
+	@Override
+	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+		
+		//---------------------------------
+		// Example Data
+		JsonElement sampleDataElement = settings.get("sampledata");
+		
+		if(sampleDataElement != null 
+		&& !sampleDataElement.isJsonNull() 
+		&& sampleDataElement.getAsBoolean()) {
+			createSampleData(response);
+			return;
+		}
+		
+		//---------------------------------
+		// Resolve Query
+		JsonElement hostsElement = settings.get("JSON_HOST");
+		if(hostsElement == null || hostsElement.isJsonNull()) {
+			return;
+		}
+		
+		JsonObject hostsObject = hostsElement.getAsJsonObject();
+		if(hostsObject.size() == 0) {
+			return;
+		}
+		
+		String hostID = hostsObject.keySet().toArray(new String[]{})[0];
+		
+		//---------------------------------
+		// Get Environment
+		JsonElement environmentElement = settings.get("environment");
+		if(environmentElement.isJsonNull()) {
+			return;
+		}
+		
+		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
+		if(environment == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatace Host Details Widget: The chosen environment seems not configured correctly.");
+			return;
+		}
+	
+		//---------------------------------
+		// Timeframe
+		//long latest = settings.get("timeframe_latest").getAsLong();
+		
+		//---------------------------------
+		// Fetch Data
+		JsonObject queryResult = environment.getHostDetails(hostID);
+		JsonArray array = new JsonArray();
+
+		if(queryResult != null) {
+			array.add(queryResult);
+		}
+		
+		response.getContent().append(CFW.JSON.toJSON(array));	
+	}
+	
+	public void createSampleData(JSONResponse response) { 
+
+		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostdetails_sample.json") );
+		
+	}
+	
+	@Override
+	public ArrayList<FileDefinition> getJavascriptFiles() {
+		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_dynatrace_commons.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostdetails.js") );
+		return array;
+	}
+
+	@Override
+	public ArrayList<FileDefinition> getCSSFiles() {
+		return new ArrayList<FileDefinition>();
+	}
+
+	@Override
+	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
+		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_widgets.properties"));
+		return map;
+	}
+
+}
