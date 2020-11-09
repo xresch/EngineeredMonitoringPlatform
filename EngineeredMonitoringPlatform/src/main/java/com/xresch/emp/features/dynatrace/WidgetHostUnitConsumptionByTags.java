@@ -16,21 +16,18 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
-import com.xresch.cfw.features.core.AutocompleteResult;
-import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
-public class WidgetHostProcesses extends WidgetDefinition {
+public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(WidgetHostProcesses.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetHostUnitConsumptionByTags.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_dynatrace_hostprocesses";}
+	public String getWidgetType() {return "emp_dynatrace_hostunitconsumptionbytags";}
 		
-
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
@@ -39,20 +36,11 @@ public class WidgetHostProcesses extends WidgetDefinition {
 						.setDescription("{!cfw_widget_dynatrace_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceManagedEnvironment.SETTINGS_TYPE))
 				)
-				
-				.addField(CFWField.newTagsSelector("JSON_HOST")
-						.setLabel("{!emp_widget_dynatrace_host!}")
-						.setDescription("{!emp_widget_dynatrace_host_desc!}")
-						.addAttribute("maxTags", "1")
-						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-							
-							@Override
-							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-								String environment = request.getParameter("environment");
 								
-								return DynatraceManagedEnvironment.autocompleteHosts(Integer.parseInt(environment), searchValue, this.getMaxResults());
-							}
-						})		
+				.addField(CFWField.newString(FormFieldType.TEXT, "tagsfilter")
+						.setLabel("{!emp_widget_dynatrace_tagsfilter!}")
+						.setDescription("{!emp_widget_dynatrace_tagsfilter_desc!}")
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceManagedEnvironment.SETTINGS_TYPE))
 				)
 				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
@@ -78,20 +66,6 @@ public class WidgetHostProcesses extends WidgetDefinition {
 		}
 		
 		//---------------------------------
-		// Resolve Query
-		JsonElement hostsElement = settings.get("JSON_HOST");
-		if(hostsElement == null || hostsElement.isJsonNull()) {
-			return;
-		}
-		
-		JsonObject hostsObject = hostsElement.getAsJsonObject();
-		if(hostsObject.size() == 0) {
-			return;
-		}
-		
-		String hostID = hostsObject.keySet().toArray(new String[]{})[0];
-		
-		//---------------------------------
 		// Get Environment
 		JsonElement environmentElement = settings.get("environment");
 		if(environmentElement.isJsonNull()) {
@@ -106,19 +80,19 @@ public class WidgetHostProcesses extends WidgetDefinition {
 	
 		//---------------------------------
 		// Timeframe
-		long earliest = settings.get("timeframe_earliest").getAsLong();
-		long latest = settings.get("timeframe_latest").getAsLong();
+		//long earliest = settings.get("timeframe_earliest").getAsLong();
+		//long latest = settings.get("timeframe_latest").getAsLong();
 		
 		//---------------------------------
 		// Fetch Data
-		JsonArray array = environment.getHostProcesses(hostID, earliest, latest);
+		JsonArray array = environment.getAllHosts();
 
 		response.getContent().append(CFW.JSON.toJSON(array));	
 	}
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostprocesses_sample.json") );
+		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostunitconsumptionbytags_sample.json") );
 		
 	}
 	
@@ -126,7 +100,7 @@ public class WidgetHostProcesses extends WidgetDefinition {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_dynatrace_commons.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostprocesses.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostunitconsumptionbytags.js") );
 		return array;
 	}
 

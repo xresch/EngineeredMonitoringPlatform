@@ -1,0 +1,214 @@
+[
+	{
+		"entityId": "HOST-1812428021FCE23D",
+		"displayName": "DESKTOP-ACME",
+		"discoveredName": "DESKTOP-ACME",
+		"firstSeenTimestamp": 1604586682694,
+		"lastSeenTimestamp": 1604934905678,
+		"tags": [
+			{
+				"context": "ENVIRONMENT",
+				"key": "acmeapp"
+			},
+			{
+				"context": "ENVIRONMENT",
+				"key": "client"
+			},
+			{
+				"context": "ENVIRONMENT",
+				"key": "windows"
+			}
+		],
+		"fromRelationships": {
+			
+		},
+		"toRelationships": {
+			
+		},
+		"osType": "WINDOWS",
+		"osArchitecture": "X86",
+		"osVersion": "Windows 10 Home 1903, ver. 10.0.18362",
+		"ipAddresses": [
+			"192.168.1.106"
+		],
+		"bitness": "64bit",
+		"cpuCores": 4,
+		"logicalCpuCores": 8,
+		"monitoringMode": "FULL_STACK",
+		"networkZoneId": "default",
+		"consumedHostUnits": 1.0,
+		"softwareTechnologies": [
+			{
+				"type": "CITRIX",
+				"edition": null,
+				"version": null
+			}
+		],
+		"oneAgentCustomHostName": ""
+	},
+	{
+		"entityId": "HOST-CE750C61B2C958B3",
+		"displayName": "testika-VirtualBox",
+		"discoveredName": "testika-VirtualBox",
+		"firstSeenTimestamp": 1604928068304,
+		"lastSeenTimestamp": 1604936648149,
+		"tags": [
+			{
+				"context": "ENVIRONMENT",
+				"key": "linux"
+			},
+			{
+				"context": "ENVIRONMENT",
+				"key": "test"
+			},
+			{
+				"context": "ENVIRONMENT",
+				"key": "acmeapp"
+			}
+		],
+		"fromRelationships": {
+			
+		},
+		"toRelationships": {
+			
+		},
+		"osType": "LINUX",
+		"osArchitecture": "X86",
+		"osVersion": "Ubuntu 20.04.1 LTS (Focal Fossa) (kernel 5.4.0-52-generic)",
+		"hypervisorType": "VIRTUALBOX",
+		"ipAddresses": [
+			"192.168.1.107"
+		],
+		"bitness": "64bit",
+		"cpuCores": 1,
+		"logicalCpuCores": 1,
+		"monitoringMode": "FULL_STACK",
+		"networkZoneId": "default",
+		"agentVersion": {
+			"major": 1,
+			"minor": 203,
+			"revision": 189,
+			"timestamp": "20201030-124742",
+			"sourceRevision": ""
+		},
+		"consumedHostUnits": 0.25,
+		"userLevel": "NON_SUPERUSER",
+		"oneAgentCustomHostName": ""
+	},
+	{
+		"entityId": "HOST-B7A6F9EE9F366CB5",
+		"displayName": "tag009",
+		"discoveredName": "tag009",
+		"firstSeenTimestamp": 1538473087608,
+		"lastSeenTimestamp": 1538641647769,
+		"tags": [
+			{
+				"context": "CONTEXTLESS",
+				"key": "linux"
+			},
+			{
+				"context": "CONTEXTLESS",
+				"key": "acmeapp"
+			}
+		],
+		"fromRelationships": {
+			"isNetworkClientOfHost": [
+				"HOST-80FF8584D8954C1D",
+				"HOST-A281F848361E79A1"
+			]
+		},
+		"toRelationships": {
+			"isProcessOf": [
+				"PROCESS_GROUP_INSTANCE-9146FB8A6A155F93"
+			],
+			"isSiteOf": [
+				"GEOLOC_SITE-F72DF471AE5F56F6"
+			],
+			"isNetworkClientOfHost": [
+				"HOST-80FF8584D8954C1D"
+			],
+			"runsOn": [
+				"PROCESS_GROUP-83D74C22E79B074F"
+			]
+		},
+		"osType": "LINUX",
+		"osArchitecture": "X86",
+		"osVersion": "Ubuntu 18.04.1",
+		"ipAddresses": [
+			"127.0.0.1",
+			"192.168.1.1"
+		],
+		"bitness": "64bit",
+		"cpuCores": 4,
+		"logicalCpuCores": 8,
+		"consumedHostUnits": 2,
+		"managementZones": [
+			{
+				"id": "6164525246045854296",
+				"name": "Zone Service E"
+			},
+			{
+				"id": "5678",
+				"name": "Infrastructure Linux"
+			}
+		]
+	},
+	{
+		"entityId": "HOST-2540A456786EEBCA",
+		"displayName": "RD40",
+		"discoveredName": "RD40",
+		"firstSeenTimestamp": 1536455342329,
+		"lastSeenTimestamp": 1538661752404,
+		"tags": [
+			{
+				"context": "CONTEXTLESS",
+				"key": "test"
+			}
+		],
+		"fromRelationships": {
+			
+		},
+		"toRelationships": {
+			"isProcessOf": [
+				"PROCESS_GROUP_INSTANCE-0014EF34F2D03461",
+				"PROCESS_GROUP_INSTANCE-306710DC5239D390"
+			],
+			"isSiteOf": [
+				"GEOLOC_SITE-2D77938DBFF32A41",
+				"AZURE_REGION-D4D61746B479FE16"
+			],
+			"runsOn": [
+				"PROCESS_GROUP-1527B48A2A57385A",
+				"PROCESS_GROUP-25544B628ABEDFAB"
+			]
+		},
+		"osType": "WINDOWS",
+		"osArchitecture": "X86",
+		"osVersion": "Windows Server 2020 Datacenter",
+		"hypervisorType": "HYPERV",
+		"ipAddresses": [
+			"127.0.0.1"
+		],
+		"bitness": "64bit",
+		"cpuCores": 2,
+		"logicalCpuCores": 2,
+		"cloudType": "AZURE",
+		"paasType": "AZURE_WEBSITES",
+		"paasMemoryLimit": 3583,
+		"azureHostNames": [
+			"azureexample.azurewebsites.net"
+		],
+		"azureSiteNames": [
+			"azureexample"
+		],
+		"azureComputeModeName": "DEDICATED",
+		"azureSku": "STANDARD",
+		"consumedHostUnits": 0.25,
+		"managementZones": [
+			{
+				"id": "5130731705740636866",
+				"name": "Windows"
+			}
+		]
+	}
+]

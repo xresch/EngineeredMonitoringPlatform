@@ -7,7 +7,7 @@
 	CFW.dashboard.registerWidget("emp_dynatrace_hostprocesses",
 		{
 			category: DYNATRACE_WIDGET_CATEGORY,
-			menuicon: "fas fa-server",
+			menuicon: "fas fa-microchip",
 			menulabel: CFWL('emp_widget_dynatrace_hostprocesses', "Host Processes"),
 			description: CFWL('emp_widget_dynatrace_hostprocesses_desc', "Displays a list of the processes running on a host monitored by Dynatrace."), 
 			usetimeframe: true,
