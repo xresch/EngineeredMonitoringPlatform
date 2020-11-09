@@ -26,11 +26,11 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.spm.EnvironmentManagerSPM;
 
-public class WidgetHostDetails extends WidgetDefinition {
+public class WidgetHostProcesses extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(WidgetHostDetails.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetHostProcesses.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_dynatrace_hostdetails";}
+	public String getWidgetType() {return "emp_dynatrace_hostprocesses";}
 		
 
 	@Override
@@ -136,26 +136,25 @@ public class WidgetHostDetails extends WidgetDefinition {
 		
 		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatace Host Details Widget: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatace Host Processes Widget: The chosen environment seems not configured correctly.");
 			return;
 		}
 	
+		//---------------------------------
+		// Timeframe
+		long earliest = settings.get("timeframe_earliest").getAsLong();
+		long latest = settings.get("timeframe_latest").getAsLong();
 		
 		//---------------------------------
 		// Fetch Data
-		JsonObject queryResult = environment.getHostDetails(hostID);
-		JsonArray array = new JsonArray();
+		JsonArray array = environment.getHostProcesses(hostID, earliest, latest);
 
-		if(queryResult != null) {
-			array.add(queryResult);
-		}
-		
 		response.getContent().append(CFW.JSON.toJSON(array));	
 	}
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostdetails_sample.json") );
+		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostprocesses_sample.json") );
 		
 	}
 	
@@ -163,7 +162,7 @@ public class WidgetHostDetails extends WidgetDefinition {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_dynatrace_commons.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostdetails.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostprocesses.js") );
 		return array;
 	}
 

@@ -146,24 +146,11 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		requestParams.put("includeDetails", "false");
 		
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL, requestParams, this.getTokenHeader());
-		if(queryResult != null) {
-			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
-			
-			JsonArray jsonArray = new JsonArray();
-			if(jsonElement.isJsonArray()) {
-				jsonArray = jsonElement.getAsJsonArray();
-			}else if(jsonElement.isJsonObject()) {
-				JsonObject object = jsonElement.getAsJsonObject();
-				if(object.get("error") != null) {
-					CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Dynatrace Error: "+object.get("error").toString());
-					return null;
-				}
-			}
-			
-			
-			
-			return jsonArray;
+		
+		if(queryResult != null) {			
+			return queryResult.getRequestBodyAsJsonArray();
 		}
+		
 		return null;
 	}
 	
@@ -187,6 +174,28 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 			
 			return json;
 		}
+		return null;
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public JsonArray getHostProcesses(String hostID, long startTimestamp, long endTimestamp) {
+		// curl -H 'Authorization: Api-Token token' \ -X GET "https://lpi31515.live.dynatrace.com/api/v1/entity/infrastructure/processes?startTimestamp=1604372880000&endTimestamp=1604588879160&host=HOST-1812428021FCE23D"
+
+		String queryURL = getAPIUrlV1() + "/entity/infrastructure/processes";
+		
+		HashMap<String,String> requestParams = new HashMap<>();
+		requestParams.put("host", hostID);
+		requestParams.put("startTimestamp", startTimestamp+"");
+		requestParams.put("endTimestamp", endTimestamp+"");
+		
+		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL, null, this.getTokenHeader());
+		
+		if(queryResult != null) {			
+			return queryResult.getRequestBodyAsJsonArray();
+		}
+		
 		return null;
 	}
 	

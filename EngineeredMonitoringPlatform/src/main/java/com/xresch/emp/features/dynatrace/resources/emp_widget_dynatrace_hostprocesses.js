@@ -1,15 +1,15 @@
 
 (function (){
-	
+
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_dynatrace_hostdetails",
+	CFW.dashboard.registerWidget("emp_dynatrace_hostprocesses",
 		{
 			category: DYNATRACE_WIDGET_CATEGORY,
 			menuicon: "fas fa-server",
-			menulabel: CFWL('emp_widget_dynatrace_hostdetails', "Host Details"),
-			description: CFWL('emp_widget_dynatrace_hostdetails_desc', "Displays details about a host monitored by Dynatrace."), 
+			menulabel: CFWL('emp_widget_dynatrace_hostprocesses', "Host Processes"),
+			description: CFWL('emp_widget_dynatrace_hostprocesses_desc', "Displays a list of the processes running on a host monitored by Dynatrace."), 
 			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, callback) {
 					
@@ -28,13 +28,16 @@
 					// Render Settings
 					var dataToRender = {
 						data: data.payload,
-						visiblefields: ["entityId", "displayName", "discoveredName", "tags", "osType", "osArchitecture", "osVersion", "cpuCores", "ipAddresses", "logicalCpuCores","monitoringMode","networkZoneId", "agentVersion","consumedHostUnits", "bitness", "oneAgentCustomHostName" ],
+						visiblefields: ["discoveredName", "tags", "firstSeenTimestamp", "lastSeenTimestamp", "metadata"],
 						titlefields: ['displayName'], 
 						titleformat: '{0}', 
+						labels: {
+							metadata: 'Executables'
+						},
 						customizers:{
-							tags: function(record, value) {  return JSON.stringify(value); },
-							ipAddresses: function(record, value) {  return JSON.stringify(value); },
-							agentVersion: function(record, value) {  return JSON.stringify(value); },
+							metadata: function(record, value) {  return JSON.stringify(value.executables); },
+							firstSeenTimestamp: function(record, value) {  return CFW.format.epochToTimestamp(value); },
+							lastSeenTimestamp: function(record, value) {  return CFW.format.epochToTimestamp(value); },
 						},
 						rendererSettings:{
 							table: { verticalize: true, narrow: true, filterable: false}
