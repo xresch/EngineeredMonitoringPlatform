@@ -190,7 +190,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		requestParams.put("startTimestamp", startTimestamp+"");
 		requestParams.put("endTimestamp", endTimestamp+"");
 		
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL, null, this.getTokenHeader());
+		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL, requestParams, this.getTokenHeader());
 		
 		if(queryResult != null) {			
 			return queryResult.getRequestBodyAsJsonArray();
