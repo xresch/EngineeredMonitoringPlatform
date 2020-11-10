@@ -1,7 +1,12 @@
 package com.xresch.emp.features.dynatrace;
 
 import java.util.HashMap;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -24,15 +29,27 @@ import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	
 	public static final String SETTINGS_TYPE = "Dynatrace Managed Environment";
-	private String URL_API_V1 = null;
-	private String URL_API_V2 = null;
+	public static final long MILLIS_3_DAYS = 1000L * 60 * 60 * 24 * 3;
 	
-	private HashMap<String,String> tokenHeader = null;
-			
 	public enum PrometheusEnvironmentFields{
 		API_URL,
 		API_TOKEN,
 	}
+	
+	private String URL_API_V1 = null;
+	private String URL_API_V2 = null;
+	
+	private HashMap<String,String> tokenHeader = null;
+	
+
+	/** Static field to store the assembled results by their file names. */
+	private static final Cache<String, CFWHttpResponse> DYNATRACE_CACHE = CFW.Caching.addCache("EMP Dynatrace Cache", 
+			CacheBuilder.newBuilder()
+				.initialCapacity(10)
+				.maximumSize(1000)
+				.expireAfterAccess(1, TimeUnit.MINUTES)
+		);
+
 			
 	private CFWField<String> apiUrl = CFWField.newString(FormFieldType.TEXT, PrometheusEnvironmentFields.API_URL)
 			.allowHTML(true)
@@ -108,6 +125,9 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		return URL_API_V1;
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public String getAPIUrlV2() {
 		
 		if(URL_API_V2 == null) {
@@ -117,6 +137,9 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		return URL_API_V2;
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public HashMap<String,String> getTokenHeader() {
 		
 		if(tokenHeader == null) {
@@ -127,20 +150,62 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		return tokenHeader;
 	}
 	
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public String getStartTimestampParam(long startTimestamp, long endTimestamp) {
+		long duration = endTimestamp - startTimestamp;
+		if(duration <= MILLIS_3_DAYS) {
+			return startTimestamp+"";
+		}else {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatrace widgets support a maximum timerange of 3 days(latest time - 3 days is shown).");
+			return (endTimestamp - MILLIS_3_DAYS)+"";
+		}
+	}
+
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public CFWHttpResponse sendCachedGetRequest(String url, HashMap<String, String> params, HashMap<String, String> headers) {
+
+		String identifier = getDefaultObject().name()+url+params;
+
+		try {
+			return DYNATRACE_CACHE.get(identifier, new Callable<CFWHttpResponse>() {
+
+				@Override
+				public CFWHttpResponse call() throws Exception {
+					return CFW.HTTP.sendGETRequest(url, params, headers);
+				}
+				
+			});
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 
 	
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonArray getAllHosts() {
+	public JsonArray getAllHosts(Long startTimestamp, Long endTimestamp) {
 		//curl -H 'Authorization: Api-Token token' \ -X GET "https://lpi31515.live.dynatrace.com/api/v1/entity/infrastructure/hosts"
 
 		String queryURL = getAPIUrlV1() + "/entity/infrastructure/hosts";
 		
 		HashMap<String,String> requestParams = new HashMap<>();
 		requestParams.put("includeDetails", "false");
-		
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL, requestParams, this.getTokenHeader());
+		if(startTimestamp != null && endTimestamp != null) {
+			requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp));
+			requestParams.put("endTimestamp", endTimestamp+"");
+		}
+				
+		CFWHttpResponse queryResult = sendCachedGetRequest(queryURL, requestParams, this.getTokenHeader());
 		
 		if(queryResult != null) {			
 			return queryResult.getRequestBodyAsJsonArray();
@@ -148,6 +213,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		return null;
 	}
+	
 	
 	/************************************************************************************
 	 * 
@@ -157,7 +223,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 
 		String queryURL = getAPIUrlV1() + "/entity/infrastructure/hosts/"+hostID;
 		
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL, null, this.getTokenHeader());
+		CFWHttpResponse queryResult = sendCachedGetRequest(queryURL, null, this.getTokenHeader());
 		if(queryResult != null) {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
@@ -182,10 +248,10 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		HashMap<String,String> requestParams = new HashMap<>();
 		requestParams.put("host", hostID);
-		requestParams.put("startTimestamp", startTimestamp+"");
+		requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp));
 		requestParams.put("endTimestamp", endTimestamp+"");
 		
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL, requestParams, this.getTokenHeader());
+		CFWHttpResponse queryResult = sendCachedGetRequest(queryURL, requestParams, this.getTokenHeader());
 		
 		if(queryResult != null) {			
 			return queryResult.getRequestBodyAsJsonArray();
@@ -193,59 +259,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		return null;
 	}
-	
-	/************************************************************************************
-	 * 
-	 ************************************************************************************/
-//	public JsonObject query(String prometheusQuery, long latestMillis) {
-//		
-//		String queryURL = getAPIUrlV1() 
-//				+ "/query?query="+CFW.HTTP.encode(prometheusQuery)
-//				+ "&time="+(latestMillis/1000);
-//		
-//		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
-//		if(queryResult != null) {
-//			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
-//			JsonObject json = jsonElement.getAsJsonObject();
-//			if(json.get("error") != null) {
-//				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
-//				return null;
-//			}
-//			
-//			return json;
-//		}
-//		return null;
-//	}
-	
-	/************************************************************************************
-	 * 
-	 ************************************************************************************/
-//	public JsonObject queryRange(String prometheusQuery, long earliestMillis, long latestMillis) {
-//		
-//		String interval = CFW.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
-//		
-//		prometheusQuery = prometheusQuery.replace("[interval]", "["+( (interval.endsWith("s")) ? "1m" : interval )+"]");
-//
-//		String queryURL = getAPIUrlV1() 
-//				+ "/query_range?query="+CFW.HTTP.encode(prometheusQuery)
-//				+"&start="+(earliestMillis/1000)
-//				+"&end="+(latestMillis/1000)
-//				+"&step="+interval;
-//		
-//		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
-//		if(queryResult != null) {
-//			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
-//			JsonObject json = jsonElement.getAsJsonObject();
-//			if(json.get("error") != null) {
-//				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
-//				return null;
-//			}
-//			
-//			return json;
-//		}
-//		return null;
-//	}
-	
+		
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
@@ -259,7 +273,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		searchValue = searchValue.toLowerCase();
 		
-		JsonArray hostArray = environment.getAllHosts();
+		JsonArray hostArray = environment.getAllHosts(null,null);
 		if(hostArray == null) { return new AutocompleteResult();}
 		
 		AutocompleteList suggestions = new AutocompleteList();

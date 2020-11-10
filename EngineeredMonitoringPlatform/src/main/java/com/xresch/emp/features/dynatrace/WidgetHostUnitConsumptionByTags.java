@@ -80,12 +80,12 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 	
 		//---------------------------------
 		// Timeframe
-		//long earliest = settings.get("timeframe_earliest").getAsLong();
-		//long latest = settings.get("timeframe_latest").getAsLong();
+		long earliest = settings.get("timeframe_earliest").getAsLong();
+		long latest = settings.get("timeframe_latest").getAsLong();
 		
 		//---------------------------------
 		// Fetch Data
-		JsonArray array = environment.getAllHosts();
+		JsonArray array = environment.getAllHosts(earliest, latest);
 
 		response.getContent().append(CFW.JSON.toJSON(array));	
 	}

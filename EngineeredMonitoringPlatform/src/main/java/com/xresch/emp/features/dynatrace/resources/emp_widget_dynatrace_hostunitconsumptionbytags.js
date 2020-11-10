@@ -39,7 +39,6 @@
 				currentHost.filteredTags = currentHost.tags;
 			}
 			
-			console.log(currentHost.filteredTags);
 		}
 		
 		//-------------------------------------
