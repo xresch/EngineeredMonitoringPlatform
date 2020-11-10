@@ -8,6 +8,8 @@
 		//-------------------------------------
 		// Initialize Variables
 		let statistics = {
+			hostcount: 0,
+			filteredhostcount: 0,
 			hostunitssum: 0,
 			filteredsum: 0,
 			fulltotals: {},
@@ -42,6 +44,7 @@
 		
 		//-------------------------------------
 		// Calculate statistics
+		statistics.hostcount = dataArray.length;
 		for(let hostIndex in dataArray){
 			let currentHost = dataArray[hostIndex];
 			let hostUnits = currentHost.consumedHostUnits;
@@ -50,6 +53,7 @@
 			statistics.hostunitssum += hostUnits;
 			if(filteredTagsCount != 0){
 				statistics.filteredsum += hostUnits;
+				statistics.filteredhostcount += 1;
 			}
 			for(let tagIndex in currentHost.filteredTags){
 				currentTagKey = currentHost.filteredTags[tagIndex].key;
@@ -101,7 +105,13 @@
 					targetDiv.append('<h4>Totals</h4>');
 					targetDiv.append('<p>The total host units and the number of units considered after filtering(useful in case you want to verify all host units are considered in the filter).</p>');
 
-					targetDiv.append('<p><p><strong>Tag Filter: </strong>"'+settings.tagsfilter+'" / <strong>Total Units: </strong>'+consumptionStatistics.hostunitssum+' / <strong>Filtered Units: </strong>'+consumptionStatistics.filteredsum+'</p>')
+					targetDiv.append('<ul>'
+								+'<li><strong>Tag Filter: </strong>"'+settings.tagsfilter+'" </li>'
+								+'<li> <strong>Total Hosts: </strong>'+consumptionStatistics.hostcount+' </li>'
+								+'<li> <strong>Hosts Counter after Filtering: </strong>'+consumptionStatistics.filteredhostcount+' </li>'
+								+'<li> <strong>Total Units: </strong>'+consumptionStatistics.hostunitssum+' </li>'
+								+'<li> <strong>Filtered Units: </strong>'+consumptionStatistics.filteredsum+' </li>'
+							+'</ul>')
 					
 					//---------------------------
 					// Render Distribution Table
