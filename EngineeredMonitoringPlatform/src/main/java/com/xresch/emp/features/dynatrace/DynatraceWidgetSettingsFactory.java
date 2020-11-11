@@ -40,7 +40,12 @@ public class DynatraceWidgetSettingsFactory {
 					
 					@Override
 					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+						
 						String environment = request.getParameter("environment");
+						if(Strings.isNullOrEmpty(environment) ) {
+							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							return null;
+						}
 						
 						return DynatraceManagedEnvironment.autocompleteHosts(Integer.parseInt(environment), searchValue, this.getMaxResults());
 					}
@@ -63,10 +68,14 @@ public class DynatraceWidgetSettingsFactory {
 					
 					@Override
 					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+
 						String environment = request.getParameter("environment");
+						if(Strings.isNullOrEmpty(environment) ) {
+							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							return null;
+						}
 						
 						String host = request.getParameter("JSON_HOST");
-						System.out.println("createSingleProcessSelectorField - host: "+host);
 						if(Strings.isNullOrEmpty(host) || host.equals("{}")) {
 							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a host first.");
 							return null;
@@ -97,9 +106,14 @@ public class DynatraceWidgetSettingsFactory {
 					
 					@Override
 					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-						String environment = request.getParameter("environment");
 						
-						return DynatraceManagedEnvironment.autocompleteMetrics(Integer.parseInt(environment), searchValue, this.getMaxResults(), entityType);
+						String environment = request.getParameter("environment");
+						if(Strings.isNullOrEmpty(environment) ) {
+							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							return null;
+						}
+						
+						return DynatraceManagedEnvironment.autocompleteMetrics(Integer.parseInt(environment), searchValue, this.getMaxResults());
 					}
 				});
 	}

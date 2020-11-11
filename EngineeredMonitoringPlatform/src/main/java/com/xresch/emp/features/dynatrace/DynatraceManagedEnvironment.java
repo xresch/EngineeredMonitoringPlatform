@@ -251,13 +251,12 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonArray getMetricsForType(String entityType) {
+	public JsonArray getAllMetrics() {
 		//curl -H 'Authorization: Api-Token token' \ -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics"
 
 		String queryURL = getAPIUrlV2() + "/metrics";
 		
 		HashMap<String,String> requestParams = new HashMap<>();
-		//requestParams.put("fields", "entityType");
 		requestParams.put("pageSize", "5000");
 		
 		CFWHttpResponse queryResult = doGetCached30Minutes(queryURL, requestParams, this.getTokenHeader());
@@ -268,6 +267,30 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 				CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Over 5000 metrics available. Only the first 5000 were loaded.");
 			}
 			
+			if(payload.get("metrics") != null) {
+				return payload.get("metrics").getAsJsonArray();
+			}
+		}
+		
+		return null;
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public JsonArray getFilteredMetrics(String filterString) {
+		//curl -H 'Authorization: Api-Token token' \ -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics"
+
+		String queryURL = getAPIUrlV2() + "/metrics";
+		
+		HashMap<String,String> requestParams = new HashMap<>();
+		requestParams.put("fields", "+entityType");
+		requestParams.put("text", filterString);
+		
+		CFWHttpResponse queryResult = doGetCached30Minutes(queryURL, requestParams, this.getTokenHeader());
+		if(queryResult != null) {			
+			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+						
 			if(payload.get("metrics") != null) {
 				return payload.get("metrics").getAsJsonArray();
 			}
@@ -444,7 +467,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public static AutocompleteResult autocompleteMetrics(int environmentID, String searchValue, int limit, String entityType)  {
+	public static AutocompleteResult autocompleteMetrics(int environmentID, String searchValue, int limit)  {
 		
 		if(searchValue.length() < 3) {
 			return null;
@@ -454,7 +477,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		searchValue = searchValue.toLowerCase();
 		
-		JsonArray metricsArray = environment.getMetricsForType(entityType);
+		JsonArray metricsArray = environment.getFilteredMetrics(searchValue);
 		
 		if(metricsArray == null) { return new AutocompleteResult();}
 		
@@ -464,18 +487,18 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 			JsonObject currentMetricObject = metricsArray.get(i).getAsJsonObject();
 			String metricsID = currentMetricObject.get("metricId").getAsString();
 			String description = currentMetricObject.get("displayName").getAsString();
-
-			if(metricsID.toLowerCase().contains(searchValue)
-			|| description.toLowerCase().contains(searchValue)) {
+			String metricEntityTypes = currentMetricObject.get("entityType").toString();
+			System.out.println("metricEntityType: "+metricEntityTypes);
 				
-				suggestions.addItem(metricsID, metricsID, 
-						"<b>Description: </b>"+description
-						+", <b>Unit: </b>"+currentMetricObject.get("unit").getAsString());
-				
-				if(suggestions.getItems().size() == limit) {
-					break;
-				}
+			suggestions.addItem(metricsID, metricsID, 
+					"<b>Description: </b>"+description
+					+", <b>Unit: </b>"+currentMetricObject.get("unit").getAsString()
+					+", <b>Supported Types: </b>"+metricEntityTypes);
+			
+			if(suggestions.getItems().size() == limit) {
+				break;
 			}
+		
 			
 		}
 		
