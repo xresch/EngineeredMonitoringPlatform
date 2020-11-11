@@ -7,17 +7,12 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
-import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
-import com.xresch.cfw.features.core.AutocompleteResult;
-import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
@@ -34,51 +29,15 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
+				.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
 				
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_dynatrace_environment!}")
-						.setDescription("{!cfw_widget_dynatrace_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceManagedEnvironment.SETTINGS_TYPE))
-				)
+				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
 				
-				.addField(CFWField.newTagsSelector("JSON_HOST")
-						.setLabel("{!emp_widget_dynatrace_host!}")
-						.setDescription("{!emp_widget_dynatrace_host_desc!}")
-						.addAttribute("maxTags", "1")
-						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-							
-							@Override
-							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-								String environment = request.getParameter("environment");
-								
-								return DynatraceManagedEnvironment.autocompleteHosts(Integer.parseInt(environment), searchValue, this.getMaxResults());
-							}
-						})		
-				)
-				
-				.addField(CFWField.newTagsSelector("JSON_METRICS")
-						.setLabel("{!emp_widget_dynatrace_metrics!}")
-						.setDescription("{!emp_widget_dynatrace_metrics_desc!}")
-						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-							
-							@Override
-							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-								String environment = request.getParameter("environment");
-								
-								return DynatraceManagedEnvironment.autocompleteMetrics(Integer.parseInt(environment), searchValue, this.getMaxResults());
-							}
-						})		
-				)
+				.addField(DynatraceWidgetSettingsFactory.createMetricsSelectorField())
 				
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
 				
-				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
-						.setLabel("{!cfw_widget_sampledata!}")
-						.setDescription("{!cfw_widget_sampledata_desc!}")
-						.setValue(false)
-				)
-				
-	
+				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}
 

@@ -16,9 +16,8 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
-import com.xresch.cfw.features.core.AutocompleteResult;
-import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
+import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -34,32 +33,11 @@ public class WidgetHostProcesses extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_dynatrace_environment!}")
-						.setDescription("{!cfw_widget_dynatrace_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceManagedEnvironment.SETTINGS_TYPE))
-				)
+				.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
 				
-				.addField(CFWField.newTagsSelector("JSON_HOST")
-						.setLabel("{!emp_widget_dynatrace_host!}")
-						.setDescription("{!emp_widget_dynatrace_host_desc!}")
-						.addAttribute("maxTags", "1")
-						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-							
-							@Override
-							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-								String environment = request.getParameter("environment");
-								
-								return DynatraceManagedEnvironment.autocompleteHosts(Integer.parseInt(environment), searchValue, this.getMaxResults());
-							}
-						})		
-				)
+				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
 				
-				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
-						.setLabel("{!cfw_widget_sampledata!}")
-						.setDescription("{!cfw_widget_sampledata_desc!}")
-						.setValue(false)
-				)
+				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}
 
