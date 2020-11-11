@@ -54,15 +54,15 @@
 						},
 						rendererSettings:{
 							chart: {
-								//charttype: settings.chart_type.toLowerCase(),
+								charttype: settings.chart_type.toLowerCase(),
 								datamode: 'arrays',
 								xfield: 'xvalues',
 								yfield: 'yvalues',
-								//stacked: settings.stacked,
-								//showlegend: settings.show_legend,
-								//ymin: settings.ymin,
-								//ymax: settings.ymax,
-								//pointradius: settings.pointradius,
+								stacked: settings.stacked,
+								showlegend: settings.show_legend,
+								ymin: settings.ymin,
+								ymax: settings.ymax,
+								pointradius: settings.pointradius,
 							}
 							
 					}};

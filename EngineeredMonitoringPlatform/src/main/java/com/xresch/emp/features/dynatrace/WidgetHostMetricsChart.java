@@ -19,6 +19,7 @@ import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
+import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -33,6 +34,7 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
+				
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_dynatrace_environment!}")
 						.setDescription("{!cfw_widget_dynatrace_environment_desc!}")
@@ -67,6 +69,8 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 							}
 						})		
 				)
+				
+				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
 				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
 						.setLabel("{!cfw_widget_sampledata!}")
