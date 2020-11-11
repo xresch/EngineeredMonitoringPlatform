@@ -4,13 +4,13 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_dynatrace_hostdetails",
+	CFW.dashboard.registerWidget("emp_dynatrace_hostmetricschart",
 		{
 			category: DYNATRACE_WIDGET_CATEGORY,
-			menuicon: "fas fa-server",
-			menulabel: CFWL('emp_widget_dynatrace_hostdetails', "Host Details"),
-			description: CFWL('emp_widget_dynatrace_hostdetails_desc', "Displays details about a host monitored by Dynatrace."), 
-			usetimeframe: false,
+			menuicon: "fas fa-chart-bar",
+			menulabel: CFWL('emp_widget_dynatrace_hostmetricschart', "Host Metrics Chart"),
+			description: CFWL('emp_widget_dynatrace_hostmetricschart_desc', "Displays a chart for the selected metrics and the selected host."), 
+			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
@@ -28,8 +28,8 @@
 					// Render Settings
 					var dataToRender = {
 						data: data.payload,
-						visiblefields: ["entityId", "displayName", "discoveredName", "tags", "osType", "osArchitecture", "osVersion", "cpuCores", "ipAddresses", "logicalCpuCores","monitoringMode","networkZoneId", "agentVersion","consumedHostUnits", "bitness", "oneAgentCustomHostName" ],
-						titlefields: ['displayName'], 
+						//visiblefields: ["entityId", "displayName", "discoveredName", "tags", "osType", "osArchitecture", "osVersion", "cpuCores", "ipAddresses", "logicalCpuCores","monitoringMode","networkZoneId", "agentVersion","consumedHostUnits", "bitness", "oneAgentCustomHostName" ],
+						//titlefields: ['displayName'], 
 						titleformat: '{0}', 
 						customizers:{
 							tags: function(record, value) {  return JSON.stringify(value); },
@@ -44,8 +44,8 @@
 
 					//--------------------------
 					// Render Widget
-					var alertRenderer = CFW.render.getRenderer('table');
-					callback(widgetObject, alertRenderer.render(dataToRender));
+					var renderer = CFW.render.getRenderer('json');
+					callback(widgetObject, renderer.render(dataToRender));
 				});
 			},
 			

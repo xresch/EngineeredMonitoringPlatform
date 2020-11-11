@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -18,6 +19,7 @@ import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
+import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 
@@ -26,7 +28,13 @@ import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
  * @author Reto Scheiwiller, (c) Copyright 2019 
  * @license MIT-License
  **************************************************************************************************************/
+/**
+ * @author retos
+ *
+ */
 public class DynatraceManagedEnvironment extends AbstractContextSettings {
+	
+	private static Logger logger = CFWLog.getLogger(DynatraceManagedEnvironment.class.getName());
 	
 	public static final String SETTINGS_TYPE = "Dynatrace Managed Environment";
 	public static final long MILLIS_3_DAYS = 1000L * 60 * 60 * 24 * 3;
@@ -42,14 +50,19 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	private HashMap<String,String> tokenHeader = null;
 	
 
-	/** Static field to store the assembled results by their file names. */
-	private static final Cache<String, CFWHttpResponse> DYNATRACE_CACHE = CFW.Caching.addCache("EMP Dynatrace Cache", 
+	/** Cache http requests to reduce number of API calls. */
+	private static final Cache<String, CFWHttpResponse> DYNATRACE_CACHE_6MIN = CFW.Caching.addCache("EMP Dynatrace Cache[6min]", 
 			CacheBuilder.newBuilder()
 				.initialCapacity(10)
 				.maximumSize(1000)
-				.expireAfterAccess(1, TimeUnit.MINUTES)
+				.expireAfterAccess(5, TimeUnit.MINUTES)
 		);
-
+	private static final Cache<String, CFWHttpResponse> DYNATRACE_CACHE_30MIN = CFW.Caching.addCache("EMP Dynatrace Cache[30min]", 
+			CacheBuilder.newBuilder()
+				.initialCapacity(10)
+				.maximumSize(1000)
+				.expireAfterAccess(30, TimeUnit.MINUTES)
+		);
 			
 	private CFWField<String> apiUrl = CFWField.newString(FormFieldType.TEXT, PrometheusEnvironmentFields.API_URL)
 			.allowHTML(true)
@@ -167,12 +180,35 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public CFWHttpResponse sendCachedGetRequest(String url, HashMap<String, String> params, HashMap<String, String> headers) {
+	public CFWHttpResponse doGetCached5Minutes(String url, HashMap<String, String> params, HashMap<String, String> headers) {
 
 		String identifier = getDefaultObject().name()+url+params;
 
 		try {
-			return DYNATRACE_CACHE.get(identifier, new Callable<CFWHttpResponse>() {
+			return DYNATRACE_CACHE_6MIN.get(identifier, new Callable<CFWHttpResponse>() {
+
+				@Override
+				public CFWHttpResponse call() throws Exception {
+					return CFW.HTTP.sendGETRequest(url, params, headers);
+				}
+				
+			});
+		} catch (ExecutionException e) {
+			new CFWLog(logger).severe("Error occured while caching response.", e );
+		}
+		
+		return null;
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public CFWHttpResponse doGetCached30Minutes(String url, HashMap<String, String> params, HashMap<String, String> headers) {
+
+		String identifier = getDefaultObject().name()+url+params;
+
+		try {
+			return DYNATRACE_CACHE_30MIN.get(identifier, new Callable<CFWHttpResponse>() {
 
 				@Override
 				public CFWHttpResponse call() throws Exception {
@@ -187,14 +223,12 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		return null;
 	}
-	
-
-	
+		
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
 	public JsonArray getAllHosts(Long startTimestamp, Long endTimestamp) {
-		//curl -H 'Authorization: Api-Token token' \ -X GET "https://lpi31515.live.dynatrace.com/api/v1/entity/infrastructure/hosts"
+		//curl -H 'Authorization: Api-Token token' \ -X GET "https://xxxxxx.live.dynatrace.com/api/v1/entity/infrastructure/hosts"
 
 		String queryURL = getAPIUrlV1() + "/entity/infrastructure/hosts";
 		
@@ -205,10 +239,68 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 			requestParams.put("endTimestamp", endTimestamp+"");
 		}
 				
-		CFWHttpResponse queryResult = sendCachedGetRequest(queryURL, requestParams, this.getTokenHeader());
+		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, requestParams, this.getTokenHeader());
 		
 		if(queryResult != null) {			
 			return queryResult.getRequestBodyAsJsonArray();
+		}
+		
+		return null;
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public JsonArray getAllMetrics() {
+		//curl -H 'Authorization: Api-Token token' \ -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics"
+
+		String queryURL = getAPIUrlV2() + "/metrics";
+		
+		HashMap<String,String> requestParams = new HashMap<>();
+		requestParams.put("pageSize", "5000");
+		
+		CFWHttpResponse queryResult = doGetCached30Minutes(queryURL, requestParams, this.getTokenHeader());
+		if(queryResult != null) {			
+			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+			
+			if(!payload.get("nextPageKey").isJsonNull()) {
+				CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Over 5000 metrics available. Only the first 5000 were loaded.");
+			}
+			
+			if(payload.get("metrics") != null) {
+				return payload.get("metrics").getAsJsonArray();
+			}
+		}
+		
+		return null;
+	}
+	
+	
+	
+	/************************************************************************************
+	 * @param entityType type of the entity (e.g "HOST")
+	 * @param entityID the id of the entity (e.g "HOST-123456021FCE23D")
+	 * @param startTimestamp of the time frame in UTC milliseconds since 01.01.1970
+	 * @param endTimestamp  of the time frame in UTC milliseconds since 01.01.1970
+	 * @param metricSelector the dynatrace metrics selector (e.g "builtin:host.cpu.usage,builtin:host.mem.usage")
+	 * @return
+	 ************************************************************************************/
+	public JsonObject queryMetrics(String entityType, String entityID, long startTimestamp, long endTimestamp, String metricSelector) {
+		//curl -H 'Authorization: Api-Token token123' -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:host.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(HOST),entityId(HOST-1812428021FCE23D)"
+
+		String queryURL = getAPIUrlV2() + "/metrics/query";
+		
+		HashMap<String,String> requestParams = new HashMap<>();
+		requestParams.put("metricSelector", metricSelector);
+		requestParams.put("from", getStartTimestampParam(startTimestamp,endTimestamp));
+		requestParams.put("to", endTimestamp+"");
+		requestParams.put("resolution", "120");
+		requestParams.put("entitySelector", "type("+entityType+"),entityId("+entityID+")");
+
+		CFWHttpResponse queryResult = doGetCached30Minutes(queryURL, requestParams, this.getTokenHeader());
+		if(queryResult != null) {			
+			return queryResult.getRequestBodyAsJsonObject();
+			
 		}
 		
 		return null;
@@ -223,7 +315,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 
 		String queryURL = getAPIUrlV1() + "/entity/infrastructure/hosts/"+hostID;
 		
-		CFWHttpResponse queryResult = sendCachedGetRequest(queryURL, null, this.getTokenHeader());
+		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, null, this.getTokenHeader());
 		if(queryResult != null) {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
@@ -251,7 +343,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp));
 		requestParams.put("endTimestamp", endTimestamp+"");
 		
-		CFWHttpResponse queryResult = sendCachedGetRequest(queryURL, requestParams, this.getTokenHeader());
+		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, requestParams, this.getTokenHeader());
 		
 		if(queryResult != null) {			
 			return queryResult.getRequestBodyAsJsonArray();
@@ -259,7 +351,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		return null;
 	}
-		
+	
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
@@ -289,8 +381,8 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 			|| discoveredName.toLowerCase().contains(searchValue)) {
 				
 				suggestions.addItem(hostID, displayName, 
-						"Tags:"+currentHostObject.get("tags").toString()
-						+", OS Type:"+currentHostObject.get("osType").getAsString());
+						"<b>Tags: </b>"+currentHostObject.get("tags").toString()
+						+", <b>OS Type: </b>"+currentHostObject.get("osType").getAsString());
 				
 				if(suggestions.getItems().size() == limit) {
 					break;
@@ -302,4 +394,46 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		return new AutocompleteResult(suggestions);
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public static AutocompleteResult autocompleteMetrics(int environmentID, String searchValue, int limit)  {
+		
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentID);
+		
+		searchValue = searchValue.toLowerCase();
+		
+		JsonArray metricsArray = environment.getAllMetrics();
+		
+		if(metricsArray == null) { return new AutocompleteResult();}
+		
+		AutocompleteList suggestions = new AutocompleteList();
+		for(int i = 0; i < metricsArray.size(); i++) {
+		
+			JsonObject currentMetricObject = metricsArray.get(i).getAsJsonObject();
+			String metricsID = currentMetricObject.get("metricId").getAsString();
+			String description = currentMetricObject.get("displayName").getAsString();
+
+			if(metricsID.toLowerCase().contains(searchValue)
+			|| description.toLowerCase().contains(searchValue)) {
+				
+				suggestions.addItem(metricsID, metricsID, 
+						"<b>Description: </b>"+description
+						+", <b>Unit: </b>"+currentMetricObject.get("unit").getAsString());
+				
+				if(suggestions.getItems().size() == limit) {
+					break;
+				}
+			}
+			
+		}
+		
+		return new AutocompleteResult(suggestions);
+	}
+	
+
 }
