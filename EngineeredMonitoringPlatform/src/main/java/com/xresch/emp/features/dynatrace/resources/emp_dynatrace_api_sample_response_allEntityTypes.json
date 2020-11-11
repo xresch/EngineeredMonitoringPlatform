@@ -1,0 +1,7713 @@
+{
+	"totalCount": 96,
+	"pageSize": 500,
+	"types": [
+		{
+			"type": "APPLICATION",
+			"properties": [
+				{
+					"id": "applicationMatchTarget",
+					"type": "Enum"
+				},
+				{
+					"id": "applicationType",
+					"type": "Enum"
+				},
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				},
+				{
+					"id": "ruleAppliedMatchType",
+					"type": "Enum"
+				},
+				{
+					"id": "ruleAppliedPattern",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "calls",
+					"toTypes": [
+						"SERVICE"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "APPLICATION_METHOD",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "APPLICATION_METHOD_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AUTO_SCALING_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isInstanceOf",
+					"fromTypes": [
+						"EC2_INSTANCE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AWS_APPLICATION_LOAD_BALANCER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isBalancedBy",
+					"fromTypes": [
+						"EC2_INSTANCE"
+					]
+				},
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AWS_AVAILABILITY_ZONE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isSiteOf",
+					"toTypes": [
+						"AWS_LAMBDA_FUNCTION",
+						"DYNAMO_DB_TABLE",
+						"EC2_INSTANCE",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "AWS_CREDENTIALS",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AWS_LAMBDA_FUNCTION",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AWS_AVAILABILITY_ZONE"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AWS_NETWORK_LOAD_BALANCER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isBalancedBy",
+					"fromTypes": [
+						"EC2_INSTANCE"
+					]
+				},
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_API_MANAGEMENT_SERVICE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_APPLICATION_GATEWAY",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isBalancedBy",
+					"fromTypes": [
+						"AZURE_VM"
+					]
+				},
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_APP_SERVICE_PLAN",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_COSMOS_DB",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_CREDENTIALS",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_EVENT_HUB",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_EVENT_HUB_NAMESPACE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_FUNCTION_APP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_IOT_HUB",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_LOAD_BALANCER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isBalancedBy",
+					"fromTypes": [
+						"AZURE_VM"
+					]
+				},
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_MGMT_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_REDIS_CACHE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_REGION",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isSiteOf",
+					"toTypes": [
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"AZURE_VM",
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "belongsTo",
+					"fromTypes": [
+						"CUSTOM_DEVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_SERVICE_BUS_NAMESPACE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_SERVICE_BUS_QUEUE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_SERVICE_BUS_TOPIC",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_SQL_DATABASE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_SQL_ELASTIC_POOL",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_SQL_SERVER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_STORAGE_ACCOUNT",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_SUBSCRIPTION",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "belongsTo",
+					"fromTypes": [
+						"CUSTOM_DEVICE",
+						"CUSTOM_DEVICE_GROUP"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_TENANT",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_VM",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isBalancedBy",
+					"toTypes": [
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_LOAD_BALANCER"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AZURE_REGION"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"HOST"
+					]
+				}
+			]
+		},
+		{
+			"type": "AZURE_VM_SCALE_SET",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "AZURE_WEB_APP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "BOSH_DEPLOYMENT",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "BROWSER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "CINDER_VOLUME",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isDiskOf",
+					"toTypes": [
+						"OPENSTACK_VM"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "CLOUD_APPLICATION",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isInstanceOf",
+					"fromTypes": [
+						"CLOUD_APPLICATION_INSTANCE"
+					]
+				},
+				{
+					"id": "isNamespaceOfCloudApplication",
+					"fromTypes": [
+						"CLOUD_APPLICATION_NAMESPACE"
+					]
+				}
+			]
+		},
+		{
+			"type": "CLOUD_APPLICATION_INSTANCE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isInstanceOf",
+					"toTypes": [
+						"CLOUD_APPLICATION"
+					]
+				},
+				{
+					"id": "runsOn",
+					"toTypes": [
+						"KUBERNETES_NODE"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isContainerGroupInstanceOfCloudApplicationInstance",
+					"fromTypes": [
+						"CONTAINER_GROUP_INSTANCE"
+					]
+				},
+				{
+					"id": "isNamespaceOfCloudApplicationInstance",
+					"fromTypes": [
+						"CLOUD_APPLICATION_NAMESPACE"
+					]
+				}
+			]
+		},
+		{
+			"type": "CLOUD_APPLICATION_NAMESPACE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNamespaceOfCloudApplication",
+					"toTypes": [
+						"CLOUD_APPLICATION"
+					]
+				},
+				{
+					"id": "isNamespaceOfCloudApplicationInstance",
+					"toTypes": [
+						"CLOUD_APPLICATION_INSTANCE"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "CONTAINER_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isInstanceOf",
+					"fromTypes": [
+						"CONTAINER_GROUP_INSTANCE"
+					]
+				}
+			]
+		},
+		{
+			"type": "CONTAINER_GROUP_INSTANCE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isContainerGroupInstanceOfCloudApplicationInstance",
+					"toTypes": [
+						"CLOUD_APPLICATION_INSTANCE"
+					]
+				},
+				{
+					"id": "isContainerGroupInstanceOfHost",
+					"toTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "isInstanceOf",
+					"toTypes": [
+						"CONTAINER_GROUP"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "CUSTOM_APPLICATION",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customApplicationType",
+					"type": "Enum"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "mobileOsFamily",
+					"type": "List"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "calls",
+					"toTypes": [
+						"SERVICE"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "CUSTOM_DEVICE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "belongsTo",
+					"toTypes": [
+						"AZURE_REGION",
+						"AZURE_SUBSCRIPTION",
+						"CUSTOM_DEVICE"
+					]
+				},
+				{
+					"id": "isInstanceOf",
+					"toTypes": [
+						"CUSTOM_DEVICE_GROUP"
+					]
+				},
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "runsOnResource",
+					"toTypes": [
+						"CUSTOM_DEVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "belongsTo",
+					"fromTypes": [
+						"CUSTOM_DEVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				},
+				{
+					"id": "runsOnResource",
+					"fromTypes": [
+						"CUSTOM_DEVICE",
+						"HOST",
+						"PROCESS_GROUP",
+						"PROCESS_GROUP_INSTANCE"
+					]
+				}
+			]
+		},
+		{
+			"type": "CUSTOM_DEVICE_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "belongsTo",
+					"toTypes": [
+						"AZURE_SUBSCRIPTION"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isInstanceOf",
+					"fromTypes": [
+						"CUSTOM_DEVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "DATASTORE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "DEVICE_APPLICATION_METHOD",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "DEVICE_APPLICATION_METHOD_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "DISK",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isDiskOf",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "DOCKER_CONTAINER_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isInstanceOf",
+					"fromTypes": [
+						"DOCKER_CONTAINER_GROUP_INSTANCE"
+					]
+				}
+			]
+		},
+		{
+			"type": "DOCKER_CONTAINER_GROUP_INSTANCE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isInstanceOf",
+					"toTypes": [
+						"DOCKER_CONTAINER_GROUP"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "DYNAMO_DB_TABLE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AWS_AVAILABILITY_ZONE"
+					]
+				}
+			]
+		},
+		{
+			"type": "EBS_VOLUME",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isDiskOf",
+					"toTypes": [
+						"EC2_INSTANCE"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "EC2_INSTANCE",
+			"properties": [
+				{
+					"id": "amiId",
+					"type": "String"
+				},
+				{
+					"id": "awsInstanceId",
+					"type": "String"
+				},
+				{
+					"id": "awsInstanceType",
+					"type": "String"
+				},
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "awsSecurityGroup",
+					"type": "Map"
+				},
+				{
+					"id": "beanstalkEnvironmentName",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "localHostName",
+					"type": "String"
+				},
+				{
+					"id": "localIp",
+					"type": "Map"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				},
+				{
+					"id": "publicHostName",
+					"type": "String"
+				},
+				{
+					"id": "publicIp",
+					"type": "Map"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isBalancedBy",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"ELASTIC_LOAD_BALANCER"
+					]
+				},
+				{
+					"id": "isInstanceOf",
+					"toTypes": [
+						"AUTO_SCALING_GROUP"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isDiskOf",
+					"fromTypes": [
+						"EBS_VOLUME"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AWS_AVAILABILITY_ZONE"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"HOST"
+					]
+				}
+			]
+		},
+		{
+			"type": "ELASTIC_LOAD_BALANCER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isBalancedBy",
+					"fromTypes": [
+						"EC2_INSTANCE"
+					]
+				},
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "EXTERNAL_SYNTHETIC_TEST",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "runsOn",
+					"toTypes": [
+						"SYNTHETIC_LOCATION"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "EXTERNAL_SYNTHETIC_TEST_STEP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "GCP_ZONE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isSiteOf",
+					"toTypes": [
+						"GOOGLE_COMPUTE_ENGINE",
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "GEOLOCATION",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "GEOLOC_SITE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isSiteOf",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "GOOGLE_COMPUTE_ENGINE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"GCP_ZONE"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"HOST"
+					]
+				}
+			]
+		},
+		{
+			"type": "HOST",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "azureComputeModeName",
+					"type": "Enum"
+				},
+				{
+					"id": "azureHostNames",
+					"type": "List"
+				},
+				{
+					"id": "azureSiteNames",
+					"type": "List"
+				},
+				{
+					"id": "azureSku",
+					"type": "Enum"
+				},
+				{
+					"id": "bitness",
+					"type": "Enum"
+				},
+				{
+					"id": "boshAvailabilityZone",
+					"type": "String"
+				},
+				{
+					"id": "boshDeploymentId",
+					"type": "String"
+				},
+				{
+					"id": "boshInstanceId",
+					"type": "String"
+				},
+				{
+					"id": "boshInstanceName",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "boshStemcellVersion",
+					"type": "String"
+				},
+				{
+					"id": "cloudPlatformVendorVersion",
+					"type": "String"
+				},
+				{
+					"id": "cloudType",
+					"type": "Enum"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "cpuCores",
+					"type": "Number"
+				},
+				{
+					"id": "customHostMetadata",
+					"type": "Map"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gceInstanceId",
+					"type": "String"
+				},
+				{
+					"id": "gceInstanceName",
+					"type": "String"
+				},
+				{
+					"id": "gceMachineType",
+					"type": "String"
+				},
+				{
+					"id": "gceNumericProjectId",
+					"type": "String"
+				},
+				{
+					"id": "gceProjectId",
+					"type": "String"
+				},
+				{
+					"id": "gcePublicIpAddresses",
+					"type": "List"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "hypervisorType",
+					"type": "Enum"
+				},
+				{
+					"id": "installerPotentialProblem",
+					"type": "Boolean"
+				},
+				{
+					"id": "installerSupportAlert",
+					"type": "Boolean"
+				},
+				{
+					"id": "installerTrackedDownload",
+					"type": "Boolean"
+				},
+				{
+					"id": "installerVersion",
+					"type": "String"
+				},
+				{
+					"id": "ipAddresses",
+					"type": "List"
+				},
+				{
+					"id": "isMonitoringCandidate",
+					"type": "Boolean"
+				},
+				{
+					"id": "kubernetesLabels",
+					"type": "Map"
+				},
+				{
+					"id": "logicalCpuCores",
+					"type": "Number"
+				},
+				{
+					"id": "logicalCpus",
+					"type": "Number"
+				},
+				{
+					"id": "memoryTotal",
+					"type": "Number"
+				},
+				{
+					"id": "monitoringMode",
+					"type": "Enum"
+				},
+				{
+					"id": "networkZoneId",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				},
+				{
+					"id": "openstackAvZone",
+					"type": "String"
+				},
+				{
+					"id": "osArchitecture",
+					"type": "Enum"
+				},
+				{
+					"id": "osType",
+					"type": "Enum"
+				},
+				{
+					"id": "osVersion",
+					"type": "String"
+				},
+				{
+					"id": "paasMemoryLimit",
+					"type": "Number"
+				},
+				{
+					"id": "paasType",
+					"type": "Enum"
+				},
+				{
+					"id": "simultaneousMultithreading",
+					"type": "Number"
+				},
+				{
+					"id": "softwareTechnologies",
+					"type": "List"
+				},
+				{
+					"id": "standaloneSpecialAgentsOnly",
+					"type": "Boolean"
+				},
+				{
+					"id": "virtualCpus",
+					"type": "Number"
+				},
+				{
+					"id": "zosCPUModelNumber",
+					"type": "String"
+				},
+				{
+					"id": "zosCPUSerialNumber",
+					"type": "String"
+				},
+				{
+					"id": "zosTotalGeneralPurposeProcessors",
+					"type": "Number"
+				},
+				{
+					"id": "zosTotalPhysicalMemory",
+					"type": "Number"
+				},
+				{
+					"id": "zosTotalZiipProcessors",
+					"type": "Number"
+				},
+				{
+					"id": "zosVirtualization",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isInstanceOf",
+					"toTypes": [
+						"HOST_GROUP"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "runsOn",
+					"toTypes": [
+						"AZURE_VM",
+						"EC2_INSTANCE",
+						"GOOGLE_COMPUTE_ENGINE",
+						"HYPERVISOR",
+						"OPENSTACK_COMPUTE_NODE",
+						"OPENSTACK_VM",
+						"VIRTUALMACHINE"
+					]
+				},
+				{
+					"id": "runsOnResource",
+					"toTypes": [
+						"CUSTOM_DEVICE"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isContainerGroupInstanceOfHost",
+					"fromTypes": [
+						"CONTAINER_GROUP_INSTANCE"
+					]
+				},
+				{
+					"id": "isDiskOf",
+					"fromTypes": [
+						"DISK"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isProcessOf",
+					"fromTypes": [
+						"PROCESS_GROUP_INSTANCE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AWS_AVAILABILITY_ZONE",
+						"AZURE_REGION",
+						"GCP_ZONE",
+						"GEOLOC_SITE",
+						"OPENSTACK_REGION",
+						"VMWARE_DATACENTER"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"OPENSTACK_VM",
+						"PROCESS_GROUP"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "HOST_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isHostGroupOf",
+					"toTypes": [
+						"PROCESS_GROUP",
+						"PROCESS_GROUP_INSTANCE"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isInstanceOf",
+					"fromTypes": [
+						"HOST"
+					]
+				}
+			]
+		},
+		{
+			"type": "HTTP_CHECK",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "calls",
+					"toTypes": [
+						"SERVICE"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "HTTP_CHECK_STEP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "HYPERVISOR",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isDiskOf",
+					"fromTypes": [
+						"HYPERVISOR_DISK"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"VMWARE_DATACENTER"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"HOST",
+						"VIRTUALMACHINE"
+					]
+				}
+			]
+		},
+		{
+			"type": "HYPERVISOR_CLUSTER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "HYPERVISOR_DISK",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isDiskOf",
+					"toTypes": [
+						"HYPERVISOR",
+						"VMWARE_DATACENTER"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "KUBERNETES_CLUSTER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "KUBERNETES_NODE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"CLOUD_APPLICATION_INSTANCE"
+					]
+				}
+			]
+		},
+		{
+			"type": "MOBILE_APPLICATION",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "mobileOsFamily",
+					"type": "List"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "calls",
+					"toTypes": [
+						"SERVICE"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "NETWORK_INTERFACE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "NEUTRON_SUBNET",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"OPENSTACK_REGION"
+					]
+				}
+			]
+		},
+		{
+			"type": "OPENSTACK_AVAILABILITY_ZONE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "OPENSTACK_COMPUTE_NODE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"OPENSTACK_REGION"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"HOST"
+					]
+				}
+			]
+		},
+		{
+			"type": "OPENSTACK_PROJECT",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "OPENSTACK_REGION",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isSiteOf",
+					"toTypes": [
+						"HOST",
+						"NEUTRON_SUBNET",
+						"OPENSTACK_COMPUTE_NODE",
+						"OPENSTACK_VM",
+						"SWIFT_CONTAINER"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "OPENSTACK_VM",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				},
+				{
+					"id": "openStackInstanceType",
+					"type": "Map"
+				},
+				{
+					"id": "openstackSecurityGroups",
+					"type": "List"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "runsOn",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isDiskOf",
+					"fromTypes": [
+						"CINDER_VOLUME"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"OPENSTACK_REGION"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"HOST"
+					]
+				}
+			]
+		},
+		{
+			"type": "OS",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "PROCESS_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "azureHostName",
+					"type": "String"
+				},
+				{
+					"id": "azureSiteName",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customPgMetadata",
+					"type": "Map"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "listenPorts",
+					"type": "List"
+				},
+				{
+					"id": "metadata",
+					"type": "List"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				},
+				{
+					"id": "softwareTechnologies",
+					"type": "List"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "runsOn",
+					"toTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOnResource",
+					"toTypes": [
+						"CUSTOM_DEVICE"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isHostGroupOf",
+					"fromTypes": [
+						"HOST_GROUP"
+					]
+				},
+				{
+					"id": "isInstanceOf",
+					"fromTypes": [
+						"PROCESS_GROUP_INSTANCE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "PROCESS_GROUP_INSTANCE",
+			"properties": [
+				{
+					"id": "appVersion",
+					"type": "String"
+				},
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "azureHostName",
+					"type": "String"
+				},
+				{
+					"id": "azureSiteName",
+					"type": "String"
+				},
+				{
+					"id": "bitness",
+					"type": "Enum"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customPgMetadata",
+					"type": "Map"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gardenApplicationNames",
+					"type": "List"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "installerVersion",
+					"type": "String"
+				},
+				{
+					"id": "isDockerized",
+					"type": "Boolean"
+				},
+				{
+					"id": "jvmClrVersion",
+					"type": "String"
+				},
+				{
+					"id": "jvmVendor",
+					"type": "String"
+				},
+				{
+					"id": "listenPorts",
+					"type": "List"
+				},
+				{
+					"id": "metadata",
+					"type": "List"
+				},
+				{
+					"id": "modules",
+					"type": "List"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				},
+				{
+					"id": "processType",
+					"type": "Enum"
+				},
+				{
+					"id": "softwareTechnologies",
+					"type": "List"
+				},
+				{
+					"id": "versionedModules",
+					"type": "List"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isInstanceOf",
+					"toTypes": [
+						"PROCESS_GROUP"
+					]
+				},
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isProcessOf",
+					"toTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOnResource",
+					"toTypes": [
+						"CUSTOM_DEVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isHostGroupOf",
+					"fromTypes": [
+						"HOST_GROUP"
+					]
+				},
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "QUEUE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isInstanceOf",
+					"fromTypes": [
+						"QUEUE_INSTANCE"
+					]
+				}
+			]
+		},
+		{
+			"type": "QUEUE_INSTANCE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isInstanceOf",
+					"toTypes": [
+						"QUEUE"
+					]
+				},
+				{
+					"id": "runsOn",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "RELATIONAL_DATABASE_SERVICE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "talksWithCandidate",
+					"toTypes": [
+						"HOST"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isNetworkClientOf",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfHost",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isNetworkClientOfProcessGroup",
+					"fromTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"AWS_AVAILABILITY_ZONE"
+					]
+				},
+				{
+					"id": "candidateTalksWith",
+					"fromTypes": [
+						"HOST"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"fromTypes": [
+						"QUEUE_INSTANCE",
+						"SERVICE",
+						"SERVICE_INSTANCE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"fromTypes": [
+						"SERVICE"
+					]
+				}
+			]
+		},
+		{
+			"type": "S3BUCKET",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "SERVICE",
+			"properties": [
+				{
+					"id": "agentTechnologyType",
+					"type": "Enum"
+				},
+				{
+					"id": "akkaActorSystem",
+					"type": "String"
+				},
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "className",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "contextRoot",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "databaseHostNames",
+					"type": "List"
+				},
+				{
+					"id": "databaseName",
+					"type": "String"
+				},
+				{
+					"id": "databaseVendor",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "esbApplicationName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "ibmCtgGatewayUrl",
+					"type": "String"
+				},
+				{
+					"id": "ibmCtgServerName",
+					"type": "String"
+				},
+				{
+					"id": "ipAddresses",
+					"type": "List"
+				},
+				{
+					"id": "mainServiceSoftwareTech",
+					"type": "Map"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				},
+				{
+					"id": "path",
+					"type": "String"
+				},
+				{
+					"id": "port",
+					"type": "Number"
+				},
+				{
+					"id": "remoteEndpoint",
+					"type": "String"
+				},
+				{
+					"id": "remoteServiceName",
+					"type": "String"
+				},
+				{
+					"id": "serviceTechnologyTypes",
+					"type": "List"
+				},
+				{
+					"id": "serviceType",
+					"type": "Enum"
+				},
+				{
+					"id": "softwareTechnologies",
+					"type": "List"
+				},
+				{
+					"id": "webApplicationId",
+					"type": "String"
+				},
+				{
+					"id": "webServerName",
+					"type": "String"
+				},
+				{
+					"id": "webServiceName",
+					"type": "String"
+				},
+				{
+					"id": "webServiceNamespace",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "calls",
+					"toTypes": [
+						"SERVICE"
+					]
+				},
+				{
+					"id": "runsOn",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"CUSTOM_DEVICE_GROUP",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "runsOnProcessGroupInstance",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "calls",
+					"fromTypes": [
+						"APPLICATION",
+						"CUSTOM_APPLICATION",
+						"HTTP_CHECK",
+						"MOBILE_APPLICATION",
+						"SERVICE"
+					]
+				},
+				{
+					"id": "isInstanceOf",
+					"fromTypes": [
+						"SERVICE_INSTANCE"
+					]
+				}
+			]
+		},
+		{
+			"type": "SERVICE_INSTANCE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "isInstanceOf",
+					"toTypes": [
+						"SERVICE"
+					]
+				},
+				{
+					"id": "runsOn",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_LAMBDA_FUNCTION",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"PROCESS_GROUP_INSTANCE",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				},
+				{
+					"id": "runsOnHost",
+					"toTypes": [
+						"AWS_APPLICATION_LOAD_BALANCER",
+						"AWS_NETWORK_LOAD_BALANCER",
+						"AZURE_API_MANAGEMENT_SERVICE",
+						"AZURE_APPLICATION_GATEWAY",
+						"AZURE_COSMOS_DB",
+						"AZURE_EVENT_HUB_NAMESPACE",
+						"AZURE_IOT_HUB",
+						"AZURE_LOAD_BALANCER",
+						"AZURE_REDIS_CACHE",
+						"AZURE_SERVICE_BUS_NAMESPACE",
+						"AZURE_SQL_SERVER",
+						"AZURE_STORAGE_ACCOUNT",
+						"CUSTOM_DEVICE",
+						"ELASTIC_LOAD_BALANCER",
+						"HOST",
+						"RELATIONAL_DATABASE_SERVICE"
+					]
+				}
+			],
+			"toRelationships": []
+		},
+		{
+			"type": "SERVICE_METHOD",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "SERVICE_METHOD_GROUP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "SWIFT_CONTAINER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"OPENSTACK_REGION"
+					]
+				}
+			]
+		},
+		{
+			"type": "SYNTHETIC_LOCATION",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": [
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"EXTERNAL_SYNTHETIC_TEST"
+					]
+				}
+			]
+		},
+		{
+			"type": "SYNTHETIC_TEST",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "SYNTHETIC_TEST_STEP",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "VCENTER",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [],
+			"toRelationships": []
+		},
+		{
+			"type": "VIRTUALMACHINE",
+			"properties": [
+				{
+					"id": "awsNameTag",
+					"type": "String"
+				},
+				{
+					"id": "boshName",
+					"type": "String"
+				},
+				{
+					"id": "conditionalName",
+					"type": "String"
+				},
+				{
+					"id": "customizedName",
+					"type": "String"
+				},
+				{
+					"id": "detectedName",
+					"type": "String"
+				},
+				{
+					"id": "gcpZone",
+					"type": "String"
+				},
+				{
+					"id": "oneAgentCustomHostName",
+					"type": "String"
+				}
+			],
+			"tags": "List",
+			"managementZones": "List",
+			"fromRelationships": [
+				{
+					"id": "runsOn",
+					"toTypes": [
+						"HYPERVISOR"
+					]
+				}
+			],
+			"toRelationships": [
+				{
+					"id": "isSiteOf",
+					"fromTypes": [
+						"VMWARE_DATACENTER"
+					]
+				},
+				{
+					"id": "runsOn",
+					"fromTypes": [
+						"HOST"
+					]
+				}
+			]
+		},
+		{
+			"type": "VMWARE_DATA100  100k    0  100k    0     0   457k      0 --:--:-- --:--:-- --:--:--  457king"
+		},
+		{
+			"id": "oneAgentCustomHostName",
+			"type": "String"
+		}
+	],
+	"tags": "List",
+	"managementZones": "List",
+	"fromRelationships": [
+		{
+			"id": "isSiteOf",
+			"toTypes": [
+				"HOST",
+				"HYPERVISOR",
+				"VIRTUALMACHINE"
+			]
+		}
+	],
+	"toRelationships": [
+		{
+			"id": "isDiskOf",
+			"fromTypes": [
+				"HYPERVISOR_DISK"
+			]
+		}
+	]
+}

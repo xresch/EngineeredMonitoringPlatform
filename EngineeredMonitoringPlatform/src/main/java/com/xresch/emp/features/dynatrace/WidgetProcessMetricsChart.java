@@ -20,11 +20,11 @@ import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
-public class WidgetHostMetricsChart extends WidgetDefinition {
+public class WidgetProcessMetricsChart extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(WidgetHostMetricsChart.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetProcessMetricsChart.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_dynatrace_hostmetricschart";}
+	public String getWidgetType() {return "emp_dynatrace_processmetricschart";}
 		
 	@Override
 	public CFWObject getSettings() {
@@ -33,7 +33,10 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 				
 				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createMetricsSelectorField("HOST"))
+				.addField(DynatraceWidgetSettingsFactory.createSingleProcessGroupSelectorField())
+				
+				.addField(DynatraceWidgetSettingsFactory.createMetricsSelectorField("PROCESS_GROUP_INSTANCE"))
+				
 				
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
 				
@@ -57,17 +60,17 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve HostID
-		JsonElement hostsElement = settings.get("JSON_HOST");
-		if(hostsElement == null || hostsElement.isJsonNull()) {
+		JsonElement processElement = settings.get("JSON_PROCESS");
+		if(processElement == null || processElement.isJsonNull()) {
 			return;
 		}
 		
-		JsonObject hostsObject = hostsElement.getAsJsonObject();
-		if(hostsObject.size() == 0) {
+		JsonObject processObject = processElement.getAsJsonObject();
+		if(processObject.size() == 0) {
 			return;
 		}
 		
-		String hostID = hostsObject.keySet().toArray(new String[]{})[0];
+		String processID = processObject.keySet().toArray(new String[]{})[0];
 		
 		//---------------------------------
 		// Resolve Metrics
@@ -92,7 +95,7 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 		
 		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatace Host Details Widget: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatrace Process Metrics Chart Widget: The chosen environment seems not configured correctly.");
 			return;
 		}
 		
@@ -104,13 +107,17 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Fetch Data
-		JsonObject queryResult = environment.queryMetrics("HOST", hostID, earliest, latest, metricsSelector);		
+		
+		//Example URL
+		// curl -H 'Authorization: Api-Token xxxxxxx' -X GET "https://xxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:tech.generic.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(PROCESS_GROUP_INSTANCE),entityId(PROCESS_GROUP_INSTANCE-8675886ACE55BAA3)"
+		
+		JsonObject queryResult = environment.queryMetrics("PROCESS_GROUP_INSTANCE", processID, earliest, latest, metricsSelector);		
 		response.getContent().append(CFW.JSON.toJSON(queryResult));	
 	}
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostmetricschart_sample.json") );
+		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_processmetricschart_sample.json") );
 		
 	}
 	
@@ -118,7 +125,7 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_dynatrace_commons.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostmetricschart.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_processmetricschart.js") );
 		return array;
 	}
 

@@ -251,12 +251,13 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonArray getAllMetrics() {
+	public JsonArray getMetricsForType(String entityType) {
 		//curl -H 'Authorization: Api-Token token' \ -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics"
 
 		String queryURL = getAPIUrlV2() + "/metrics";
 		
 		HashMap<String,String> requestParams = new HashMap<>();
+		//requestParams.put("fields", "entityType");
 		requestParams.put("pageSize", "5000");
 		
 		CFWHttpResponse queryResult = doGetCached30Minutes(queryURL, requestParams, this.getTokenHeader());
@@ -286,7 +287,10 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	 * @return
 	 ************************************************************************************/
 	public JsonObject queryMetrics(String entityType, String entityID, long startTimestamp, long endTimestamp, String metricSelector) {
-		//curl -H 'Authorization: Api-Token token123' -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:host.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(HOST),entityId(HOST-1812428021FCE23D)"
+		// Host CPU Usage Example
+		//curl -H 'Authorization: Api-Token token123' -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:host.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(HOST),entityId(HOST-1234528021FCE23D)"
+		// Process Instance CPU Usage Example
+		//curl -H 'Authorization: Api-Token token123' -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:tech.generic.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(PROCESS_GROUP_INSTANCE),entityId(PROCESS_GROUP_INSTANCE-43892357E55BAA3)"
 
 		String queryURL = getAPIUrlV2() + "/metrics/query";
 		
@@ -311,7 +315,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	 * 
 	 ************************************************************************************/
 	public JsonObject getHostDetails(String hostID) {
-		//curl -H 'Authorization: Api-Token token' \ -X GET "https://lpi31515.live.dynatrace.com/api/v1/entity/infrastructure/hosts"
+		//curl -H 'Authorization: Api-Token token' \ -X GET "https://xxxxxx.live.dynatrace.com/api/v1/entity/infrastructure/hosts"
 
 		String queryURL = getAPIUrlV1() + "/entity/infrastructure/hosts/"+hostID;
 		
@@ -333,15 +337,17 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonArray getHostProcesses(String hostID, long startTimestamp, long endTimestamp) {
+	public JsonArray getHostProcesses(String hostID, Long startTimestamp, Long endTimestamp) {
 		// curl -H 'Authorization: Api-Token token' \ -X GET "https://lpi31515.live.dynatrace.com/api/v1/entity/infrastructure/processes?startTimestamp=1604372880000&endTimestamp=1604588879160&host=HOST-1812428021FCE23D"
 
 		String queryURL = getAPIUrlV1() + "/entity/infrastructure/processes";
 		
 		HashMap<String,String> requestParams = new HashMap<>();
 		requestParams.put("host", hostID);
-		requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp));
-		requestParams.put("endTimestamp", endTimestamp+"");
+		if(startTimestamp != null && endTimestamp != null) {
+			requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp));
+			requestParams.put("endTimestamp", endTimestamp+"");
+		}
 		
 		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, requestParams, this.getTokenHeader());
 		
@@ -397,7 +403,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public static AutocompleteResult autocompleteMetrics(int environmentID, String searchValue, int limit)  {
+	public static AutocompleteResult autocompleteProcesses(int environmentID, String searchValue, int limit, String hostID) {
 		
 		if(searchValue.length() < 3) {
 			return null;
@@ -407,7 +413,48 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		searchValue = searchValue.toLowerCase();
 		
-		JsonArray metricsArray = environment.getAllMetrics();
+		JsonArray processArray = environment.getHostProcesses(hostID,null,null);
+		if(processArray == null) { return new AutocompleteResult();}
+		
+		AutocompleteList suggestions = new AutocompleteList();
+		for(int i = 0; i < processArray.size(); i++) {
+		
+			JsonObject currentProcessObject = processArray.get(i).getAsJsonObject();
+			String processInstanceID = currentProcessObject.get("entityId").getAsString();
+			String displayName = currentProcessObject.get("displayName").getAsString();
+			String discoveredName = currentProcessObject.get("discoveredName").getAsString();
+
+			if(processInstanceID.toLowerCase().contains(searchValue)
+			|| displayName.toLowerCase().contains(searchValue)
+			|| discoveredName.toLowerCase().contains(searchValue)) {
+				
+				suggestions.addItem(processInstanceID, displayName, 
+						"<b>Executables: </b>"+currentProcessObject.get("metadata").getAsJsonObject().get("executables").toString());
+				
+				if(suggestions.getItems().size() == limit) {
+					break;
+				}
+			}
+			
+		}
+		
+		return new AutocompleteResult(suggestions);
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public static AutocompleteResult autocompleteMetrics(int environmentID, String searchValue, int limit, String entityType)  {
+		
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentID);
+		
+		searchValue = searchValue.toLowerCase();
+		
+		JsonArray metricsArray = environment.getMetricsForType(entityType);
 		
 		if(metricsArray == null) { return new AutocompleteResult();}
 		
