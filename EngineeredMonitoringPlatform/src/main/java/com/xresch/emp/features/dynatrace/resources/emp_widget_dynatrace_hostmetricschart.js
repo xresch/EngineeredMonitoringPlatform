@@ -16,20 +16,36 @@
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					
 					var settings = widgetObject.JSON_SETTINGS;				
-					
+					 
 					//---------------------------------
 					// Check for Data and Errors
-					if(CFW.utils.isNullOrEmpty(data.payload) || typeof data.payload == 'string' || data.payload.length == null){
+					if(CFW.utils.isNullOrEmpty(data.payload) || typeof data.payload == 'string'){
 						callback(widgetObject, '');
 						return;
 					}
 					
+					//---------------------------------
+					// Prepare data
+					console.log(data.payload);
+					dataToRender = [];
+					var metrics = data.payload.result;
+					for(let i = 0; i < metrics.length; i++ ){
+						let currentMetric = metrics[i];
+						let dataset = {
+								metric: 	 currentMetric.metricId.replace('builtin:', ''),
+								xvalues:	 currentMetric.data[0].timestamps,
+								yvalues:	 currentMetric.data[0].values,
+						}
+						
+						dataToRender.push(dataset);
+					}
+					
 					//---------------------------
 					// Render Settings
-					var dataToRender = {
-						data: data.payload,
+					var renderParams = {
+						data: dataToRender,
 						//visiblefields: ["entityId", "displayName", "discoveredName", "tags", "osType", "osArchitecture", "osVersion", "cpuCores", "ipAddresses", "logicalCpuCores","monitoringMode","networkZoneId", "agentVersion","consumedHostUnits", "bitness", "oneAgentCustomHostName" ],
-						//titlefields: ['displayName'], 
+						titlefields: ['metric'], 
 						titleformat: '{0}', 
 						customizers:{
 							tags: function(record, value) {  return JSON.stringify(value); },
@@ -37,15 +53,25 @@
 							agentVersion: function(record, value) {  return JSON.stringify(value); },
 						},
 						rendererSettings:{
-							table: { verticalize: true, narrow: true, filterable: false}
+							chart: {
+								//charttype: settings.chart_type.toLowerCase(),
+								datamode: 'arrays',
+								xfield: 'xvalues',
+								yfield: 'yvalues',
+								//stacked: settings.stacked,
+								//showlegend: settings.show_legend,
+								//ymin: settings.ymin,
+								//ymax: settings.ymax,
+								//pointradius: settings.pointradius,
+							}
 							
 					}};
 					
 
 					//--------------------------
 					// Render Widget
-					var renderer = CFW.render.getRenderer('json');
-					callback(widgetObject, renderer.render(dataToRender));
+					var renderer = CFW.render.getRenderer('chart');
+					callback(widgetObject, renderer.render(renderParams));
 				});
 			},
 			

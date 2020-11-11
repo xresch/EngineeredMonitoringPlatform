@@ -119,8 +119,7 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 		}
 		
 		String metricsSelector = String.join(",", metricsObject.keySet());
-		System.out.println("metricsString: "+metricsSelector);
-		
+
 		//---------------------------------
 		// Get Environment
 		JsonElement environmentElement = settings.get("environment");
@@ -142,14 +141,8 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Fetch Data
-		JsonObject queryResult = environment.queryMetrics("HOST", hostID, earliest, latest, metricsSelector);
-		JsonArray array = new JsonArray();
-
-		if(queryResult != null) {
-			array.add(queryResult);
-		}
-		
-		response.getContent().append(CFW.JSON.toJSON(array));	
+		JsonObject queryResult = environment.queryMetrics("HOST", hostID, earliest, latest, metricsSelector);		
+		response.getContent().append(CFW.JSON.toJSON(queryResult));	
 	}
 	
 	public void createSampleData(JSONResponse response) { 
