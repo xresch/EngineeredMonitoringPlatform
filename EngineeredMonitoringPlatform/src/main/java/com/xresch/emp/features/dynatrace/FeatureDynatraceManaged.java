@@ -33,6 +33,7 @@ public class FeatureDynatraceManaged extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetHostMetricsChart());
 		CFW.Registry.Widgets.add(new WidgetHostProcesses());
 		CFW.Registry.Widgets.add(new WidgetHostUnitConsumptionByTags());
+		CFW.Registry.Widgets.add(new WidgetProcessEvents());
 		CFW.Registry.Widgets.add(new WidgetProcessMetricsChart());
 		//----------------------------------
 		// Register Manual Page

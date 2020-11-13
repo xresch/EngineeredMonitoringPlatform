@@ -1,0 +1,82 @@
+[
+	{
+		"eventId": -844182604072360977,
+		"startTime": 1605197290000,
+		"endTime": 1605197300000,
+		"entityId": "PROCESS_GROUP_INSTANCE-DE253DC9640EB5E7",
+		"entityName": "com.xresch.cfw._main._Main",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "PROCESS_RESTART",
+		"eventStatus": "OPEN",
+		"tags": [],
+		"id": "-844182604072360977_1605197290000",
+		"source": "builtin"
+	},
+	{
+		"eventId": 8528838337274087407,
+		"startTime": 1604647070000,
+		"endTime": 1604647080000,
+		"entityId": "PROCESS_GROUP_INSTANCE-DE253DC9640EB5E7",
+		"entityName": "com.xresch.cfw._main._Main",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "DEPLOYMENT_CHANGED_NEW",
+		"eventStatus": "OPEN",
+		"tags": [],
+		"id": "8528838337274087407_1604647070000",
+		"artifact": "C:\\Program Files\\Java\\jre1.8.0_191\\lib\\resources.jar\n",
+		"source": "builtin"
+	},
+	{
+		"eventId": -844182604072360977,
+		"startTime": 1604547070000,
+		"endTime": 1604547080000,
+		"entityId": "PROCESS_GROUP_INSTANCE-DE253DC9640EB5E7",
+		"entityName": "com.xresch.cfw._main._Main",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "PROCESS_RESTART",
+		"eventStatus": "CLOSED",
+		"tags": [],
+		"id": "-844182604072360977_1605197290000",
+		"source": "builtin"
+	},
+	{
+		"eventId": 8528838337274087407,
+		"startTime": 1604541070000,
+		"endTime": 1604541080000,
+		"entityId": "PROCESS_GROUP_INSTANCE-DE253DC9640EB5E7",
+		"entityName": "com.xresch.cfw._main._Main",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "DEPLOYMENT_CHANGED_NEW",
+		"eventStatus": "CLOSED",
+		"tags": [],
+		"id": "8528838337274087407_1604647070000",
+		"artifact": "C:\\Program Files\\Java\\jre1.8.0_191\\lib\\resources.jar\n",
+		"source": "builtin"
+	},	{
+		"eventId": -844182604072360977,
+		"startTime": 1604441070000,
+		"endTime": 1604441080000,
+		"entityId": "PROCESS_GROUP_INSTANCE-DE253DC9640EB5E7",
+		"entityName": "com.xresch.cfw._main._Main",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "PROCESS_RESTART",
+		"eventStatus": "CLOSED",
+		"tags": [],
+		"id": "-844182604072360977_1605197290000",
+		"source": "builtin"
+	},
+	{
+		"eventId": 8528838337274087407,
+		"startTime": 1604421070000,
+		"endTime": 1604421080000,
+		"entityId": "PROCESS_GROUP_INSTANCE-DE253DC9640EB5E7",
+		"entityName": "com.xresch.cfw._main._Main",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "DEPLOYMENT_CHANGED_NEW",
+		"eventStatus": "CLOSED",
+		"tags": [],
+		"id": "8528838337274087407_1604647070000",
+		"artifact": "C:\\Program Files\\Java\\jre1.8.0_191\\lib\\resources.jar\n",
+		"source": "builtin"
+	}
+]

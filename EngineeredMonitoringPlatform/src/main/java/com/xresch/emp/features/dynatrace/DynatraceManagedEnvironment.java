@@ -173,7 +173,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		if(duration <= (MILLIS_1_DAY * maxDays) ) {
 			return startTimestamp+"";
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatrace widget support a maximum timerange of "+maxDays+" days(latest time - 3 days is shown).");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatrace Widget: Time range adjusted to "+maxDays+" days(latest time - 3 days).");
 			return (endTimestamp - (MILLIS_1_DAY * maxDays) )+"";
 		}
 	}

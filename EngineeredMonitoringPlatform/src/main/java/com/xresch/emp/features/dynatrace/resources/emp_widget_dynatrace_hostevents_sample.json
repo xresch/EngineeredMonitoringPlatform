@@ -1,871 +1,164 @@
 [
 	{
-		"entityId": "PROCESS_GROUP_INSTANCE-865D336ACE55BAA3",
-		"displayName": "Citrix Common",
-		"discoveredName": "Citrix Common",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-38CC13D29C95524B"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"executables": [
-				"CDViewer.exe"
-			],
-			"executablePaths": [
-				"C:\\PROGRAM FILES (X86)\\CITRIX\\ICA CLIENT\\CDVIEWER.EXE"
-			]
-		},
-		"softwareTechnologies": [
+		"eventId": -8173885406251234492,
+		"startTime": 1605270840000,
+		"endTime": -1,
+		"entityId": "HOST-CE750C61B2C958B3",
+		"entityName": "testmachine-VirtualBox",
+		"severityLevel": "RESOURCE_CONTENTION",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "CPU_SATURATED",
+		"eventStatus": "OPEN",
+		"tags": [
 			{
-				"type": "CITRIX",
-				"edition": null,
-				"version": null
+				"context": "ENVIRONMENT",
+				"key": "acmeapp"
 			},
 			{
-				"type": "CLR",
-				"edition": "FullCLR",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "test"
 			},
 			{
-				"type": "CITRIX_COMMON",
-				"edition": null,
-				"version": null
+				"context": "ENVIRONMENT",
+				"key": "linux"
+			}
+		],
+		"id": "-8173885406251234492_1605270840000",
+		"source": "builtin"
+	},
+	{
+		"eventId": 5903172189996147197,
+		"startTime": 1605263529207,
+		"endTime": -1,
+		"entityId": "HOST-CE750C61B2C958B3",
+		"entityName": "testmachine-VirtualBox",
+		"severityLevel": "AVAILABILITY",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "CONNECTION_LOST",
+		"eventStatus": "OPEN",
+		"tags": [
+			{
+				"context": "ENVIRONMENT",
+				"key": "acmeapp"
 			},
 			{
-				"type": "DOTNET",
-				"edition": ".NET Framework",
-				"version": "4.8.4180.0"
-			}
-		],
-		"bitness": "32bit",
-		"monitoringState": {
-			"actualMonitoringState": "ON",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-FDC6860327B8578B",
-		"displayName": "DolbyDAX*API.exe",
-		"discoveredName": "DolbyDAX*API.exe",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-1E7BE20C37210CD2"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"C:\\Program\\ Files\\Dolby\\Dolby\\ DAX2\\DAX2_API\\DolbyDAX2API.exe"
-			],
-			"executables": [
-				"DolbyDAX*API.exe"
-			],
-			"executablePaths": [
-				"C:/Program Files/Dolby/Dolby DAX*/DAX*_API/DolbyDAX*API.exe",
-				"C:\\PROGRAM FILES\\DOLBY\\DOLBY DAX2\\DAX2_API\\DOLBYDAX2API.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "CLR",
-				"edition": "FullCLR",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "test"
 			},
 			{
-				"type": "DOTNET",
-				"edition": ".NET Framework",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "linux"
 			}
 		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "OFF",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
+		"id": "5903172189996147197_1605263529207",
+		"source": "builtin"
 	},
 	{
-		"entityId": "PROCESS_GROUP_INSTANCE-B348AFEEBE2842BB",
-		"displayName": "Google Chrome",
-		"discoveredName": "Google Chrome",
-		"firstSeenTimestamp": 1604586840000,
-		"lastSeenTimestamp": 1604915040000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-1DB7168BDCE9CE4B"
-			],
-			"isNetworkClientOf": [
-				"PROCESS_GROUP_INSTANCE-DE253DC9640EB5E7"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"executables": [
-				"chrome.exe"
-			],
-			"executablePaths": [
-				"C:\\PROGRAM FILES (X86)\\GOOGLE\\CHROME\\APPLICATION\\CHROME.EXE"
-			]
-		},
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "ON",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-6B81B5E5D15C66C7",
-		"displayName": "Lenovo.Modern.ImController.PluginHost.CompanionApp.exe",
-		"discoveredName": "Lenovo.Modern.ImController.PluginHost.CompanionApp.exe",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604914980000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-C2DDA28E214A3276"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"-name 07c9790c-b7a2-4f69-b402-5600f43e0d50 -runas -pluginName LenovoWiFiSecurityPlugin -pluginVersion 2.1.0.68"
-			],
-			"executables": [
-				"Lenovo.Modern.ImController.PluginHost.CompanionApp.exe"
-			],
-			"executablePaths": [
-				"C:/WINDOWS/Lenovo/iMController/PluginHost*/Lenovo.Modern.ImController.PluginHost.CompanionApp.exe",
-				"C:\\WINDOWS\\LENOVO\\IMCONTROLLER\\PLUGINHOST86\\LENOVO.MODERN.IMCONTROLLER.PLUGINHOST.COMPANIONAPP.EXE"
-			]
-		},
-		"softwareTechnologies": [
+		"eventId": -7900151206067845753,
+		"startTime": 1605262860000,
+		"endTime": 1605263160000,
+		"entityId": "HOST-CE750C61B2C958B3",
+		"entityName": "testmachine-VirtualBox",
+		"severityLevel": "RESOURCE_CONTENTION",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "CPU_SATURATED",
+		"eventStatus": "CLOSED",
+		"tags": [
 			{
-				"type": "CLR",
-				"edition": "FullCLR",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "acmeapp"
 			},
 			{
-				"type": "SQLITE",
-				"edition": null,
-				"version": null
+				"context": "ENVIRONMENT",
+				"key": "test"
 			},
 			{
-				"type": "DOTNET",
-				"edition": ".NET Framework",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "linux"
 			}
 		],
-		"bitness": "32bit",
-		"monitoringState": {
-			"actualMonitoringState": "OFF",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
+		"id": "-7900151206067845753_1605262860000",
+		"source": "builtin"
 	},
 	{
-		"entityId": "PROCESS_GROUP_INSTANCE-91CB90E57934197F",
-		"displayName": "Lenovo.Modern.ImController.PluginHost.Device.exe",
-		"discoveredName": "Lenovo.Modern.ImController.PluginHost.Device.exe",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604914980000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-FC8DF2CD8216D02B"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"-name ed9f8094-37e8-465b-8b8f-c0c2a3e695c7 -runas -pluginName GenericMessagingPlugin -pluginVersion 3.1.0.156"
-			],
-			"executables": [
-				"Lenovo.Modern.ImController.PluginHost.Device.exe"
-			],
-			"executablePaths": [
-				"C:/WINDOWS/Lenovo/iMController/PluginHost*/Lenovo.Modern.ImController.PluginHost.Device.exe",
-				"C:\\WINDOWS\\LENOVO\\IMCONTROLLER\\PLUGINHOST86\\LENOVO.MODERN.IMCONTROLLER.PLUGINHOST.DEVICE.EXE"
-			]
-		},
-		"softwareTechnologies": [
+		"eventId": 3417631722524741235,
+		"startTime": 1605035109207,
+		"endTime": 1605078365296,
+		"entityId": "HOST-CE750C61B2C958B3",
+		"entityName": "testmachine-VirtualBox",
+		"severityLevel": "AVAILABILITY",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "CONNECTION_LOST",
+		"eventStatus": "CLOSED",
+		"tags": [
 			{
-				"type": "CLR",
-				"edition": "FullCLR",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "acmeapp"
 			},
 			{
-				"type": "DOTNET",
-				"edition": ".NET Framework",
-				"version": "4.8.4180.0"
-			}
-		],
-		"bitness": "32bit",
-		"monitoringState": {
-			"actualMonitoringState": "OFF",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-A17F94DA54F25440",
-		"displayName": "Lenovo.Modern.ImController.PluginHost.SettingsApp.exe",
-		"discoveredName": "Lenovo.Modern.ImController.PluginHost.SettingsApp.exe",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604914980000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-30D98EFF08C592CB"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"-name 3b551446-7c7f-400e-a768-42e71506fddf -runas -pluginName DolbyAudioPlugin -pluginVersion 1.2.239.14"
-			],
-			"executables": [
-				"Lenovo.Modern.ImController.PluginHost.SettingsApp.exe"
-			],
-			"executablePaths": [
-				"C:/WINDOWS/Lenovo/iMController/PluginHost/Lenovo.Modern.ImController.PluginHost.SettingsApp.exe",
-				"C:\\WINDOWS\\LENOVO\\IMCONTROLLER\\PLUGINHOST\\LENOVO.MODERN.IMCONTROLLER.PLUGINHOST.SETTINGSAPP.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "CLR",
-				"edition": "FullCLR",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "test"
 			},
 			{
-				"type": "DOTNET",
-				"edition": ".NET Framework",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "linux"
 			}
 		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "OFF",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
+		"id": "3417631722524741235_1605035109207",
+		"source": "builtin"
 	},
 	{
-		"entityId": "PROCESS_GROUP_INSTANCE-4D0DAE0C4037D79A",
-		"displayName": "Lenovo.Modern.ImController.exe",
-		"discoveredName": "Lenovo.Modern.ImController.exe",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-5BD23889E7435216"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"C:\\Windows\\Lenovo\\ImController\\Service\\Lenovo.Modern.ImController.exe"
-			],
-			"executables": [
-				"Lenovo.Modern.ImController.exe"
-			],
-			"executablePaths": [
-				"C:/Windows/Lenovo/ImController/Service/Lenovo.Modern.ImController.exe",
-				"C:\\WINDOWS\\LENOVO\\IMCONTROLLER\\SERVICE\\LENOVO.MODERN.IMCONTROLLER.EXE"
-			]
-		},
-		"softwareTechnologies": [
+		"eventId": -5142297063499129441,
+		"startTime": 1604989080000,
+		"endTime": 1604990040000,
+		"entityId": "HOST-CE750C61B2C958B3",
+		"entityName": "testmachine-VirtualBox",
+		"severityLevel": "RESOURCE_CONTENTION",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "CPU_SATURATED",
+		"eventStatus": "CLOSED",
+		"tags": [
 			{
-				"type": "CLR",
-				"edition": "FullCLR",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "acmeapp"
 			},
 			{
-				"type": "DOTNET",
-				"edition": ".NET Framework",
-				"version": "4.8.4180.0"
-			}
-		],
-		"bitness": "32bit",
-		"monitoringState": {
-			"actualMonitoringState": "OFF",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-623FCF147FED42C3",
-		"displayName": "OneAgent log analytics",
-		"discoveredName": "OneAgent log analytics",
-		"firstSeenTimestamp": 1604586780000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-54A8B0B75D36E463"
-			],
-			"isNetworkClientOf": [
-				"PROCESS_GROUP_INSTANCE-C6E8D37133BC12B1"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"C:\\Program\\ Files\\dynatrace\\oneagent\\agent\\lib64\\oneagentloganalytics.exe -Dcom.compuware.apm.WatchDogPort=50003 -Dcom.compuware.apm.WatchDogTimeout=900"
-			],
-			"executables": [
-				"oneagentloganalytics.exe"
-			],
-			"executablePaths": [
-				"C:/Program Files/dynatrace/oneagent/agent/lib*/oneagentloganalytics.exe",
-				"C:\\PROGRAM FILES\\DYNATRACE\\ONEAGENT\\AGENT\\LIB64\\ONEAGENTLOGANALYTICS.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "APMNG",
-				"edition": null,
-				"version": null
-			}
-		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "ON",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		},
-		"agentVersions": [
-			{
-				"major": 1,
-				"minor": 203,
-				"revision": 188,
-				"timestamp": "20201030-080220",
-				"sourceRevision": ""
-			}
-		]
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-3675464A5D41F6E2",
-		"displayName": "OneAgent monitoring extensions",
-		"discoveredName": "OneAgent monitoring extensions",
-		"firstSeenTimestamp": 1604586780000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-4F6C4B7F4305AFB7"
-			],
-			"isNetworkClientOf": [
-				"PROCESS_GROUP_INSTANCE-C6E8D37133BC12B1"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"oneagentplugin.exe -Dcom.compuware.apm.WatchDogPort=50002 -Dcom.compuware.apm.WatchDogTimeout=900"
-			],
-			"executables": [
-				"oneagentplugin.exe"
-			],
-			"executablePaths": [
-				"C:/Program Files/dynatrace/oneagent/agent/lib*/oneagentplugin.exe",
-				"C:\\PROGRAM FILES\\DYNATRACE\\ONEAGENT\\AGENT\\LIB64\\ONEAGENTPLUGIN.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "APMNG",
-				"edition": null,
-				"version": null
-			}
-		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "ON",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-2FBA0A4B6B7707EB",
-		"displayName": "OneAgent network monitoring",
-		"discoveredName": "OneAgent network monitoring",
-		"firstSeenTimestamp": 1604586780000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-55BB99EBACB51463"
-			],
-			"isNetworkClientOf": [
-				"PROCESS_GROUP_INSTANCE-C6E8D37133BC12B1"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"executables": [
-				"oneagentnetwork.exe"
-			],
-			"executablePaths": [
-				"C:\\PROGRAM FILES\\DYNATRACE\\ONEAGENT\\AGENT\\LIB64\\ONEAGENTNETWORK.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "APMNG",
-				"edition": null,
-				"version": null
-			}
-		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "ON",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-C6E8D37133BC12B1",
-		"displayName": "OneAgent system monitoring",
-		"discoveredName": "OneAgent system monitoring",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-3AD9FB79C914520C"
-			]
-		},
-		"toRelationships": {
-			"isNetworkClientOf": [
-				"PROCESS_GROUP_INSTANCE-623FCF147FED42C3",
-				"PROCESS_GROUP_INSTANCE-2FBA0A4B6B7707EB",
-				"PROCESS_GROUP_INSTANCE-3675464A5D41F6E2"
-			]
-		},
-		"metadata": {
-			"executables": [
-				"oneagentwatchdog.exe"
-			],
-			"executablePaths": [
-				"C:\\PROGRAM FILES\\DYNATRACE\\ONEAGENT\\AGENT\\LIB64\\ONEAGENTWATCHDOG.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "APMNG",
-				"edition": null,
-				"version": null
-			}
-		],
-		"listenPorts": [
-			50000,
-			50001,
-			50002,
-			50003
-		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "ON",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		},
-		"agentVersions": [
-			{
-				"major": 1,
-				"minor": 203,
-				"revision": 188,
-				"timestamp": "20201030-080220",
-				"sourceRevision": ""
-			}
-		]
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-70E3AF2B55EC7C9F",
-		"displayName": "OneApp.IGCC.WinService.exe",
-		"discoveredName": "OneApp.IGCC.WinService.exe",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-35AB318688988A51"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"C:\\Windows\\System32\\DriverStore\\FileRepository\\igcc_dch.inf_amd64_dc7a0fe3ada1cbf5\\OneApp.IGCC.WinService.exe"
-			],
-			"executables": [
-				"OneApp.IGCC.WinService.exe"
-			],
-			"executablePaths": [
-				"C:/Windows/System*/DriverStore/FileRepository/igcc_dch.inf_amd*_*/OneApp.IGCC.WinService.exe",
-				"C:\\WINDOWS\\SYSTEM32\\DRIVERSTORE\\FILEREPOSITORY\\IGCC_DCH.INF_AMD64_DC7A0FE3ADA1CBF5\\ONEAPP.IGCC.WINSERVICE.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "CLR",
-				"edition": "FullCLR",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "test"
 			},
 			{
-				"type": "DOTNET",
-				"edition": ".NET Framework",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "linux"
 			}
 		],
-		"listenPorts": [
-			808
-		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "OFF",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
+		"id": "-5142297063499129441_1604989080000",
+		"source": "builtin"
 	},
 	{
-		"entityId": "PROCESS_GROUP_INSTANCE-BC7432138656FD65",
-		"displayName": "Silk Performer 20.0 File",
-		"discoveredName": "Silk Performer 20.0 File",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-1DC901848DFBF106"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"executables": [
-				"sgLauncher.exe"
-			],
-			"executablePaths": [
-				"C:\\PROGRAM FILES (X86)\\SILK\\SILK LAUNCHER SERVICE\\SGLAUNCHER.EXE"
-			]
-		},
-		"listenPorts": [
-			19200,
-			19201
-		],
-		"bitness": "32bit",
-		"monitoringState": {
-			"100 16233    0 16233    0     0  66802      0 --:--:-- --:--:-- --:--:-- 67078quired": false
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-9EF41360054F5AEE",
-		"displayName": "SmartAudio.exe",
-		"discoveredName": "SmartAudio.exe",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-FEE919DF099E2D76"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"C:\\Program\\ Files\\CONEXANT\\SAII\\SmartAudio.exe /c"
-			],
-			"executables": [
-				"SmartAudio.exe"
-			],
-			"executablePaths": [
-				"C:/Program Files/CONEXANT/SAII/SmartAudio.exe",
-				"C:\\PROGRAM FILES\\CONEXANT\\SAII\\SMARTAUDIO.EXE"
-			]
-		},
-		"softwareTechnologies": [
+		"eventId": 4648667782156286376,
+		"startTime": 1604947689207,
+		"endTime": 1604989121722,
+		"entityId": "HOST-CE750C61B2C958B3",
+		"entityName": "testmachine-VirtualBox",
+		"severityLevel": "AVAILABILITY",
+		"impactLevel": "INFRASTRUCTURE",
+		"eventType": "CONNECTION_LOST",
+		"eventStatus": "CLOSED",
+		"tags": [
 			{
-				"type": "CLR",
-				"edition": "FullCLR",
-				"version": "4.8.4180.0"
+				"context": "ENVIRONMENT",
+				"key": "acmeapp"
 			},
 			{
-				"type": "DOTNET",
-				"edition": ".NET Framework",
-				"version": "4.8.4180.0"
-			}
-		],
-		"listenPorts": [
-			1596
-		],
-		"bitness": "32bit",
-		"monitoringState": {
-			"actualMonitoringState": "OFF",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-30ADC906DE53298A",
-		"displayName": "Windows System",
-		"discoveredName": "Windows System",
-		"firstSeenTimestamp": 1604586660000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-09875E82E2FB98FD"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"executables": [
-				"System",
-				"conhost.exe"
-			],
-			"executablePaths": [
-				"C:\\WINDOWS\\SYSTEM32\\CONHOST.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "WINDOWS_SYSTEM",
-				"edition": null,
-				"version": null
+				"context": "ENVIRONMENT",
+				"key": "test"
 			},
 			{
-				"type": "SQLITE",
-				"edition": null,
-				"version": null
+				"context": "ENVIRONMENT",
+				"key": "linux"
 			}
 		],
-		"listenPorts": [
-			1536,
-			1537,
-			1538,
-			1539,
-			1540,
-			135,
-			1544,
-			9001,
-			139,
-			5357,
-			5040,
-			445
-		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "ON",
-			"expectedMonitoringState": "OFF",
-			"restartRequired": false
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-221B5F78EA3A8B46",
-		"displayName": "backgroundTaskHost.exe",
-		"discoveredName": "backgroundTaskHost.exe",
-		"firstSeenTimestamp": 1604587320000,
-		"lastSeenTimestamp": 1604914190265,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-A8E1131173317753"
-			]
-		},
-		"toRelationships": {
-			
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"C:\\Windows\\System32\\backgroundTaskHost.exe -ServerName:Microsoft.MicrosoftOfficeHub.AppX54h2e8jwdm50fj5ha8987vz1etpx7czd.mca"
-			],
-			"executables": [
-				"backgroundTaskHost.exe"
-			],
-			"executablePaths": [
-				"C:/Windows/System*/backgroundTaskHost.exe",
-				"C:\\WINDOWS\\SYSTEM32\\BACKGROUNDTASKHOST.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "CLR",
-				"edition": "FullCLR",
-				"version": "4.8.4180.0"
-			},
-			{
-				"type": "DOTNET",
-				"edition": ".NET Framework",
-				"version": "4.8.4180.0"
-			}
-		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "OFF",
-			"expectedMonitoringState": "ON",
-			"restartRequired": true
-		}
-	},
-	{
-		"entityId": "PROCESS_GROUP_INSTANCE-DE253DC9640EB5E7",
-		"displayName": "com.xresch.cfw._main._Main",
-		"discoveredName": "com.xresch.cfw._main._Main",
-		"firstSeenTimestamp": 1604586960000,
-		"lastSeenTimestamp": 1604915160000,
-		"tags": [],
-		"fromRelationships": {
-			"isProcessOf": [
-				"HOST-1812428021FCE23D"
-			],
-			"isInstanceOf": [
-				"PROCESS_GROUP-C6377F4945F257DA"
-			]
-		},
-		"toRelationships": {
-			"runsOnProcessGroupInstance": [
-				"SERVICE-0F7FD672A833CEAF",
-				"SERVICE-3E406113057BA711",
-				"SERVICE-7E3A5C03AC2A12EF",
-				"SERVICE-42B6CCC7E8071D73",
-				"SERVICE-197990259FFA1A66"
-			],
-			"isNetworkClientOf": [
-				"PROCESS_GROUP_INSTANCE-B348AFEEBE2842BB"
-			]
-		},
-		"metadata": {
-			"commandLineArgs": [
-				"java -cp .\\lib\\*;.\\extensions\\* com.xresch.cfw._main._Main"
-			],
-			"executables": [
-				"java.exe"
-			],
-			"javaMainClasses": [
-				"com.xresch.cfw._main._Main"
-			],
-			"executablePaths": [
-				"C:/Program Files (x*)/Common Files/Oracle/Java/javapath/java.exe",
-				"C:\\PROGRAM FILES (X86)\\COMMON FILES\\ORACLE\\JAVA\\JAVAPATH_TARGET_60151171\\JAVA.EXE"
-			]
-		},
-		"softwareTechnologies": [
-			{
-				"type": "JETTY",
-				"edition": "HTTP Server",
-				"version": "9.4.31.v20200723"
-			},
-			{
-				"type": "JAVA",
-				"edition": "Oracle HotSpot",
-				"version": "1.8.0_191"
-			}
-		],
-		"listenPorts": [
-			8888,
-			8889,
-			443
-		],
-		"bitness": "64bit",
-		"monitoringState": {
-			"actualMonitoringState": "ON",
-			"expectedMonitoringState": "ON",
-			"restartRequired": false
-		},
-		"agentVersions": [
-			{
-				"major": 1,
-				"minor": 203,
-				"revision": 188,
-				"timestamp": "20201030-080220",
-				"sourceRevision": ""
-			}
-		]
+		"id": "4648667782156286376_1604947689207",
+		"source": "builtin"
 	}
 ]

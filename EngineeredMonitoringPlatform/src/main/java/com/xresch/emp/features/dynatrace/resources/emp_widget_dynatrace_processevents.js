@@ -4,12 +4,12 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_dynatrace_hostevents",
+	CFW.dashboard.registerWidget("emp_dynatrace_processevents",
 		{
 			category: DYNATRACE_WIDGET_CATEGORY,
 			menuicon: "fas fa-bolt",
-			menulabel: CFWL('emp_widget_dynatrace_hostevents', "Host Events"),
-			description: CFWL('emp_widget_dynatrace_hostevents_desc', "Lists the events for the selected host, occurred during the selected time frame."), 
+			menulabel: CFWL('emp_widget_dynatrace_processevents', "Process Events"),
+			description: CFWL('emp_widget_dynatrace_processevents_desc', "Lists the events for the selected process, occurred during the selected time frame."), 
 			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, callback) {
 					

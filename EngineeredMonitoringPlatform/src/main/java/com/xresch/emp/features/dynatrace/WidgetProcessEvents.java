@@ -1,4 +1,4 @@
-package com.xresch.emp.features.prometheus;
+package com.xresch.emp.features.dynatrace;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +13,6 @@ import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
-import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
@@ -23,33 +21,23 @@ import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
-public class WidgetInstantThreshold extends WidgetDefinition {
+public class WidgetProcessEvents extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(WidgetInstantThreshold.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetProcessEvents.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_prometheus_instant_threshold";}
+	public String getWidgetType() {return "emp_dynatrace_processevents";}
 		
 
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_spm_environment!}")
-						.setDescription("{!cfw_widget_spm_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
-				)
-				.addField(CFWField.newString(FormFieldType.TEXT, "query")
-						.setLabel("{!emp_widget_prometheus_instant_query!}")
-						.setDescription("{!emp_widget_prometheus_instant_query_desc!}")
-				)
-				.addField(CFWField.newString(FormFieldType.TEXT, "suffix")
-						.setLabel("{!emp_widget_prometheus_suffix!}")
-						.setDescription("{!emp_widget_prometheus_suffix_desc!}")
-				)
+				.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
 				
-				.addAllFields(WidgetSettingsFactory.createThresholdFields())
-
-				.addField(WidgetSettingsFactory.createDisplayAsSelect(new String[]{"Tiles", "Panels", "Table"}, "Tiles"))
+				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
+				
+				.addField(DynatraceWidgetSettingsFactory.createSingleProcessGroupSelectorField())
+				
+				.addField(WidgetSettingsFactory.createDisplayAsSelect(new String[]{"Tiles", "Table", "Panels", "Cards"}, "Panels"))
 				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
 				
@@ -74,13 +62,18 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 		}
 		
 		//---------------------------------
-		// Resolve Query
-		JsonElement queryElement = settings.get("query");
-		if(queryElement.isJsonNull()) {
+		// Resolve HostID
+		JsonElement processElement = settings.get("JSON_PROCESS");
+		if(processElement == null || processElement.isJsonNull()) {
 			return;
 		}
 		
-		String prometheusQuery = queryElement.getAsString();
+		JsonObject processObject = processElement.getAsJsonObject();
+		if(processObject.size() == 0) {
+			return;
+		}
+		
+		String processID = processObject.keySet().toArray(new String[]{})[0];
 		
 		//---------------------------------
 		// Get Environment
@@ -89,39 +82,35 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 			return;
 		}
 		
-		PrometheusEnvironment environment = PrometheusEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
+		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Prometheus Widget: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatace Process Events Widget: The chosen environment seems not configured correctly.");
 			return;
 		}
 	
 		//---------------------------------
 		// Timeframe
+		long earliest = settings.get("timeframe_earliest").getAsLong();
 		long latest = settings.get("timeframe_latest").getAsLong();
 		
 		//---------------------------------
 		// Fetch Data
-		JsonObject queryResult = environment.query(prometheusQuery, latest);
-		JsonArray array = new JsonArray();
+		JsonArray array = environment.getEventsForEntity(processID, earliest, latest);
 
-		if(queryResult != null) {
-			array.add(queryResult);
-		}
-		
 		response.getContent().append(CFW.JSON.toJSON(array));	
 	}
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.getContent().append(CFW.Files.readPackageResource(FeaturePrometheus.PACKAGE_RESOURCE, "emp_widget_prometheus_instant_threshold_sample.json") );
+		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_processevents_sample.json") );
 		
 	}
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeaturePrometheus.PACKAGE_RESOURCE, "emp_prometheus_commonFunctions.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeaturePrometheus.PACKAGE_RESOURCE, "emp_widget_prometheus_instant_threshold.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_dynatrace_commons.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_processevents.js") );
 		return array;
 	}
 
