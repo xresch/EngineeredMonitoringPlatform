@@ -77,6 +77,12 @@ function emp_dynatrace_renderEvents(widgetObject, data, callback){
 				hover: 		false,
 				filterable: false,
 			},
+			panels: {
+				narrow: 	true,
+			},
+			cards: {
+				narrow: 	true,
+			},
 			
 	}};
 	
