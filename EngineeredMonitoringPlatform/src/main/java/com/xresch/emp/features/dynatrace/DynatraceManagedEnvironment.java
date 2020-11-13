@@ -37,7 +37,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	private static Logger logger = CFWLog.getLogger(DynatraceManagedEnvironment.class.getName());
 	
 	public static final String SETTINGS_TYPE = "Dynatrace Managed Environment";
-	public static final long MILLIS_3_DAYS = 1000L * 60 * 60 * 24 * 3;
+	public static final long MILLIS_1_DAY = 1000L * 60 * 60 * 24 * 1;
 	
 	public enum PrometheusEnvironmentFields{
 		API_URL,
@@ -60,7 +60,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	private static final Cache<String, CFWHttpResponse> DYNATRACE_CACHE_30MIN = CFW.Caching.addCache("EMP Dynatrace Cache[30min]", 
 			CacheBuilder.newBuilder()
 				.initialCapacity(10)
-				.maximumSize(1000)
+				.maximumSize(100)
 				.expireAfterAccess(30, TimeUnit.MINUTES)
 		);
 			
@@ -164,16 +164,17 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	}
 	
 	
-	/************************************************************************************
+	/**
+	 * @param maxDays TODO**********************************************************************************
 	 * 
 	 ************************************************************************************/
-	public String getStartTimestampParam(long startTimestamp, long endTimestamp) {
+	public String getStartTimestampParam(long startTimestamp, long endTimestamp, int maxDays) {
 		long duration = endTimestamp - startTimestamp;
-		if(duration <= MILLIS_3_DAYS) {
+		if(duration <= (MILLIS_1_DAY * maxDays) ) {
 			return startTimestamp+"";
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatrace widgets support a maximum timerange of 3 days(latest time - 3 days is shown).");
-			return (endTimestamp - MILLIS_3_DAYS)+"";
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatrace widget support a maximum timerange of "+maxDays+" days(latest time - 3 days is shown).");
+			return (endTimestamp - (MILLIS_1_DAY * maxDays) )+"";
 		}
 	}
 
@@ -235,7 +236,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		HashMap<String,String> requestParams = new HashMap<>();
 		requestParams.put("includeDetails", "false");
 		if(startTimestamp != null && endTimestamp != null) {
-			requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp));
+			requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp, 3));
 			requestParams.put("endTimestamp", endTimestamp+"");
 		}
 				
@@ -319,7 +320,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		HashMap<String,String> requestParams = new HashMap<>();
 		requestParams.put("metricSelector", metricSelector);
-		requestParams.put("from", getStartTimestampParam(startTimestamp,endTimestamp));
+		requestParams.put("from", getStartTimestampParam(startTimestamp,endTimestamp, 3));
 		requestParams.put("to", endTimestamp+"");
 		requestParams.put("resolution", "120");
 		requestParams.put("entitySelector", "type("+entityType+"),entityId("+entityID+")");
@@ -360,6 +361,30 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
+	public JsonArray getEventsForEntity(String entityID, long startTimestamp, long endTimestamp) {
+		//curl -H 'Authorization: Api-Token ' -X GET "https://xxxxx.live.dynatrace.com/api/v1/events?entityId=HOST-18124265361FCE23D"
+
+		String queryURL = getAPIUrlV1() + "/events";
+		
+		HashMap<String,String> requestParams = new HashMap<>();
+		requestParams.put("entityId", entityID);
+		requestParams.put("from", getStartTimestampParam(startTimestamp,endTimestamp, 365*2));
+		requestParams.put("to", endTimestamp+"");
+		
+		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, requestParams, this.getTokenHeader());
+		if(queryResult != null) {			
+			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+			
+			if(payload.get("events") != null) {
+				return payload.get("events").getAsJsonArray();
+			}
+		}
+		return null;
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public JsonArray getHostProcesses(String hostID, Long startTimestamp, Long endTimestamp) {
 		// curl -H 'Authorization: Api-Token token' \ -X GET "https://lpi31515.live.dynatrace.com/api/v1/entity/infrastructure/processes?startTimestamp=1604372880000&endTimestamp=1604588879160&host=HOST-1812428021FCE23D"
 
@@ -368,7 +393,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		HashMap<String,String> requestParams = new HashMap<>();
 		requestParams.put("host", hostID);
 		if(startTimestamp != null && endTimestamp != null) {
-			requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp));
+			requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp, 3));
 			requestParams.put("endTimestamp", endTimestamp+"");
 		}
 		
