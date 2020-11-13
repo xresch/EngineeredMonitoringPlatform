@@ -320,7 +320,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		
 		HashMap<String,String> requestParams = new HashMap<>();
 		requestParams.put("metricSelector", metricSelector);
-		requestParams.put("from", getStartTimestampParam(startTimestamp,endTimestamp, 3));
+		requestParams.put("from", startTimestamp+"");
 		requestParams.put("to", endTimestamp+"");
 		requestParams.put("resolution", "120");
 		requestParams.put("entitySelector", "type("+entityType+"),entityId("+entityID+")");
