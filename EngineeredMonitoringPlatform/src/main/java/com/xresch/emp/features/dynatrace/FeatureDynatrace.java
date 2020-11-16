@@ -9,7 +9,7 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
  * @author Reto Scheiwiller, (c) Copyright 2019 
  * @license MIT-License
  **************************************************************************************************************/
-public class FeatureDynatraceManaged extends CFWAppFeature {
+public class FeatureDynatrace extends CFWAppFeature {
 	
 	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.dynatrace.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.dynatrace.resources";
@@ -24,7 +24,7 @@ public class FeatureDynatraceManaged extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Context Settings
-		CFW.Registry.ContextSettings.register(DynatraceManagedEnvironment.SETTINGS_TYPE, DynatraceManagedEnvironment.class);
+		CFW.Registry.ContextSettings.register(DynatraceEnvironment.SETTINGS_TYPE, DynatraceEnvironment.class);
     
 		//----------------------------------
 		// Register Widgets
@@ -47,7 +47,7 @@ public class FeatureDynatraceManaged extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-		DynatraceManagedEnvironmentManagement.initialize();
+		DynatraceEnvironmentManagement.initialize();
 	}
 
 	@Override

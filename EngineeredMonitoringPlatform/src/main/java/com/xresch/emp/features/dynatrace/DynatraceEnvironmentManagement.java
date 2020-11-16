@@ -11,16 +11,16 @@ import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
 
 
-public class DynatraceManagedEnvironmentManagement {
+public class DynatraceEnvironmentManagement {
 	
-	private static Logger logger = CFWLog.getLogger(DynatraceManagedEnvironmentManagement.class.getName());
+	private static Logger logger = CFWLog.getLogger(DynatraceEnvironmentManagement.class.getName());
 	
 	private static boolean isInitialized = false;
 
 	// Contains ContextSettings id and the associated database interface
-	private static HashMap<Integer, DynatraceManagedEnvironment> environments = new HashMap<Integer, DynatraceManagedEnvironment>();
+	private static HashMap<Integer, DynatraceEnvironment> environments = new HashMap<Integer, DynatraceEnvironment>();
 	
-	private DynatraceManagedEnvironmentManagement() {
+	private DynatraceEnvironmentManagement() {
 		// hide public constructor
 	}
 	/************************************************************************
@@ -29,12 +29,12 @@ public class DynatraceManagedEnvironmentManagement {
 	public static void initialize() {
 	
 		ContextSettingsChangeListener listener = 
-				new ContextSettingsChangeListener(DynatraceManagedEnvironment.SETTINGS_TYPE) {
+				new ContextSettingsChangeListener(DynatraceEnvironment.SETTINGS_TYPE) {
 			
 			@Override
 			public void onChange(AbstractContextSettings setting, boolean isNew) {
-				DynatraceManagedEnvironment env = (DynatraceManagedEnvironment)setting;
-				DynatraceManagedEnvironmentManagement.createEnvironment(env);
+				DynatraceEnvironment env = (DynatraceEnvironment)setting;
+				DynatraceEnvironmentManagement.createEnvironment(env);
 			}
 			
 			@Override
@@ -54,12 +54,12 @@ public class DynatraceManagedEnvironmentManagement {
 	 ************************************************************************/
 	private static void createEnvironments() {
 		// Clear environments
-		environments = new HashMap<Integer, DynatraceManagedEnvironment>();
+		environments = new HashMap<Integer, DynatraceEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(DynatraceManagedEnvironment.SETTINGS_TYPE);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(DynatraceEnvironment.SETTINGS_TYPE);
 
 		for(AbstractContextSettings settings : settingsArray) {
-			DynatraceManagedEnvironment current = (DynatraceManagedEnvironment)settings;
+			DynatraceEnvironment current = (DynatraceEnvironment)settings;
 			createEnvironment(current);
 			
 		}
@@ -68,7 +68,7 @@ public class DynatraceManagedEnvironmentManagement {
 	/************************************************************************
 	 * 
 	 ************************************************************************/
-	private static void createEnvironment(DynatraceManagedEnvironment environment) {
+	private static void createEnvironment(DynatraceEnvironment environment) {
 
 		environments.remove(environment.getDefaultObject().id());
 
@@ -89,7 +89,7 @@ public class DynatraceManagedEnvironmentManagement {
 		if(!isInitialized) { initialize(); }
 		LinkedHashMap<Integer,String> options = new LinkedHashMap<Integer,String>();
 		
-		for(DynatraceManagedEnvironment env : environments.values()) {
+		for(DynatraceEnvironment env : environments.values()) {
 			options.put(env.getDefaultObject().id(), env.getDefaultObject().name());
 		}
 		
@@ -99,7 +99,7 @@ public class DynatraceManagedEnvironmentManagement {
 	/************************************************************************
 	 * 
 	 ************************************************************************/
-	public static DynatraceManagedEnvironment getEnvironment(int id) {
+	public static DynatraceEnvironment getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
 		return environments.get(id);
 	}

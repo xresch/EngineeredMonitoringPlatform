@@ -32,11 +32,11 @@ import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
  * @author retos
  *
  */
-public class DynatraceManagedEnvironment extends AbstractContextSettings {
+public class DynatraceEnvironment extends AbstractContextSettings {
 	
-	private static Logger logger = CFWLog.getLogger(DynatraceManagedEnvironment.class.getName());
+	private static Logger logger = CFWLog.getLogger(DynatraceEnvironment.class.getName());
 	
-	public static final String SETTINGS_TYPE = "Dynatrace Managed Environment";
+	public static final String SETTINGS_TYPE = "Dynatrace Environment";
 	public static final long MILLIS_1_DAY = 1000L * 60 * 60 * 24 * 1;
 	
 	public enum PrometheusEnvironmentFields{
@@ -72,7 +72,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 			.setDescription("The apiToken used to access the prometheus instance.");
 	
 	
-	public DynatraceManagedEnvironment() {
+	public DynatraceEnvironment() {
 		initializeFields();
 	}
 		
@@ -112,7 +112,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		return apiUrl.getValue();
 	}
 	
-	public DynatraceManagedEnvironment apiURL(String value) {
+	public DynatraceEnvironment apiURL(String value) {
 		this.apiUrl.setValue(value);
 		return this;
 	}
@@ -121,7 +121,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 		return apiToken.getValue();
 	}
 	
-	public DynatraceManagedEnvironment apiToken(String value) {
+	public DynatraceEnvironment apiToken(String value) {
 		this.apiToken.setValue(value);
 		return this;
 	}
@@ -415,7 +415,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 			return null;
 		}
 		
-		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentID);
+		DynatraceEnvironment environment = DynatraceEnvironmentManagement.getEnvironment(environmentID);
 		
 		searchValue = searchValue.toLowerCase();
 		
@@ -457,7 +457,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 			return null;
 		}
 		
-		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentID);
+		DynatraceEnvironment environment = DynatraceEnvironmentManagement.getEnvironment(environmentID);
 		
 		searchValue = searchValue.toLowerCase();
 		
@@ -498,7 +498,7 @@ public class DynatraceManagedEnvironment extends AbstractContextSettings {
 			return null;
 		}
 		
-		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentID);
+		DynatraceEnvironment environment = DynatraceEnvironmentManagement.getEnvironment(environmentID);
 		
 		searchValue = searchValue.toLowerCase();
 		

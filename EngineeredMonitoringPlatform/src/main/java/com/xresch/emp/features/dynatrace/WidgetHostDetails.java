@@ -78,7 +78,7 @@ public class WidgetHostDetails extends WidgetDefinition {
 			return;
 		}
 		
-		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
+		DynatraceEnvironment environment = DynatraceEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatace Host Details Widget: The chosen environment seems not configured correctly.");
 			return;
@@ -99,15 +99,15 @@ public class WidgetHostDetails extends WidgetDefinition {
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostdetails_sample.json") );
+		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatrace.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostdetails_sample.json") );
 		
 	}
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_dynatrace_commons.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostdetails.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatrace.PACKAGE_RESOURCE, "emp_dynatrace_commons.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatrace.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostdetails.js") );
 		return array;
 	}
 

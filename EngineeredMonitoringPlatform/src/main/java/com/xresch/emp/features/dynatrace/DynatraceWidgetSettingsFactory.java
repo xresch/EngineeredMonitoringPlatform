@@ -22,7 +22,7 @@ public class DynatraceWidgetSettingsFactory {
 		return CFWField.newString(FormFieldType.SELECT, "environment")
 			.setLabel("{!cfw_widget_dynatrace_environment!}")
 			.setDescription("{!cfw_widget_dynatrace_environment_desc!}")
-			.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceManagedEnvironment.SETTINGS_TYPE));
+			.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceEnvironment.SETTINGS_TYPE));
 	}
 
 	/************************************************************************************
@@ -47,7 +47,7 @@ public class DynatraceWidgetSettingsFactory {
 							return null;
 						}
 						
-						return DynatraceManagedEnvironment.autocompleteHosts(Integer.parseInt(environment), searchValue, this.getMaxResults());
+						return DynatraceEnvironment.autocompleteHosts(Integer.parseInt(environment), searchValue, this.getMaxResults());
 					}
 				});
 	}
@@ -84,7 +84,7 @@ public class DynatraceWidgetSettingsFactory {
 						JsonObject hostObject = CFW.JSON.jsonStringToJsonElement(host).getAsJsonObject();
 						String hostID = hostObject.keySet().toArray(new String[]{})[0];
 						
-						return DynatraceManagedEnvironment.autocompleteProcesses(
+						return DynatraceEnvironment.autocompleteProcesses(
 								Integer.parseInt(environment), 
 								searchValue, 
 								this.getMaxResults(),hostID);
@@ -113,7 +113,7 @@ public class DynatraceWidgetSettingsFactory {
 							return null;
 						}
 						
-						return DynatraceManagedEnvironment.autocompleteMetrics(Integer.parseInt(environment), searchValue, this.getMaxResults());
+						return DynatraceEnvironment.autocompleteMetrics(Integer.parseInt(environment), searchValue, this.getMaxResults());
 					}
 				});
 	}

@@ -37,7 +37,7 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.TEXT, "tagsfilter")
 						.setLabel("{!emp_widget_dynatrace_tagsfilter!}")
 						.setDescription("{!emp_widget_dynatrace_tagsfilter_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceManagedEnvironment.SETTINGS_TYPE))
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceEnvironment.SETTINGS_TYPE))
 				)
 				
 				.addField(WidgetSettingsFactory.createSampleDataField())
@@ -65,7 +65,7 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 			return;
 		}
 		
-		DynatraceManagedEnvironment environment = DynatraceManagedEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
+		DynatraceEnvironment environment = DynatraceEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatace Host Processes Widget: The chosen environment seems not configured correctly.");
 			return;
@@ -85,15 +85,15 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostunitconsumptionbytags_sample.json") );
+		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatrace.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostunitconsumptionbytags_sample.json") );
 		
 	}
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_dynatrace_commons.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatraceManaged.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostunitconsumptionbytags.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatrace.PACKAGE_RESOURCE, "emp_dynatrace_commons.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatrace.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostunitconsumptionbytags.js") );
 		return array;
 	}
 
