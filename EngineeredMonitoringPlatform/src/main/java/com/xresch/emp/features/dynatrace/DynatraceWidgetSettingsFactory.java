@@ -60,7 +60,7 @@ public class DynatraceWidgetSettingsFactory {
 	 * 
 	 * @return
 	 ************************************************************************************/
-	public static CFWField<?> createSingleProcessGroupSelectorField(){
+	public static CFWField<?> createSingleProcessGroupInstanceSelectorField(){
 		
 		return CFWField.newTagsSelector("JSON_PROCESS")
 				.setLabel("{!emp_widget_dynatrace_processgroup!}")
@@ -86,7 +86,47 @@ public class DynatraceWidgetSettingsFactory {
 						JsonObject hostObject = CFW.JSON.jsonStringToJsonElement(host).getAsJsonObject();
 						String hostID = hostObject.keySet().toArray(new String[]{})[0];
 						
-						return DynatraceEnvironment.autocompleteProcesses(
+						return DynatraceEnvironment.autocompleteProcessGroupInstance(
+								Integer.parseInt(environment), 
+								searchValue, 
+								this.getMaxResults(),hostID);
+					}
+				});
+	}
+	
+	/************************************************************************************
+	 * Returns default process selector field to select a process of a specific host.
+	 * This field requires input from the field created by createSingleHostSelectorField();
+	 * 
+	 * @return
+	 ************************************************************************************/
+	public static CFWField<?> createSingleProcessGroupSelectorField(){
+		
+		return CFWField.newTagsSelector("JSON_PROCESS_GROUP")
+				.setLabel("{!emp_widget_dynatrace_processgroup!}")
+				.setDescription("{!emp_widget_dynatrace_processgroup_desc!}")
+				.addAttribute("maxTags", "1")
+				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+					
+					@Override
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+
+						String environment = request.getParameter("environment");
+						if(Strings.isNullOrEmpty(environment) ) {
+							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							return null;
+						}
+						
+						String host = request.getParameter("JSON_HOST");
+						if(Strings.isNullOrEmpty(host) || host.equals("{}")) {
+							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a host first.");
+							return null;
+						}
+						
+						JsonObject hostObject = CFW.JSON.jsonStringToJsonElement(host).getAsJsonObject();
+						String hostID = hostObject.keySet().toArray(new String[]{})[0];
+						
+						return DynatraceEnvironment.autocompleteProcessGroup(
 								Integer.parseInt(environment), 
 								searchValue, 
 								this.getMaxResults(),hostID);
@@ -123,7 +163,7 @@ public class DynatraceWidgetSettingsFactory {
 	/************************************************************************************
 	 * Returns default log selector field to select a single log for the specified host.
 	 * This field requires input from the field created by createSingleHostSelectorField();
-	 * @param entityType HOST or PROCESS_GROUP_INSTANCE
+	 * @param entityType HOST or PROCESS_GROUP
 	 * @return
 	 ************************************************************************************/
 	public static CFWField<?> createSingleLogSelectorField(EntityType entityType){
@@ -143,7 +183,7 @@ public class DynatraceWidgetSettingsFactory {
 							return null;
 						}
 						
-						String entityString = request.getParameter( (entityType == EntityType.HOST ? "JSON_HOST" : "JSON_PROCESS") );
+						String entityString = request.getParameter( (entityType == EntityType.HOST ? "JSON_HOST" : "JSON_PROCESS_GROUP") );
 						if(Strings.isNullOrEmpty(entityString) || entityString.equals("{}")) {
 							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a host or process first.");
 							return null;

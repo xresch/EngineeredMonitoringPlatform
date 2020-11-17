@@ -87,7 +87,7 @@ public class WidgetHostProcesses extends WidgetDefinition {
 		
 		//---------------------------------
 		// Fetch Data
-		JsonArray array = environment.getHostProcesses(hostID, earliest, latest);
+		JsonArray array = environment.getHostProcessGroupInstances(hostID, earliest, latest);
 
 		response.getContent().append(CFW.JSON.toJSON(array));	
 	}

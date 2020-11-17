@@ -19,6 +19,7 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.dynatrace.DynatraceEnvironment.EntityType;
 
 public class WidgetHostMetricsChart extends WidgetDefinition {
 
@@ -104,7 +105,7 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Fetch Data
-		JsonObject queryResult = environment.queryMetrics("HOST", hostID, earliest, latest, metricsSelector);		
+		JsonObject queryResult = environment.queryMetrics(EntityType.HOST, hostID, earliest, latest, metricsSelector);		
 		response.getContent().append(CFW.JSON.toJSON(queryResult));	
 	}
 	

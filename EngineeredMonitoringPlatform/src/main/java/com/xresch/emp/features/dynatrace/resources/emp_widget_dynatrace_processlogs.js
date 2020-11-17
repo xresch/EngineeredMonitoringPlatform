@@ -4,12 +4,12 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_dynatrace_hostlogs",
+	CFW.dashboard.registerWidget("emp_dynatrace_processlogs",
 		{
 			category: DYNATRACE_WIDGET_CATEGORY,
 			menuicon: "fas fa-file-signature",
-			menulabel: CFWL('emp_widget_dynatrace_hostlogs', "Host Logs"),
-			description: CFWL('emp_widget_dynatrace_hostlogs_desc', "List log entries for a specified host."), 
+			menulabel: CFWL('emp_widget_dynatrace_processlogs', "Process Logs"),
+			description: CFWL('emp_widget_dynatrace_processlogs_desc', "List log entries for a specified process."), 
 			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, callback) {
 					

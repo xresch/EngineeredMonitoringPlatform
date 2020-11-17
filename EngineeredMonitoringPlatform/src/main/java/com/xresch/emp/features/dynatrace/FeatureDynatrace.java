@@ -3,6 +3,10 @@ package com.xresch.emp.features.dynatrace;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
+import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.features.manual.FeatureManual;
+import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************
  * 
@@ -35,15 +39,16 @@ public class FeatureDynatrace extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetHostProcesses());
 		CFW.Registry.Widgets.add(new WidgetHostUnitConsumptionByTags());
 		CFW.Registry.Widgets.add(new WidgetProcessEvents());
+		CFW.Registry.Widgets.add(new WidgetProcessLogs());
 		CFW.Registry.Widgets.add(new WidgetProcessMetricsChart());
 		//----------------------------------
 		// Register Manual Page
-//		FeatureEMPCommon.WIDGET_PAGE.addChild(
-//				new ManualPage("Dynatrace Widgets")
-//					.faicon("fas fa-desktop")
-//					.addPermission(FeatureManual.PERMISSION_MANUAL)
-//					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_Prometheus.html")
-//			);
+		FeatureEMPCommon.WIDGET_PAGE.addChild(
+				new ManualPage("Dynatrace Widgets")
+					.faicon("fas fa-desktop")
+					.addPermission(FeatureManual.PERMISSION_MANUAL)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_widgets_dynatrace.html")
+			);
 	}
 
 	@Override

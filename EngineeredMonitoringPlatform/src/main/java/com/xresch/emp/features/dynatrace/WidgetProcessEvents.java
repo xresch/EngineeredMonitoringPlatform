@@ -35,7 +35,7 @@ public class WidgetProcessEvents extends WidgetDefinition {
 				
 				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleProcessGroupSelectorField())
+				.addField(DynatraceWidgetSettingsFactory.createSingleProcessGroupInstanceSelectorField())
 				
 				.addField(WidgetSettingsFactory.createDisplayAsSelect(new String[]{"Tiles", "Table", "Panels", "Cards"}, "Panels"))
 				

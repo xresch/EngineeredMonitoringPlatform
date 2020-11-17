@@ -46,6 +46,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 	
 	public enum EntityType {
 		HOST,
+		PROCESS_GROUP,
 		PROCESS_GROUP_INSTANCE,
 	}
 	
@@ -315,11 +316,11 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 	 * @param metricSelector the dynatrace metrics selector (e.g "builtin:host.cpu.usage,builtin:host.mem.usage")
 	 * @return
 	 ************************************************************************************/
-	public JsonObject queryMetrics(String entityType, String entityID, long startTimestamp, long endTimestamp, String metricSelector) {
+	public JsonObject queryMetrics(EntityType entityType, String entityID, long startTimestamp, long endTimestamp, String metricSelector) {
 		// Host CPU Usage Example
 		//curl -H 'Authorization: Api-Token token123' -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:host.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(HOST),entityId(HOST-1234528021FCE23D)"
 		// Process Instance CPU Usage Example
-		//curl -H 'Authorization: Api-Token token123' -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:tech.generic.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(PROCESS_GROUP_INSTANCE),entityId(PROCESS_GROUP_INSTANCE-43892357E55BAA3)"
+		//curl -H 'Authorization: Api-Token token123' -X GET "https://xxxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:tech.generic.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(PROCESS_GROUP),entityId(PROCESS_GROUP-43892357E55BAA3)"
 
 		String queryURL = getAPIUrlV2() + "/metrics/query";
 		
@@ -370,6 +371,33 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		//curl -H 'Authorization: Api-Token dt0c01.12345' -X GET "https://xxxx.live.dynatrace.com/api/v1/entity/infrastructure/hosts/HOST-1123456781FCE23D/logs"
 
 		String queryURL = getAPIUrlV1() + "/entity/infrastructure/hosts/"+hostID+"/logs";
+		
+		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, null, this.getTokenHeader());
+		if(queryResult != null) {
+			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
+			JsonObject json = jsonElement.getAsJsonObject();
+			
+			if(json.get("error") != null) {
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Dynatrace Error: "+json.get("error").getAsString());
+				return null;
+			}
+			
+			JsonElement logElement = json.get("logs");
+			if(logElement != null && logElement.isJsonArray() ) {
+				return logElement.getAsJsonArray();
+			}
+
+		}
+		return null;
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public JsonArray getLogsForProcessGroup(String processGroupID) {
+		//curl -H 'Authorization: Api-Token dt0c01.12345' -X GET "https://xxxx.live.dynatrace.com/api/v1/entity/infrastructure/hosts/HOST-1123456781FCE23D/logs"
+
+		String queryURL = getAPIUrlV1() + "/entity/infrastructure/process-groups/"+processGroupID+"/logs";
 		
 		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, null, this.getTokenHeader());
 		if(queryResult != null) {
@@ -459,6 +487,76 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		return null;
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public JsonArray getLogRecordsForProcess(String hostID, String processGroupID, String logPath, String query, int maxEntries, long startTimestamp, long endTimestamp) {
+		//curl -H 'Authorization: Api-Token dt0c01.123456' -X POST "https://xxx.live.dynatrace.com/api/v1/entity/infrastructure/process-groups/PROCESS_GROUP-12345FCE23D/logs/Windows%20Application%20Log"
+
+		String postLogAnalysisJobURL = getAPIUrlV1() + "/entity/infrastructure/process-groups/"+processGroupID+"/logs/"+CFW.HTTP.encode(logPath).replace("+", "%20");
+
+		HashMap<String,String> requestParams = new HashMap<>();
+		requestParams.put("hostFilter", hostID);
+		requestParams.put("startTimestamp", startTimestamp+"");
+		requestParams.put("endTimestamp", endTimestamp+"");
+		requestParams.put("query", query);
+		
+		CFWHttpResponse queryResult = CFW.HTTP.sendPOSTRequest(postLogAnalysisJobURL, requestParams, this.getTokenHeader());
+		if(queryResult != null) {	
+			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+
+			if(payload.get("jobId") != null) {
+				String jobId = payload.get("jobId").getAsString();
+				
+				//----------------------------------
+				// Wait before Polling
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					new CFWLog(logger).severe("Thread interrupted.", e);
+				}
+				
+				//----------------------------------
+				// Poll Status for max 10 Seconds
+				int i = 0;
+				while(i < 10) {
+					i++;
+					String getJobStatusURL = getAPIUrlV1() + "/entity/infrastructure/process-groups/"+processGroupID+"/logs/jobs/"+jobId;
+					CFWHttpResponse jobStatusResult = CFW.HTTP.sendGETRequest(getJobStatusURL, null, this.getTokenHeader());
+
+					if(jobStatusResult != null) {			
+						JsonObject jobStatusObject = jobStatusResult.getRequestBodyAsJsonObject();
+
+						if(jobStatusObject.get("logAnalysisStatus") != null 
+						&& jobStatusObject.get("logAnalysisStatus").getAsString().equals("READY")) {
+							
+							//----------------------------------
+							// Get Results
+							String getLogRecordsURL = getAPIUrlV1() + "/entity/infrastructure/process-groups/"+processGroupID+"/logs/jobs/"+jobId+"/records?pageSize="+maxEntries;
+							CFWHttpResponse getLogRecordsResult = CFW.HTTP.sendGETRequest(getLogRecordsURL, null, this.getTokenHeader());
+							if(getLogRecordsResult != null) {
+								
+								JsonObject logRecordsObject = getLogRecordsResult.getRequestBodyAsJsonObject();
+								if(logRecordsObject.get("records") != null) {
+									return logRecordsObject.get("records").getAsJsonArray();
+								}
+							}
+							break;
+						}
+					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						new CFWLog(logger).severe("Thread interrupted.", e);
+					}
+				}
+			}else if(payload.get("error") != null) {
+				new CFWLog(logger).severe("Error:"+payload.get("error").getAsJsonObject().get("message").getAsString());
+			}
+		}
+		return null;
+	}
+	
 	
 	/************************************************************************************
 	 * 
@@ -487,10 +585,34 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonArray getHostProcesses(String hostID, Long startTimestamp, Long endTimestamp) {
+	public JsonArray getHostProcessGroupInstances(String hostID, Long startTimestamp, Long endTimestamp) {
 		// curl -H 'Authorization: Api-Token token' \ -X GET "https://lpi31515.live.dynatrace.com/api/v1/entity/infrastructure/processes?startTimestamp=1604372880000&endTimestamp=1604588879160&host=HOST-1812428021FCE23D"
 
 		String queryURL = getAPIUrlV1() + "/entity/infrastructure/processes";
+		
+		HashMap<String,String> requestParams = new HashMap<>();
+		requestParams.put("host", hostID);
+		if(startTimestamp != null && endTimestamp != null) {
+			requestParams.put("startTimestamp", getStartTimestampParam(startTimestamp,endTimestamp, 3));
+			requestParams.put("endTimestamp", endTimestamp+"");
+		}
+		
+		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, requestParams, this.getTokenHeader());
+		
+		if(queryResult != null) {			
+			return queryResult.getRequestBodyAsJsonArray();
+		}
+		
+		return null;
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public JsonArray getHostProcessGroup(String hostID, Long startTimestamp, Long endTimestamp) {
+		// curl -H 'Authorization: Api-Token token' \ -X GET "https://lpi31515.live.dynatrace.com/api/v1/entity/infrastructure/processes?startTimestamp=1604372880000&endTimestamp=1604588879160&host=HOST-1812428021FCE23D"
+
+		String queryURL = getAPIUrlV1() + "/entity/infrastructure/process-groups";
 		
 		HashMap<String,String> requestParams = new HashMap<>();
 		requestParams.put("host", hostID);
@@ -566,12 +688,14 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		JsonArray logfilesArray = null;
 			
 		switch(type) {
-		case HOST:						logfilesArray = environment.getLogsForHost(entityID);
-										break;
-		case PROCESS_GROUP_INSTANCE: 
-										break;
-		default:
-										break;
+			case HOST:						logfilesArray = environment.getLogsForHost(entityID);
+											break;
+											
+			case PROCESS_GROUP: 			logfilesArray = environment.getLogsForProcessGroup(entityID);
+											break;
+											
+			default:
+											break;
 		
 		}
 			
@@ -582,14 +706,20 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		AutocompleteList suggestions = new AutocompleteList();
 		for(int i = 0; i < logfilesArray.size(); i++) {
 		
-			JsonObject currentHostObject = logfilesArray.get(i).getAsJsonObject();
-			String path = currentHostObject.get("path").getAsString();
+			JsonObject currentLogObject = logfilesArray.get(i).getAsJsonObject();
+			String path = currentLogObject.get("path").getAsString();
 
 			if(path.toLowerCase().contains(searchValue)) {
 				
+				String availableForAnalysis = "";
+				if(currentLogObject.get("availableForAnalysis") != null) {
+					availableForAnalysis = ", <b>Available for Analysis: </b>"+currentLogObject.get("availableForAnalysis").getAsString();
+				}
+				
 				suggestions.addItem(path, path, 
-						"<b>File Size: </b>"+(currentHostObject.get("size").getAsInt() / 1000)+" KB"
-						+", <b>Available for Analysis: </b>"+currentHostObject.get("availableForAnalysis").getAsString());
+						"<b>File Size: </b>"+(currentLogObject.get("size").getAsInt() / 1000)+" KB"
+						+availableForAnalysis
+						);
 				
 				if(suggestions.getItems().size() == limit) {
 					break;
@@ -604,7 +734,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public static AutocompleteResult autocompleteProcesses(int environmentID, String searchValue, int limit, String hostID) {
+	public static AutocompleteResult autocompleteProcessGroupInstance(int environmentID, String searchValue, int limit, String hostID) {
 		
 		if(searchValue.length() < 3) {
 			return null;
@@ -614,7 +744,48 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		
 		searchValue = searchValue.toLowerCase();
 		
-		JsonArray processArray = environment.getHostProcesses(hostID,null,null);
+		JsonArray processArray = environment.getHostProcessGroupInstances(hostID,null,null);
+		if(processArray == null) { return new AutocompleteResult();}
+		
+		AutocompleteList suggestions = new AutocompleteList();
+		for(int i = 0; i < processArray.size(); i++) {
+		
+			JsonObject currentProcessObject = processArray.get(i).getAsJsonObject();
+			String processInstanceID = currentProcessObject.get("entityId").getAsString();
+			String displayName = currentProcessObject.get("displayName").getAsString();
+			String discoveredName = currentProcessObject.get("discoveredName").getAsString();
+
+			if(processInstanceID.toLowerCase().contains(searchValue)
+			|| displayName.toLowerCase().contains(searchValue)
+			|| discoveredName.toLowerCase().contains(searchValue)) {
+				
+				suggestions.addItem(processInstanceID, displayName, 
+						"<b>Executables: </b>"+currentProcessObject.get("metadata").getAsJsonObject().get("executables").toString());
+				
+				if(suggestions.getItems().size() == limit) {
+					break;
+				}
+			}
+			
+		}
+		
+		return new AutocompleteResult(suggestions);
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public static AutocompleteResult autocompleteProcessGroup(int environmentID, String searchValue, int limit, String hostID) {
+		
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		DynatraceEnvironment environment = DynatraceEnvironmentManagement.getEnvironment(environmentID);
+		
+		searchValue = searchValue.toLowerCase();
+		
+		JsonArray processArray = environment.getHostProcessGroup(hostID,null,null);
 		if(processArray == null) { return new AutocompleteResult();}
 		
 		AutocompleteList suggestions = new AutocompleteList();

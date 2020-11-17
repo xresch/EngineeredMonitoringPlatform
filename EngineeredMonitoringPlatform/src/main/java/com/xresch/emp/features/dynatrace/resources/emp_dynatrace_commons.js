@@ -7,7 +7,44 @@ var DYNATRACE_WIDGET_CATEGORY =  "Monitoring | Dynatrace";
  ******************************************************************/
 CFW.dashboard.registerCategory("fas fa-desktop", DYNATRACE_WIDGET_CATEGORY);
 
+/******************************************************************
+ * 
+ ******************************************************************/
+function emp_dynatrace_renderLogs(widgetObject, data, callback){
+	
+	var settings = widgetObject.JSON_SETTINGS;				
+	
+	//---------------------------------
+	// Check for Data and Errors
+	if(CFW.utils.isNullOrEmpty(data.payload) || typeof data.payload == 'string' || data.payload.length == null){
+		callback(widgetObject, '');
+		return;
+	}
+	
+	//---------------------------
+	// Render Settings
+	var dataToRender = {
+		data: data.payload,
+		visiblefields: ["timestamp", "logLevel", "text"],
+		labels: {
+			logLevel: "Level",
+			text: "Message"
+		},
+		customizers:{
+			timestamp: function(record, value) {  return CFW.format.epochToTimestamp(value); },
+		},
+		rendererSettings:{
+			table: { verticalize: false, narrow: true, filterable: false}
+			
+	}};
+	
 
+	//--------------------------
+	// Render Widget
+	var alertRenderer = CFW.render.getRenderer('table');
+	callback(widgetObject, alertRenderer.render(dataToRender));
+	
+}
 /******************************************************************
  * 
  ******************************************************************/

@@ -19,6 +19,7 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.dynatrace.DynatraceEnvironment.EntityType;
 
 public class WidgetProcessMetricsChart extends WidgetDefinition {
 
@@ -33,9 +34,9 @@ public class WidgetProcessMetricsChart extends WidgetDefinition {
 				
 				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleProcessGroupSelectorField())
+				.addField(DynatraceWidgetSettingsFactory.createSingleProcessGroupInstanceSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createMetricsSelectorField("PROCESS_GROUP_INSTANCE"))
+				.addField(DynatraceWidgetSettingsFactory.createMetricsSelectorField("PROCESS_GROUP"))
 				
 				
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
@@ -109,9 +110,9 @@ public class WidgetProcessMetricsChart extends WidgetDefinition {
 		// Fetch Data
 		
 		//Example URL
-		// curl -H 'Authorization: Api-Token xxxxxxx' -X GET "https://xxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:tech.generic.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(PROCESS_GROUP_INSTANCE),entityId(PROCESS_GROUP_INSTANCE-8675886ACE55BAA3)"
+		// curl -H 'Authorization: Api-Token xxxxxxx' -X GET "https://xxxxx.live.dynatrace.com/api/v2/metrics/query?metricSelector=builtin:tech.generic.cpu.usage&from=1604372880000&to=1604588879160&resolution=h&entitySelector=type(PROCESS_GROUP),entityId(PROCESS_GROUP-8675886ACE55BAA3)"
 		
-		JsonObject queryResult = environment.queryMetrics("PROCESS_GROUP_INSTANCE", processID, earliest, latest, metricsSelector);		
+		JsonObject queryResult = environment.queryMetrics(EntityType.PROCESS_GROUP_INSTANCE, processID, earliest, latest, metricsSelector);		
 		response.getContent().append(CFW.JSON.toJSON(queryResult));	
 	}
 	
