@@ -26,22 +26,7 @@
 					
 					//---------------------------------
 					// Prepare data
-					console.log(data.payload);
-					dataToRender = [];
-					var metrics = data.payload.result;
-					for(let i = 0; i < metrics.length; i++ ){
-						
-						let currentMetric = metrics[i];
-						if(currentMetric.data.length > 0){
-							let dataset = {
-									metric: 	 currentMetric.metricId.replace('builtin:', ''),
-									xvalues:	 currentMetric.data[0].timestamps,
-									yvalues:	 currentMetric.data[0].values,
-							}
-
-							dataToRender.push(dataset);
-						}
-					}
+					dataToRender = emp_dynatrace_prepareMetricData(data.payload.result);
 					
 					//---------------------------
 					// Render Settings

@@ -10,6 +10,33 @@ CFW.dashboard.registerCategory("fas fa-desktop", DYNATRACE_WIDGET_CATEGORY);
 /******************************************************************
  * 
  ******************************************************************/
+function emp_dynatrace_prepareMetricData(metricsArray){
+	
+	dataToRender = [];
+	for(let i = 0; i < metricsArray.length; i++ ){
+		
+		let currentMetric = metricsArray[i];
+		
+		if(currentMetric.data.length > 0){
+
+			let dataLength = currentMetric.data.length;
+			for(let j = 0; j < dataLength; j++ ){
+				currentData = currentMetric.data[j];
+				let dataset = {
+						metric: 	 currentMetric.metricId.replace('builtin:', '') + (dataLength > 1 ? '-'+j : ''),
+						xvalues:	 currentData.timestamps,
+						yvalues:	 currentData.values,
+				}
+		
+				dataToRender.push(dataset);
+			}
+		}
+	}
+	return dataToRender;
+}
+/******************************************************************
+ * 
+ ******************************************************************/
 function emp_dynatrace_renderLogs(widgetObject, data, callback){
 	
 	var settings = widgetObject.JSON_SETTINGS;				
