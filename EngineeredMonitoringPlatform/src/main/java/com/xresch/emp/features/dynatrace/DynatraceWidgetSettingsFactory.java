@@ -181,8 +181,8 @@ public class DynatraceWidgetSettingsFactory {
 		return CFWField.newInteger(FormFieldType.NUMBER, "LOG_MAX_ENTRIES")
 				.setLabel("{!emp_widget_dynatrace_logmaxentries!}")
 				.setDescription("{!emp_widget_dynatrace_logmaxentries_desc!}")
-				.setValue(20)
-				.addValidator(new NumberRangeValidator(1, 200));
+				.setValue(50)
+				.addValidator(new NumberRangeValidator(1, 10000));
 	}
 
 		

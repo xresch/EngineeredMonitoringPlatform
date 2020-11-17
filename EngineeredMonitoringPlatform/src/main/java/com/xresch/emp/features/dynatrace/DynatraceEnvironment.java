@@ -589,7 +589,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 				
 				suggestions.addItem(path, path, 
 						"<b>File Size: </b>"+(currentHostObject.get("size").getAsInt() / 1000)+" KB"
-						+"<b>Available for Analysis: </b>"+currentHostObject.get("availableForAnalysis").getAsString());
+						+", <b>Available for Analysis: </b>"+currentHostObject.get("availableForAnalysis").getAsString());
 				
 				if(suggestions.getItems().size() == limit) {
 					break;
