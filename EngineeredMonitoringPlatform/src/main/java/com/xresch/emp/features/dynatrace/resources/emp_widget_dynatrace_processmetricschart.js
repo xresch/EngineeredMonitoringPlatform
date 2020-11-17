@@ -24,6 +24,10 @@
 						return;
 					}
 					
+					if(data.payload.error != null){
+						callback(widgetObject, '<p> An error occured: '+data.payload.error.message);
+						return;
+					}
 					//---------------------------------
 					// Prepare data
 					dataToRender = emp_dynatrace_prepareMetricData(data.payload.result);

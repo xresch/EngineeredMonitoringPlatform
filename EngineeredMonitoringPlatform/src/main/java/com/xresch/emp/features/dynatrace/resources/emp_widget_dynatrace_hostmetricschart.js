@@ -24,6 +24,11 @@
 						return;
 					}
 					
+					if(data.payload.error != null){
+						callback(widgetObject, '<p> An error occured: '+data.payload.error.message);
+						return;
+					}
+					
 					//---------------------------------
 					// Prepare data
 					dataToRender = emp_dynatrace_prepareMetricData(data.payload.result);
@@ -62,15 +67,6 @@
 					callback(widgetObject, renderer.render(renderParams));
 				});
 			},
-			
-			getEditForm: function (widgetObject) {
-				return CFW.dashboard.getSettingsForm(widgetObject);
-			},
-			
-			onSave: function (form, widgetObject) {
-				widgetObject.JSON_SETTINGS = CFW.format.formToObject(form);
-				return true;	
-			}
 		}
 	);	
 	

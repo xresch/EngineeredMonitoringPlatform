@@ -23,7 +23,7 @@ function emp_dynatrace_prepareMetricData(metricsArray){
 			for(let j = 0; j < dataLength; j++ ){
 				currentData = currentMetric.data[j];
 				let dataset = {
-						metric: 	 currentMetric.metricId.replace('builtin:', '') + (dataLength > 1 ? '-'+j : ''),
+						metric: 	 currentMetric.metricId.replace('builtin:', '') +"-"+ currentData.dimensions[currentData.dimensions.length-1],
 						xvalues:	 currentData.timestamps,
 						yvalues:	 currentData.values,
 				}
