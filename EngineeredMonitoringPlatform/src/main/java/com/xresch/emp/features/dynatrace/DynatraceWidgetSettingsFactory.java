@@ -10,6 +10,8 @@ import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.validation.NumberRangeValidator;
+import com.xresch.emp.features.dynatrace.DynatraceEnvironment.EntityType;
 
 public class DynatraceWidgetSettingsFactory {
 	
@@ -51,7 +53,7 @@ public class DynatraceWidgetSettingsFactory {
 					}
 				});
 	}
-	
+		
 	/************************************************************************************
 	 * Returns default process selector field to select a process of a specific host.
 	 * This field requires input from the field created by createSingleHostSelectorField();
@@ -118,6 +120,70 @@ public class DynatraceWidgetSettingsFactory {
 				});
 	}
 	
+	/************************************************************************************
+	 * Returns default log selector field to select a single log for the specified host.
+	 * This field requires input from the field created by createSingleHostSelectorField();
+	 * @param entityType HOST or PROCESS_GROUP_INSTANCE
+	 * @return
+	 ************************************************************************************/
+	public static CFWField<?> createSingleLogSelectorField(EntityType entityType){
+		
+		return CFWField.newTagsSelector("JSON_LOG")
+				.setLabel("{!emp_widget_dynatrace_log!}")
+				.setDescription("{!emp_widget_dynatrace_log_desc!}")
+				.addAttribute("maxTags", "1")
+				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+					
+					@Override
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+						
+						String environment = request.getParameter("environment");
+						if(Strings.isNullOrEmpty(environment) ) {
+							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							return null;
+						}
+						
+						String entityString = request.getParameter( (entityType == EntityType.HOST ? "JSON_HOST" : "JSON_PROCESS") );
+						if(Strings.isNullOrEmpty(entityString) || entityString.equals("{}")) {
+							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a host or process first.");
+							return null;
+						}
+						
+						JsonObject entityObject = CFW.JSON.jsonStringToJsonElement(entityString).getAsJsonObject();
+						String entityID = entityObject.keySet().toArray(new String[]{})[0];
+						
+						return DynatraceEnvironment.autocompleteLog(Integer.parseInt(environment), 
+								searchValue, 
+								this.getMaxResults(), 
+								entityType,
+								entityID);
+					}
+				});
+	}
+	
+	/************************************************************************************
+	 * Returns default log query field to define the query to filter the logs.
+	 * @return
+	 ************************************************************************************/
+	public static CFWField<?> createLogQueryField(){
+		
+		return CFWField.newString(FormFieldType.TEXT, "LOG_QUERY")
+				.setLabel("{!emp_widget_dynatrace_logquery!}")
+				.setDescription("{!emp_widget_dynatrace_logquery_desc!}");
+	}
+	
+	/************************************************************************************
+	 * Returns default log query field to define the query to filter the logs.
+	 * @return
+	 ************************************************************************************/
+	public static CFWField<?> createLogMaxEntriesField(){
+		
+		return CFWField.newInteger(FormFieldType.NUMBER, "LOG_MAX_ENTRIES")
+				.setLabel("{!emp_widget_dynatrace_logmaxentries!}")
+				.setDescription("{!emp_widget_dynatrace_logmaxentries_desc!}")
+				.setValue(20)
+				.addValidator(new NumberRangeValidator(1, 200));
+	}
 
 		
 

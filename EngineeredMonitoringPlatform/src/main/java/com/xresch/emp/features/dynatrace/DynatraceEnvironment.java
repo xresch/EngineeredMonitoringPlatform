@@ -44,6 +44,11 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		API_TOKEN,
 	}
 	
+	public enum EntityType {
+		HOST,
+		PROCESS_GROUP_INSTANCE,
+	}
+	
 	private String URL_API_V1 = null;
 	private String URL_API_V2 = null;
 	
@@ -361,6 +366,103 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
+	public JsonArray getLogsForHost(String hostID) {
+		//curl -H 'Authorization: Api-Token dt0c01.12345' -X GET "https://xxxx.live.dynatrace.com/api/v1/entity/infrastructure/hosts/HOST-1123456781FCE23D/logs"
+
+		String queryURL = getAPIUrlV1() + "/entity/infrastructure/hosts/"+hostID+"/logs";
+		
+		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, null, this.getTokenHeader());
+		if(queryResult != null) {
+			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
+			JsonObject json = jsonElement.getAsJsonObject();
+			
+			if(json.get("error") != null) {
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Dynatrace Error: "+json.get("error").getAsString());
+				return null;
+			}
+			
+			JsonElement logElement = json.get("logs");
+			if(logElement != null && logElement.isJsonArray() ) {
+				return logElement.getAsJsonArray();
+			}
+
+		}
+		return null;
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public JsonArray getLogRecordsForHost(String hostID, String logPath, String query, int maxEntries, long startTimestamp, long endTimestamp) {
+		//curl -H 'Authorization: Api-Token dt0c01.123456' -X POST "https://xxx.live.dynatrace.com/api/v1/entity/infrastructure/hosts/HOST-12345FCE23D/logs/Windows%20Application%20Log"
+
+		String postLogAnalysisJobURL = getAPIUrlV1() + "/entity/infrastructure/hosts/"+hostID+"/logs/"+CFW.HTTP.encode(logPath).replace("+", "%20");
+
+		HashMap<String,String> requestParams = new HashMap<>();
+		requestParams.put("startTimestamp", startTimestamp+"");
+		requestParams.put("endTimestamp", endTimestamp+"");
+		requestParams.put("query", query);
+		
+		CFWHttpResponse queryResult = CFW.HTTP.sendPOSTRequest(postLogAnalysisJobURL, requestParams, this.getTokenHeader());
+		if(queryResult != null) {	
+			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+
+			if(payload.get("jobId") != null) {
+				String jobId = payload.get("jobId").getAsString();
+				
+				//----------------------------------
+				// Wait before Polling
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					new CFWLog(logger).severe("Thread interrupted.", e);
+				}
+				
+				//----------------------------------
+				// Poll Status for max 10 Seconds
+				int i = 0;
+				while(i < 10) {
+					i++;
+					String getJobStatusURL = getAPIUrlV1() + "/entity/infrastructure/hosts/"+hostID+"/logs/jobs/"+jobId;
+					CFWHttpResponse jobStatusResult = CFW.HTTP.sendGETRequest(getJobStatusURL, null, this.getTokenHeader());
+
+					if(jobStatusResult != null) {			
+						JsonObject jobStatusObject = jobStatusResult.getRequestBodyAsJsonObject();
+
+						if(jobStatusObject.get("logAnalysisStatus") != null 
+						&& jobStatusObject.get("logAnalysisStatus").getAsString().equals("READY")) {
+							
+							//----------------------------------
+							// Get Results
+							String getLogRecordsURL = getAPIUrlV1() + "/entity/infrastructure/hosts/"+hostID+"/logs/jobs/"+jobId+"/records?pageSize="+maxEntries;
+							CFWHttpResponse getLogRecordsResult = CFW.HTTP.sendGETRequest(getLogRecordsURL, null, this.getTokenHeader());
+							if(getLogRecordsResult != null) {
+								
+								JsonObject logRecordsObject = getLogRecordsResult.getRequestBodyAsJsonObject();
+								if(logRecordsObject.get("records") != null) {
+									return logRecordsObject.get("records").getAsJsonArray();
+								}
+							}
+							break;
+						}
+					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						new CFWLog(logger).severe("Thread interrupted.", e);
+					}
+				}
+			}else if(payload.get("error") != null) {
+				new CFWLog(logger).severe("Error:"+payload.get("error").getAsJsonObject().get("message").getAsString());
+			}
+		}
+		return null;
+	}
+	
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public JsonArray getEventsForEntity(String entityID, long startTimestamp, long endTimestamp) {
 		//curl -H 'Authorization: Api-Token ' -X GET "https://xxxxx.live.dynatrace.com/api/v1/events?entityId=HOST-18124265361FCE23D"
 
@@ -437,6 +539,57 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 				suggestions.addItem(hostID, displayName, 
 						"<b>Tags: </b>"+currentHostObject.get("tags").toString()
 						+", <b>OS Type: </b>"+currentHostObject.get("osType").getAsString());
+				
+				if(suggestions.getItems().size() == limit) {
+					break;
+				}
+			}
+			
+		}
+		
+		return new AutocompleteResult(suggestions);
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public static AutocompleteResult autocompleteLog(int environmentID, String searchValue, int limit, EntityType type, String entityID) {
+		
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		DynatraceEnvironment environment = DynatraceEnvironmentManagement.getEnvironment(environmentID);
+		
+		searchValue = searchValue.toLowerCase();
+		
+		JsonArray logfilesArray = null;
+			
+		switch(type) {
+		case HOST:						logfilesArray = environment.getLogsForHost(entityID);
+										break;
+		case PROCESS_GROUP_INSTANCE: 
+										break;
+		default:
+										break;
+		
+		}
+			
+		
+		
+		if(logfilesArray == null) { return new AutocompleteResult();}
+		
+		AutocompleteList suggestions = new AutocompleteList();
+		for(int i = 0; i < logfilesArray.size(); i++) {
+		
+			JsonObject currentHostObject = logfilesArray.get(i).getAsJsonObject();
+			String path = currentHostObject.get("path").getAsString();
+
+			if(path.toLowerCase().contains(searchValue)) {
+				
+				suggestions.addItem(path, path, 
+						"<b>File Size: </b>"+(currentHostObject.get("size").getAsInt() / 1000)+" KB"
+						+"<b>Available for Analysis: </b>"+currentHostObject.get("availableForAnalysis").getAsString());
 				
 				if(suggestions.getItems().size() == limit) {
 					break;
