@@ -1,4 +1,6 @@
 
+<div id="manual-toc"></div>
+
 <h2>Dynatrace Widgets Setup</h2>
 <p>
 Before the Dynatrace widgets can be used, at least one Dynatrace environment has to be defined by a user with admin permissions.
@@ -11,8 +13,8 @@ The environments can be added in the Context Settings found under &quot;Admin &g
 The API has the following known limitations;
 </p>
 <ul>
-	<li><strong>SaaS Requests: </strong>Dynatrace SaaS solution has a limitation of 50 request/min. Extensive use of Dynatrace widgets with can easily reach this limit and will result in error messages. This is not the case with on premis solutions.</li>
-	<li><strong>Timeframes: </strong>Various API calls have limitations on how much data they will return. In case such a limit is reached, a warning message is displayed for each widget running into this issue.</li>
+	<li><strong>SaaS Requests: </strong>Dynatrace SaaS solution has a limitation of 50 request/min. Extensive use of Dynatrace widgets can easily reach this limit and will result in error messages. This is not the case with on-premise solutions.</li>
+	<li><strong>Timeframes: </strong>Various API calls have limitations on the maximum timeframe they can access. In case such a limit is reached, a warning message is displayed for each widget running into this issue.</li>
 </ul>
 
 
@@ -37,7 +39,7 @@ Will display logs extracted for the selected host and operating system log file.
 
 <h3>Host Metrics Chart</h3>
 <p>
-This widget will display a chart for the selected metrics during the selected timeframe. The autocomplete will saerch through over 1500 available metrics and will as well show metrics that are not available for host entities.
+This widget will display a chart for the selected metrics during the selected timeframe. The autocomplete will search through over 1500 available metrics and will as well show metrics that are not available for host entities.
 Following a list of some useful host metrics to get you started:
 </p>
 
@@ -164,25 +166,25 @@ builtin:host.dns.queryTime   //DNS query time, Unit: MilliSecond
 
 <h3>Host Processes</h3>
 <p>
-
+The widget lists process details for the specified host. This widget can be useful to find process names for other widgets.
 </p>
 
 
 <h3>Host Unit Consumption By Tags</h3>
 <p>
-
+Calculates the host unit consumption for the tags included with the given filter. This widget supports a maximum timeframe of 3 days.
 </p>
 
 
 <h3>Process Events</h3>
 <p>
-
+This widget will list the events which occurred in the selected timeframe. The maximum timeframe is 2 years.
 </p>
 
 
 <h3>Process Logs</h3>
 <p>
-
+Will display logs extracted for the selected process and log file. You can filter the logs with the same query syntax used on the Dynatrace UI. 
 </p>
 
 
