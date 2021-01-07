@@ -17,6 +17,11 @@
 			{
 				"context": "ENVIRONMENT",
 				"key": "windows"
+			},
+			{
+				"context": "CONTEXTLESS",
+				"key": "TID",
+				"value": "acme"
 			}
 		],
 		"fromRelationships": {
@@ -64,6 +69,11 @@
 			{
 				"context": "ENVIRONMENT",
 				"key": "acmeapp"
+			},
+			{
+				"context": "CONTEXTLESS",
+				"key": "TID",
+				"value": "acme"
 			}
 		],
 		"fromRelationships": {
@@ -109,6 +119,11 @@
 			{
 				"context": "CONTEXTLESS",
 				"key": "acmeapp"
+			},
+			{
+				"context": "CONTEXTLESS",
+				"key": "TID",
+				"value": "acme_api"
 			}
 		],
 		"fromRelationships": {
@@ -163,6 +178,16 @@
 			{
 				"context": "CONTEXTLESS",
 				"key": "test"
+			},
+			{
+				"context": "CONTEXTLESS",
+				"key": "TID",
+				"value": "testapp"
+			},
+			{
+				"context": "CONTEXTLESS",
+				"key": "TID",
+				"value": "testapp2"
 			}
 		],
 		"fromRelationships": {

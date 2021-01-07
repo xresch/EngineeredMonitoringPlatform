@@ -25,22 +25,19 @@
 		// Filter Tags
 		for(let hostIndex in dataArray){
 			let currentHost = dataArray[hostIndex];
+			currentHost.filteredTags = [];
 			
-			if(!CFW.utils.isNullOrEmpty(tagsfilter)){
-				currentHost.filteredTags = [];
-				for(let tagIndex in currentHost.tags){
-					currentTag = currentHost.tags[tagIndex];
-					
-					if(regexObj.exec(currentTag.key) !== null){
-						currentHost.filteredTags.push(currentTag);
-					}
+			for(let tagIndex in currentHost.tags){
+				currentTag = currentHost.tags[tagIndex];
+				let tagString = currentTag.key + ((currentTag.value != null) ? ":"+currentTag.value : "");
+				if(CFW.utils.isNullOrEmpty(tagsfilter) 
+				|| regexObj.exec(tagString) !== null){
+					currentHost.filteredTags.push(tagString);
 				}
-			}else{
-				currentHost.filteredTags = currentHost.tags;
 			}
-			
+
 		}
-		
+
 		//-------------------------------------
 		// Calculate statistics
 		statistics.hostcount = dataArray.length;
@@ -54,15 +51,16 @@
 				statistics.filteredsum += hostUnits;
 				statistics.filteredhostcount += 1;
 			}
+			
 			for(let tagIndex in currentHost.filteredTags){
-				currentTagKey = currentHost.filteredTags[tagIndex].key;
+				let currentTagString = currentHost.filteredTags[tagIndex];
 				
-				if(statistics.fulltotals[currentTagKey] == undefined){
-					statistics.fulltotals[currentTagKey] = hostUnits;
-					statistics.distributedtotals[currentTagKey] = hostUnits / filteredTagsCount;
+				if(statistics.fulltotals[currentTagString] == undefined){
+					statistics.fulltotals[currentTagString] = hostUnits;
+					statistics.distributedtotals[currentTagString] = hostUnits / filteredTagsCount;
 				}else{
-					statistics.fulltotals[currentTagKey] += hostUnits;
-					statistics.distributedtotals[currentTagKey] += hostUnits / filteredTagsCount;
+					statistics.fulltotals[currentTagString] += hostUnits;
+					statistics.distributedtotals[currentTagString] += hostUnits / filteredTagsCount;
 				}
 
 			}
