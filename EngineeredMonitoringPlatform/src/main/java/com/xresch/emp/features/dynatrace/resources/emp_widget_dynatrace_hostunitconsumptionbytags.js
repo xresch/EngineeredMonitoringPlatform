@@ -116,7 +116,7 @@
 						data: consumptionStatistics.distributedtotals,
 						labels: { name: "Tag", value: "Units"},
 						customizers: { value: function(record, value) {  return value.toFixed(3); } },
-						rendererSettings:{ table: { verticalize: true, narrow: true, filterable: false}}
+						rendererSettings:{ table: { verticalize: true, verticalizelabelize: false, narrow: true, filterable: false}}
 					};
 					
 					var renderer = CFW.render.getRenderer('table');
@@ -131,7 +131,7 @@
 						data: consumptionStatistics.fulltotals,
 						labels: { name: "Tag", value: "Units"},
 						customizers: { value: function(record, value) {  return value.toFixed(3); } },
-						rendererSettings:{ table: { verticalize: true, narrow: true, filterable: false}}
+						rendererSettings:{ table: { verticalize: true, verticalizelabelize: false, narrow: true, filterable: false}}
 					};
 					
 					var renderer = CFW.render.getRenderer('table');
