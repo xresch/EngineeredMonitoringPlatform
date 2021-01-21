@@ -52,9 +52,12 @@
 								yfield: 'yvalues',
 								stacked: settings.stacked,
 								showlegend: settings.show_legend,
+								// if not set make true
+								showaxes: (settings.show_axes == null) ? true : settings.show_axes,
 								ymin: settings.ymin,
 								ymax: settings.ymax,
 								pointradius: settings.pointradius,
+								padding: 2
 							}
 							
 					}};
