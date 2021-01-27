@@ -13,7 +13,7 @@ function emp_widget_awa_getStatusStyle(status){
 	switch(status.toUpperCase()){
 		case "RUNNING": 	style = "cfw-warning"; 
 							break;
-		case "WAITING": 	style = "cfw-warning"; 
+		case "WAITING": 	style = "cfw-cyan"; 
 							break;					
 		case "ENDED OK": 	style = "cfw-excellent"; 
 							break;
