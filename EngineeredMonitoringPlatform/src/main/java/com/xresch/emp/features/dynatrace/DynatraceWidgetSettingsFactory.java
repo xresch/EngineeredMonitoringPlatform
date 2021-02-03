@@ -24,7 +24,7 @@ public class DynatraceWidgetSettingsFactory {
 		return CFWField.newString(FormFieldType.SELECT, "environment")
 			.setLabel("{!cfw_widget_dynatrace_environment!}")
 			.setDescription("{!cfw_widget_dynatrace_environment_desc!}")
-			.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceEnvironment.SETTINGS_TYPE));
+			.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(DynatraceEnvironment.SETTINGS_TYPE));
 	}
 
 	/************************************************************************************

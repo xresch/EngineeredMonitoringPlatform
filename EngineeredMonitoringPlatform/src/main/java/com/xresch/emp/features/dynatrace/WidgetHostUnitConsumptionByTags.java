@@ -37,7 +37,7 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.TEXT, "tagsfilter")
 						.setLabel("{!emp_widget_dynatrace_tagsfilter!}")
 						.setDescription("{!emp_widget_dynatrace_tagsfilter_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(DynatraceEnvironment.SETTINGS_TYPE))
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(DynatraceEnvironment.SETTINGS_TYPE))
 				)
 				
 				.addField(WidgetSettingsFactory.createSampleDataField())

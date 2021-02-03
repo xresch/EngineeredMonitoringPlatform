@@ -38,12 +38,12 @@ public class WidgetRangeChart extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_spm_environment!}")
 						.setDescription("{!cfw_widget_spm_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE))
 				)
 				.addField((CFWField)CFWField.newString(FormFieldType.TEXTAREA, "query")
 						.setLabel("{!emp_widget_prometheus_range_query!}")
 						.setDescription("{!emp_widget_prometheus_range_query_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(PrometheusEnvironment.SETTINGS_TYPE))
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE))
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							@Override
 							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {

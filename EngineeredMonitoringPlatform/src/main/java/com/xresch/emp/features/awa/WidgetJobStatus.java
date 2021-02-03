@@ -57,7 +57,7 @@ public class WidgetJobStatus extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_awajobstatus_environment!}")
 						.setDescription("{!cfw_widget_awajobstatus_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(AWAEnvironment.SETTINGS_TYPE))
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(AWAEnvironment.SETTINGS_TYPE))
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")

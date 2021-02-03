@@ -42,7 +42,7 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
 						.setLabel("{!cfw_widget_spm_environment!}")
 						.setDescription("{!cfw_widget_spm_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForType(EnvironmentSPM.SETTINGS_TYPE))
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE))
 				)
 				
 				.addField(CFWField.newTagsSelector("JSON_MONITORS")
