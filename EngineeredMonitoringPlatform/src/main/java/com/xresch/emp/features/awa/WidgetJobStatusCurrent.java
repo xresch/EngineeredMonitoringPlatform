@@ -186,8 +186,8 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 					object.addProperty("END_TIME", (endTime != null) ? endTime.toInstant().toEpochMilli() : null);
 					object.addProperty("HOST_DESTINATION", result.getString("HOST_DESTINATION"));
 					object.addProperty("HOST_SOURCE", result.getString("HOST_SOURCE"));
-					object.addProperty("DURATION_SECONDS", result.getString("DURATION_SECONDS"));
-					object.addProperty("STATUS_CODE", result.getString("STATUS_CODE"));
+					object.addProperty("DURATION_SECONDS", result.getInt("DURATION_SECONDS"));
+					object.addProperty("STATUS_CODE", result.getInt("STATUS_CODE"));
 
 				}else {
 					object.addProperty("status", "UNKNOWN");

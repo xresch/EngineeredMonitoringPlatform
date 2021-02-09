@@ -66,14 +66,43 @@
 								showlabels: false,
 								borderstyle: settings.borderstyle
 							},
+							table: {
+								narrow: 	true,
+								striped: 	true,
+								hover: 		false,
+								filterable: false
+							}
+					}};
+										
+					//---------------------------
+					// Chart Render Settings
+					var chartRendererSettings = {
+						data: null,
+						titlefields: ['JOBNAME', 'LABEL'], 
+						visiblefields: ['JOBNAME', 'LABEL'], 
+						titleformat: '{0} - {1}', 
+						rendererSettings:{
+							chart: {
+								responsive: true,
+								charttype: 'area',
+								xfield: "END_TIME",
+								yfield: 'DURATION_SECONDS',
+								stacked: false,
+								showlegend: false,
+								showaxes: false,
+								ymin: 0,
+								ymax: null,
+								pointradius: 0,
+								padding: 0
+							}
 					}};
 					
-					console.log(groupedJobStats)
 					//---------------------------------
 					// Table Renderer Settings
 					let visibileFields = ['JOBNAME'];
 					if (settings.showlabels){ visibileFields.push('LABEL'); }
 					if (settings.showstatistics){ visibileFields.push('MIN', 'AVG', 'MAX'); }
+					if (settings.showsparkline){ visibileFields.push('SUM'); /* Use sum field to display graph */ }
 					visibileFields.push('STATUSES');
 					
 					var tableRendererSettings = {
@@ -83,6 +112,9 @@
 						titlefields: ['LABEL'], 
 						titleformat: '{0}', 
 						visiblefields: visibileFields, 
+						labels: {
+							SUM: "Sparkline",
+						},
 						customizers: {
 							MIN: function(record, value) { return CFW.format.millisToClock(value*1000);},
 							AVG: function(record, value) { return CFW.format.millisToClock(value*1000);},
@@ -91,7 +123,15 @@
 								tilesRendererSettings.data = value;
 								var tilesRenderer = CFW.render.getRenderer('tiles');
 								return tilesRenderer.render(tilesRendererSettings);
-							}
+							},
+							SUM: function(record, value) {
+								chartRendererSettings.data = record.STATUSES;
+								console.log(chartRendererSettings.data);
+								var chartRenderer = CFW.render.getRenderer('chart');
+
+								return $('<div class="w-100" style="height: 20px; max-width: 200px">').append(chartRenderer.render(chartRendererSettings));
+								//return chartRenderer.render(chartRendererSettings);
+							},
 						},
 						rendererSettings:{
 							table: {
