@@ -237,7 +237,7 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 		long currentTime = new Date().getTime();
 		int i = 2;
 		response.getContent().append("["
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"RUNNING\", \"END_TIME\": null},"
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 1234, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 123, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 12354, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
@@ -251,8 +251,8 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 331234, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
 			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 1256734, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
 			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 12934, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
-			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
-			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 3214, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
+			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"RUNNING\", \"END_TIME\": null},"
+			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 3214, \"END_TIME\": null},"
 			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 2143, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
 			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 4444, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
 			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 55, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
