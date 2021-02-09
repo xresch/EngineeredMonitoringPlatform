@@ -5,7 +5,7 @@ import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.emp.features.awa.WidgetJobStatusLegend;
-import com.xresch.emp.features.awa.WidgetJobStatus;
+import com.xresch.emp.features.awa.WidgetJobStatusCurrent;
 import com.xresch.emp.features.awa.WidgetJobsWithStatus;
 import com.xresch.emp.features.prometheus.WidgetInstantThreshold;
 import com.xresch.emp.features.prometheus.WidgetRangeChart;

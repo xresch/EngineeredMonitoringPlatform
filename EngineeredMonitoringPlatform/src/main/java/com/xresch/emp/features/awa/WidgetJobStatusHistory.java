@@ -25,17 +25,25 @@ import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.validation.IntegerValidator;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
-public class WidgetJobStatus extends WidgetDefinition {
+public class WidgetJobStatusHistory extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(WidgetJobStatus.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetJobStatusHistory.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_awajobstatus";}
+	public String getWidgetType() {return "emp_awajobstatus_history";}
 
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
+				
+				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
+						.setLabel("{!cfw_widget_awajobstatus_environment!}")
+						.setDescription("{!cfw_widget_awajobstatus_environment_desc!}")
+						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(AWAEnvironment.SETTINGS_TYPE))
+				)
+				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, "jobnames")
 						.setLabel("{!cfw_widget_awajobstatus_jobnames!}")
 						.setDescription("{!cfw_widget_awajobstatus_jobnames_desc!}")
@@ -49,23 +57,19 @@ public class WidgetJobStatus extends WidgetDefinition {
 						
 				)
 				
-				.addField(CFWField.newInteger(FormFieldType.TEXT, "last_run_minutes")
-						.setLabel("{!cfw_widget_awajobstatus_last_run_minutes!}")
-						.setDescription("{!cfw_widget_awajobstatus_last_run_minutes_desc!}")
-						.setValue(0)	
-				)
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_awajobstatus_environment!}")
-						.setDescription("{!cfw_widget_awajobstatus_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(AWAEnvironment.SETTINGS_TYPE))
+				.addField(CFWField.newInteger(FormFieldType.TEXT, "statuscount")
+					.setLabel("{!cfw_widget_awajobstatus_statuscount!}")
+					.setDescription("{!cfw_widget_awajobstatus_statuscount_desc!}")
+					.setValue(7)
+					.addValidator(new IntegerValidator().setNullAllowed(false))
 				)
 				
-				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
-						.setLabel("{!cfw_widget_displayas!}")
-						.setDescription("{!cfw_widget_displayas_desc!}")
-						.setOptions(new String[]{"Tiles", "Panels", "Table"})
-						.setValue("Tiles")
-				)
+//				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
+//						.setLabel("{!cfw_widget_displayas!}")
+//						.setDescription("{!cfw_widget_displayas_desc!}")
+//						.setOptions(new String[]{"Tiles", "Panels", "Table"})
+//						.setValue("Tiles")
+//				)
 								
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
 						.setLabel("{!cfw_widget_tilessizefactor!}")
@@ -81,9 +85,15 @@ public class WidgetJobStatus extends WidgetDefinition {
 						.setValue("None")
 				)
 				
+				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showstatistics")
+						.setLabel("{!cfw_widget_awajobstatus_showstatistics!}")
+						.setDescription("{!cfw_widget_awajobstatus_showstatistics_desc!}")
+						.setValue(true)
+				)
+				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "showlabels")
-						.setLabel("{!cfw_widget_tilesshowlabels!}")
-						.setDescription("{!cfw_widget_tilesshowlabels_desc!}")
+						.setLabel("{!cfw_widget_awajobstatus_showlabels!}")
+						.setDescription("{!cfw_widget_awajobstatus_showlabels_desc!}")
 						.setValue(true)
 				)
 				
@@ -92,6 +102,8 @@ public class WidgetJobStatus extends WidgetDefinition {
 						.setDescription("{!cfw_widget_disable_desc!}")
 						.setValue(false)
 				)
+				
+
 				
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
 						.setLabel("{!cfw_widget_sampledata!}")
@@ -135,6 +147,11 @@ public class WidgetJobStatus extends WidgetDefinition {
 		if(!joblabelsElement.isJsonNull() && !joblabelsElement.getAsString().isEmpty()) {
 			joblabels = joblabelsElement.getAsString().trim().split("[,\t\r\n]+");
 		}
+		
+		//---------------------------------
+		// Resolve Status Count
+		JsonElement statuscountElement = settings.get("statuscount");
+		Integer statuscount = statuscountElement.getAsInt();
 
 		//---------------------------------
 		// Get Environment & DB
@@ -160,9 +177,10 @@ public class WidgetJobStatus extends WidgetDefinition {
 		for(int i = 0; i < jobnames.length; i++) {
 
 			ResultSet result = db.preparedExecuteQuerySilent(
-					CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_last_jobstatus.sql"),
+					CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_last_jobstatus_history.sql"),
 					environment.clientID(),
-					jobnames[i].trim() );
+					jobnames[i].trim(),
+					statuscount);
 			try {
 				JsonObject object = new JsonObject();
 				object.addProperty("JOBNAME", jobnames[i]);
@@ -211,23 +229,33 @@ public class WidgetJobStatus extends WidgetDefinition {
 		long currentTime = new Date().getTime();
 		response.getContent().append("["
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(1200*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(2120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_V\", \"LABEL\":\"JP_0003_V\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(3120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0_A\", \"LABEL\":\"JP__A\", \"STATUS\":\"WAITING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"OVERDUE (UNKNOWN)\", \"END_TIME\":"+(currentTime-(4120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"OVERDUE (ENDED OK)\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(9120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_V\", \"LABEL\":\"JP_0003_V\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(34120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_Chjkl\", \"LABEL\":\"The Holy C\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_A\", \"LABEL\":\"JP_0003_A\", \"STATUS\":\"WAITING\", \"END_TIME\":"+(currentTime-(1220*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225fksdfghuw\", \"LABEL\":\"JP_0003_225fksdfghuw\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(620*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_Vhjklh\", \"LABEL\":\"JP_0003_Vhjklh\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_01\", \"LABEL\":\"JP_01\", \"STATUS\":\"ISSUE\", \"END_TIME\":"+(currentTime-(1440*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0003_A\", \"LABEL\":\"JP_0003_A\", \"STATUS\":\"OVERDUE (ISSUE)\", \"END_TIME\":"+(currentTime-(120*60000))+"}"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 1234, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 123, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 12354, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 15234, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 51234, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 71234, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 81234, \"END_TIME\":"+(currentTime-(1200*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 91234, \"END_TIME\":"+(currentTime-(1200*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 12934, \"END_TIME\":"+(currentTime-(1200*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"RUNNING\", \"DURATION_SECONDS\": 123477, \"END_TIME\":"+(currentTime-(1200*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 331234, \"END_TIME\":"+(currentTime-(1200*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 1256734, \"END_TIME\":"+(currentTime-(1200*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 12934, \"END_TIME\":"+(currentTime-(1200*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(2120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 3214, \"END_TIME\":"+(currentTime-(2120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 2143, \"END_TIME\":"+(currentTime-(2120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 4444, \"END_TIME\":"+(currentTime-(2120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 55, \"END_TIME\":"+(currentTime-(2120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 9999, \"END_TIME\":"+(currentTime-(2120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_8008_88\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 8888, \"END_TIME\":"+(currentTime-(2120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"WAITING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 222, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 3333, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 44444, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 45678, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 98765, \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 54222, \"END_TIME\":"+(currentTime-(120*60000))+"}"
 			+"]");
 
 	}
@@ -236,7 +264,7 @@ public class WidgetJobStatus extends WidgetDefinition {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.PACKAGE_RESOURCE, "emp_awa_commonFunctions.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.PACKAGE_RESOURCE, "emp_widget_awajobstatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.PACKAGE_RESOURCE, "emp_widget_awajobstatus_history.js") );
 		return array;
 	}
 

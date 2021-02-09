@@ -42,7 +42,8 @@ public class FeatureAWA extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Widgets
-		CFW.Registry.Widgets.add(new WidgetJobStatus());
+		CFW.Registry.Widgets.add(new WidgetJobStatusCurrent());
+		CFW.Registry.Widgets.add(new WidgetJobStatusHistory());
 		CFW.Registry.Widgets.add(new WidgetJobsWithStatus());
 		CFW.Registry.Widgets.add(new WidgetJobStatusLegend());
     
