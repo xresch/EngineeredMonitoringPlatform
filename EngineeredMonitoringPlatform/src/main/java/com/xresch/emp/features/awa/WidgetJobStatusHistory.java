@@ -63,14 +63,7 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 					.setValue(7)
 					.addValidator(new IntegerValidator().setNullAllowed(false))
 				)
-				
-//				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
-//						.setLabel("{!cfw_widget_displayas!}")
-//						.setDescription("{!cfw_widget_displayas_desc!}")
-//						.setOptions(new String[]{"Tiles", "Panels", "Table"})
-//						.setValue("Tiles")
-//				)
-								
+							
 				.addField(CFWField.newString(FormFieldType.SELECT, "sizefactor")
 						.setLabel("{!cfw_widget_tilessizefactor!}")
 						.setDescription("{!cfw_widget_tilessizefactor_desc!}")
