@@ -92,7 +92,7 @@
 								showaxes: false,
 								ymin: 0,
 								ymax: null,
-								pointradius: 0,
+								pointradius: 1,
 								padding: 0
 							}
 					}};
