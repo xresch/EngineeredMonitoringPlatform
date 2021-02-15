@@ -237,7 +237,7 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 		long currentTime = new Date().getTime();
 		int i = 2;
 		response.getContent().append("["
-			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"RUNNING\", \"END_TIME\": null},"
+			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"RUNNING\", \"END_TIME\": null, \"DURATION_SECONDS\": 0},"
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 1234, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ABNORMAL ENDING\", \"DURATION_SECONDS\": 123, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"ENDED OK\", \"DURATION_SECONDS\": 12354, \"END_TIME\":"+((currentTime-(120*60000))+(1000*i++))+"},"

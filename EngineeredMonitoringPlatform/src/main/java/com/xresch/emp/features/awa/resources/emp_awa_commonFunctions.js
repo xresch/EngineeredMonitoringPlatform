@@ -66,12 +66,13 @@ function emp_widget_awa_groupByJobname(statusArray){
 		
 		//--------------------------------
 		// Fill Data
-		if(!isNaN(duration)){
+		if(!isNaN(duration) && currentStatus.END_TIME != null){
 			groupedResults[jobname].COUNT += 1;
 			groupedResults[jobname].SUM += duration;
 			groupedResults[jobname].MIN = (groupedResults[jobname].MIN <= duration) ? groupedResults[jobname].MIN : duration;
 			groupedResults[jobname].MAX = (groupedResults[jobname].MAX >= duration) ? groupedResults[jobname].MAX : duration;
 		}
+		
 		groupedResults[jobname].STATUSES.push(currentStatus);
 		
 	}
