@@ -2,6 +2,7 @@ package com.xresch.emp.features.prometheus;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map.Entry;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
@@ -203,6 +204,12 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		}
 		
 		JsonObject result = getTargets();
+	
+//		{ "data": { "activeTargets": [ { "labels": {
+//        "instance": "127.0.0.1:9090",
+//        "job": "prometheus"
+//      },
+//    }
 		
 		AutocompleteList list = new AutocompleteList();
 		if(result != null) {
@@ -224,22 +231,47 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		}
 		
 		return new AutocompleteResult(list); 
-//		{
-//			  "status": "success",
-//			  "data": {
-//			    "activeTargets": [
-//			      {
-//			        "discoveredLabels": {
-//			          "__address__": "127.0.0.1:9090",
-//			          "__metrics_path__": "/metrics",
-//			          "__scheme__": "http",
-//			          "job": "prometheus"
-//			        },
-//			        "labels": {
-//			          "instance": "127.0.0.1:9090",
-//			          "job": "prometheus"
-//			        },
-//			      }
+
+	}
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public AutocompleteResult autocompleteLabels(String searchValue, int limit) {
+		
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		String[] splitted = searchValue.split(" ");
+		String lastword = splitted[splitted.length-1];
+		if(lastword.length() > 50) {
+			return null;
+		}
+		JsonObject result = getTargets();
+		
+		AutocompleteList list = new AutocompleteList();
+		if(result != null) {
+			
+			JsonArray targets = result.get("data").getAsJsonObject().get("activeTargets").getAsJsonArray();
+			String lowerSearch = searchValue.toLowerCase();
+			for(JsonElement target : targets) {
+				JsonObject labels = target.getAsJsonObject().get("labels").getAsJsonObject();
+				for(Entry<String, JsonElement> entry : labels.entrySet()) {
+					String entryString = entry.getKey() + "=\""+entry.getValue().getAsString()+"\"";
+					if(entryString.toLowerCase().contains(lastword)) {
+						AutocompleteItem item = new AutocompleteItem(entryString);
+						item.setMethodReplace(lastword);
+						list.addItem(item);
+					}
+					
+					if(list.size() == limit) { break; }
+				
+				}
+			}
+		}
+		
+		return new AutocompleteResult(list); 
+
 	}
 	/************************************************************************************
 	 * 
