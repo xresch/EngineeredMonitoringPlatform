@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.google.common.base.Strings;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
@@ -123,6 +124,26 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
+	public JsonObject getTargets() {
+		
+		String queryURL = getAPIUrlVersion1() + "/targets";
+		
+		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
+		if(queryResult != null) {
+			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
+			JsonObject json = jsonElement.getAsJsonObject();
+			if(json.get("error") != null) {
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
+				return null;
+			}
+			
+			return json;
+		}
+		return null;
+	}
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public JsonObject query(String prometheusQuery, long latestMillis) {
 		
 		String queryURL = getAPIUrlVersion1() 
@@ -175,11 +196,60 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
+	public AutocompleteResult autocompleteInstance(String searchValue, int limit) {
+		
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		JsonObject result = getTargets();
+		
+		AutocompleteList list = new AutocompleteList();
+		if(result != null) {
+			
+			JsonArray targets = result.get("data").getAsJsonObject().get("activeTargets").getAsJsonArray();
+			String lowerSearch = searchValue.toLowerCase();
+			for(JsonElement target : targets) {
+				JsonObject labels = target.getAsJsonObject().get("labels").getAsJsonObject();
+				if(labels.has("instance")) {
+					String instance = labels.get("instance").getAsString();
+					if(instance.toLowerCase().contains(lowerSearch)) {
+						list.addItem(instance);
+					}
+					
+					if(list.size() == limit) { break; }
+				
+				}
+			}
+		}
+		
+		return new AutocompleteResult(list); 
+//		{
+//			  "status": "success",
+//			  "data": {
+//			    "activeTargets": [
+//			      {
+//			        "discoveredLabels": {
+//			          "__address__": "127.0.0.1:9090",
+//			          "__metrics_path__": "/metrics",
+//			          "__scheme__": "http",
+//			          "job": "prometheus"
+//			        },
+//			        "labels": {
+//			          "instance": "127.0.0.1:9090",
+//			          "job": "prometheus"
+//			        },
+//			      }
+	}
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public static AutocompleteResult autocompleteQuery(String searchValue, int limit) {
 		
 		if(searchValue.length() < 3) {
 			return null;
 		}
+		
 		String[] splitted = searchValue.split("\r\n|\n");
 		String lastLine = splitted[splitted.length-1];
 		if(lastLine.length() > 50) {

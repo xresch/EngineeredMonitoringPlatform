@@ -36,6 +36,10 @@ public class FeaturePrometheus extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetRangeChart());
 		
 		//----------------------------------
+		// Register Parameters
+		CFW.Registry.Parameters.add(new ParameterDefinitionPrometheusInstance());
+		
+		//----------------------------------
 		// Register Manual Page
 		FeatureEMPCommon.WIDGET_PAGE.addChild(
 				new ManualPage("Prometheus Widgets")
