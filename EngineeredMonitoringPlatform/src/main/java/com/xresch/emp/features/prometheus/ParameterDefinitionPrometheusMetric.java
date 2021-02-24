@@ -13,9 +13,9 @@ import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.parameters.ParameterDefinition;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
-public class ParameterDefinitionPrometheusFilter extends ParameterDefinition {
+public class ParameterDefinitionPrometheusMetric extends ParameterDefinition {
 
-	public static final String LABEL = "Prometheus Filter";
+	public static final String LABEL = "Prometheus Metric";
 	
 	/***************************************************************
 	 * 
@@ -29,8 +29,8 @@ public class ParameterDefinitionPrometheusFilter extends ParameterDefinition {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
-		CFWField settingsField = CFWField.newString(FormFieldType.TEXT, LABEL)
-				.addAttribute("style", "min-width: 300px;")
+		CFWField settingsField = CFWField.newString(FormFieldType.TAGS, LABEL)
+				.addAttribute("maxTags", "1")
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
@@ -44,12 +44,12 @@ public class ParameterDefinitionPrometheusFilter extends ParameterDefinition {
 						
 						PrometheusEnvironment environment = PrometheusEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
 						
-						return environment.autocompleteLabels(searchValue, this.getMaxResults());
+						return environment.autocompleteMetrics(searchValue, this.getMaxResults());
 					}
 				});
 				
 		
-		if(fieldValue != null) {
+		if(fieldValue !=null) {
 			settingsField.setValueConvert(fieldValue);
 		}
 	

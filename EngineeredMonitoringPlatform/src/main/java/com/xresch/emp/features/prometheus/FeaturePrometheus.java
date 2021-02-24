@@ -39,6 +39,7 @@ public class FeaturePrometheus extends CFWAppFeature {
 		// Register Parameters
 		CFW.Registry.Parameters.add(new ParameterDefinitionPrometheusFilter());
 		CFW.Registry.Parameters.add(new ParameterDefinitionPrometheusInstance());
+		CFW.Registry.Parameters.add(new ParameterDefinitionPrometheusMetric());
 		
 		//----------------------------------
 		// Register Manual Page

@@ -142,6 +142,29 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		}
 		return null;
 	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public JsonObject getMetrics() {
+		
+		String queryURL = getAPIUrlVersion1() + "/metadata";
+		
+		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
+		if(queryResult != null) {
+			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
+			JsonObject json = jsonElement.getAsJsonObject();
+			if(json.get("error") != null) {
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
+				return null;
+			}
+			
+			return json;
+		}
+		return null;
+	}
+	
+	
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
@@ -268,6 +291,43 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 				
 				}
 			}
+		}
+		
+		return new AutocompleteResult(list); 
+
+	}
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public AutocompleteResult autocompleteMetrics(String searchValue, int limit) {
+		
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		
+		String[] splitted = searchValue.split(" ");
+		String lastword = splitted[splitted.length-1].toLowerCase();
+		if(lastword.length() > 50) {
+			return null;
+		}
+		JsonObject result = getMetrics();
+		
+		AutocompleteList list = new AutocompleteList();
+		if(result != null) {
+			
+			for(Entry<String, JsonElement> entry : result.get("data").getAsJsonObject().entrySet()) {
+				String metricName = entry.getKey();
+				if(metricName.toLowerCase().contains(lastword)) {
+					AutocompleteItem item = new AutocompleteItem(metricName);
+					list.addItem(item);
+				}
+				
+				if(list.size() == limit) {
+					break;
+				}
+			}
+			
 		}
 		
 		return new AutocompleteResult(list); 
