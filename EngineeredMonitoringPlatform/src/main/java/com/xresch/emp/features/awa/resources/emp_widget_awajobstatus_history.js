@@ -58,7 +58,14 @@
 						visiblefields: ['END_TIME', 'STATUS'], 
 						customizers: {
 							START_TIME: function(record, value) { return (value != null) ? new moment(value).format("YYYY-MM-DD HH:mm") : '';},
-							END_TIME: function(record, value) { return (value != null) ? new moment(value).format("YYYY-MM-DD HH:mm") : '';}
+							END_TIME: function(record, value) { return (value != null) ? new moment(value).format("YYYY-MM-DD HH:mm") : '';},
+							URL: function(record, value) { 
+					 			if(value != null && value != ""){
+					 				return  '<a class="btn btn-sm btn-primary ml-2" role="button" target="_blank" href="'+value+'" ><i class="fas fa-external-link-square-alt"></i>&nbsp;Open in AWA</a>'; 
+					 			}else {
+					 				return "&nbsp;";
+					 			}
+							},
 						},
 						rendererSettings:{
 							tiles: {
@@ -131,6 +138,13 @@
 
 								return $('<div class="w-100" style="height: 20px; max-width: 200px">').append(chartRenderer.render(chartRendererSettings));
 								//return chartRenderer.render(chartRendererSettings);
+							},
+							URL: function(record, value) { 
+					 			if(value != null && value != ""){
+					 				return  '<a class="btn btn-sm btn-primary ml-2" role="button" target="_blank" href="'+value+'" ><i class="fas fa-external-link-square-alt"></i>&nbsp;Open in AWA</a>'; 
+					 			}else {
+					 				return "&nbsp;";
+					 			}
 							},
 						},
 						rendererSettings:{

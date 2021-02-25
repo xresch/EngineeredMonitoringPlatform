@@ -160,18 +160,19 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		JsonArray resultArray = new JsonArray();
 		for(int i = 0; i < jobnames.length; i++) {
 
+			String currentJobname = jobnames[i].trim();
 			ResultSet result = db.preparedExecuteQuerySilent(
 					CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_last_jobstatus.sql"),
 					environment.clientID(),
-					jobnames[i].trim() );
+					currentJobname);
 			try {
 				JsonObject object = new JsonObject();
-				object.addProperty("JOBNAME", jobnames[i]);
+				object.addProperty("JOBNAME", currentJobname);
 				
 				if(joblabels != null && i < joblabels.length) {
 					object.addProperty("LABEL", joblabels[i]);
 				}else {
-					object.addProperty("LABEL", jobnames[i]);
+					object.addProperty("LABEL", currentJobname);
 				}
 				
 				if(result != null && result.next()){
@@ -179,15 +180,20 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 					OffsetDateTime startTime = result.getObject("START_TIME", OffsetDateTime.class);
 					OffsetDateTime endTime = result.getObject("END_TIME", OffsetDateTime.class);
 
+					int runID = result.getInt("ID");
+					String type = result.getString("TYPE");
+					String URL = environment.getJobWorkflowURL(currentJobname, type, runID);
+					
 					object.addProperty("STATUS", result.getString("STATUS"));
 					object.addProperty("CLIENT_ID", result.getString("CLIENT_ID"));
-					object.addProperty("TYPE", result.getString("TYPE"));
+					object.addProperty("TYPE", type);
 					object.addProperty("START_TIME", (startTime != null) ? startTime.toInstant().toEpochMilli() : null );
 					object.addProperty("END_TIME", (endTime != null) ? endTime.toInstant().toEpochMilli() : null);
 					object.addProperty("HOST_DESTINATION", result.getString("HOST_DESTINATION"));
 					object.addProperty("HOST_SOURCE", result.getString("HOST_SOURCE"));
 					object.addProperty("DURATION_SECONDS", result.getInt("DURATION_SECONDS"));
 					object.addProperty("STATUS_CODE", result.getInt("STATUS_CODE"));
+					object.addProperty("URL", URL);
 
 				}else {
 					object.addProperty("status", "UNKNOWN");

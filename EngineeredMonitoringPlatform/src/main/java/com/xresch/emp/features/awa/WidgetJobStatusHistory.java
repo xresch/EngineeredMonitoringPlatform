@@ -95,7 +95,7 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 						.setDescription("{!cfw_widget_awajobstatus_showlabels_desc!}")
 						.setValue(true)
 				)
-				
+								
 				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
 						.setLabel("{!cfw_widget_disable!}")
 						.setDescription("{!cfw_widget_disable_desc!}")
@@ -174,22 +174,28 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 		JsonArray resultArray = new JsonArray();
 		for(int i = 0; i < jobnames.length; i++) {
 
+			String currentJobname = jobnames[i].trim();
 			ResultSet result = db.preparedExecuteQuerySilent(
 					CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_last_jobstatus_history.sql"),
 					environment.clientID(),
-					jobnames[i].trim(),
+					currentJobname,
 					statuscount);
 			try {
 				
 				if(result != null) { 
 					while(result.next()){
 						JsonObject object = new JsonObject();
-						object.addProperty("JOBNAME", jobnames[i]);
+						object.addProperty("JOBNAME", currentJobname);
+						
+						int runID = result.getInt("ID");
+						String type = result.getString("TYPE");
+						String URL = environment.getJobWorkflowURL(currentJobname, type, runID);
+						
 						
 						if(joblabels != null && i < joblabels.length) {
 							object.addProperty("LABEL", joblabels[i]);
 						}else {
-							object.addProperty("LABEL", jobnames[i]);
+							object.addProperty("LABEL", currentJobname);
 						}
 						OffsetDateTime startTime = result.getObject("START_TIME", OffsetDateTime.class);
 						OffsetDateTime endTime = result.getObject("END_TIME", OffsetDateTime.class);
@@ -203,6 +209,7 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 						object.addProperty("HOST_SOURCE", result.getString("HOST_SOURCE"));
 						object.addProperty("DURATION_SECONDS", result.getInt("DURATION_SECONDS"));
 						object.addProperty("STATUS_CODE", result.getInt("STATUS_CODE"));
+						object.addProperty("URL", URL);
 						resultArray.add(object);
 					}
 				}else {

@@ -1,10 +1,8 @@
 package com.xresch.emp.features.awa;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.common.base.Strings;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
@@ -14,11 +12,7 @@ import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
-import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-
-import oracle.ucp.jdbc.PoolDataSource;
-import oracle.ucp.jdbc.PoolDataSourceFactory;
 
 /**************************************************************************************************************
  * 
@@ -33,6 +27,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 	
 	public enum AWAEnvironmentFields{
 		URL,
+		URL_DB_PART,
 		DB_HOST,
 		DB_PORT,
 		DB_NAME,
@@ -43,7 +38,10 @@ public class AWAEnvironment extends AbstractContextSettings {
 	}
 	
 	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, AWAEnvironmentFields.URL)
-			.setDescription("The url of the AWA web application including port number if required.");	
+			.setDescription("The url of the AWA web application including port number(if required).");
+	
+	private CFWField<String> urlDBPart = CFWField.newString(FormFieldType.TEXT, AWAEnvironmentFields.URL_DB_PART)
+			.setDescription("The db part of the url, needed to have direct links in dashboard tiles.");	
 	
 	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, AWAEnvironmentFields.DB_HOST)
 			.setDescription("The server name of the database host.");
@@ -83,7 +81,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 	}
 		
 	private void initializeFields() {
-		this.addFields(url, dbHost, dbPort, dbName, dbType, dbUser, dbPassword, clientID);
+		this.addFields(url, urlDBPart, dbHost, dbPort, dbName, dbType, dbUser, dbPassword, clientID);
 	}
 		
 	
@@ -115,6 +113,30 @@ public class AWAEnvironment extends AbstractContextSettings {
 		return false;
 	}
 	
+	
+	public String getJobWorkflowURL(String jobname, String type, int runID) {
+		String urlString = url.getValue();
+		String urlDBPartString = urlDBPart.getValue();
+		if( !Strings.isNullOrEmpty(urlString) 
+		&&	!Strings.isNullOrEmpty(urlDBPartString)
+				) {
+			if(!urlString.endsWith("/")) { urlString += "/"; url.setValue(urlString); };
+			
+			String finalClientID = "00"+clientID.getValue();
+			finalClientID = finalClientID.substring(finalClientID.length() - 4);
+			
+			String jobURL = urlString+"awi/#"+urlDBPartString+":"+finalClientID
+						+"@pm/monitor/"+CFW.HTTP.encode(jobname)
+						+"&id="+runID
+						+"&type="+type
+						+"&src=eh";
+						
+			return jobURL;
+		}
+		
+		return null;
+	}
+	
 	public String url() {
 		return url.getValue();
 	}
@@ -124,6 +146,16 @@ public class AWAEnvironment extends AbstractContextSettings {
 		return this;
 	}
 	
+	
+	public String urlDBPart() {
+		return urlDBPart.getValue();
+	}
+	
+	public AWAEnvironment urlDBPart(String value) {
+		this.urlDBPart.setValue(value);
+		return this;
+	}
+
 	public String dbType() {
 		return dbType.getValue();
 	}
@@ -195,5 +227,5 @@ public class AWAEnvironment extends AbstractContextSettings {
 	public void setDBInstance(DBInterface dbInstance) {
 		this.dbInstance = dbInstance;
 	}
-
+	
 }

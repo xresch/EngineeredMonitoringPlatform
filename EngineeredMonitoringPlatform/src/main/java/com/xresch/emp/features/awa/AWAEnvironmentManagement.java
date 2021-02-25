@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -161,7 +162,9 @@ public class AWAEnvironmentManagement {
 	}
 	
 	
-
+	/*****************************************************************
+	 * 
+	 *****************************************************************/
 	public static AutocompleteResult autocompleteClient(HttpServletRequest request){
 		
 		AutocompleteList list = new AutocompleteList();
@@ -203,5 +206,49 @@ public class AWAEnvironmentManagement {
 		}
 		
 		return new AutocompleteResult(list);
+	}
+	
+	/*****************************************************************
+	 * 
+	 *****************************************************************/
+	public static AutocompleteResult autocompleteJobname(int environmentID, String searchValue, int maxResults) {
+
+		if(searchValue.length() < 3) {
+			return null;
+		}
+		//---------------------------
+		// Get DB
+		DBInterface db;
+		AWAEnvironment environment = AWAEnvironmentManagement.getEnvironment(environmentID);
+		db = environment.getDBInstance();
+		
+		if(db == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			return null;
+		}
+		System.out.println("===== Query ==== \n"+CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_autocomplete_jobnames.sql"));
+		ResultSet result = db.preparedExecuteQuery(
+			CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_autocomplete_jobnames.sql"),
+			environment.clientID(),
+			"%"+searchValue+"%",
+			maxResults);
+		
+		LinkedHashMap<Object, Object> suggestions = new LinkedHashMap<Object, Object>();
+		try {
+			if(result != null) {
+				for(int i = 0;i < maxResults && result.next();i++) {
+					String jobname = result.getString("NAME");
+					suggestions.put(jobname, jobname);	
+				}
+			}
+		
+		} catch (SQLException e) {
+			new CFWLog(logger)
+				.severe("Error fetching autocomplete data.", e);
+		}finally {
+			db.close(result);
+		}
+		
+		return new AutocompleteResult(suggestions);
 	}
 }

@@ -200,7 +200,12 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 					OffsetDateTime startTime = result.getObject("START_TIME", OffsetDateTime.class);
 					OffsetDateTime endTime = result.getObject("END_TIME", OffsetDateTime.class);
 					
-					object.addProperty("JOBNAME", result.getString("NAME"));
+					int runID = result.getInt("ID");
+					String type = result.getString("TYPE");
+					String currentJobname = result.getString("NAME");
+					String URL = environment.getJobWorkflowURL(currentJobname, type, runID);
+					
+					object.addProperty("JOBNAME", currentJobname);
 					object.addProperty("STATUS", result.getString("STATUS"));
 					object.addProperty("CLIENT_ID", result.getString("CLIENT_ID"));
 					object.addProperty("TYPE", result.getString("TYPE"));
@@ -210,7 +215,7 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 					object.addProperty("HOST_SOURCE", result.getString("HOST_SOURCE"));
 					object.addProperty("DURATION_SECONDS", result.getString("DURATION_SECONDS"));
 					object.addProperty("STATUS_CODE", result.getString("STATUS_CODE"));
-					
+					object.addProperty("URL", URL);
 					resultArray.add(object);
 				}
 				
