@@ -35,11 +35,9 @@ public class WidgetRangeChart extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_spm_environment!}")
-						.setDescription("{!cfw_widget_spm_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE))
-				)
+				
+				.addField(PrometheusSettingsFactory.createPrometheusEnvironmentSelectorField())
+				
 				.addField((CFWField)CFWField.newString(FormFieldType.TEXTAREA, "query")
 						.setLabel("{!emp_widget_prometheus_range_query!}")
 						.setDescription("{!emp_widget_prometheus_range_query_desc!}")
