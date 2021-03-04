@@ -35,7 +35,7 @@
 					var chartLabelFields;
 					
 					if(!CFW.utils.isNullOrEmpty(settings.labels)){
-						chartLabelFields = settings.labels.split(/[, ]+/);
+						chartLabelFields = settings.labels.trim().split(/[, ]+/);
 						console.log('chartLabelFields: '); 
 						console.log(chartLabelFields); 
 					}else{
