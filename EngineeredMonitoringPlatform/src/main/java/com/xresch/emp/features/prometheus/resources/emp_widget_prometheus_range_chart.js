@@ -32,7 +32,15 @@
 					//---------------------------------
 					// Prepare Prometheus data
 					var monitorStats = emp_widget_prometheus_prepareData(data.payload);
-					var chartLabelFields = emp_widget_prometheus_getChartLabelFields(data.payload);
+					var chartLabelFields;
+					
+					if(!CFW.utils.isNullOrEmpty(settings.labels)){
+						chartLabelFields = settings.labels.split(/[, ]+/);
+						console.log('chartLabelFields: '); 
+						console.log(chartLabelFields); 
+					}else{
+						chartLabelFields = emp_widget_prometheus_getChartLabelFields(data.payload);
+					}
 
 					//---------------------------
 					// Render Settings
