@@ -29,6 +29,29 @@ public class FeatureAWA extends CFWAppFeature {
 	
 	//public static final String PERMISSION_AWAJOBSTATUS = "AWA Jobstatus";
 	
+	/************************************************************************************
+	 * Override to make it managed and return something else then null.
+	 ************************************************************************************/
+	@Override
+	public String getNameForFeatureManagement() {
+		return "AWA";
+	};
+	
+	/************************************************************************************
+	 * Register a description for the feature management.
+	 ************************************************************************************/
+	@Override
+	public String getDescriptionForFeatureManagement() {
+		return "Dashboard Widgets and Context Settings for Automic Workload Automation(AWA).";
+	};
+	
+	/************************************************************************************
+	 * Return if the feature is active by default or if the admin has to enable it.
+	 ************************************************************************************/
+	public boolean activeByDefault() {
+		return true;
+	};
+	
 	@Override
 	public void register() {
 		//----------------------------------

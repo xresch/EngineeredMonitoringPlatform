@@ -32,7 +32,7 @@ public class ServletTheusinator extends HttpServlet
 	@Override
     protected void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException
     {
-		if( CFW.Context.Request.hasPermission(FeatureSPM.PERMISSION_THEUSINATOR) ){
+		if( CFW.Context.Request.hasPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR) ){
 			
 			String service = request.getParameter("service");
 			

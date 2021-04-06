@@ -20,6 +20,28 @@ public class FeatureWebex extends CFWAppFeature {
 	public static final String RESOURCE_PACKAGE = "com.xresch.emp.features.webex.resources";
 	public static final String MANUAL_PACKAGE = "com.xresch.emp.features.webex.manual";
 	
+	/************************************************************************************
+	 * Override to make it managed and return something else then null.
+	 ************************************************************************************/
+	@Override
+	public String getNameForFeatureManagement() {
+		return "Webex";
+	};
+	
+	/************************************************************************************
+	 * Register a description for the feature management.
+	 ************************************************************************************/
+	@Override
+	public String getDescriptionForFeatureManagement() {
+		return "Dashboard Widget to fetch service status from Webex.";
+	};
+	
+	/************************************************************************************
+	 * Return if the feature is active by default or if the admin has to enable it.
+	 ************************************************************************************/
+	public boolean activeByDefault() {
+		return true;
+	};
 	@Override
 	public void register() {
 		

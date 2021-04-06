@@ -18,6 +18,29 @@ public class FeaturePrometheus extends CFWAppFeature {
 	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.prometheus.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.prometheus.resources";
 	
+	/************************************************************************************
+	 * Override to make it managed and return something else then null.
+	 ************************************************************************************/
+	@Override
+	public String getNameForFeatureManagement() {
+		return "Prometheus";
+	};
+	
+	/************************************************************************************
+	 * Register a description for the feature management.
+	 ************************************************************************************/
+	@Override
+	public String getDescriptionForFeatureManagement() {
+		return "Dashboard Widgets and Context Settings for Prometheus.";
+	};
+	
+	/************************************************************************************
+	 * Return if the feature is active by default or if the admin has to enable it.
+	 ************************************************************************************/
+	public boolean activeByDefault() {
+		return true;
+	};
+	
 	@Override
 	public void register() {
 		

@@ -12,6 +12,7 @@ import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
 import com.xresch.emp.features.prometheus.FeaturePrometheus;
 import com.xresch.emp.features.spm.FeatureSPM;
+import com.xresch.emp.features.spm.FeatureSPMTheusinator;
 import com.xresch.emp.features.webex.FeatureWebex;
 
 /**************************************************************************************************************
@@ -45,6 +46,7 @@ public class Main implements CFWAppInterface {
 		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);
+    	CFW.Registry.Features.addFeature(FeatureSPMTheusinator.class);
     	CFW.Registry.Features.addFeature(FeatureWebex.class);
 
 	}
