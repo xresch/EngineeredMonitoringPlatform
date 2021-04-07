@@ -90,7 +90,10 @@
 								striped: 	false,
 								hover: 		false,
 								filterable: false,
-							}
+							},
+							panels: {
+								narrow: 	true,
+							},
 					}};
 					
 					//-----------------------------------
