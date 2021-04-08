@@ -48,7 +48,7 @@
 					
 					//---------------------------------
 					// Prepare visible fields
-					var visiblefields = null;
+					var visiblefields = Object.keys(data.payload[0]);
 					var detailColumns = settings.detailcolumns;
 					
 					if(!CFW.utils.isNullOrEmpty(detailColumns)){
@@ -122,8 +122,7 @@
 								maxcolumns: 5,
 							},
 					}};
-					
-					
+										
 					//--------------------------
 					// Render Widget
 					var renderer = CFW.render.getRenderer(renderType);
