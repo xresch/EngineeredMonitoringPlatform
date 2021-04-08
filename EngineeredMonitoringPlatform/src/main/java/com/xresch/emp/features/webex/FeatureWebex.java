@@ -17,7 +17,7 @@ import com.xresch.emp.features.prometheus.WidgetRangeChart;
  **************************************************************************************************************/
 public class FeatureWebex extends CFWAppFeature {
 	
-	public static final String RESOURCE_PACKAGE = "com.xresch.emp.features.webex.resources";
+	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.webex.resources";
 	public static final String MANUAL_PACKAGE = "com.xresch.emp.features.webex.manual";
 	
 	/************************************************************************************
@@ -47,7 +47,7 @@ public class FeatureWebex extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Package
-		CFW.Files.addAllowedPackage(RESOURCE_PACKAGE);
+		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		CFW.Files.addAllowedPackage(MANUAL_PACKAGE); 
 		
 		//-----------------------------------------

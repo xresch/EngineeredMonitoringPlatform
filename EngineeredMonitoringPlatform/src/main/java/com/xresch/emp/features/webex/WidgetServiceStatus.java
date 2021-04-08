@@ -96,14 +96,14 @@ public class WidgetServiceStatus extends WidgetDefinition {
 	
 	public void createSampleData(JSONResponse response) { 
 		
-		response.getContent().append(CFW.Files.readPackageResource(FeatureWebex.RESOURCE_PACKAGE, "emp_widget_webexservicestatus_sample.json"));
+		response.getContent().append(CFW.Files.readPackageResource(FeatureWebex.PACKAGE_RESOURCE, "emp_widget_webexservicestatus_sample.json"));
 
 	}
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureWebex.RESOURCE_PACKAGE, "emp_widget_webexservicestatus.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureWebex.PACKAGE_RESOURCE, "emp_widget_webexservicestatus.js");
 		array.add(js);
 		return array;
 	}
@@ -116,7 +116,7 @@ public class WidgetServiceStatus extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_widgets.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureWebex.PACKAGE_RESOURCE, "lang_en_emp_webex.properties"));
 		return map;
 	}
 

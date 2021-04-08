@@ -16,6 +16,7 @@ import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.validation.LengthValidator;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.webex.FeatureWebex;
 
 public class WidgetCustomThresholdLegend extends WidgetDefinition {
 
@@ -95,6 +96,7 @@ public class WidgetCustomThresholdLegend extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_common.properties"));
 		return map;
 	}
 

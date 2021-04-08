@@ -29,7 +29,7 @@ public class WidgetServiceStatusLegend extends WidgetDefinition {
 
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureWebex.RESOURCE_PACKAGE, "emp_widget_webexservicestatus_legend.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureWebex.PACKAGE_RESOURCE, "emp_widget_webexservicestatus_legend.js");
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add(js);
 		return array;
