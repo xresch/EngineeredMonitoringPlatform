@@ -90,12 +90,20 @@
 							panels: {
 								narrow: 	true,
 							},
+							cards: {
+								narrow: 	true,
+								maxcolumns: 5,
+							},
 					}};
 					
 					//-----------------------------------
 					// Adjust RenderSettings
 					if(dataToRender.data.length > 0){
-						if( (renderType == "table" || renderType == "panels")){
+						if( (renderType == "table" 
+							|| renderType == "panels"
+							|| renderType == "cards"
+							|| renderType == "csv"
+							|| renderType == "json")){
 							
 							var visiblefields = Object.keys(dataToRender.data[0]);
 							//remove alertstyle and textstyle

@@ -48,7 +48,7 @@
 					
 					//---------------------------------
 					// Prepare visible fields
-					var visiblefields = [];
+					var visiblefields = null;
 					var detailColumns = settings.detailcolumns;
 					
 					if(!CFW.utils.isNullOrEmpty(detailColumns)){
@@ -116,6 +116,10 @@
 							},
 							panels: {
 								narrow: 	true,
+							},
+							cards: {
+								narrow: 	true,
+								maxcolumns: 5,
 							},
 					}};
 					

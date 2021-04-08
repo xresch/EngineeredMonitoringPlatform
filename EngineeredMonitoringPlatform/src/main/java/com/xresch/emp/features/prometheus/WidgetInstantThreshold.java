@@ -49,12 +49,9 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 				
 				.addAllFields(WidgetSettingsFactory.createThresholdFields())
 
-				.addField(WidgetSettingsFactory.createDisplayAsSelect(new String[]{"Tiles", "Panels", "Table"}, "Tiles"))
-				
+				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
-				
 				.addField(WidgetSettingsFactory.createDisableBoolean())
-				
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}

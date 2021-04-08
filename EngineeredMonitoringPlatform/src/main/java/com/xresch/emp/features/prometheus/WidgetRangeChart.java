@@ -57,12 +57,7 @@ public class WidgetRangeChart extends WidgetDefinition {
 						.setDescription("{!emp_widget_prometheus_labels_desc!}")
 				)
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
-				
-				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
-						.setLabel("{!cfw_widget_sampledata!}")
-						.setDescription("{!cfw_widget_sampledata_desc!}")
-						.setValue(false)
-				)
+				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}
 

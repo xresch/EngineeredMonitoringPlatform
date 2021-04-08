@@ -146,6 +146,7 @@ function emp_dynatrace_renderEvents(widgetObject, data, callback){
 			},
 			cards: {
 				narrow: 	true,
+				maxcolumns: 5,
 			},
 			
 	}};

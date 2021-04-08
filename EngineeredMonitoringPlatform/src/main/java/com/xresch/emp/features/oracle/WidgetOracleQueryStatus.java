@@ -84,14 +84,8 @@ public class WidgetOracleQueryStatus extends WidgetDefinition {
 				)
 
 				.addAllFields(WidgetSettingsFactory.createThresholdFields())
-		
-				.addField(CFWField.newString(FormFieldType.SELECT, "renderer")
-						.setLabel("{!cfw_widget_displayas!}")
-						.setDescription("{!emp_widget_displayas_desc!}")
-						.setOptions(new String[]{"Tiles", "Panels", "Table"})
-						.setValue("Tiles")
-				)
-								
+										
+				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
 				.addField(WidgetSettingsFactory.createDisableBoolean())
 				.addField(WidgetSettingsFactory.createSampleDataField())

@@ -22,6 +22,7 @@ import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
+import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -96,19 +97,9 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 						.setValue(true)
 				)
 								
-				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "disable")
-						.setLabel("{!cfw_widget_disable!}")
-						.setDescription("{!cfw_widget_disable_desc!}")
-						.setValue(false)
-				)
 				
-
-				
-				.addField(CFWField.newBoolean(FormFieldType.BOOLEAN, "sampledata")
-						.setLabel("{!cfw_widget_sampledata!}")
-						.setDescription("{!cfw_widget_sampledata_desc!}")
-						.setValue(false)
-				)
+				.addField(WidgetSettingsFactory.createDisableBoolean())
+				.addField(WidgetSettingsFactory.createSampleDataField())
 	
 		;
 	}

@@ -93,6 +93,10 @@
 							panels: {
 								narrow: 	true,
 							},
+							cards: {
+								narrow: 	true,
+								maxcolumns: 5,
+							},
 					}};
 					
 					//-----------------------------------
