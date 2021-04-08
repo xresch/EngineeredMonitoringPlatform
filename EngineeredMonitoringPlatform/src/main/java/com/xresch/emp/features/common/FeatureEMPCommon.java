@@ -6,6 +6,7 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.emp.features.oracle.WidgetOracleQueryStatus;
 import com.xresch.emp.features.spm.FeatureSPM;
 import com.xresch.emp.features.webex.FeatureWebex;
 
@@ -31,6 +32,10 @@ public class FeatureEMPCommon extends CFWAppFeature {
 		// Register Package
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
+		
+		//----------------------------------
+		// Register Widgets
+		CFW.Registry.Widgets.add(new WidgetCustomThresholdLegend());
 		
 		//----------------------------------
 		// Register Manuals	
