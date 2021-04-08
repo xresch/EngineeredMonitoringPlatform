@@ -12,8 +12,8 @@
 		{
 			category: "Monitoring | Webex",
 			menuicon: "fas fa-info-circle",
-			menulabel: CFWL('cfw_widget_webexservicestatuslegend', "Webex Service Status Legend"),
-			description: CFWL('cfw_widget_webexservicestatuslegend_desc', "Displays a legend for the colors used by the Webex Service Status widget."),
+			menulabel: CFWL('emp_widget_webexservicestatuslegend', "Webex Service Status Legend"),
+			description: CFWL('emp_widget_webexservicestatuslegend_desc', "Displays a legend for the colors used by the Webex Service Status widget."),
 			defaulttitle: "",
 			defaultwidth: 32,
 			defaultheight: 4,

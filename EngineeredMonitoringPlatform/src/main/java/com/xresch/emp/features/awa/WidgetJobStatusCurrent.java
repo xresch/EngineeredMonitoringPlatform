@@ -37,27 +37,27 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	public CFWObject getSettings() {
 		return new CFWObject()
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_awajobstatus_environment!}")
-						.setDescription("{!cfw_widget_awajobstatus_environment_desc!}")
+						.setLabel("{!emp_widget_awajobstatus_environment!}")
+						.setDescription("{!emp_widget_awajobstatus_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(AWAEnvironment.SETTINGS_TYPE))
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, "jobnames")
-						.setLabel("{!cfw_widget_awajobstatus_jobnames!}")
-						.setDescription("{!cfw_widget_awajobstatus_jobnames_desc!}")
+						.setLabel("{!emp_widget_awajobstatus_jobnames!}")
+						.setDescription("{!emp_widget_awajobstatus_jobnames_desc!}")
 						.setValue("")			
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, "joblabels")
-						.setLabel("{!cfw_widget_awajobstatus_joblabels!}")
-						.setDescription("{!cfw_widget_awajobstatus_joblabels_desc!}")
+						.setLabel("{!emp_widget_awajobstatus_joblabels!}")
+						.setDescription("{!emp_widget_awajobstatus_joblabels_desc!}")
 						.setValue("")
 						
 				)
 				
 				.addField(CFWField.newInteger(FormFieldType.TEXT, "last_run_minutes")
-						.setLabel("{!cfw_widget_awajobstatus_last_run_minutes!}")
-						.setDescription("{!cfw_widget_awajobstatus_last_run_minutes_desc!}")
+						.setLabel("{!emp_widget_awajobstatus_last_run_minutes!}")
+						.setDescription("{!emp_widget_awajobstatus_last_run_minutes_desc!}")
 						.setValue(0)	
 				)
 

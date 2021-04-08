@@ -53,8 +53,8 @@ public class WidgetRangeChart extends WidgetDefinition {
 				)
 			
 				.addField(CFWField.newString(FormFieldType.TEXT, "labels")
-						.setLabel("{!cfw_widget_prometheus_labels!}")
-						.setDescription("{!cfw_widget_prometheus_labels_desc!}")
+						.setLabel("{!emp_widget_prometheus_labels!}")
+						.setDescription("{!emp_widget_prometheus_labels_desc!}")
 				)
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
 				

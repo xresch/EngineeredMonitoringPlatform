@@ -12,8 +12,8 @@
 		{
 			category: "Monitoring | SPM",
 			menuicon: "fas fa-cogs",
-			menulabel: CFWL('cfw_widget_spmmonitorstatus_forprojects', "SPM Monitor Status for Projects"),
-			description: CFWL('cfw_widget_spmmonitorstatus_forprojects_desc', "Fetches the status of all the monitors for the specified projects."),
+			menulabel: CFWL('emp_widget_spmmonitorstatus_forprojects', "SPM Monitor Status for Projects"),
+			description: CFWL('emp_widget_spmmonitorstatus_forprojects_desc', "Fetches the status of all the monitors for the specified projects."),
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){

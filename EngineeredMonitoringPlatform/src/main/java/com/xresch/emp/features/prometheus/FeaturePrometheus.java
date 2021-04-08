@@ -23,7 +23,7 @@ public class FeaturePrometheus extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getNameForFeatureManagement() {
-		return "Prometheus";
+		return "EMP Prometheus";
 	};
 	
 	/************************************************************************************

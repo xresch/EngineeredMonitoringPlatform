@@ -32,15 +32,15 @@ public class WidgetServiceStatus extends WidgetDefinition {
 	public CFWObject getSettings() {
 		return new CFWObject()
 				.addField(CFWField.newString(FormFieldType.TEXT, "url")
-						.setLabel("{!cfw_widget_webexservicestatus_url!}")
-						.setDescription("{!cfw_widget_webexservicestatus_url_desc!}")
+						.setLabel("{!emp_widget_webexservicestatus_url!}")
+						.setDescription("{!emp_widget_webexservicestatus_url_desc!}")
 						.allowHTML(true)
 						.setValue("")			
 				)
 				
 //				.addField(CFWField.newString(FormFieldType.TEXTAREA, "service_filter")
-//						.setLabel("{!cfw_widget_webexservicestatus_servicefilter!}")
-//						.setDescription("{!cfw_widget_webexservicestatus_servicefilter_desc!}")
+//						.setLabel("{!emp_widget_webexservicestatus_servicefilter!}")
+//						.setDescription("{!emp_widget_webexservicestatus_servicefilter_desc!}")
 //						.setValue("")
 //						
 //				)

@@ -12,8 +12,8 @@
 		{
 			category: "Monitoring | SPM",
 			menuicon: "fas fa-cogs",
-			menulabel: CFWL('cfw_widget_spmcounterforprojectstatus', "SPM Counters for Project Status"),
-			description: CFWL('cfw_widget_spmcounterforprojectstatus_desc', "Fetches the current count for the defined counters of a single project and displays it as defined by the threshold options."), 
+			menulabel: CFWL('emp_widget_spmcounterforprojectstatus', "SPM Counters for Project Status"),
+			description: CFWL('emp_widget_spmcounterforprojectstatus_desc', "Fetches the current count for the defined counters of a single project and displays it as defined by the threshold options."), 
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){

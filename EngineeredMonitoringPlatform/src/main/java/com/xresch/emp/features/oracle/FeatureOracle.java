@@ -32,7 +32,7 @@ public class FeatureOracle extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getNameForFeatureManagement() {
-		return "Oracle";
+		return "EMP Oracle";
 	};
 	
 	/************************************************************************************

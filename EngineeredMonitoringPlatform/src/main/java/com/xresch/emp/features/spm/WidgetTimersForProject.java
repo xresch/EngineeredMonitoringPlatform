@@ -42,14 +42,14 @@ public class WidgetTimersForProject extends WidgetDefinition {
 	public CFWObject getSettings() {
 		return new CFWObject()
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_spm_environment!}")
-						.setDescription("{!cfw_widget_spm_environment_desc!}")
+						.setLabel("{!emp_widget_spm_environment!}")
+						.setDescription("{!emp_widget_spm_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE))
 				)
 				
 				.addField(CFWField.newTagsSelector("JSON_PROJECTS")
-						.setLabel("{!cfw_widget_spm_project!}")
-						.setDescription("{!cfw_widget_spm_project_desc!}")
+						.setLabel("{!emp_widget_spm_project!}")
+						.setDescription("{!emp_widget_spm_project_desc!}")
 						.addAttribute("maxTags", "1")
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
@@ -63,8 +63,8 @@ public class WidgetTimersForProject extends WidgetDefinition {
 				)
 				
 				.addField(CFWField.newTagsSelector("JSON_TIMERNAMES")
-						.setLabel("{!cfw_widget_spm_timernames!}")
-						.setDescription("{!cfw_widget_spm_timernames_desc!}")	
+						.setLabel("{!emp_widget_spm_timernames!}")
+						.setDescription("{!emp_widget_spm_timernames_desc!}")	
 							.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override

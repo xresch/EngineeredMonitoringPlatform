@@ -77,8 +77,8 @@
 		{
 			category: "Monitoring | Webex",
 			menuicon: "fas fa-cogs",
-			menulabel: CFWL('cfw_widget_webexservicestatus', "Webex Service Status"),
-			description: CFWL('cfw_widget_webexservicestatus_desc', "Fetches the status of Webex services from the given Webex REST URL. (Example: https://service-status.webex.com/customer/dashServices/123)"),
+			menulabel: CFWL('emp_widget_webexservicestatus', "Webex Service Status"),
+			description: CFWL('emp_widget_webexservicestatus_desc', "Fetches the status of Webex services from the given Webex REST URL. (Example: https://service-status.webex.com/customer/dashServices/123)"),
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){

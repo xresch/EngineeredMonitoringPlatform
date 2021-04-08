@@ -34,7 +34,7 @@ public class FeatureAWA extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getNameForFeatureManagement() {
-		return "AWA";
+		return "EMP AWA";
 	};
 	
 	/************************************************************************************

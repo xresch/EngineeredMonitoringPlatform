@@ -23,7 +23,7 @@ public class FeatureDynatrace extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getNameForFeatureManagement() {
-		return "Dynatrace";
+		return "EMP Dynatrace";
 	};
 	
 	/************************************************************************************

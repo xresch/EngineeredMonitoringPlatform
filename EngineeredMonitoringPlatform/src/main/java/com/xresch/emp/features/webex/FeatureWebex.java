@@ -25,7 +25,7 @@ public class FeatureWebex extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getNameForFeatureManagement() {
-		return "Webex";
+		return "EMP Webex";
 	};
 	
 	/************************************************************************************

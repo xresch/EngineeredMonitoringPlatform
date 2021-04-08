@@ -31,7 +31,7 @@ public class FeatureSPM extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getNameForFeatureManagement() {
-		return "SPM";
+		return "EMP SPM";
 	};
 	
 	/************************************************************************************

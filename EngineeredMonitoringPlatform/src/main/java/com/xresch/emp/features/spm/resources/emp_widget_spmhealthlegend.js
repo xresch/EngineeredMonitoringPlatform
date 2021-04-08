@@ -21,8 +21,8 @@
 		{
 			category: "Monitoring | SPM",
 			menuicon: "fas fa-info-circle",
-			menulabel: CFWL('cfw_widget_smpstatuslegend', "SPM Status Legend"),
-			description: CFWL('cfw_widget_smpstatuslegend_desc', "Displays a legend for the colors used by the SPM status monitors."),
+			menulabel: CFWL('emp_widget_smpstatuslegend', "SPM Status Legend"),
+			description: CFWL('emp_widget_smpstatuslegend_desc', "Displays a legend for the colors used by the SPM status monitors."),
 			defaulttitle: "",
 			defaultwidth: 32,
 			defaultheight: 4,

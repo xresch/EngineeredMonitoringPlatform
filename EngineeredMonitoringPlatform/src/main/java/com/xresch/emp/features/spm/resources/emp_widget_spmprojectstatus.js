@@ -12,8 +12,8 @@
 		{
 			category: "Monitoring | SPM",
 			menuicon: "fas fa-cogs",
-			menulabel: CFWL('cfw_widget_spmprojectstatus', "SPM Project Status"),
-			description: CFWL('cfw_widget_spmprojectstatus_desc', "Fetches the status of one or multiple SPM Ponitors."),
+			menulabel: CFWL('emp_widget_spmprojectstatus', "SPM Project Status"),
+			description: CFWL('emp_widget_spmprojectstatus_desc', "Fetches the status of one or multiple SPM Ponitors."),
 			createWidgetInstance: function (widgetObject, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){

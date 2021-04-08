@@ -12,8 +12,8 @@
 		{
 			category: "Monitoring | AWA",
 			menuicon: "fas fa-info-circle",
-			menulabel: CFWL('cfw_widget_awajobstatuslegend', "AWA Job Status Legend"),
-			description: CFWL('cfw_widget_awajobstatuslegend_desc', "Displays a legend for the colors used by the AWA job status widget."),
+			menulabel: CFWL('emp_widget_awajobstatuslegend', "AWA Job Status Legend"),
+			description: CFWL('emp_widget_awajobstatuslegend_desc', "Displays a legend for the colors used by the AWA job status widget."),
 			defaulttitle: "",
 			defaultwidth: 32,
 			defaultheight: 4,

@@ -13,8 +13,8 @@ public class PrometheusSettingsFactory {
 	 ************************************************************************************/
 	public static CFWField<?> createPrometheusEnvironmentSelectorField(){
 		return CFWField.newString(FormFieldType.SELECT, "environment")
-				.setLabel("{!cfw_widget_spm_environment!}")
-				.setDescription("{!cfw_widget_spm_environment_desc!}")
+				.setLabel("{!emp_widget_spm_environment!}")
+				.setDescription("{!emp_widget_spm_environment_desc!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE));
 	}
 		

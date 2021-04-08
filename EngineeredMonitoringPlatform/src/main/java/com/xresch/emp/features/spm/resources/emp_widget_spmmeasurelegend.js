@@ -21,8 +21,8 @@
 		{
 			category: "Monitoring | SPM",
 			menuicon: "fas fa-info-circle",
-			menulabel: CFWL('cfw_widget_smpmeasurelegend', "SPM Measure Legend"),
-			description: CFWL('cfw_widget_smpmeasurelegend_desc', "Displays a legend for the colors used by the SPM monitors(Timers and Counters)."),
+			menulabel: CFWL('emp_widget_smpmeasurelegend', "SPM Measure Legend"),
+			description: CFWL('emp_widget_smpmeasurelegend_desc', "Displays a legend for the colors used by the SPM monitors(Timers and Counters)."),
 			defaulttitle: "",
 			defaultwidth: 32,
 			defaultheight: 4,

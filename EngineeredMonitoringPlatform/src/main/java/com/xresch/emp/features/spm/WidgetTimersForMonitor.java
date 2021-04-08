@@ -42,14 +42,14 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 	public CFWObject getSettings() {
 		return new CFWObject()
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_spm_environment!}")
-						.setDescription("{!cfw_widget_spm_environment_desc!}")
+						.setLabel("{!emp_widget_spm_environment!}")
+						.setDescription("{!emp_widget_spm_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE))
 				)
 				
 				.addField(CFWField.newTagsSelector("JSON_MONITORS")
-						.setLabel("{!cfw_widget_spm_monitor!}")
-						.setDescription("{!cfw_widget_spm_monitor_desc!}")
+						.setLabel("{!emp_widget_spm_monitor!}")
+						.setDescription("{!emp_widget_spm_monitor_desc!}")
 						.addAttribute("maxTags", "1")
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
@@ -63,8 +63,8 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 				)
 				
 				.addField(CFWField.newTagsSelector("JSON_TIMERNAMES")
-						.setLabel("{!cfw_widget_spm_timernames!}")
-						.setDescription("{!cfw_widget_spm_timernames_desc!}")	
+						.setLabel("{!emp_widget_spm_timernames!}")
+						.setDescription("{!emp_widget_spm_timernames_desc!}")	
 							.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override

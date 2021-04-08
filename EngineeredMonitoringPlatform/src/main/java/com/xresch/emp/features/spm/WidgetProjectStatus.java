@@ -40,14 +40,14 @@ public class WidgetProjectStatus extends WidgetDefinition {
 		return new CFWObject()
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_spm_environment!}")
-						.setDescription("{!cfw_widget_spm_environment_desc!}")
+						.setLabel("{!emp_widget_spm_environment!}")
+						.setDescription("{!emp_widget_spm_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE))
 				)
 				
 				.addField(CFWField.newTagsSelector("JSON_PROJECTS")
-						.setLabel("{!cfw_widget_spm_projects!}")
-						.setDescription("{!cfw_widget_spm_projects_desc!}")
+						.setLabel("{!emp_widget_spm_projects!}")
+						.setDescription("{!emp_widget_spm_projects_desc!}")
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override
@@ -60,8 +60,8 @@ public class WidgetProjectStatus extends WidgetDefinition {
 				)
 				
 				.addField(CFWField.newString(FormFieldType.SELECT, "measure")
-						.setLabel("{!cfw_widget_spm_measure!}")
-						.setDescription("{!cfw_widget_spm_measure_desc!}")
+						.setLabel("{!emp_widget_spm_measure!}")
+						.setDescription("{!emp_widget_spm_measure_desc!}")
 						.setOptions(new String[]{"Overall Health", "Availability", "Accuracy", "Performance"})
 						.setValue("Overall Health")
 				)

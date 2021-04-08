@@ -34,8 +34,8 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 	public CFWObject getSettings() {
 		return new CFWObject()
 				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!cfw_widget_spm_environment!}")
-						.setDescription("{!cfw_widget_spm_environment_desc!}")
+						.setLabel("{!emp_widget_spm_environment!}")
+						.setDescription("{!emp_widget_spm_environment_desc!}")
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE))
 				)
 				.addField(CFWField.newString(FormFieldType.TEXT, "query")
