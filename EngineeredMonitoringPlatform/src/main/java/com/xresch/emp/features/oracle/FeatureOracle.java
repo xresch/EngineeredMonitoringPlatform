@@ -27,6 +27,8 @@ public class FeatureOracle extends CFWAppFeature {
 	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.oracle.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.oracle.resources";
 	
+	public static final String PERMISSION_WIDGETS_ORACLE = "Widgets: Oracle";
+	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
 	 ************************************************************************************/
@@ -86,11 +88,11 @@ public class FeatureOracle extends CFWAppFeature {
 		
 		//----------------------------------
 		// Permissions
-//		CFW.DB.Permissions.oneTimeCreate(
-//				new Permission(PERMISSION_OracleJOBSTATUS, "user")
-//					.description("View and analyze productive Oracle job status."),
-//				true,
-//				true);
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_WIDGETS_ORACLE, "user")
+					.description("Create and Edit Oracle Widgets."),
+				true,
+				true);
 	}
 
 	@Override
