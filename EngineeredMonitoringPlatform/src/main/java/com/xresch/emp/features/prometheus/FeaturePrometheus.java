@@ -6,6 +6,7 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************
@@ -17,6 +18,8 @@ public class FeaturePrometheus extends CFWAppFeature {
 	
 	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.prometheus.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.prometheus.resources";
+	
+	public static final String PERMISSION_WIDGETS_PROMETHEUS = "Widgets: Prometheus";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -78,6 +81,14 @@ public class FeaturePrometheus extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		PrometheusEnvironmentManagement.initialize();
+		
+		//----------------------------------
+		// Permissions
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_WIDGETS_PROMETHEUS, "user")
+					.description("Create and Edit Prometheus Widgets."),
+				true,
+				true);
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.oracle.FeatureOracle;
 
 public class WidgetInstantThreshold extends WidgetDefinition {
 
@@ -133,5 +134,9 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeaturePrometheus.PACKAGE_RESOURCE, "lang_en_emp_prometheus.properties"));
 		return map;
 	}
-
+	
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeaturePrometheus.PERMISSION_WIDGETS_PROMETHEUS);
+	}
 }
