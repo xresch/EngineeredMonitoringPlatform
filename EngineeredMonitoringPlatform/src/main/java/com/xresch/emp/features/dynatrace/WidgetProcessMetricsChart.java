@@ -30,13 +30,13 @@ public class WidgetProcessMetricsChart extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
+				.addField(DynatraceSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
+				.addField(DynatraceSettingsFactory.createSingleHostSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleProcessGroupInstanceSelectorField())
+				.addField(DynatraceSettingsFactory.createSingleProcessGroupInstanceSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createMetricsSelectorField("PROCESS_GROUP"))
+				.addField(DynatraceSettingsFactory.createMetricsSelectorField("PROCESS_GROUP"))
 				
 				
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())

@@ -32,15 +32,15 @@ public class WidgetHostLogs extends WidgetDefinition {
 		
 	class WidgetHostLogsSettings extends CFWObject {
 		public WidgetHostLogsSettings() {
-			this.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
+			this.addField(DynatraceSettingsFactory.createEnvironmentSelectorField())
 			
-				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
+				.addField(DynatraceSettingsFactory.createSingleHostSelectorField())
 			
-				.addField(DynatraceWidgetSettingsFactory.createSingleLogSelectorField(EntityType.HOST))
+				.addField(DynatraceSettingsFactory.createSingleLogSelectorField(EntityType.HOST))
 			
-				.addField(DynatraceWidgetSettingsFactory.createLogQueryField())
+				.addField(DynatraceSettingsFactory.createLogQueryField())
 			
-				.addField(DynatraceWidgetSettingsFactory.createLogMaxEntriesField())
+				.addField(DynatraceSettingsFactory.createLogMaxEntriesField())
 			
 				.addField(WidgetSettingsFactory.createSampleDataField());
 		}

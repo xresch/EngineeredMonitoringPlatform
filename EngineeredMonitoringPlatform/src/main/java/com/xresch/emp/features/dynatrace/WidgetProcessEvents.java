@@ -31,11 +31,11 @@ public class WidgetProcessEvents extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
+				.addField(DynatraceSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
+				.addField(DynatraceSettingsFactory.createSingleHostSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleProcessGroupInstanceSelectorField())
+				.addField(DynatraceSettingsFactory.createSingleProcessGroupInstanceSelectorField())
 				
 				.addField(WidgetSettingsFactory.createDisplayAsSelect(new String[]{"Tiles", "Table", "Panels", "Cards"}, "Panels"))
 				

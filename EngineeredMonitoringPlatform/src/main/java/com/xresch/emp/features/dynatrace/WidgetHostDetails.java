@@ -36,9 +36,9 @@ public class WidgetHostDetails extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
+				.addField(DynatraceSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
+				.addField(DynatraceSettingsFactory.createSingleHostSelectorField())
 				
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;

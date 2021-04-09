@@ -30,11 +30,11 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
+				.addField(DynatraceSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
+				.addField(DynatraceSettingsFactory.createSingleHostSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createMetricsSelectorField("HOST"))
+				.addField(DynatraceSettingsFactory.createMetricsSelectorField("HOST"))
 				
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
 				

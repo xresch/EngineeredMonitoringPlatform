@@ -13,14 +13,14 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.validation.NumberRangeValidator;
 import com.xresch.emp.features.dynatrace.DynatraceEnvironment.EntityType;
 
-public class DynatraceWidgetSettingsFactory {
+public class DynatraceSettingsFactory {
 	
 	/************************************************************************************
 	 * Returns the dynatrace environment selector field.
 	 * 
 	 * @return
 	 ************************************************************************************/
-	public static CFWField<?> createDynatraceEnvironmentSelectorField(){
+	public static CFWField<?> createEnvironmentSelectorField(){
 		return CFWField.newString(FormFieldType.SELECT, "environment")
 			.setLabel("{!emp_widget_dynatrace_environment!}")
 			.setDescription("{!emp_widget_dynatrace_environment_desc!}")

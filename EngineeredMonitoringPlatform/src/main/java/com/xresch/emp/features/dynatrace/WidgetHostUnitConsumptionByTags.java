@@ -32,7 +32,7 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
+				.addField(DynatraceSettingsFactory.createEnvironmentSelectorField())
 								
 				.addField(CFWField.newString(FormFieldType.TEXT, "tagsfilter")
 						.setLabel("{!emp_widget_dynatrace_tagsfilter!}")

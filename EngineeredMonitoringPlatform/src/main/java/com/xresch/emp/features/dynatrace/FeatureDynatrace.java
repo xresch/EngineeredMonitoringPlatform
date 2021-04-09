@@ -7,6 +7,7 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.Permission;
+import com.xresch.emp.features.awa.ParameterDefinitionAWAEnvironment;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************
@@ -67,6 +68,11 @@ public class FeatureDynatrace extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetProcessEvents());
 		CFW.Registry.Widgets.add(new WidgetProcessLogs());
 		CFW.Registry.Widgets.add(new WidgetProcessMetricsChart());
+		
+		//----------------------------------
+		// Register Parameters
+		CFW.Registry.Parameters.add(new ParameterDefinitionDynatraceEnvironment());
+		
 		//----------------------------------
 		// Register Manual Page
 		FeatureEMPCommon.WIDGET_PAGE.addChild(

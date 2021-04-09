@@ -32,17 +32,17 @@ public class WidgetProcessLogs extends WidgetDefinition {
 		
 	class WidgetProcessLogsSettings extends CFWObject {
 		public WidgetProcessLogsSettings() {
-			this.addField(DynatraceWidgetSettingsFactory.createDynatraceEnvironmentSelectorField())
+			this.addField(DynatraceSettingsFactory.createEnvironmentSelectorField())
 			
-				.addField(DynatraceWidgetSettingsFactory.createSingleHostSelectorField())
+				.addField(DynatraceSettingsFactory.createSingleHostSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleProcessGroupSelectorField())
+				.addField(DynatraceSettingsFactory.createSingleProcessGroupSelectorField())
 				
-				.addField(DynatraceWidgetSettingsFactory.createSingleLogSelectorField(EntityType.PROCESS_GROUP))
+				.addField(DynatraceSettingsFactory.createSingleLogSelectorField(EntityType.PROCESS_GROUP))
 			
-				.addField(DynatraceWidgetSettingsFactory.createLogQueryField())
+				.addField(DynatraceSettingsFactory.createLogQueryField())
 			
-				.addField(DynatraceWidgetSettingsFactory.createLogMaxEntriesField())
+				.addField(DynatraceSettingsFactory.createLogMaxEntriesField())
 			
 				.addField(WidgetSettingsFactory.createSampleDataField());
 		}
