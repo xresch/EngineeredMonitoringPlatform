@@ -36,7 +36,7 @@ public class WidgetRangeChart extends WidgetDefinition {
 	public CFWObject getSettings() {
 		return new CFWObject()
 				
-				.addField(PrometheusSettingsFactory.createPrometheusEnvironmentSelectorField())
+				.addField(PrometheusSettingsFactory.createEnvironmentSelectorField())
 				
 				.addField((CFWField)CFWField.newString(FormFieldType.TEXTAREA, "query")
 						.setLabel("{!emp_widget_prometheus_range_query!}")

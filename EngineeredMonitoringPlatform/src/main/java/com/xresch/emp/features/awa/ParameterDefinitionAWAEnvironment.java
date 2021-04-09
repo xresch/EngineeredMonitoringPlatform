@@ -1,21 +1,15 @@
-package com.xresch.emp.features.prometheus;
+package com.xresch.emp.features.awa;
 
 import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.google.common.base.Strings;
-import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWField.FormFieldType;
-import com.xresch.cfw.features.core.AutocompleteResult;
-import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.parameters.ParameterDefinition;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
-public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinition {
+public class ParameterDefinitionAWAEnvironment extends ParameterDefinition {
 
-	public static final String LABEL = "Prometheus Environment";
+	public static final String LABEL = "AWA Environment";
 	
 	/***************************************************************
 	 * 
@@ -29,7 +23,7 @@ public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinitio
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
-		CFWField settingsField = PrometheusSettingsFactory.createEnvironmentSelectorField();
+		CFWField settingsField = AWASettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
 			settingsField.setValueConvert(fieldValue);
@@ -55,7 +49,7 @@ public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinitio
 	public boolean isAvailable(HashSet<String> widgetTypesArray) {
 		
 		for(String type : widgetTypesArray) {
-			if(type.contains("prometheus")) {
+			if(type.contains("emp_awa")) {
 				return true;
 			}
 			

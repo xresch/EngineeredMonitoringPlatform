@@ -36,11 +36,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!emp_widget_awajobstatus_environment!}")
-						.setDescription("{!emp_widget_awajobstatus_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(AWAEnvironment.SETTINGS_TYPE))
-				)
+				.addField(AWASettingsFactory.createEnvironmentSelectorField())
 				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, "jobnames")
 						.setLabel("{!emp_widget_awajobstatus_jobnames!}")
