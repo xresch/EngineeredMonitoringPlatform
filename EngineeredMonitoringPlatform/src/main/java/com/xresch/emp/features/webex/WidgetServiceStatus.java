@@ -22,6 +22,7 @@ import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.spm.FeatureSPM;
 
 public class WidgetServiceStatus extends WidgetDefinition {
 
@@ -118,6 +119,11 @@ public class WidgetServiceStatus extends WidgetDefinition {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureWebex.PACKAGE_RESOURCE, "lang_en_emp_webex.properties"));
 		return map;
+	}
+	
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeatureWebex.PERMISSION_WIDGETS_WEBEX);
 	}
 
 }

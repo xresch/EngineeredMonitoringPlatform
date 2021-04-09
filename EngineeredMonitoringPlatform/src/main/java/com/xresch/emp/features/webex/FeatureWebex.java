@@ -20,6 +20,8 @@ public class FeatureWebex extends CFWAppFeature {
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.webex.resources";
 	public static final String MANUAL_PACKAGE = "com.xresch.emp.features.webex.manual";
 	
+	public static final String PERMISSION_WIDGETS_WEBEX = "Widgets: Webex";
+	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
 	 ************************************************************************************/
@@ -59,7 +61,13 @@ public class FeatureWebex extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-									
+		//----------------------------------
+		// Permissions
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_WIDGETS_WEBEX, "user")
+					.description("Create and Edit Webex Widgets."),
+				true,
+				true);							
 	}
 
 	@Override
