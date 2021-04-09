@@ -27,7 +27,7 @@ public class FeatureAWA extends CFWAppFeature {
 	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.awa.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.awa.resources";
 	
-	//public static final String PERMISSION_AWAJOBSTATUS = "AWA Jobstatus";
+	public static final String PERMISSION_WIDGETS_AWA = "Widgets: AWA";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -91,11 +91,11 @@ public class FeatureAWA extends CFWAppFeature {
 		
 		//----------------------------------
 		// Permissions
-//		CFW.DB.Permissions.oneTimeCreate(
-//				new Permission(PERMISSION_AWAJOBSTATUS, "user")
-//					.description("View and analyze productive AWA job status."),
-//				true,
-//				true);
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_WIDGETS_AWA, "user")
+					.description("Create and Edit AWA Widgets."),
+				true,
+				true);
 	}
 
 	@Override

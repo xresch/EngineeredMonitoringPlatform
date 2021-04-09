@@ -7,6 +7,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.gson.JsonObject;
+import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWObject;
@@ -51,4 +52,8 @@ public class WidgetJobStatusLegend extends WidgetDefinition {
 		return map;
 	}
 
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA);
+	}
 }

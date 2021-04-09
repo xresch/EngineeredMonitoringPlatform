@@ -286,5 +286,10 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.PACKAGE_RESOURCE, "lang_en_emp_awa.properties"));
 		return map;
 	}
+	
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA);
+	}
 
 }
