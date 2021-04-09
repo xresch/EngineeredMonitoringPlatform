@@ -41,26 +41,9 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!emp_widget_spm_environment!}")
-						.setDescription("{!emp_widget_spm_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE))
-				)
+				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(CFWField.newTagsSelector("JSON_PROJECTS")
-						.setLabel("{!emp_widget_spm_project!}")
-						.setDescription("{!emp_widget_spm_project_desc!}")
-						.addAttribute("maxTags", "1")
-						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-							
-							@Override
-							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-								String environment = request.getParameter("environment");
-								
-								return EnvironmentManagerSPM.autocompleteProjects(Integer.parseInt(environment), searchValue, this.getMaxResults());
-							}
-						})			
-				)
+				.addField(SPMSettingsFactory.createProjectsSelectorField())
 				
 				.addField(CFWField.newTagsSelector("JSON_COUNTERNAMES")
 						.setLabel("{!emp_widget_spm_counternames!}")

@@ -40,32 +40,11 @@ public class WidgetProjectStatus extends WidgetDefinition {
 	public CFWObject getSettings() {
 		return new CFWObject()
 				
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!emp_widget_spm_environment!}")
-						.setDescription("{!emp_widget_spm_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE))
-				)
+				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(CFWField.newTagsSelector("JSON_PROJECTS")
-						.setLabel("{!emp_widget_spm_projects!}")
-						.setDescription("{!emp_widget_spm_projects_desc!}")
-						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-							
-							@Override
-							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-								String environment = request.getParameter("environment");
-								
-								return EnvironmentManagerSPM.autocompleteProjects(Integer.parseInt(environment), searchValue, this.getMaxResults());
-							}
-						})			
-				)
+				.addField(SPMSettingsFactory.createProjectsSelectorField())
 				
-				.addField(CFWField.newString(FormFieldType.SELECT, "measure")
-						.setLabel("{!emp_widget_spm_measure!}")
-						.setDescription("{!emp_widget_spm_measure_desc!}")
-						.setOptions(new String[]{"Overall Health", "Availability", "Accuracy", "Performance"})
-						.setValue("Overall Health")
-				)
+				.addField(SPMSettingsFactory.createMeasureSelectField())
 				
 				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())

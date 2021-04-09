@@ -37,18 +37,9 @@ public class WidgetMonitorStatusAll extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!emp_widget_spm_environment!}")
-						.setDescription("{!emp_widget_spm_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE))
-				)
+				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
 								
-				.addField(CFWField.newString(FormFieldType.SELECT, "measure")
-						.setLabel("{!emp_widget_spm_measure!}")
-						.setDescription("{!emp_widget_spm_measure_desc!}")
-						.setOptions(new String[]{"Overall Health", "Availability", "Accuracy", "Performance"})
-						.setValue("Overall Health")
-				)
+				.addField(SPMSettingsFactory.createMeasureSelectField())
 				
 				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
