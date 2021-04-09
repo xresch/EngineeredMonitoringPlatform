@@ -29,7 +29,6 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.validation.CustomValidator;
-import com.xresch.emp.features.awa.FeatureAWA;
 
 public class WidgetOracleQueryStatus extends WidgetDefinition {
 
@@ -40,11 +39,7 @@ public class WidgetOracleQueryStatus extends WidgetDefinition {
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField(CFWField.newString(FormFieldType.SELECT, "environment")
-						.setLabel("{!emp_widget_oraclequerystatus_environment!}")
-						.setDescription("{!emp_widget_oraclequerystatus_environment_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(OracleEnvironment.SETTINGS_TYPE))
-				)
+				.addField( OracleSettingsFactory.createEnvironmentSelectorField() )
 				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, "sqlquery")
 						.setLabel("{!emp_widget_oraclequerystatus_sqlquery!}")
@@ -218,7 +213,7 @@ public class WidgetOracleQueryStatus extends WidgetDefinition {
 			array.add(object);
 		}
 		
-		response.getContent().append(array.toString());
+		response.getContent().append(CFW.Random.randomJSONArrayOfMightyPeople(12).toString());
 
 	}
 	

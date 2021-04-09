@@ -11,6 +11,7 @@ import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.response.bootstrap.MenuItem;
 import com.xresch.emp._main.Main;
+import com.xresch.emp.features.awa.ParameterDefinitionAWAEnvironment;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.prometheus.PrometheusEnvironment;
 import com.xresch.emp.features.prometheus.PrometheusEnvironmentManagement;
@@ -69,8 +70,7 @@ public class FeatureOracle extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Parameters
-		//CFW.Registry.Parameters.add(new ParameterDefinitionOracleJobname());
-    
+		CFW.Registry.Parameters.add(new ParameterDefinitionOracleEnvironment());
 		
 		//----------------------------------
 		// Register Manual Page
