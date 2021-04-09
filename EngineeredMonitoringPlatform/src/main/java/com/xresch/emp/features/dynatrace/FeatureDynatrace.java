@@ -6,6 +6,7 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************
@@ -17,6 +18,8 @@ public class FeatureDynatrace extends CFWAppFeature {
 	
 	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.dynatrace.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.dynatrace.resources";
+	
+	public static final String PERMISSION_WIDGETS_DYNATRACE = "Widgets: Dynatrace";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -77,6 +80,14 @@ public class FeatureDynatrace extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		DynatraceEnvironmentManagement.initialize();
+		
+		//----------------------------------
+		// Permissions
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_WIDGETS_DYNATRACE, "user")
+					.description("Create and Edit Dynatrace Widgets."),
+				true,
+				true);
 	}
 
 	@Override

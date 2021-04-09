@@ -108,5 +108,12 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatrace.PACKAGE_RESOURCE, "lang_en_emp_dynatrace.properties"));
 		return map;
 	}
+	
+	
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeatureDynatrace.PERMISSION_WIDGETS_DYNATRACE);
+	}
+	
 
 }

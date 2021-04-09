@@ -169,4 +169,9 @@ public class WidgetProcessLogs extends WidgetDefinition {
 		return map;
 	}
 
+	
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeatureDynatrace.PERMISSION_WIDGETS_DYNATRACE);
+	}
 }

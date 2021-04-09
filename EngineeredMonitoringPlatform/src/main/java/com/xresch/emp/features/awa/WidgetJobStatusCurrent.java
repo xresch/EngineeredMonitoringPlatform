@@ -26,7 +26,6 @@ import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.emp.features.common.FeatureEMPCommon;
 
 public class WidgetJobStatusCurrent extends WidgetDefinition {
 

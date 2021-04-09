@@ -23,6 +23,7 @@ import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.emp.features.awa.FeatureAWA;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 public class WidgetHostDetails extends WidgetDefinition {
@@ -121,6 +122,11 @@ public class WidgetHostDetails extends WidgetDefinition {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatrace.PACKAGE_RESOURCE, "lang_en_emp_dynatrace.properties"));
 		return map;
+	}
+	
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeatureDynatrace.PERMISSION_WIDGETS_DYNATRACE);
 	}
 
 }
