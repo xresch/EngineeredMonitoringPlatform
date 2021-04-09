@@ -8,6 +8,7 @@ import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.prometheus.ParameterDefinitionPrometheusEnvironment;
 
 /**************************************************************************************************************
  * 
@@ -66,6 +67,10 @@ public class FeatureSPM extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetTimersForProject());
 		CFW.Registry.Widgets.add(new WidgetStatusLegend());
 		CFW.Registry.Widgets.add(new WidgetMeasureLegend());
+		
+		//----------------------------------
+		// Register Parameters
+		CFW.Registry.Parameters.add(new ParameterDefinitionSPMEnvironment());
 		
 		//----------------------------------
 		// Register Manuals

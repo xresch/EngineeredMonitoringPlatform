@@ -18,6 +18,8 @@
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					var monitorStats = data.payload;
+					var settings = widgetObject.JSON_SETTINGS;
+					var renderer = settings.renderer.toLowerCase();
 					
 					for(var key in monitorStats){
 						var current = monitorStats[key];
@@ -68,9 +70,9 @@
 					 	},
 						rendererSettings:{
 							tiles: {
-								sizefactor: widgetObject.JSON_SETTINGS.sizefactor,
-								showlabels: widgetObject.JSON_SETTINGS.showlabels,
-								borderstyle: widgetObject.JSON_SETTINGS.borderstyle
+								sizefactor: settings.sizefactor,
+								showlabels: settings.showlabels,
+								borderstyle: settings.borderstyle
 							},
 							table: {
 								narrow: 	true,
@@ -89,7 +91,10 @@
 					
 					//-----------------------------------
 					// Adjust RenderSettings for Table
-					if(widgetObject.JSON_SETTINGS.renderer == "Table"){
+					if(renderer == "table"
+					|| renderer == "panels"
+					|| renderer == "cards"
+					|| renderer == "csv"){
 						dataToRender.visiblefields = ['PROJECT_NAME', 'MONITOR_NAME', 'VALUE']; 
 						dataToRender.customizers.PROJECT_NAME = function(record, value) { 
 				 			if(value != null && value != ""){
@@ -105,10 +110,10 @@
 					if(  data.payload == null || typeof data.payload == 'string'){
 						callback(widgetObject, "unknown");
 					}else{
-						var renderType = widgetObject.JSON_SETTINGS.renderer;
-						if(renderType == null){ renderType = 'tiles'};
+
+						if(renderer == null){ renderType = 'tiles'};
 						
-						var alertRenderer = CFW.render.getRenderer(renderType.toLowerCase());
+						var alertRenderer = CFW.render.getRenderer(renderer);
 						callback(widgetObject, alertRenderer.render(dataToRender));
 					}
 					
