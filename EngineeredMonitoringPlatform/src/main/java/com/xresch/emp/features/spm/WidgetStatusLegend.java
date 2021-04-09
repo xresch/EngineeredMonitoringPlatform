@@ -7,6 +7,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import com.google.gson.JsonObject;
+import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWObject;
@@ -49,6 +50,11 @@ public class WidgetStatusLegend extends WidgetDefinition {
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
 		return map;
+	}
+	
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM);
 	}
 
 }

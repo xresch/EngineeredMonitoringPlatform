@@ -1,18 +1,12 @@
 package com.xresch.emp.features.spm;
 
-import java.util.ArrayList;
-
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
-import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.Permission;
-import com.xresch.cfw.response.bootstrap.DynamicItemCreator;
-import com.xresch.cfw.response.bootstrap.HierarchicalHTMLItem;
-import com.xresch.cfw.response.bootstrap.MenuItem;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************
@@ -25,7 +19,8 @@ public class FeatureSPM extends CFWAppFeature {
 	public static final String PACKAGE_MANUAL = "com.xresch.emp.features.spm.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.spm.resources";
 	
-
+	public static final String PERMISSION_WIDGETS_SPM = "Widgets: SPM";
+	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
 	 ************************************************************************************/
@@ -85,6 +80,14 @@ public class FeatureSPM extends CFWAppFeature {
 		//-----------------------------------------
 		// Initialize SPM Environments
 		EnvironmentManagerSPM.initialize();
+		
+		//----------------------------------
+		// Permissions
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_WIDGETS_SPM, "user")
+					.description("Create and Edit SPM Widgets."),
+				true,
+				true);
 											
 	}
 

@@ -292,5 +292,9 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE, "lang_en_emp_spm.properties"));
 		return map;
 	}
-
+	
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM);
+	}
 }

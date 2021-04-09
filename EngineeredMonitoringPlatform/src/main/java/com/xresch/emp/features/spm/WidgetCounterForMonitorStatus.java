@@ -30,6 +30,7 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.prometheus.FeaturePrometheus;
 
 public class WidgetCounterForMonitorStatus extends WidgetDefinition {
 
@@ -294,6 +295,11 @@ public class WidgetCounterForMonitorStatus extends WidgetDefinition {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE, "lang_en_emp_spm.properties"));
 		return map;
+	}
+	
+	@Override
+	public boolean hasPermission() {
+		return CFW.Context.Request.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM);
 	}
 
 }
