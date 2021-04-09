@@ -1,4 +1,4 @@
-package com.xresch.emp.features.oracle;
+package com.xresch.emp.features.mysql;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
@@ -14,50 +14,44 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
  * @author Reto Scheiwiller, (c) Copyright 2021
  * @license MIT-License
  **************************************************************************************************************/
-public class OracleEnvironment extends AbstractContextSettings {
+public class MySQLEnvironment extends AbstractContextSettings {
 	
-	public static final String SETTINGS_TYPE = "Oracle Environment";
+	public static final String SETTINGS_TYPE = "MySQL Environment";
 	
 	private DBInterface dbInstance = null;
 	
-	public enum OracleEnvironmentFields{
+	public enum MySQLEnvironmentFields{
 		DB_HOST,
 		DB_PORT,
 		DB_NAME,
-		DB_TYPE,
 		DB_USER,
 		DB_PASSWORD,
 	}
 		
-	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, OracleEnvironmentFields.DB_HOST)
+	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, MySQLEnvironmentFields.DB_HOST)
 			.setDescription("The server name of the database host.");
 	
-	private CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, OracleEnvironmentFields.DB_PORT)
+	private CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, MySQLEnvironmentFields.DB_PORT)
 			.setDescription("The port used to access the database.");
 	
-	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, OracleEnvironmentFields.DB_NAME)
+	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, MySQLEnvironmentFields.DB_NAME)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbType = CFWField.newString(FormFieldType.SELECT, OracleEnvironmentFields.DB_TYPE)
-			.setDescription("The type of the oracle service.")
-			.setOptions(new String[] {"Service Name", "SID"})
-			.setValue("SID");
-	
-	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, OracleEnvironmentFields.DB_USER)
+	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, MySQLEnvironmentFields.DB_USER)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, OracleEnvironmentFields.DB_PASSWORD)
+	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, MySQLEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.")
 			.disableSecurity()
-			.enableEncryption("oracle_DB_PW_Salt");
+			.enableEncryption("mysql_DB_PW_Salt");
 	
 	
-	public OracleEnvironment() {
+	public MySQLEnvironment() {
 		initializeFields();
 	}
 		
 	private void initializeFields() {
-		this.addFields(dbHost, dbPort, dbName, dbType, dbUser, dbPassword);
+		this.addFields(dbHost, dbPort, dbName, dbUser, dbPassword);
 	}
 		
 	
@@ -67,13 +61,13 @@ public class OracleEnvironment extends AbstractContextSettings {
 		int count = new DashboardWidget()
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
-			.and().like(DashboardWidgetFields.TYPE, "emp_oracle%")
+			.and().like(DashboardWidgetFields.TYPE, "emp_mysql%")
 			.getCount();
 		
 		if(count == 0) {
 			return true;
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The Oracle Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The MySQL Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
 			return false;
 		}
 
@@ -88,22 +82,12 @@ public class OracleEnvironment extends AbstractContextSettings {
 		
 		return false;
 	}
-	
-
-	public String dbType() {
-		return dbType.getValue();
-	}
-	
-	public OracleEnvironment dbType(String value) {
-		this.dbType.setValue(value);
-		return this;
-	}
 			
 	public String dbHost() {
 		return dbHost.getValue();
 	}
 	
-	public OracleEnvironment dbHost(String value) {
+	public MySQLEnvironment dbHost(String value) {
 		this.dbHost.setValue(value);
 		return this;
 	}
@@ -112,7 +96,7 @@ public class OracleEnvironment extends AbstractContextSettings {
 		return dbPort.getValue();
 	}
 	
-	public OracleEnvironment dbPort(int value) {
+	public MySQLEnvironment dbPort(int value) {
 		this.dbPort.setValue(value);
 		return this;
 	}
@@ -121,7 +105,7 @@ public class OracleEnvironment extends AbstractContextSettings {
 		return dbName.getValue();
 	}
 	
-	public OracleEnvironment dbName(String value) {
+	public MySQLEnvironment dbName(String value) {
 		this.dbName.setValue(value);
 		return this;
 	}
@@ -130,7 +114,7 @@ public class OracleEnvironment extends AbstractContextSettings {
 		return dbUser.getValue();
 	}
 	
-	public OracleEnvironment dbUser(String value) {
+	public MySQLEnvironment dbUser(String value) {
 		this.dbUser.setValue(value);
 		return this;
 	}
@@ -139,7 +123,7 @@ public class OracleEnvironment extends AbstractContextSettings {
 		return dbPassword.getValue();
 	}
 	
-	public OracleEnvironment dbPassword(String value) {
+	public MySQLEnvironment dbPassword(String value) {
 		this.dbPassword.setValue(value);
 		return this;
 	}	

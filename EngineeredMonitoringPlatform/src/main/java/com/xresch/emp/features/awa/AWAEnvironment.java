@@ -91,7 +91,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 		int count = new DashboardWidget()
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
-			.and(DashboardWidgetFields.TYPE, "emp_awajobstatus")
+			.and().like(DashboardWidgetFields.TYPE, "emp_awa%")
 			.getCount();
 		
 		if(count == 0) {

@@ -95,7 +95,7 @@
 					|| renderer == "panels"
 					|| renderer == "cards"
 					|| renderer == "csv"){
-						dataToRender.visiblefields = ['PROJECT_NAME', 'MONITOR_NAME', 'VALUE']; 
+						dataToRender.visiblefields = ['PROJECT_NAME', 'VALUE']; 
 						dataToRender.customizers.PROJECT_NAME = function(record, value) { 
 				 			if(value != null && value != ""){
 				 				return  '<a style="color: inherit;" target="_blank" href="'+record.PROJECT_URL+'" >'+value+'</a>'; 

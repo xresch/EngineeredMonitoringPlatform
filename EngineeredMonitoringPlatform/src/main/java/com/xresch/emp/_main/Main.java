@@ -10,6 +10,7 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.emp.features.awa.FeatureAWA;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
+import com.xresch.emp.features.mysql.FeatureMySQL;
 import com.xresch.emp.features.oracle.FeatureOracle;
 import com.xresch.emp.features.prometheus.FeaturePrometheus;
 import com.xresch.emp.features.spm.FeatureSPM;
@@ -41,10 +42,11 @@ public class Main implements CFWAppInterface {
 	public void register() {
     	
 		//----------------------------------
-		// Register Objects
+		// Register Features
     	CFW.Registry.Features.addFeature(FeatureEMPCommon.class);
 		CFW.Registry.Features.addFeature(FeatureAWA.class);
 		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
+		CFW.Registry.Features.addFeature(FeatureMySQL.class);
 		CFW.Registry.Features.addFeature(FeatureOracle.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);
