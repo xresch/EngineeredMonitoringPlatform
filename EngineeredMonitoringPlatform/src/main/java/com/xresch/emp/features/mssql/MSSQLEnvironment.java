@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mysql;
+package com.xresch.emp.features.mssql;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
@@ -14,13 +14,13 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
  * @author Reto Scheiwiller, (c) Copyright 2021
  * @license MIT-License
  **************************************************************************************************************/
-public class MySQLEnvironment extends AbstractContextSettings {
+public class MSSQLEnvironment extends AbstractContextSettings {
 	
-	public static final String SETTINGS_TYPE = "MySQL Environment";
+	public static final String SETTINGS_TYPE = "MSSQL Environment";
 	
 	private DBInterface dbInstance = null;
 	
-	public enum MySQLEnvironmentFields{
+	public enum MSSQLEnvironmentFields{
 		DB_HOST,
 		DB_PORT,
 		DB_NAME,
@@ -28,25 +28,25 @@ public class MySQLEnvironment extends AbstractContextSettings {
 		DB_PASSWORD,
 	}
 		
-	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, MySQLEnvironmentFields.DB_HOST)
+	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, MSSQLEnvironmentFields.DB_HOST)
 			.setDescription("The server name of the database host.");
 	
-	private CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, MySQLEnvironmentFields.DB_PORT)
+	private CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, MSSQLEnvironmentFields.DB_PORT)
 			.setDescription("The port used to access the database.");
 	
-	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, MySQLEnvironmentFields.DB_NAME)
+	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, MSSQLEnvironmentFields.DB_NAME)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, MySQLEnvironmentFields.DB_USER)
+	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, MSSQLEnvironmentFields.DB_USER)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, MySQLEnvironmentFields.DB_PASSWORD)
+	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, MSSQLEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.")
 			.disableSecurity()
-			.enableEncryption("mysql_DB_PW_Salt");
+			.enableEncryption("mssql_DB_PW_Salt");
 	
 	
-	public MySQLEnvironment() {
+	public MSSQLEnvironment() {
 		initializeFields();
 	}
 		
@@ -61,13 +61,13 @@ public class MySQLEnvironment extends AbstractContextSettings {
 		int count = new DashboardWidget()
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
-			.and().like(DashboardWidgetFields.TYPE, "emp_mysql%")
+			.and().like(DashboardWidgetFields.TYPE, "emp_mssql%")
 			.getCount();
 		
 		if(count == 0) {
 			return true;
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The MySQL Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The MSSQL Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
 			return false;
 		}
 
@@ -87,7 +87,7 @@ public class MySQLEnvironment extends AbstractContextSettings {
 		return dbHost.getValue();
 	}
 	
-	public MySQLEnvironment dbHost(String value) {
+	public MSSQLEnvironment dbHost(String value) {
 		this.dbHost.setValue(value);
 		return this;
 	}
@@ -96,7 +96,7 @@ public class MySQLEnvironment extends AbstractContextSettings {
 		return dbPort.getValue();
 	}
 	
-	public MySQLEnvironment dbPort(int value) {
+	public MSSQLEnvironment dbPort(int value) {
 		this.dbPort.setValue(value);
 		return this;
 	}
@@ -105,7 +105,7 @@ public class MySQLEnvironment extends AbstractContextSettings {
 		return dbName.getValue();
 	}
 	
-	public MySQLEnvironment dbName(String value) {
+	public MSSQLEnvironment dbName(String value) {
 		this.dbName.setValue(value);
 		return this;
 	}
@@ -114,7 +114,7 @@ public class MySQLEnvironment extends AbstractContextSettings {
 		return dbUser.getValue();
 	}
 	
-	public MySQLEnvironment dbUser(String value) {
+	public MSSQLEnvironment dbUser(String value) {
 		this.dbUser.setValue(value);
 		return this;
 	}
@@ -123,7 +123,7 @@ public class MySQLEnvironment extends AbstractContextSettings {
 		return dbPassword.getValue();
 	}
 	
-	public MySQLEnvironment dbPassword(String value) {
+	public MSSQLEnvironment dbPassword(String value) {
 		this.dbPassword.setValue(value);
 		return this;
 	}	

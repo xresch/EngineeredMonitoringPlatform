@@ -3,17 +3,17 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-database", "Monitoring | MySQL");
+	CFW.dashboard.registerCategory("fas fa-database", "Monitoring | MSSQL");
 	
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_mysqlquerystatus",
+	CFW.dashboard.registerWidget("emp_mssqlquerystatus",
 		{
-			category: "Monitoring | MySQL",
+			category: "Monitoring | MSSQL",
 			menuicon: "fas fa-thermometer-half",
-			menulabel: CFWL('emp_widget_mysqlquerystatus', "Query Status"),
-			description: CFWL('emp_widget_mysqlquerystatus', "Executes an SQL Query and displays a threshhold based status."), 
+			menulabel: CFWL('emp_widget_mssqlquerystatus', "Query Status"),
+			description: CFWL('emp_widget_mssqlquerystatus', "Executes an SQL Query and displays a threshhold based status."), 
 			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, callback) {
 					

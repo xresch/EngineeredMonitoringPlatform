@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mysql;
+package com.xresch.emp.features.mssql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -13,27 +13,27 @@ import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
 
-public class MySQLEnvironmentManagement {
-	private static Logger logger = CFWLog.getLogger(MySQLEnvironmentManagement.class.getName());
+public class MSSQLEnvironmentManagement {
+	private static Logger logger = CFWLog.getLogger(MSSQLEnvironmentManagement.class.getName());
 	
 	private static boolean isInitialized = false;
 	
 	// Contains ContextSettings id and the associated database interface
-	private static HashMap<Integer, MySQLEnvironment> environmentsWithDB = new HashMap<Integer, MySQLEnvironment>();
+	private static HashMap<Integer, MSSQLEnvironment> environmentsWithDB = new HashMap<Integer, MSSQLEnvironment>();
 	
 
-	private MySQLEnvironmentManagement() {
+	private MSSQLEnvironmentManagement() {
 		//hide public constructor
 	}
 	public static void initialize() {
 		
 		ContextSettingsChangeListener listener = 
-				new ContextSettingsChangeListener(MySQLEnvironment.SETTINGS_TYPE) {
+				new ContextSettingsChangeListener(MSSQLEnvironment.SETTINGS_TYPE) {
 			
 			@Override
 			public void onChange(AbstractContextSettings setting, boolean isNew) {
-				MySQLEnvironment env = (MySQLEnvironment)setting;
-				MySQLEnvironmentManagement.createEnvironment(env);
+				MSSQLEnvironment env = (MSSQLEnvironment)setting;
+				MSSQLEnvironmentManagement.createEnvironment(env);
 			}
 
 			@Override
@@ -50,18 +50,18 @@ public class MySQLEnvironmentManagement {
 	
 	private static void createEnvironments() {
 		// Clear environments
-		environmentsWithDB = new HashMap<Integer, MySQLEnvironment>();
+		environmentsWithDB = new HashMap<Integer, MSSQLEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(MySQLEnvironment.SETTINGS_TYPE);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(MSSQLEnvironment.SETTINGS_TYPE);
 
 		for(AbstractContextSettings settings : settingsArray) {
-			MySQLEnvironment current = (MySQLEnvironment)settings;
+			MSSQLEnvironment current = (MSSQLEnvironment)settings;
 			createEnvironment(current);
 			
 		}
 	}
 	
-	private static void createEnvironment(MySQLEnvironment environment) {
+	private static void createEnvironment(MSSQLEnvironment environment) {
 
 		environmentsWithDB.remove(environment.getDefaultObject().id());
 		
@@ -80,7 +80,7 @@ public class MySQLEnvironmentManagement {
 	}
 	
 	
-	public static MySQLEnvironment getEnvironment(int id) {
+	public static MSSQLEnvironment getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
 		return environmentsWithDB.get(id);
 	}

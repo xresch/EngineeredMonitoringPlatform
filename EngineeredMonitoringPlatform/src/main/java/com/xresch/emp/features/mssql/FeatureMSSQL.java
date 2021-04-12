@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mysql;
+package com.xresch.emp.features.mssql;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWAppFeature;
@@ -23,19 +23,19 @@ import com.xresch.emp.features.spm.EnvironmentManagerSPM;
  * @author Reto Scheiwiller, (c) Copyright 2019 
  * @license MIT-License
  **************************************************************************************************************/
-public class FeatureMySQL extends CFWAppFeature {
+public class FeatureMSSQL extends CFWAppFeature {
 	
-	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.mysql.manual";
-	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.mysql.resources";
+	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.mssql.manual";
+	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.mssql.resources";
 	
-	public static final String PERMISSION_WIDGETS_MYSQL = "Widgets: MySQL";
+	public static final String PERMISSION_WIDGETS_MYSQL = "Widgets: MSSQL";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
 	 ************************************************************************************/
 	@Override
 	public String getNameForFeatureManagement() {
-		return "EMP MySQL";
+		return "EMP MSSQL";
 	};
 	
 	/************************************************************************************
@@ -43,7 +43,7 @@ public class FeatureMySQL extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getDescriptionForFeatureManagement() {
-		return "Dashboard Widgets to fetch data from a MySQL Database.";
+		return "Dashboard Widgets to fetch data from a MSSQL Database.";
 	};
 	
 	/************************************************************************************
@@ -62,35 +62,35 @@ public class FeatureMySQL extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Context Settings
-		CFW.Registry.ContextSettings.register(MySQLEnvironment.SETTINGS_TYPE, MySQLEnvironment.class);
+		CFW.Registry.ContextSettings.register(MSSQLEnvironment.SETTINGS_TYPE, MSSQLEnvironment.class);
 		
 		//----------------------------------
 		// Register Widgets
-		CFW.Registry.Widgets.add(new WidgetMySQLQueryStatus());
+		CFW.Registry.Widgets.add(new WidgetMSSQLQueryStatus());
 		
 		//----------------------------------
 		// Register Parameters
-		CFW.Registry.Parameters.add(new ParameterDefinitionMySQLEnvironment());
+		CFW.Registry.Parameters.add(new ParameterDefinitionMSSQLEnvironment());
 		
 		//----------------------------------
 		// Register Manual Page
 		FeatureEMPCommon.WIDGET_PAGE.addChild(
-				new ManualPage("MySQL Widgets")
+				new ManualPage("MSSQL Widgets")
 					.faicon("fas fa-desktop")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)
-					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_mysql.html")
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_mssql.html")
 			);
 	}
 
 	@Override
 	public void initializeDB() {
-		MySQLEnvironmentManagement.initialize();
+		MSSQLEnvironmentManagement.initialize();
 		
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
 				new Permission(PERMISSION_WIDGETS_MYSQL, "user")
-					.description("Create and Edit MySQL Widgets."),
+					.description("Create and Edit MSSQL Widgets."),
 				true,
 				true);
 	}

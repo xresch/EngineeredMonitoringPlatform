@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mysql;
+package com.xresch.emp.features.mssql;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -30,20 +30,20 @@ import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.validation.CustomValidator;
 
-public class WidgetMySQLQueryStatus extends WidgetDefinition {
+public class WidgetMSSQLQueryStatus extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(WidgetMySQLQueryStatus.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetMSSQLQueryStatus.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_mysqlquerystatus";}
+	public String getWidgetType() {return "emp_mssqlquerystatus";}
 
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
-				.addField( MySQLSettingsFactory.createEnvironmentSelectorField() )
+				.addField( MSSQLSettingsFactory.createEnvironmentSelectorField() )
 				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, "sqlquery")
-						.setLabel("{!emp_widget_mysqlquerystatus_sqlquery!}")
-						.setDescription("{!emp_widget_mysqlquerystatus_sqlquery_desc!}")
+						.setLabel("{!emp_widget_mssqlquerystatus_sqlquery!}")
+						.setDescription("{!emp_widget_mssqlquerystatus_sqlquery_desc!}")
 						.setValue("")
 						.addValidator(new CustomValidator() {
 							
@@ -65,18 +65,18 @@ public class WidgetMySQLQueryStatus extends WidgetDefinition {
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXT, "valuecolumn")
-						.setLabel("{!emp_widget_mysqlquerystatus_valuecolumn!}")
-						.setDescription("{!emp_widget_mysqlquerystatus_valuecolumn_desc!}")
+						.setLabel("{!emp_widget_mssqlquerystatus_valuecolumn!}")
+						.setDescription("{!emp_widget_mssqlquerystatus_valuecolumn_desc!}")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXT, "labelcolumns")
-						.setLabel("{!emp_widget_mysqlquerystatus_labelcolumns!}")
-						.setDescription("{!emp_widget_mysqlquerystatus_labelcolumns_desc!}")
+						.setLabel("{!emp_widget_mssqlquerystatus_labelcolumns!}")
+						.setDescription("{!emp_widget_mssqlquerystatus_labelcolumns_desc!}")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXT, "detailcolumns")
-						.setLabel("{!emp_widget_mysqlquerystatus_detailcolumns!}")
-						.setDescription("{!emp_widget_mysqlquerystatus_detailcolumns_desc!}")
+						.setLabel("{!emp_widget_mssqlquerystatus_detailcolumns!}")
+						.setDescription("{!emp_widget_mssqlquerystatus_detailcolumns_desc!}")
 				)
 
 				.addAllFields(WidgetSettingsFactory.createThresholdFields())
@@ -121,14 +121,14 @@ public class WidgetMySQLQueryStatus extends WidgetDefinition {
 		if(environmentElement.isJsonNull()) {
 			return;
 		}
-		MySQLEnvironment environment = MySQLEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
+		MSSQLEnvironment environment = MSSQLEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
 
 		//---------------------------------
 		// Get DB
 		DBInterface db = environment.getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "MySQL Query Status: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "MSSQL Query Status: The chosen environment seems not configured correctly.");
 			return;
 		}
 			
@@ -220,7 +220,7 @@ public class WidgetMySQLQueryStatus extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMySQL.PACKAGE_RESOURCE, "emp_widget_mysqlquerystatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMSSQL.PACKAGE_RESOURCE, "emp_widget_mssqlquerystatus.js") );
 		return array;
 	}
 
@@ -232,13 +232,13 @@ public class WidgetMySQLQueryStatus extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMySQL.PACKAGE_RESOURCE, "lang_en_emp_mysql.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMSSQL.PACKAGE_RESOURCE, "lang_en_emp_mssql.properties"));
 		return map;
 	}
 	
 	@Override
 	public boolean hasPermission() {
-		return CFW.Context.Request.hasPermission(FeatureMySQL.PERMISSION_WIDGETS_MYSQL);
+		return CFW.Context.Request.hasPermission(FeatureMSSQL.PERMISSION_WIDGETS_MYSQL);
 	}
 
 }

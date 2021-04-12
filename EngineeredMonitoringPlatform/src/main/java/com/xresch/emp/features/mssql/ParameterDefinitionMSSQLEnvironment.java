@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mysql;
+package com.xresch.emp.features.mssql;
 
 import java.util.HashSet;
 
@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.features.dashboard.parameters.ParameterDefinition;
 
-public class ParameterDefinitionMySQLEnvironment extends ParameterDefinition {
+public class ParameterDefinitionMSSQLEnvironment extends ParameterDefinition {
 
-	public static final String LABEL = "MySQL Environment";
+	public static final String LABEL = "MSSQL Environment";
 	
 	/***************************************************************
 	 * 
@@ -23,7 +23,7 @@ public class ParameterDefinitionMySQLEnvironment extends ParameterDefinition {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
-		CFWField settingsField = MySQLSettingsFactory.createEnvironmentSelectorField();
+		CFWField settingsField = MSSQLSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
 			settingsField.setValueConvert(fieldValue);
@@ -49,7 +49,7 @@ public class ParameterDefinitionMySQLEnvironment extends ParameterDefinition {
 	public boolean isAvailable(HashSet<String> widgetTypesArray) {
 		
 		for(String type : widgetTypesArray) {
-			if(type.contains("emp_mysql")) {
+			if(type.contains("emp_mssql")) {
 				return true;
 			}
 			
