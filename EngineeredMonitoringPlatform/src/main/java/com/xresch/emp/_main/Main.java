@@ -10,6 +10,7 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.emp.features.awa.FeatureAWA;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
+import com.xresch.emp.features.mssql.FeatureMSSQL;
 import com.xresch.emp.features.mysql.FeatureMySQL;
 import com.xresch.emp.features.oracle.FeatureOracle;
 import com.xresch.emp.features.prometheus.FeaturePrometheus;
@@ -47,6 +48,7 @@ public class Main implements CFWAppInterface {
 		CFW.Registry.Features.addFeature(FeatureAWA.class);
 		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
 		CFW.Registry.Features.addFeature(FeatureMySQL.class);
+		CFW.Registry.Features.addFeature(FeatureMSSQL.class);
 		CFW.Registry.Features.addFeature(FeatureOracle.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);

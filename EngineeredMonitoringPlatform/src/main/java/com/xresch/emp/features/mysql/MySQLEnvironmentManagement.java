@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
+import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
@@ -92,18 +93,18 @@ public class MySQLEnvironmentManagement {
 		
 		DBInterface db = new DBInterface() {
 			
-			SQLServerConnectionPoolDataSource pooledSource;
+
+			MysqlConnectionPoolDataSource pooledSource;
 			{
 				try {
 
-					pooledSource = new SQLServerConnectionPoolDataSource();
+					pooledSource = new MysqlConnectionPoolDataSource();
 					pooledSource.setServerName(servername);
 					pooledSource.setPortNumber(port);
 					
 					pooledSource.setDatabaseName(dbName);
 					pooledSource.setUser(username);
 					pooledSource.setPassword(password);
-					pooledSource.setMultiSubnetFailover(true);
 					
 					//----------------------------------
 					// Test connection
