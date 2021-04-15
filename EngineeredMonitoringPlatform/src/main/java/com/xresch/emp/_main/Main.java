@@ -47,6 +47,7 @@ public class Main implements CFWAppInterface {
     	CFW.Registry.Features.addFeature(FeatureEMPCommon.class);
 		CFW.Registry.Features.addFeature(FeatureAWA.class);
 		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
+		//CFW.Registry.Features.addFeature(FeatureInfluxDB.class);
 		CFW.Registry.Features.addFeature(FeatureMySQL.class);
 		CFW.Registry.Features.addFeature(FeatureMSSQL.class);
 		CFW.Registry.Features.addFeature(FeatureOracle.class);

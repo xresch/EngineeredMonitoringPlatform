@@ -1,0 +1,66 @@
+
+####################################################################
+# Request with Body Flux Query
+####################################################################
+curl --request POST \
+  http://localhost:8086/api/v2/query?org=initOrg  \
+  --header 'Authorization: Token tNuEOGVpF0HcopzXiyAOJybaiYWHIeGDFxg4WVn3JHipR5ergoHivigGqVcLVoU8ODSqchpW0jbobLe8y7JyoQ==' \
+  --header 'Accept: application/csv' \
+  --header 'Content-type: application/vnd.flux' \
+  --data 'from(bucket: "initBucket")
+	  |> range(start: -15m, stop: -0m)
+	  |> filter(fn: (r) => r["_measurement"] == "http_api_request_duration_seconds")
+	  |> filter(fn: (r) => r["method"] == "GET")
+	  |> aggregateWindow(every: 15m, fn: mean, createEmpty: false)
+	  |> yield(name: "mean")'
+	    
+================================
+Response sample
+================================
+result,table,_start,_stop,_time,_value,_field,_measurement,handler,method,path,response_code,status,user_agent
+,mean,0,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:30:00Z,254.5,+Inf,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,0,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:34:45.4608732Z,299.5,+Inf,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,1,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:30:00Z,254.5,0.005,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,1,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:34:45.4608732Z,299.5,0.005,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,2,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:30:00Z,254.5,0.01,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,2,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:34:45.4608732Z,299.5,0.01,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,3,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:30:00Z,254.5,0.025,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+
+
+####################################################################
+# Request with Body JSON InfluxQL
+####################################################################	  
+curl --request POST \
+  http://localhost:8086/api/v2/query?org=initOrg  \
+  --header 'Authorization: Token tNuEOGVpF0HcopzXiyAOJybaiYWHIeGDFxg4WVn3JHipR5ergoHivigGqVcLVoU8ODSqchpW0jbobLe8y7JyoQ==' \
+  --header 'Accept: application/csv' \
+  --header 'Content-type: application/json' \
+  --data '{"type": "flux", "query": "from(bucket: \"initBucket\") |> range(start: -15m, stop: -0m) |> filter(fn: (r) => r[\"_measurement\"] == \"http_api_request_duration_seconds\") |> filter(fn: (r) => r[\"method\"] == \"GET\") |> aggregateWindow(every: 15m, fn: mean, createEmpty: false) |> yield(name: \"mean\")"}'
+
+================================
+Response sample
+================================
+result,table,_start,_stop,_time,_value,_field,_measurement,handler,method,path,response_code,status,user_agent
+,mean,0,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:30:00Z,254.5,+Inf,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,0,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:34:45.4608732Z,299.5,+Inf,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,1,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:30:00Z,254.5,0.005,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,1,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:34:45.4608732Z,299.5,0.005,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,2,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:30:00Z,254.5,0.01,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,2,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:34:45.4608732Z,299.5,0.01,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+,mean,3,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:30:00Z,254.5,0.025,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
+  
+####################################################################
+# Request with Body Flux Query
+####################################################################
+curl --request POST \
+  http://localhost:8086/api/v2/query?org=initOrg  \
+  --header 'Authorization: Token tNuEOGVpF0HcopzXiyAOJybaiYWHIeGDFxg4WVn3JHipR5ergoHivigGqVcLVoU8ODSqchpW0jbobLe8y7JyoQ==' \
+  --header 'Accept: application/csv' \
+  --header 'Content-type: application/vnd.flux' \
+  --data 'from(bucket: "initBucket")
+	  |> range(start: -2m, stop: 0m)
+	  |> filter(fn: (r) => r["_measurement"] == "http_api_request_duration_seconds")
+	  |> top(n:10, columns: ["_time"])
+	  |> filter(fn: (r) => r["method"] == "GET")
+	  |> aggregateWindow(every: 15m, fn: mean, createEmpty: false)
+	  |> yield(name: "mean")'
