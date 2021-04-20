@@ -1,18 +1,15 @@
 package com.xresch.emp.features.mysql;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
-import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
+import com.xresch.emp.features.common.EMPDBInterfaceFactory;
 
 public class MySQLEnvironmentManagement {
 	private static Logger logger = CFWLog.getLogger(MySQLEnvironmentManagement.class.getName());
@@ -67,7 +64,7 @@ public class MySQLEnvironmentManagement {
 		environmentsWithDB.remove(environment.getDefaultObject().id());
 		
 		if(environment.isDBDefined()) {
-			DBInterface db = initializeDBInterface(
+			DBInterface db = EMPDBInterfaceFactory.createMySQLInterface(
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 
@@ -86,54 +83,110 @@ public class MySQLEnvironmentManagement {
 		return environmentsWithDB.get(id);
 	}
 	
+//	/************************************************************************
+//	 * 
+//	 ************************************************************************/
+//	public static DBInterface initializeDBInterface(String servername, int port, String dbName, String username, String password) {
+//		
+//		DBInterface db = new DBInterface() {
+//			
+//			//SQLServerConnectionPoolDataSource pooledSource;
+//			BasicDataSource pooledSource;
+//			{
+//				try {
+//					//Driver name: com.mysql.jdbc.Driver
+//					//Connection URL Example: "jdbc:mysql://localhost:3306/databasename"
+//					//Connection URL Example: "jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;user=MyUserName;password=*****;";  
+//					pooledSource = new BasicDataSource();
+//					
+//					pooledSource.setDriverClassName("com.mysql.jdbc.Driver");
+//					pooledSource.setUrl("jdbc:mysql://"+servername+":"+port+"/"+dbName);					
+//
+//					pooledSource.setUsername(username);
+//					pooledSource.setPassword(password);
+//					
+//					pooledSource.setMaxIdle(90);
+//					pooledSource.setMinIdle(10);
+//					pooledSource.setMaxOpenPreparedStatements(100);
+//					
+//					//----------------------------------
+//					// Test connection
+//					pooledSource.setLoginTimeout(5);
+//					Connection connection = pooledSource.getConnection();
+//					connection.close();
+//					
+//				} catch (Exception e) {
+//					new CFWLog(logger)
+//						.severe("Exception initializing Database.", e);
+//				}
+//			}
+//			
+//			@Override
+//			public Connection getConnection() throws SQLException {
+//				
+//				if(transactionConnection.get() != null) {
+//					return transactionConnection.get();
+//				}else {
+//					synchronized (pooledSource) {
+//						Connection connection = pooledSource.getConnection();
+//						addOpenConnection(connection);
+//						return connection;
+//					}
+//				}				
+//			}
+//		};
+//
+//		return db;
+//	}
+	
 	/************************************************************************
 	 * 
 	 ************************************************************************/
-	public static DBInterface initializeDBInterface(String servername, int port, String dbName, String username, String password) {
-		
-		DBInterface db = new DBInterface() {
-			
-
-			MysqlConnectionPoolDataSource pooledSource;
-			{
-				try {
-
-					pooledSource = new MysqlConnectionPoolDataSource();
-					pooledSource.setServerName(servername);
-					pooledSource.setPortNumber(port);
-					
-					pooledSource.setDatabaseName(dbName);
-					pooledSource.setUser(username);
-					pooledSource.setPassword(password);
-					
-					//----------------------------------
-					// Test connection
-					pooledSource.setLoginTimeout(5);
-					Connection connection = pooledSource.getConnection();
-					connection.close();
-					
-				} catch (Exception e) {
-					new CFWLog(logger)
-						.severe("Exception initializing Database.", e);
-				}
-			}
-			
-			@Override
-			public Connection getConnection() throws SQLException {
-				
-				if(transactionConnection.get() != null) {
-					return transactionConnection.get();
-				}else {
-					synchronized (pooledSource) {
-						Connection connection = pooledSource.getConnection();
-						addOpenConnection(connection);
-						return connection;
-					}
-				}				
-			}
-		};
-
-		return db;
-	}
+//	public static DBInterface initializeDBInterface(String servername, int port, String dbName, String username, String password) {
+//		
+//		DBInterface db = new DBInterface() {
+//			
+//
+//			MysqlConnectionPoolDataSource pooledSource;
+//			{
+//				try {
+//
+//					pooledSource = new MysqlConnectionPoolDataSource();
+//					pooledSource.setServerName(servername);
+//					pooledSource.setPortNumber(port);
+//					
+//					pooledSource.setDatabaseName(dbName);
+//					pooledSource.setUser(username);
+//					pooledSource.setPassword(password);
+//					
+//					//----------------------------------
+//					// Test connection
+//					pooledSource.setLoginTimeout(5);
+//					Connection connection = pooledSource.getConnection();
+//					connection.close();
+//					
+//				} catch (Exception e) {
+//					new CFWLog(logger)
+//						.severe("Exception initializing Database.", e);
+//				}
+//			}
+//			
+//			@Override
+//			public Connection getConnection() throws SQLException {
+//				
+//				if(transactionConnection.get() != null) {
+//					return transactionConnection.get();
+//				}else {
+//					synchronized (pooledSource) {
+//						Connection connection = pooledSource.getConnection();
+//						addOpenConnection(connection);
+//						return connection;
+//					}
+//				}				
+//			}
+//		};
+//
+//		return db;
+//	}
 	
 }

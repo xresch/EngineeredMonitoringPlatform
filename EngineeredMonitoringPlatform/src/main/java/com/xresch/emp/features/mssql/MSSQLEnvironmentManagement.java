@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import org.apache.commons.dbcp2.BasicDataSource;
+
 import com.microsoft.sqlserver.jdbc.SQLServerConnectionPoolDataSource;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
+import com.xresch.emp.features.common.EMPDBInterfaceFactory;
 
 public class MSSQLEnvironmentManagement {
 	private static Logger logger = CFWLog.getLogger(MSSQLEnvironmentManagement.class.getName());
@@ -66,7 +69,7 @@ public class MSSQLEnvironmentManagement {
 		environmentsWithDB.remove(environment.getDefaultObject().id());
 		
 		if(environment.isDBDefined()) {
-			DBInterface db = initializeDBInterface(
+			DBInterface db = EMPDBInterfaceFactory.createMSSQLInterface(
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 
@@ -85,54 +88,5 @@ public class MSSQLEnvironmentManagement {
 		return environmentsWithDB.get(id);
 	}
 	
-	/************************************************************************
-	 * 
-	 ************************************************************************/
-	public static DBInterface initializeDBInterface(String servername, int port, String dbName, String username, String password) {
-		
-		DBInterface db = new DBInterface() {
-			
-			SQLServerConnectionPoolDataSource pooledSource;
-			{
-				try {
-
-					pooledSource = new SQLServerConnectionPoolDataSource();
-					pooledSource.setServerName(servername);
-					pooledSource.setPortNumber(port);
-					
-					pooledSource.setDatabaseName(dbName);
-					pooledSource.setUser(username);
-					pooledSource.setPassword(password);
-					pooledSource.setMultiSubnetFailover(true);
-					
-					//----------------------------------
-					// Test connection
-					pooledSource.setLoginTimeout(5);
-					Connection connection = pooledSource.getConnection();
-					connection.close();
-					
-				} catch (Exception e) {
-					new CFWLog(logger)
-						.severe("Exception initializing Database.", e);
-				}
-			}
-			
-			@Override
-			public Connection getConnection() throws SQLException {
-				
-				if(transactionConnection.get() != null) {
-					return transactionConnection.get();
-				}else {
-					synchronized (pooledSource) {
-						Connection connection = pooledSource.getConnection();
-						addOpenConnection(connection);
-						return connection;
-					}
-				}				
-			}
-		};
-
-		return db;
-	}
 	
 }
