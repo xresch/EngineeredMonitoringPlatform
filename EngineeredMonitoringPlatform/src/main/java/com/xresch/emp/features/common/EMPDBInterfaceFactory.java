@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.emp.features.mysql.MySQLEnvironmentManagement;
@@ -106,15 +107,15 @@ public class EMPDBInterfaceFactory {
 					pooledSource.setUsername(username);
 					pooledSource.setPassword(password);
 					
-					pooledSource.setMaxIdle(90);
-					pooledSource.setMinIdle(10);
-					pooledSource.setMaxOpenPreparedStatements(100);
+					CFW.DB.setDefaultConnectionPoolSettings(pooledSource);
 					
 					//----------------------------------
 					// Test connection
 					//pooledSource.setLoginTimeout(5);
 					Connection connection = pooledSource.getConnection();
 					connection.close();
+					
+					CFW.Registry.Components.registerManagedConnectionPool("EMP MSSQL:"+servername+":"+port+";databaseName="+dbName, pooledSource);
 					
 				} catch (Exception e) {
 					new CFWLog(logger)
@@ -152,7 +153,6 @@ public class EMPDBInterfaceFactory {
 				try {
 					//Driver name: com.mysql.cj.jdbc.Driver
 					//Connection URL Example: "jdbc:mysql://localhost:3306/databasename"
-					//Connection URL Example: "jdbc:sqlserver://localhost:1433;databaseName=AdventureWorks;user=MyUserName;password=*****;";  
 					pooledSource = new BasicDataSource();
 					
 					pooledSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
@@ -161,15 +161,16 @@ public class EMPDBInterfaceFactory {
 					pooledSource.setUsername(username);
 					pooledSource.setPassword(password);
 					
-					pooledSource.setMaxIdle(90);
-					pooledSource.setMinIdle(10);
-					pooledSource.setMaxOpenPreparedStatements(100);
+					CFW.DB.setDefaultConnectionPoolSettings(pooledSource);
 					
 					//----------------------------------
 					// Test connection
 					//pooledSource.setLoginTimeout(5);
 					Connection connection = pooledSource.getConnection();
 					connection.close();
+					
+					CFW.Registry.Components.registerManagedConnectionPool("EMP MySQL:"+servername+":"+port+";databaseName="+dbName, pooledSource);
+					
 					
 				} catch (Exception e) {
 					new CFWLog(logger)
