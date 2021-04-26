@@ -14,7 +14,6 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.emp.features.common.EMPDBInterfaceFactory;
 
 public class MSSQLEnvironmentManagement {
 	private static Logger logger = CFWLog.getLogger(MSSQLEnvironmentManagement.class.getName());
@@ -69,7 +68,7 @@ public class MSSQLEnvironmentManagement {
 		environmentsWithDB.remove(environment.getDefaultObject().id());
 		
 		if(environment.isDBDefined()) {
-			DBInterface db = EMPDBInterfaceFactory.createMSSQLInterface(
+			DBInterface db = DBInterface.createDBInterfaceMSSQL(
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 

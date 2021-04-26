@@ -18,7 +18,6 @@ import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.emp.features.common.EMPDBInterfaceFactory;
 
 import oracle.ucp.jdbc.PoolDataSource;
 import oracle.ucp.jdbc.PoolDataSourceFactory;
@@ -77,7 +76,7 @@ public class AWAEnvironmentManagement {
 		environmentsWithDB.remove(environment.getDefaultObject().id());
 		
 		if(environment.isDBDefined()) {
-			DBInterface db = EMPDBInterfaceFactory.createOracleInterface(
+			DBInterface db = DBInterface.createDBInterfaceOracle(
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 
@@ -113,7 +112,7 @@ public class AWAEnvironmentManagement {
 		
 		if(environment.isDBDefined()) {
 			
-			DBInterface db = EMPDBInterfaceFactory.createOracleInterface(
+			DBInterface db = DBInterface.createDBInterfaceOracle(
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 

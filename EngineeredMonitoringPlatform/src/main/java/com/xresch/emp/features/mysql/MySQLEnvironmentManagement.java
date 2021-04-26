@@ -9,7 +9,6 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.emp.features.common.EMPDBInterfaceFactory;
 
 public class MySQLEnvironmentManagement {
 	private static Logger logger = CFWLog.getLogger(MySQLEnvironmentManagement.class.getName());
@@ -64,7 +63,7 @@ public class MySQLEnvironmentManagement {
 		environmentsWithDB.remove(environment.getDefaultObject().id());
 		
 		if(environment.isDBDefined()) {
-			DBInterface db = EMPDBInterfaceFactory.createMySQLInterface(
+			DBInterface db = DBInterface.createDBInterfaceMySQL(
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 

@@ -18,7 +18,6 @@ import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.emp.features.common.EMPDBInterfaceFactory;
 
 
 public class EnvironmentManagerSPM {
@@ -85,7 +84,7 @@ public class EnvironmentManagerSPM {
 
 		if(environment.isDBDefined()) {
 			
-			DBInterface db = EMPDBInterfaceFactory.createMSSQLInterface(
+			DBInterface db = DBInterface.createDBInterfaceMSSQL(
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 
