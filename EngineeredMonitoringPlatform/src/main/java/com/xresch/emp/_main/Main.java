@@ -20,13 +20,13 @@ import com.xresch.emp.features.webex.FeatureWebex;
 
 /**************************************************************************************************************
  * 
- * @author Reto Scheiwiller, (c) Copyright 2019 
+ * @author Reto Scheiwiller, (c) Copyright 2020
  **************************************************************************************************************/
 @CFWExtensionApplication
 public class Main implements CFWAppInterface {
 	
-	private static final Logger logger = CFWLog.getLogger(Main.class.getName());
-	protected static CFWLog log = new CFWLog(logger);
+	//Don't do a logger here
+	//private static final Logger logger = CFWLog.getLogger(Main.class.getName());
 	
     public static void main( String[] args ) throws Exception
     {
@@ -80,6 +80,7 @@ public class Main implements CFWAppInterface {
 	        try {
 				executor.start();
 			} catch (Exception e) {
+				Logger logger = CFWLog.getLogger(Main.class.getName());
 				new CFWLog(logger)
 				.severe("Exception occured during startup.", e);
 			}
