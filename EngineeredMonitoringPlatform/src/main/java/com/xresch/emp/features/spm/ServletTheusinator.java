@@ -68,14 +68,15 @@ public class ServletTheusinator extends HttpServlet
 		String method = request.getParameter("method");
 		String sessionID = request.getParameter("sessionId");
 		String env = request.getParameter("env");
-
+		
+		// build manually, environment without DB will not be created successfully 
 		ContextSettings settings = CFW.DB.ContextSettings.selectByID(env);
 		
 		if(settings == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The SPM environment seems not to be configured correctly.");
 			return;
 		}
-		
+
 		EnvironmentSPM spm = new EnvironmentSPM();
 		spm.mapJsonFields(settings.settings());
 						
@@ -122,10 +123,14 @@ public class ServletTheusinator extends HttpServlet
 	private static void sendGETRequest(HttpServletRequest request, PlaintextResponse plaintext, String url) {
 		
 		CFWHttpResponse result = CFW.HTTP.sendGETRequest(url);
-		if(result.getStatus() <= 299) {
+		if(result != null && result.getStatus() <= 299) {
 			plaintext.getContent().append(result.getResponseBody());	
 		} else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The SPM API Call returned the HTTP Status "+result.getStatus());
+			if(result != null) {
+				CFW.Messages.addWarningMessage("The SPM API Call returned the HTTP Status "+result.getStatus());
+			}else {
+				CFW.Messages.addWarningMessage("The SPM API Call failed without a response.");
+			}
 		}
 	}
 	
