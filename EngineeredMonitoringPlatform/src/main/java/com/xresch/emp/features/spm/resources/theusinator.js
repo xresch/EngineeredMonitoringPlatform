@@ -223,8 +223,6 @@ function fireChartTypeChange(selector) {
 /**************************************************************************************
  * Change order of projects in dashboard (by name, by tid, by environment, by custom tag)
  * @param selector selected value of #sortSelector
- * @see storeLocalValue()
- * @see startTheusinator();
  *************************************************************************************/
 function fireSortChange(selector) {
 
@@ -2344,15 +2342,6 @@ function dynamicSort(property) {
  * getSession(), getUserId() and getProjectsForUser() can't be called asynchronously
  * as each requires a return value from the prior function.
  * Sets all selectors to the right values by getting the right cookies.
- * @see retrieveLocalValue()
- * @see getSession()
- * @see getUserId()
- * @see getProjectsForUser()
- * @see getGroupsWithConfigRights()
- * @see draw()
- * @see drawLegend()
- * @see refreshTimer()
- * @see keepSessionAlive()
  *************************************************************************************/
 function startTheusinator(){
 	
@@ -2830,9 +2819,8 @@ function keepSessionAlive() {
 		
 			function(data) {
 				if($(data).find('readableTime').length == 0) {
-					clearInterval(ALIVE);
-					clearInterval(INTERVAL_ID);
-					RESULTS_DIV.html('<p>Session terminated. Please reload page.</p>');
+					//Restart and create a new session
+					startTheusinator();
 				}
 			}
 		)
