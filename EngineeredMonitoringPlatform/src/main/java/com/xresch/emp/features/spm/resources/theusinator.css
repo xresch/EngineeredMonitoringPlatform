@@ -58,42 +58,11 @@
 	min-height: 600px;
 }
 
-.modal-content {
-	width: 1200px;
-	overflow: hidden;
-	margin-left: -50%;
-	margin-top: 28%;
-}
-
-.modalHalf {
-	float: left;
-	width: 50%;
-	height: 95%;
-	padding: 10px;
-	margin: auto;
-}
-
-#modal {
-	margin: auto;
-}
-
-#modalRight {
-	border-left: 1px solid #e5e5e5;
-}
-
 .pie {
 	position: absolute;
 	bottom: 0px;
 }
 
-#rightGraph #pie {
-	bottom: 40px;
-}
-
-.modal-body {
-	height: 90%;
-	overflow: hidden;
-}
 
 #tabs {
 	list-style-type: none;
@@ -107,20 +76,6 @@
 	visibility: hidden;
 	text-align: center;
 	line-height: 20px;
-}
-
-#leftTable {
-	width: 100%;
-}
-
-#leftGraph {
-	width: 100%;
-	height: 400px;
-}
-
-#rightGraph {
-	width: 100%;
-	height: 100%;
 }
 
 #rightGraph p {

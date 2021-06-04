@@ -69,7 +69,28 @@ var END_DATE;
 //-------------------------
 // Loading Texts
 var LOADING_TEXTS = ["Getting Data...", "This might take a while...", "Working that API...", "Picking colors...", "Drawing content...", "No data point can hide from me!", "Decoding results...", "Analyzing...", "Doing stuff...", "I'd suggest grabbing a coffee right about now.", "Shovelling coal into the server...", "A few bits tried to escape, but we caught them.", "Don't think of a blue elephant while this is loading...", "Our other loading screen is much faster, but that's only for VIP's.", "Spinning up the hamster...", "Testing data on Timmy... ... ... We're going to need another Timmy.", "Loading humorous message ... Please Wait"];
-	
+
+//-------------------------
+// modal template
+var modalTemplate = 
+`
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+	<li class="nav-item"><a class="nav-link active" data-toggle="pill" href="#overallhealth" onclick="updateModalBody('Overall Health')">Overall Health</a></li>
+	<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#availability" onclick="updateModalBody('Availability')">Availability</a></li>
+	<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#accuracy" onclick="updateModalBody('Accuracy')">Accuracy</a></li>
+	<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#performance" onclick="updateModalBody('Performance')">Performance</a></li>
+	<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#pageroundtriptime" onclick="updateModalBody('Page round trip time/#Overall Response Time#')">Page Round Trip Time</a></li>
+	<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#customtimer" onclick="updateModalBody('Custom timer/#Overall Response Time#')">Custom Timers</a></li>
+	<li class="nav-item"><a class="nav-link" data-toggle="pill" href="#description" onclick="updateModalBody('description')">Project Description</a></li>
+</ul>
+<div class="row"> <div id="projectDescription" class="col-12"></div> </div>
+<div id="graphRow" class="row"> 
+	<div id="modalGraph" style="height: 300px;" class="col-12"></div> 
+</div>
+<div class="row"> <div id="modalTable" class="col-12"></div> </div>
+
+
+`
 //-------------------------
 // Animations for optionPanel
 // one time initialization
@@ -1171,11 +1192,11 @@ function addTag(selector) {
 			draw();
 			input.val('');
 		}else{
-			$('#rightGraph').append('<p id="warningText" style="font-size: 12px; font-weight: normal; text-align: left;">Invalid input. Tags must be between 1 and 8 characters long.</p>');
+			$('#projectDescription').append('<p id="warningText" style="font-size: 12px; font-weight: normal; text-align: left;">Invalid input. Tags must be between 1 and 8 characters long.</p>');
 			input.val('');
 		}
 	}else{
-		$('#rightGraph').append('<p id="warningText" style="font-size: 12px; font-weight: normal; text-align: left;">Only one custom tag per project.</p>');
+		$('#projectDescription').append('<p id="warningText" style="font-size: 12px; font-weight: normal; text-align: left;">Only one custom tag per project.</p>');
 		input.val('');
 	}
 	
@@ -1898,7 +1919,7 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 	
 	//-------------------------
 	// Prepare chart selector if necessary
-	if(targetDiv.attr('class') != 'tile bgtile filterable' && targetDiv.attr('id') != 'rightGraph') {
+	if(targetDiv.attr('class') != 'tile bgtile filterable' && targetDiv.attr('id') != 'projectDescription') {
 		
 		var chartSelector = $('<select id="chartSelector" class="form-control form-control-sm col-md-2" onchange="fireChartTypeChange(this)" title="Choose Chart Type">');
 		chartSelector.html('<option value="area">Area Chart</option><option value="bar">Bar Chart</option><option value="donut">Donut Chart</option><option value="scatter">Line Chart</option><option value="pie">Pie Chart</option>');
@@ -1913,9 +1934,9 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 		hoverInfo = 'label+text';
 	} else {
 		
-		if(targetId == 'rightGraph' || targetId == 'leftGraph') {
+		if(targetId == 'projectDescription' || targetId == 'modalGraph') {
 			
-			if(targetId == 'rightGraph') {
+			if(targetId == 'projectDescription') {
 				htmlString += '<div class="fa fa-info-circle" id="toggleHelp" aria-hidden="true" style="cursor: pointer; data-toggle="tooltip" data-placement="bottom" title="The chart shows the data of the last ' + DASHBOARD_TIME_FRAME + ' hours merged into hourly timestamps, going back in time counter clockwise. Hover over the individual slices to see the timestamp and the value for that timestamp."></div>';
 			}
 			htmlString += '<p>' + PROJECT_LIST[CURRENT_MODAL_PROJECT].fullName + '</p>';
@@ -2122,6 +2143,8 @@ function toggleModal(selector) {
 	$('.modal-title').text(projectName + ' - Last ' + DASHBOARD_TIME_FRAME + ' hours');
 	$('#modal').modal({'show': true, 'backdrop': false});
 	
+	CFW.ui.showLargeModal("", modalTemplate, "modalRestartRefresh();", false);
+	
 	if(PROJECT_LIST[CURRENT_MODAL_PROJECT].hasConfigRights) {
 		$('#configButton').attr('onclick', "window.location.href='/silk/DEF/Monitoring/Configuration?pId=" + CURRENT_MODAL_PROJECT + "'");
 	} else {
@@ -2176,22 +2199,21 @@ function updateModalBody(tab) {
  *************************************************************************************/
 function drawProjectDescription() {
 	
-	var leftGraph = $('#leftGraph');
-	var rightGraph = $('#rightGraph');
-	var leftTable = $('#leftTable');
+	var modalGraph = $('#modalGraph');
+	var projectDescription = $('#projectDescription');
+	var modalTable = $('#modalTable');
 	var table = $('<table id="descriptionTable" class="customTable"></table>');
 	var rowstring = '';
 	var loopable = PROJECT_LIST[CURRENT_MODAL_PROJECT].fullDescription;
 	
-	leftTable.html('');
-	leftGraph.html('');
-	rightGraph.html('');
-	rightGraph.append('<p style="font-size: 12px; font-weight: normal; text-align: left; margin-bottom: -5px;">You can set one custom tag per project. A custom tag can be at most eight characters long.</p></br>');
-	rightGraph.append('<input class="form-control tablefilter" id="tagInput" placeholder="Add Tag..." style="margin-bottom: 2px;"></input>');
-	rightGraph.append('<button class="btn btn-sm btn-primary m-2" id="addTagButton" value="'+ CURRENT_MODAL_PROJECT +'" >Add Tag</button>');
-	rightGraph.append('<button class="btn btn-sm btn-primary m-2" id="removeTagButton" value="'+ CURRENT_MODAL_PROJECT +'" onclick="removeTag(this)">Remove Tag</button>');
-	$('#addTagButton').click(function() {addTag(document.getElementById('tagInput'))});
-
+	//----------------------------
+	// Clear
+	modalTable.html('');
+	modalGraph.html('');
+	projectDescription.html('');
+	
+	//----------------------------
+	// Create Description Table
 	for(index in loopable) {
 		
 		if(loopable[index] != '' && loopable[index] != undefined) {
@@ -2204,7 +2226,18 @@ function drawProjectDescription() {
 		}
 		
 	table.append(rowstring);	
-	leftTable.append(table);
+	projectDescription.append(table);
+	
+
+	//----------------------------
+	// Create Tag Definer
+	projectDescription.append('<p style="font-size: 12px; font-weight: normal; text-align: left; margin-bottom: -5px;">You can set one custom tag per project. A custom tag can be at most eight characters long.</p></br>');
+	projectDescription.append('<input class="form-control tablefilter" id="tagInput" placeholder="Add Tag..." style="margin-bottom: 2px;"></input>');
+	projectDescription.append('<button class="btn btn-sm btn-primary m-2" id="addTagButton" value="'+ CURRENT_MODAL_PROJECT +'" >Add Tag</button>');
+	projectDescription.append('<button class="btn btn-sm btn-primary m-2" id="removeTagButton" value="'+ CURRENT_MODAL_PROJECT +'" onclick="removeTag(this)">Remove Tag</button>');
+	$('#addTagButton').click(function() {addTag(document.getElementById('tagInput'))});
+
+
 	
 }
 
@@ -2216,24 +2249,24 @@ function drawProjectDescription() {
  *************************************************************************************/
 function drawModalContent(projectId) {
 	
-	var leftGraph = $('#leftGraph');
-	var rightGraph = $('#rightGraph');
-	var leftTable = $('#leftTable');
+	var modalGraph = $('#modalGraph');
+	var projectDescription = $('#projectDescription');
+	var modalTable = $('#modalTable');
 	
-	leftTable.html('');
-	leftGraph.html('');
-	rightGraph.html('');
+	modalTable.html('');
+	modalGraph.html('');
+	projectDescription.html('');
 	
 	if (PROJECT_LIST[projectId].timeseries[DASHBOARD_TIME_FRAME_STRING] != 0) {	
 				
-				drawModalTable('leftTable');
-				drawChart('donut', 'rightGraph', PROJECT_LIST[projectId].timeseries[DASHBOARD_TIME_FRAME_STRING]);
-				drawChart(CURRENT_CHART_TYPE, 'leftGraph', PROJECT_LIST[projectId].timeseries[DASHBOARD_TIME_FRAME_STRING]);
+		drawModalTable('modalTable');
+		//drawChart('donut', 'projectDescription', PROJECT_LIST[projectId].timeseries[DASHBOARD_TIME_FRAME_STRING]);
+		drawChart(CURRENT_CHART_TYPE, 'modalGraph', PROJECT_LIST[projectId].timeseries[DASHBOARD_TIME_FRAME_STRING]);
 				
 				
-			} else {
-				leftTable.append("No data available.");
-			}
+	} else {
+		modalTable.append("No data available.");
+	}
 }
 
 /**************************************************************************************
@@ -2265,7 +2298,7 @@ function drawModalTable(targetId) {
 	var percent = roundFloat(calculatePercentile(sumArray, 0.9));
 	var stdDev = roundFloat(calculateStdDeviation(sumArray));
 	
-	var rowstring = '<table class="customTable" style="border-bottom: 1px solid #e5e5e5;"><tr><td>Average: </td><td class="value">' + avg + 
+	var rowstring = '<table class="table table-sm table-striped" style="border-bottom: 1px solid #e5e5e5;"><tr><td>Average: </td><td class="value">' + avg + 
 	'</td></tr><tr><td>Maximum: </td><td class="value">' + max + 
 	'</td></tr><tr><td>Minimum: </td><td class="value">' + min + 
 	'</td></tr><tr><td>Median: </td><td class="value">' + median +
