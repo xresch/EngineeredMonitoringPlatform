@@ -69,6 +69,7 @@ public class MSSQLEnvironmentManagement {
 		
 		if(environment.isDBDefined()) {
 			DBInterface db = DBInterface.createDBInterfaceMSSQL(
+					"EMP_MSSQL",
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 

@@ -530,7 +530,6 @@ function fetchDataAndDrawTimeseriesSingleProject(dataObject) {
 					
 					project.value = roundFloat(($(this).find("sum").text())/($(this).find("count").text()));					
 				} else {
-					
 					project.value = roundFloat($(this).find(CURRENT_MEASURE_DATA).text());
 				};
 				project.max = roundFloat($(this).find("max").text());
@@ -932,7 +931,7 @@ function drawDashboardView() {
 	tile.css('color', '#222;');
 	tile.css("height", 150 * ZOOM);
 	tile.css("width", 150 * ZOOM);
-	tile.css("fontSize", 55 * ZOOM);
+	tile.css("fontSize", 51 * ZOOM);
 	tile.css("padding", 2 * ZOOM);
 	tile.css("border-radius", BORDER_RADIUS * ZOOM);
 	
@@ -1971,7 +1970,7 @@ function drawChartBarOrLine(graphType, targetId, vals) {
 			targetDiv.attr('title', 'Offline');
 		}
 		
-		var oldValue = retrieveLocalValue("p" + projectId);
+		var oldValue = retrieveLocalValue("p" + targetId);
 		if (oldValue != "") {
 			if(oldValue >= 25.00 && textArray[textArray.length -1] < 25.00) {
 	

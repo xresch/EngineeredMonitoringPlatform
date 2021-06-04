@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+	
+		<getProjectsForUserResponse soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+			<getProjectsForUserReturn
+				soapenc:arrayType="ns1:Project[202]" xsi:type="soapenc:Array"
+				xmlns:ns1="http://scc.segue.com"
+				xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+				<getProjectsForUserReturn href="#id0" />
+				<getProjectsForUserReturn href="#id1" />
+				<getProjectsForUserReturn href="#id2" />
+				<getProjectsForUserReturn href="#id3" />
+				<getProjectsForUserReturn href="#id4" />
+				<getProjectsForUserReturn href="#id5" />
+			</getProjectsForUserReturn>
+		</getProjectsForUserResponse>
+		
+		<multiRef id="id0" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">false</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">0</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">0</id>
+			<name xsi:type="xsd:string">[INA] Sample App Inactive</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;TEST&quot;,
+				&quot;tid&quot;:&quot;INA&quot;,
+				&quot;description&quot;: &quot;Sample App Inactive&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>
+		
+		<multiRef id="id1" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">true</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">1</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">1</id>
+			<name xsi:type="xsd:string">[EXP] Example App A</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;TEST&quot;,
+				&quot;tid&quot;:&quot;EXP&quot;,
+				&quot;description&quot;: &quot;Sample App&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>
+		
+		<multiRef id="id2" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">true</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">2</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">2</id>
+			<name xsi:type="xsd:string">[EXB] Example App B</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;TEST&quot;,
+				&quot;tid&quot;:&quot;EXB&quot;,
+				&quot;description&quot;: &quot;Sample App&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>
+
+		<multiRef id="id3" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">true</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">3</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">3</id>
+			<name xsi:type="xsd:string">[FOO] Foo Project</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;DEV&quot;,
+				&quot;tid&quot;:&quot;FOO&quot;,
+				&quot;description&quot;: &quot;Foo Project&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>		
+		
+		<multiRef id="id4" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">true</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">4</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">4</id>
+			<name xsi:type="xsd:string">[FOX] Fox Project</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;DEV&quot;,
+				&quot;tid&quot;:&quot;FOX&quot;,
+				&quot;description&quot;: &quot;Fox Project&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>	
+
+		<multiRef id="id5" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">true</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">5</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">5</id>
+			<name xsi:type="xsd:string">[BAR] Bar Project</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;DEV&quot;,
+				&quot;tid&quot;:&quot;BAR&quot;,
+				&quot;description&quot;: &quot;Bar Project&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>	
+		
+		<multiRef id="id6" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">true</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">6</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">6</id>
+			<name xsi:type="xsd:string">[000] Triple-Zero</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;DEV&quot;,
+				&quot;tid&quot;:&quot;000&quot;,
+				&quot;description&quot;: &quot;Triple-Zero&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>	
+		
+		<multiRef id="id7" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">true</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">7</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">7</id>
+			<name xsi:type="xsd:string">[YAY] Horray!</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;DEV&quot;,
+				&quot;tid&quot;:&quot;YAY&quot;,
+				&quot;description&quot;: &quot;Horray!&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>	
+				
+		<multiRef id="id8" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">true</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">8</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">8</id>
+			<name xsi:type="xsd:string">[WOW] Amazing Application</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;DEV&quot;,
+				&quot;tid&quot;:&quot;WOW&quot;,
+				&quot;description&quot;: &quot;Amazing Application&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>	
+		
+						
+		<multiRef id="id9" soapenc:root="0" soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:ns2="http://scc.segue.com">
+			<active xsi:type="xsd:boolean">true</active>
+			<appModuleIds soapenc:arrayType="xsd:int[1]"
+				xsi:type="soapenc:Array">
+				<appModuleIds xsi:type="xsd:int">9</appModuleIds>
+			</appModuleIds>
+			<id xsi:type="xsd:int">9</id>
+			<name xsi:type="xsd:string">[TST] Test Application</name>
+			<description xsi:type="xsd:string">{
+				&quot;env&quot;:
+				&quot;DEV&quot;,
+				&quot;tid&quot;:&quot;TST&quot;,
+				&quot;description&quot;: &quot;Test Application&quot;,
+				&quot;itso&quot;: &quot;Doe, Jane(u88888)&quot;,
+				&quot;itso deputy&quot;: &quot;Doe, Joe(u123456)&quot;
+				}</description>
+		</multiRef>	
+		
+	</soapenv:Body>
+</soapenv:Envelope>

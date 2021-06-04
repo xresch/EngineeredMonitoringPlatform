@@ -85,6 +85,7 @@ public class EnvironmentManagerSPM {
 		if(environment.isDBDefined()) {
 			
 			DBInterface db = DBInterface.createDBInterfaceMSSQL(
+					"EMP_SPM",
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 

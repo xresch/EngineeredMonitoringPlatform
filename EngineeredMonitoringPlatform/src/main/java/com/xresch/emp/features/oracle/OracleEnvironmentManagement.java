@@ -65,6 +65,7 @@ public class OracleEnvironmentManagement {
 				
 		if(environment.isDBDefined()) {
 			DBInterface db = DBInterface.createDBInterfaceOracle(
+					"EMP_Oracle",
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 

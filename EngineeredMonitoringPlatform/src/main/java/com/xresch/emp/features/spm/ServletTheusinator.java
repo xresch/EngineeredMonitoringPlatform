@@ -69,20 +69,38 @@ public class ServletTheusinator extends HttpServlet
 		String sessionID = request.getParameter("sessionId");
 		String env = request.getParameter("env");
 		
+		//------------------------------
+		// Get Settings
+		//------------------------------
+		
 		// build manually, environment without DB will not be created successfully 
 		ContextSettings settings = CFW.DB.ContextSettings.selectByID(env);
-		
 		if(settings == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The SPM environment seems not to be configured correctly.");
 			return;
 		}
 
+		//------------------------------
+		// Return Testdata
+		//------------------------------
+		if(settings.name().equals("CFWTest")) {
+			getTestdata(request, plaintext, method);
+			return;
+		}
+		
+		//------------------------------
+		// Create Environment 
+		//------------------------------
 		EnvironmentSPM spm = new EnvironmentSPM();
 		spm.mapJsonFields(settings.settings());
-						
+		
 		String queryString = request.getQueryString().replaceAll("service=.*?&|&service=.*?", "")
 									.replaceAll("env=.*?&|&env=.*?", "");
 		
+		
+		//------------------------------
+		// Fetch Data
+		//------------------------------
 		switch(service.toLowerCase()) {
 		
 			case "sccsystem": 			
@@ -132,6 +150,31 @@ public class ServletTheusinator extends HttpServlet
 				CFW.Messages.addWarningMessage("The SPM API Call failed without a response.");
 			}
 		}
+	}
+	
+	/*************************************************************************************
+	 * 
+	 *************************************************************************************/
+	private void getTestdata(HttpServletRequest request, PlaintextResponse plaintext, String method) {
+		
+		switch(method.toLowerCase()) {
+			case "getprojectsforuser": 		plaintext.append(CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "theusinator_sample_getProjectsForUser.xml"));			
+											break;
+				
+			
+			case "getclientmeasuredata": 	plaintext.append(
+													CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "theusinator_sample_getClientMeasureData.xml")
+														.replaceAll("#value#", ""+CFW.Random.randomFromZeroToInteger(100))
+														.replaceAll("#value2#", ""+CFW.Random.randomFromZeroToInteger(100))
+														.replaceAll("#value3#", ""+CFW.Random.randomFromZeroToInteger(100))
+													);			
+											break;
+			
+			
+			default: 							
+											break;
+		}
+	
 	}
 	
 }

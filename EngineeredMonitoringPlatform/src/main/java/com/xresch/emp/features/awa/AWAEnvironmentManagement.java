@@ -1,6 +1,5 @@
 package com.xresch.emp.features.awa;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,9 +17,6 @@ import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-
-import oracle.ucp.jdbc.PoolDataSource;
-import oracle.ucp.jdbc.PoolDataSourceFactory;
 
 
 public class AWAEnvironmentManagement {
@@ -77,6 +73,7 @@ public class AWAEnvironmentManagement {
 		
 		if(environment.isDBDefined()) {
 			DBInterface db = DBInterface.createDBInterfaceOracle(
+					"EMP_AWA",
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 
@@ -113,6 +110,7 @@ public class AWAEnvironmentManagement {
 		if(environment.isDBDefined()) {
 			
 			DBInterface db = DBInterface.createDBInterfaceOracle(
+					"EMP_AWA",
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 
@@ -163,7 +161,7 @@ public class AWAEnvironmentManagement {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
 			return null;
 		}
-		System.out.println("===== Query ==== \n"+CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_autocomplete_jobnames.sql"));
+		//System.out.println("===== Query ==== \n"+CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_autocomplete_jobnames.sql"));
 		ResultSet result = db.preparedExecuteQuery(
 			CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_autocomplete_jobnames.sql"),
 			environment.clientID(),
