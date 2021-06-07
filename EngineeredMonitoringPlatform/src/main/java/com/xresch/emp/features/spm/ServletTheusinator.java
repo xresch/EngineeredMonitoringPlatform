@@ -12,6 +12,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.contextsettings.ContextSettings;
 import com.xresch.cfw.response.HTMLResponse;
+import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.PlaintextResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
@@ -103,6 +104,18 @@ public class ServletTheusinator extends HttpServlet
 		//------------------------------
 		switch(service.toLowerCase()) {
 		
+			case "cfw": 			
+			
+				switch(method.toLowerCase()) {
+					case "geturl": 				JSONResponse jsonResponse = new JSONResponse();
+												jsonResponse.setPayLoad(spm.url());
+												break;
+	  										
+					default: 					CFW.Messages.itemNotSupported(method);
+												break;
+				}
+			break;
+			
 			case "sccsystem": 			
 				
 				switch(method.toLowerCase()) {
@@ -158,6 +171,10 @@ public class ServletTheusinator extends HttpServlet
 	private void getTestdata(HttpServletRequest request, PlaintextResponse plaintext, String method) {
 		
 		switch(method.toLowerCase()) {
+			case "geturl": 					JSONResponse jsonResponse = new JSONResponse();
+											jsonResponse.setPayLoad("https://www.sampleurl.test");
+											break;
+											
 			case "getprojectsforuser": 		plaintext.append(CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "theusinator_sample_getProjectsForUser.xml"));			
 											break;
 				
