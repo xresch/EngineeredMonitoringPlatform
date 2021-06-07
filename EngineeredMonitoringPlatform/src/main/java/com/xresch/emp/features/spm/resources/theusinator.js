@@ -2210,7 +2210,7 @@ function drawProjectDescription() {
 	//----------------------------
 	// Links to SPM
 	var configButton = null;
-	var monitoringButton = $('<a id="monitoringButton" class="btn btn-sm btn-success" target="_blank">Open Monitoring</a>');
+	var monitoringButton = $('<a id="monitoringButton" class="btn btn-sm btn-success m-2" target="_blank">Open Monitoring</a>');
 	projectDescription.append(monitoringButton);
 	
 	if(PROJECT_LIST[CURRENT_MODAL_PROJECT].hasConfigRights) {
@@ -2317,13 +2317,16 @@ function drawModalTable(targetId) {
 	var percent = roundFloat(calculatePercentile(sumArray, 0.9));
 	var stdDev = roundFloat(calculateStdDeviation(sumArray));
 	
-	var rowstring = '<table class="table table-sm table-striped" style="border-bottom: 1px solid #e5e5e5;"><tr><td>Average: </td><td class="value">' + avg + 
+	var rowstring = '<table class="table table-sm table-striped">'+
+	'<thead><tr><th>Metric</th><th class="value">Value</th></thead>' +
+	'<tbody>' +
+	'<tr><td>Average: </td><td class="value">' + avg + 
 	'</td></tr><tr><td>Maximum: </td><td class="value">' + max + 
 	'</td></tr><tr><td>Minimum: </td><td class="value">' + min + 
 	'</td></tr><tr><td>Median: </td><td class="value">' + median +
 	'</td></tr><tr><td>90th Percentile: </td><td class="value">' + percent +
 	'</td></tr><tr><td>Standard Deviation: </td><td class="value">' + stdDev +
-	'</td></tr></table>';
+	'</td></tr></tbody></table>';
 	
 	targetDiv.append(rowstring);
 }
