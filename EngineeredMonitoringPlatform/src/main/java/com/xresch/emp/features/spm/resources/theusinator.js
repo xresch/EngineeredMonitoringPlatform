@@ -238,7 +238,7 @@ function fireChartTypeChange(selector) {
 	}else {
 		drawChart(CURRENT_CHART_TYPE, targetId, PROJECT_LIST[CURRENT_PROJECT].timeseries[CURRENT_TIME_FRAME]);
 	}
-	selectStyleMode(document.getElementById('styleModeDropdown'));
+	//selectStyleMode(document.getElementById('styleModeDropdown'));
 }
 
 /**************************************************************************************
@@ -2136,6 +2136,7 @@ function toggleModal(selector) {
 		clearInterval(BLINK_INTERVALS[i]);
 	}
 	BLINK_INTERVALS = [];
+	
 	CURRENT_MODAL_PROJECT = $(selector).attr('id');
 	var projectName = PROJECT_LIST[CURRENT_MODAL_PROJECT].fullName;
 	
@@ -2144,13 +2145,7 @@ function toggleModal(selector) {
 	$('#modal').modal({'show': true, 'backdrop': false});
 	
 	CFW.ui.showLargeModal("", modalTemplate, "modalRestartRefresh();", false);
-	
-	if(PROJECT_LIST[CURRENT_MODAL_PROJECT].hasConfigRights) {
-		$('#configButton').attr('onclick', "window.location.href='/silk/DEF/Monitoring/Configuration?pId=" + CURRENT_MODAL_PROJECT + "'");
-	} else {
-		$('#configButton').css('display', 'none');
-	}
-	
+		
 	$('#monitorButton').attr('onclick', "window.location.href='/silk/DEF/Monitoring/Monitoring?pId=" + CURRENT_MODAL_PROJECT + "'");
 	updateModalBody('Overall Health');
 	
@@ -2178,7 +2173,7 @@ function updateModalBody(tab) {
 	
 	if(tab == 'description') {
 		drawProjectDescription();
-		selectStyleMode(document.getElementById('styleModeDropdown'));
+		//selectStyleMode(document.getElementById('styleModeDropdown'));
 	}else{
 		updateTimeFrame(DASHBOARD_TIME_FRAME_STRING);
 		var dataObject = {
@@ -2211,6 +2206,30 @@ function drawProjectDescription() {
 	modalTable.html('');
 	modalGraph.html('');
 	projectDescription.html('');
+	
+	//----------------------------
+	// Links to SPM
+	var configButton = null;
+	var monitoringButton = $('<a id="monitoringButton" class="btn btn-sm btn-success" target="_blank">Open Monitoring</a>');
+	projectDescription.append(monitoringButton);
+	
+	if(PROJECT_LIST[CURRENT_MODAL_PROJECT].hasConfigRights) {
+		configButton = $('<a id="monitoringButton" class="btn btn-sm btn-success" target="_blank">Open Configuration</a>');
+		projectDescription.append(configButton);
+	} 
+	
+	CFW.http.getJSON("./theusinator?env="+ENVIRONMENT+"&service=cfw&method=geturl", 
+		function(data) {
+			if(data.success){
+				var url = data.payload;
+				monitoringButton.attr('href', url+"/silk/DEF/Monitoring/Monitoring?pId=" + CURRENT_MODAL_PROJECT);
+				
+				if(configButton != null){
+					configButton.attr('href', url+"/silk/DEF/Monitoring/Configuration?pId=" + CURRENT_MODAL_PROJECT);
+				}
+			}
+	});
+
 	
 	//----------------------------
 	// Create Description Table
