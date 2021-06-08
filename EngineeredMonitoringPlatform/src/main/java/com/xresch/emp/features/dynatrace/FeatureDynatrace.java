@@ -85,8 +85,6 @@ public class FeatureDynatrace extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-		DynatraceEnvironmentManagement.initialize();
-		
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
@@ -98,7 +96,7 @@ public class FeatureDynatrace extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
-		/* do nothing */
+		DynatraceEnvironmentManagement.initialize();
 	}
 
 	@Override

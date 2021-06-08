@@ -38,25 +38,27 @@ public class EnvironmentManagerSPM {
 	 ************************************************************************/
 	public static void initialize() {
 	
-		ContextSettingsChangeListener listener = 
-				new ContextSettingsChangeListener(EnvironmentSPM.SETTINGS_TYPE) {
+		if(!isInitialized) {
+			ContextSettingsChangeListener listener = 
+					new ContextSettingsChangeListener(EnvironmentSPM.SETTINGS_TYPE) {
+				
+				@Override
+				public void onChange(AbstractContextSettings setting, boolean isNew) {
+					EnvironmentSPM env = (EnvironmentSPM)setting;
+					EnvironmentManagerSPM.createEnvironment(env);
+				}
+				
+				@Override
+				public void onDelete(AbstractContextSettings typeSettings) {
+					environmentsWithDB.remove(typeSettings.getDefaultObject().id());
+				}
+			};
 			
-			@Override
-			public void onChange(AbstractContextSettings setting, boolean isNew) {
-				EnvironmentSPM env = (EnvironmentSPM)setting;
-				EnvironmentManagerSPM.createEnvironment(env);
-			}
+			CFW.DB.ContextSettings.addChangeListener(listener);
 			
-			@Override
-			public void onDelete(AbstractContextSettings typeSettings) {
-				environmentsWithDB.remove(typeSettings.getDefaultObject().id());
-			}
-		};
-		
-		CFW.DB.ContextSettings.addChangeListener(listener);
-		
-		createEnvironments();
-		isInitialized = true;
+			createEnvironments();
+			isInitialized = true;
+		}
 	}
 	
 	/************************************************************************

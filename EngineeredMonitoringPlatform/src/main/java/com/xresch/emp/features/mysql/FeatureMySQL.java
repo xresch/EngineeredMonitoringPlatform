@@ -84,8 +84,6 @@ public class FeatureMySQL extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-		MySQLEnvironmentManagement.initialize();
-		
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
@@ -97,7 +95,7 @@ public class FeatureMySQL extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
-		/* do nothing */
+		MySQLEnvironmentManagement.initialize();
 	}
 
 	@Override

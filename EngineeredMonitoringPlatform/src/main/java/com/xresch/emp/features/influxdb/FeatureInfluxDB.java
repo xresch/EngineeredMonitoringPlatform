@@ -77,8 +77,6 @@ public class FeatureInfluxDB extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-		InfluxDBEnvironmentManagement.initialize();
-		
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
@@ -90,7 +88,7 @@ public class FeatureInfluxDB extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
-		/* do nothing */
+		InfluxDBEnvironmentManagement.initialize();
 	}
 
 	@Override

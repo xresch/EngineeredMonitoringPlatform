@@ -84,8 +84,7 @@ public class FeatureMSSQL extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-		MSSQLEnvironmentManagement.initialize();
-		
+	
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
@@ -97,7 +96,7 @@ public class FeatureMSSQL extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
-		/* do nothing */
+		MSSQLEnvironmentManagement.initialize();
 	}
 
 	@Override

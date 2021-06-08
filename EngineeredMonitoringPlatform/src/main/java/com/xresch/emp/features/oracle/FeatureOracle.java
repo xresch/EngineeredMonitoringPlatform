@@ -84,7 +84,7 @@ public class FeatureOracle extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-		OracleEnvironmentManagement.initialize();
+		
 		
 		//----------------------------------
 		// Permissions
@@ -97,7 +97,7 @@ public class FeatureOracle extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
-		/* do nothing */
+		OracleEnvironmentManagement.initialize();
 	}
 
 	@Override

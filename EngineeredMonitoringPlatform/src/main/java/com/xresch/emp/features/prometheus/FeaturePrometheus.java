@@ -80,8 +80,6 @@ public class FeaturePrometheus extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-		PrometheusEnvironmentManagement.initialize();
-		
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
@@ -93,7 +91,7 @@ public class FeaturePrometheus extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
-		/* do nothing */
+		PrometheusEnvironmentManagement.initialize();
 	}
 
 	@Override

@@ -96,10 +96,6 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 	public void initializeDB() {
 		
 		//-----------------------------------------
-		// Initialize SPM Environments
-		EnvironmentManagerSPM.initialize();
-		
-		//-----------------------------------------
 		// Add Theusinator Menu
 		CFW.DB.Permissions.oneTimeCreate(
 				new Permission(PERMISSION_THEUSINATOR, "user")
@@ -111,6 +107,10 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
+		//-----------------------------------------
+		// Initialize SPM Environments
+		EnvironmentManagerSPM.initialize();
+		
 		//---------------------------------------------------------
 		// Add Theusinator Servlet
         app.addAppServlet(ServletTheusinator.class,  "/theusinator");

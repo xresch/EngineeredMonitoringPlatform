@@ -82,9 +82,7 @@ public class FeatureSPM extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		
-		//-----------------------------------------
-		// Initialize SPM Environments
-		EnvironmentManagerSPM.initialize();
+		
 		
 		//----------------------------------
 		// Permissions
@@ -97,7 +95,12 @@ public class FeatureSPM extends CFWAppFeature {
 	}
 
 	@Override
-	public void addFeature(CFWApplicationExecutor app) {	
+	public void addFeature(CFWApplicationExecutor app) {
+		
+		//-----------------------------------------
+		// Initialize SPM Environments
+		EnvironmentManagerSPM.initialize();
+		
 		//---------------------------------------------------------
 		//Register here as it won't work before DB is initialized.
 		CFW.Registry.API.addAll(API_Factory.getAPIDefinitions());

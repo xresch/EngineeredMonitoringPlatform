@@ -88,8 +88,7 @@ public class FeatureAWA extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-		AWAEnvironmentManagement.initialize();
-		
+				
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
@@ -101,7 +100,7 @@ public class FeatureAWA extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
-		/* do nothing */
+		AWAEnvironmentManagement.initialize();
 	}
 
 	@Override
