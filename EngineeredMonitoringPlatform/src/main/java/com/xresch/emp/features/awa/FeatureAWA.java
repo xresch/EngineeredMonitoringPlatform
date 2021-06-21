@@ -49,7 +49,7 @@ public class FeatureAWA extends CFWAppFeature {
 	 * Return if the feature is active by default or if the admin has to enable it.
 	 ************************************************************************************/
 	public boolean activeByDefault() {
-		return true;
+		return false;
 	};
 	
 	@Override
