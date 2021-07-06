@@ -2144,7 +2144,7 @@ function toggleModal(selector) {
 	$('.modal-title').text(projectName + ' - Last ' + DASHBOARD_TIME_FRAME + ' hours');
 	$('#modal').modal({'show': true, 'backdrop': false});
 	
-	CFW.ui.showLargeModal("", modalTemplate, "modalRestartRefresh();", false);
+	CFW.ui.showModalLarge("", modalTemplate, "modalRestartRefresh();", false);
 		
 	$('#monitorButton').attr('onclick', "window.location.href='/silk/DEF/Monitoring/Monitoring?pId=" + CURRENT_MODAL_PROJECT + "'");
 	updateModalBody('Overall Health');
