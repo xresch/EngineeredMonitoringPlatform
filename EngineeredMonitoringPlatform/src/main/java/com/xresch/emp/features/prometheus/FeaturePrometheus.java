@@ -6,6 +6,7 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
@@ -83,7 +84,7 @@ public class FeaturePrometheus extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_PROMETHEUS, "user")
+				new Permission(PERMISSION_WIDGETS_PROMETHEUS, FeatureUserManagement.CATEGORY_USER)
 					.description("Create and Edit Prometheus Widgets."),
 				true,
 				true);

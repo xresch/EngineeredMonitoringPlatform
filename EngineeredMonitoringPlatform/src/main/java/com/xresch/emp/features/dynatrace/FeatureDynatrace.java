@@ -6,8 +6,8 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
-import com.xresch.emp.features.awa.ParameterDefinitionAWAEnvironment;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************
@@ -88,7 +88,7 @@ public class FeatureDynatrace extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_DYNATRACE, "user")
+				new Permission(PERMISSION_WIDGETS_DYNATRACE, FeatureUserManagement.CATEGORY_USER)
 					.description("Create and Edit Dynatrace Widgets."),
 				true,
 				true);

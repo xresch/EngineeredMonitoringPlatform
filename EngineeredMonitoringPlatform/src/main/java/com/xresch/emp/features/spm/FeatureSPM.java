@@ -6,9 +6,9 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.emp.features.common.FeatureEMPCommon;
-import com.xresch.emp.features.prometheus.ParameterDefinitionPrometheusEnvironment;
 
 /**************************************************************************************************************
  * 
@@ -87,7 +87,7 @@ public class FeatureSPM extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_SPM, "user")
+				new Permission(PERMISSION_WIDGETS_SPM, FeatureUserManagement.CATEGORY_USER)
 					.description("Create and Edit SPM Widgets."),
 				true,
 				true);

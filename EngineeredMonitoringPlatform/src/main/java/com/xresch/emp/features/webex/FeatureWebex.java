@@ -3,12 +3,8 @@ package com.xresch.emp.features.webex;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
+import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
-import com.xresch.emp.features.awa.WidgetJobStatusLegend;
-import com.xresch.emp.features.awa.WidgetJobStatusCurrent;
-import com.xresch.emp.features.awa.WidgetJobsWithStatus;
-import com.xresch.emp.features.prometheus.WidgetInstantThreshold;
-import com.xresch.emp.features.prometheus.WidgetRangeChart;
 
 /**************************************************************************************************************
  * 
@@ -64,7 +60,7 @@ public class FeatureWebex extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_WEBEX, "user")
+				new Permission(PERMISSION_WIDGETS_WEBEX, FeatureUserManagement.CATEGORY_USER)
 					.description("Create and Edit Webex Widgets."),
 				true,
 				true);							

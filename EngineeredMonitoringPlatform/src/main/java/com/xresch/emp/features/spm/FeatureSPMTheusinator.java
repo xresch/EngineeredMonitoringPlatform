@@ -7,8 +7,10 @@ import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
+import com.xresch.cfw.features.core.FeatureCore;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.response.bootstrap.DynamicItemCreator;
 import com.xresch.cfw.response.bootstrap.HierarchicalHTMLItem;
@@ -88,7 +90,7 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 			.faicon("fas fa-grip-horizontal")
 			.addPermission(PERMISSION_THEUSINATOR);
 		
-		CFW.Registry.Components.addRegularMenuItem(theusinatorMenu, "Dashboards");
+		CFW.Registry.Components.addRegularMenuItem(theusinatorMenu, FeatureCore.MENU_TOOLS);
 				
 	}
 
@@ -98,7 +100,7 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 		//-----------------------------------------
 		// Add Theusinator Menu
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_THEUSINATOR, "user")
+				new Permission(PERMISSION_THEUSINATOR, FeatureUserManagement.CATEGORY_USER)
 					.description("View and analyze productive SPM Monitoring status using the Theusinator Dashboard."),
 				true,
 				true);

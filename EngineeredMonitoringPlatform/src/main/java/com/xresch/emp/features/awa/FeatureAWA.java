@@ -4,18 +4,11 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
-import com.xresch.cfw.datahandling.CFWField.FormFieldType;
-import com.xresch.cfw.features.config.Configuration;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
-import com.xresch.cfw.response.bootstrap.MenuItem;
-import com.xresch.emp._main.Main;
 import com.xresch.emp.features.common.FeatureEMPCommon;
-import com.xresch.emp.features.prometheus.PrometheusEnvironment;
-import com.xresch.emp.features.prometheus.PrometheusEnvironmentManagement;
-import com.xresch.emp.features.spm.EnvironmentSPM;
-import com.xresch.emp.features.spm.EnvironmentManagerSPM;
 
 /**************************************************************************************************************
  * 
@@ -92,7 +85,7 @@ public class FeatureAWA extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_AWA, "user")
+				new Permission(PERMISSION_WIDGETS_AWA, FeatureUserManagement.CATEGORY_USER)
 					.description("Create and Edit AWA Widgets."),
 				true,
 				true);
