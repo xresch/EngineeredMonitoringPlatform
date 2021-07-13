@@ -8,6 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
+import com.xresch.cfw._main.CFW.Utils;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.db.CFWSQL;
@@ -191,7 +192,7 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 	 ************************************************************************************/
 	public JsonObject queryRange(String influxdbQuery, long earliestMillis, long latestMillis) {
 		
-		String interval = CFW.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
+		String interval = Utils.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
 		
 		influxdbQuery = influxdbQuery.replace("[interval]", "["+( (interval.endsWith("s")) ? "1m" : interval )+"]");
 
