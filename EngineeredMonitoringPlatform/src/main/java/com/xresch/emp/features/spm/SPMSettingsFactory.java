@@ -19,6 +19,7 @@ public class SPMSettingsFactory {
 				.setDescription("{!emp_widget_spm_environment_desc!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE));
 	}
+	
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
@@ -35,7 +36,24 @@ public class SPMSettingsFactory {
 						
 						return EnvironmentManagerSPM.autocompleteMonitors(Integer.parseInt(environment), searchValue, this.getMaxResults());
 					}
-				})		;
+			});
+	}
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
+	public static CFWField<?> createMonitorsSelectorField(){
+		return CFWField.newTagsSelector("JSON_MONITORS")
+				.setLabel("{!emp_widget_spm_monitor!}")
+				.setDescription("{!emp_widget_spm_monitor_desc!}")
+				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+					
+					@Override
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+						String environment = request.getParameter("environment");
+						
+						return EnvironmentManagerSPM.autocompleteMonitors(Integer.parseInt(environment), searchValue, this.getMaxResults());
+					}
+				});
 	}
 	
 	/************************************************************************************

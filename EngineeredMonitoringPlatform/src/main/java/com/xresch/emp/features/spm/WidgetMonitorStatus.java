@@ -42,7 +42,7 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		return new CFWObject()
 				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(SPMSettingsFactory.createMonitorSelectorField())
+				.addField(SPMSettingsFactory.createMonitorsSelectorField())
 				
 				.addField(SPMSettingsFactory.createMeasureSelectField())
 								
