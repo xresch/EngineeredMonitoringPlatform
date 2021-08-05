@@ -83,7 +83,7 @@ public class DynatraceSettingsFactory {
 							return null;
 						}
 						
-						JsonObject hostObject = CFW.JSON.jsonStringToJsonElement(host).getAsJsonObject();
+						JsonObject hostObject = CFW.JSON.stringToJsonElement(host).getAsJsonObject();
 						String hostID = hostObject.keySet().toArray(new String[]{})[0];
 						
 						return DynatraceEnvironment.autocompleteProcessGroupInstance(
@@ -123,7 +123,7 @@ public class DynatraceSettingsFactory {
 							return null;
 						}
 						
-						JsonObject hostObject = CFW.JSON.jsonStringToJsonElement(host).getAsJsonObject();
+						JsonObject hostObject = CFW.JSON.stringToJsonElement(host).getAsJsonObject();
 						String hostID = hostObject.keySet().toArray(new String[]{})[0];
 						
 						return DynatraceEnvironment.autocompleteProcessGroup(
@@ -189,7 +189,7 @@ public class DynatraceSettingsFactory {
 							return null;
 						}
 						
-						JsonObject entityObject = CFW.JSON.jsonStringToJsonElement(entityString).getAsJsonObject();
+						JsonObject entityObject = CFW.JSON.stringToJsonElement(entityString).getAsJsonObject();
 						String entityID = entityObject.keySet().toArray(new String[]{})[0];
 						
 						return DynatraceEnvironment.autocompleteLog(Integer.parseInt(environment), 
