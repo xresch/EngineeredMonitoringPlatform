@@ -90,10 +90,10 @@ public class WidgetOracleQueryStatus extends WidgetDefinition {
 	}
 		
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = settings.get("sampledata");
+		JsonElement sampleDataElement = jsonSettings.get("sampledata");
 		
 		if(sampleDataElement != null 
 		&& !sampleDataElement.isJsonNull() 
@@ -104,7 +104,7 @@ public class WidgetOracleQueryStatus extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Jobnames
-		JsonElement sqlQueryElement = settings.get("sqlquery");
+		JsonElement sqlQueryElement = jsonSettings.get("sqlquery");
 		if(sqlQueryElement.isJsonNull() || sqlQueryElement.getAsString().isEmpty()) {
 			return;
 		}
@@ -117,7 +117,7 @@ public class WidgetOracleQueryStatus extends WidgetDefinition {
 		//---------------------------------
 		// Get Environment & DB
 		
-		JsonElement environmentElement = settings.get("environment");
+		JsonElement environmentElement = jsonSettings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}

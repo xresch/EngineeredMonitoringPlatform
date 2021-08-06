@@ -73,7 +73,7 @@ public class WidgetCustomThresholdLegend extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { /* do nothing */ }
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { /* do nothing */ }
 
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {

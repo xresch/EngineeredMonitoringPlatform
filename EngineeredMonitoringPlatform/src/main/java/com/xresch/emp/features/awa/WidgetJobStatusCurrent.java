@@ -66,10 +66,10 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	}
 		
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = settings.get("sampledata");
+		JsonElement sampleDataElement = jsonSettings.get("sampledata");
 		
 		if(sampleDataElement != null 
 		&& !sampleDataElement.isJsonNull() 
@@ -80,7 +80,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Jobnames
-		JsonElement jobnamesElement = settings.get("jobnames");
+		JsonElement jobnamesElement = jsonSettings.get("jobnames");
 		if(jobnamesElement.isJsonNull() || jobnamesElement.getAsString().isEmpty()) {
 			return;
 		}
@@ -93,7 +93,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 
 		//---------------------------------
 		// Resolve Joblabels
-		JsonElement joblabelsElement = settings.get("joblabels");
+		JsonElement joblabelsElement = jsonSettings.get("joblabels");
 		String[] joblabels = null;
 		if(!joblabelsElement.isJsonNull() && !joblabelsElement.getAsString().isEmpty()) {
 			joblabels = joblabelsElement.getAsString().trim().split("[,\t\r\n]+");
@@ -102,7 +102,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		//---------------------------------
 		// Get Environment & DB
 		
-		JsonElement environmentElement = settings.get("environment");
+		JsonElement environmentElement = jsonSettings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}

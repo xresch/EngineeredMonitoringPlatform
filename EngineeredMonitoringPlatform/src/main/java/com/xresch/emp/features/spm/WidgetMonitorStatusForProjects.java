@@ -56,11 +56,11 @@ public class WidgetMonitorStatusForProjects extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = settings.get("sampledata");
+		JsonElement sampleDataElement = jsonSettings.get("sampledata");
 		
 		if(sampleDataElement != null 
 		&& !sampleDataElement.isJsonNull() 
@@ -70,7 +70,7 @@ public class WidgetMonitorStatusForProjects extends WidgetDefinition {
 		}
 		//---------------------------------
 		// Resolve Jobnames
-		JsonElement projectsElement = settings.get("JSON_PROJECTS");
+		JsonElement projectsElement = jsonSettings.get("JSON_PROJECTS");
 		if(projectsElement.isJsonNull()) {
 			return;
 		}
@@ -82,7 +82,7 @@ public class WidgetMonitorStatusForProjects extends WidgetDefinition {
 		
 		//---------------------------------
 		// Get Environment
-		JsonElement environmentElement = settings.get("environment");
+		JsonElement environmentElement = jsonSettings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}
@@ -106,7 +106,7 @@ public class WidgetMonitorStatusForProjects extends WidgetDefinition {
 		//---------------------------------
 		// Get Measure
 		String measureName = "Overall Health";
-		JsonElement measureElement = settings.get("measure");
+		JsonElement measureElement = jsonSettings.get("measure");
 		if(measureElement != null && !measureElement.isJsonNull()) {
 			measureName = measureElement.getAsString();
 		}

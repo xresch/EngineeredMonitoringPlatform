@@ -77,11 +77,11 @@ public class WidgetTimersForProject extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = settings.get("sampledata");
+		JsonElement sampleDataElement = jsonSettings.get("sampledata");
 		
 		if(sampleDataElement != null 
 		&& !sampleDataElement.isJsonNull() 
@@ -92,7 +92,7 @@ public class WidgetTimersForProject extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Monitors
-		JsonElement projectsElement = settings.get("JSON_PROJECTS");
+		JsonElement projectsElement = jsonSettings.get("JSON_PROJECTS");
 		if(projectsElement.isJsonNull()) {
 			return;
 		}
@@ -106,7 +106,7 @@ public class WidgetTimersForProject extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve CounterNames
-		JsonElement timersElement = settings.get("JSON_TIMERNAMES");
+		JsonElement timersElement = jsonSettings.get("JSON_TIMERNAMES");
 		if(timersElement.isJsonNull()) {
 			return;
 		}
@@ -118,7 +118,7 @@ public class WidgetTimersForProject extends WidgetDefinition {
 		
 		//---------------------------------
 		// Get Environment
-		JsonElement environmentElement = settings.get("environment");
+		JsonElement environmentElement = jsonSettings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}

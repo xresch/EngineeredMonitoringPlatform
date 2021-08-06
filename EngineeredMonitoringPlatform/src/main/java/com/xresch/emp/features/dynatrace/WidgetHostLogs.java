@@ -53,10 +53,10 @@ public class WidgetHostLogs extends WidgetDefinition {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		
 		WidgetHostLogsSettings settingsObject = new WidgetHostLogsSettings();
-		settingsObject.mapJsonFields(settings);
+		settingsObject.mapJsonFields(jsonSettings);
 		
 		//---------------------------------
 		// Example Data
@@ -106,7 +106,7 @@ public class WidgetHostLogs extends WidgetDefinition {
 		
 		//---------------------------------
 		// Get Environment
-		JsonElement environmentElement = settings.get("environment");
+		JsonElement environmentElement = jsonSettings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}
@@ -119,8 +119,8 @@ public class WidgetHostLogs extends WidgetDefinition {
 	
 		//---------------------------------
 		// Timeframe
-		long earliest = settings.get("timeframe_earliest").getAsLong();
-		long latest = settings.get("timeframe_latest").getAsLong();
+		long earliest = jsonSettings.get("timeframe_earliest").getAsLong();
+		long latest = jsonSettings.get("timeframe_latest").getAsLong();
 		
 		//---------------------------------
 		// Fetch Data

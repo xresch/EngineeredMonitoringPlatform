@@ -56,10 +56,10 @@ public class WidgetServiceStatus extends WidgetDefinition {
 	}
 		
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = settings.get("sampledata");
+		JsonElement sampleDataElement = jsonSettings.get("sampledata");
 		
 		if(sampleDataElement != null 
 		&& !sampleDataElement.isJsonNull() 
@@ -70,7 +70,7 @@ public class WidgetServiceStatus extends WidgetDefinition {
 		 
 		//---------------------------------
 		// Resolve URL
-		JsonElement urlElement = settings.get("url");
+		JsonElement urlElement = jsonSettings.get("url");
 		String url = null;
 		if(!urlElement.isJsonNull() && !urlElement.getAsString().isEmpty()) {
 			url = urlElement.getAsString();

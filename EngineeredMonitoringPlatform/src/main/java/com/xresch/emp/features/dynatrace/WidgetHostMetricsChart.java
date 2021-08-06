@@ -43,11 +43,11 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = settings.get("sampledata");
+		JsonElement sampleDataElement = jsonSettings.get("sampledata");
 		
 		if(sampleDataElement != null 
 		&& !sampleDataElement.isJsonNull() 
@@ -58,7 +58,7 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve HostID
-		JsonElement hostsElement = settings.get("JSON_HOST");
+		JsonElement hostsElement = jsonSettings.get("JSON_HOST");
 		if(hostsElement == null || hostsElement.isJsonNull()) {
 			return;
 		}
@@ -72,7 +72,7 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Metrics
-		JsonElement metricsElement = settings.get("JSON_METRICS");
+		JsonElement metricsElement = jsonSettings.get("JSON_METRICS");
 		if(metricsElement == null || metricsElement.isJsonNull()) {
 			return;
 		}
@@ -86,7 +86,7 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 
 		//---------------------------------
 		// Get Environment
-		JsonElement environmentElement = settings.get("environment");
+		JsonElement environmentElement = jsonSettings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}
@@ -99,8 +99,8 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Timeframe
-		long earliest = settings.get("timeframe_earliest").getAsLong();
-		long latest = settings.get("timeframe_latest").getAsLong();
+		long earliest = jsonSettings.get("timeframe_earliest").getAsLong();
+		long latest = jsonSettings.get("timeframe_latest").getAsLong();
 		
 		
 		//---------------------------------

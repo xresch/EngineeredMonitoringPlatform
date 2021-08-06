@@ -55,10 +55,10 @@ public class WidgetProcessLogs extends WidgetDefinition {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		
 		WidgetProcessLogsSettings settingsObject = new WidgetProcessLogsSettings();
-		settingsObject.mapJsonFields(settings);
+		settingsObject.mapJsonFields(jsonSettings);
 		
 		//---------------------------------
 		// Example Data
@@ -118,7 +118,7 @@ public class WidgetProcessLogs extends WidgetDefinition {
 		
 		//---------------------------------
 		// Get Environment
-		JsonElement environmentElement = settings.get("environment");
+		JsonElement environmentElement = jsonSettings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}
@@ -131,8 +131,8 @@ public class WidgetProcessLogs extends WidgetDefinition {
 	
 		//---------------------------------
 		// Timeframe
-		long earliest = settings.get("timeframe_earliest").getAsLong();
-		long latest = settings.get("timeframe_latest").getAsLong();
+		long earliest = jsonSettings.get("timeframe_earliest").getAsLong();
+		long latest = jsonSettings.get("timeframe_latest").getAsLong();
 		
 		//---------------------------------
 		// Fetch Data

@@ -69,11 +69,11 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 	}
 		
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = settings.get("sampledata");
+		JsonElement sampleDataElement = jsonSettings.get("sampledata");
 		
 		if(sampleDataElement != null 
 		&& !sampleDataElement.isJsonNull() 
@@ -84,7 +84,7 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Hours
-		JsonElement statusElement = settings.get("status");
+		JsonElement statusElement = jsonSettings.get("status");
 		
 		if(statusElement == null ) {
 			return;
@@ -105,7 +105,7 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Hours
-		JsonElement hoursElement = settings.get("hours");
+		JsonElement hoursElement = jsonSettings.get("hours");
 		
 		int hours = 24;
 		if(hoursElement != null ) {
@@ -113,7 +113,7 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 		}
 		//---------------------------------
 		// Resolve Jobfilters
-		JsonElement jobfiltersElement = settings.get("jobfilters");
+		JsonElement jobfiltersElement = jsonSettings.get("jobfilters");
 		if(jobfiltersElement.isJsonNull() || jobfiltersElement.getAsString().isEmpty()) {
 			return;
 		}
@@ -127,7 +127,7 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 		//---------------------------------
 		// Get Environment & DB
 		
-		JsonElement environmentElement = settings.get("environment");
+		JsonElement environmentElement = jsonSettings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}

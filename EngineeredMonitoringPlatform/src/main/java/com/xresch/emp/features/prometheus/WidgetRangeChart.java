@@ -62,11 +62,11 @@ public class WidgetRangeChart extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, JsonObject settings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
 		
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = settings.get("sampledata");
+		JsonElement sampleDataElement = jsonSettings.get("sampledata");
 		
 		if(sampleDataElement != null 
 		&& !sampleDataElement.isJsonNull() 
@@ -77,7 +77,7 @@ public class WidgetRangeChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Query
-		JsonElement queryElement = settings.get("query");
+		JsonElement queryElement = jsonSettings.get("query");
 		if(queryElement.isJsonNull()) {
 			return;
 		}
@@ -86,7 +86,7 @@ public class WidgetRangeChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Get Environment
-		JsonElement environmentElement = settings.get("environment");
+		JsonElement environmentElement = jsonSettings.get("environment");
 		if(environmentElement.isJsonNull()) {
 			return;
 		}
@@ -99,8 +99,8 @@ public class WidgetRangeChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Timeframe
-		long earliest = settings.get("timeframe_earliest").getAsLong();
-		long latest = settings.get("timeframe_latest").getAsLong();
+		long earliest = jsonSettings.get("timeframe_earliest").getAsLong();
+		long latest = jsonSettings.get("timeframe_latest").getAsLong();
 		
 		//---------------------------------
 		// Fetch Data
