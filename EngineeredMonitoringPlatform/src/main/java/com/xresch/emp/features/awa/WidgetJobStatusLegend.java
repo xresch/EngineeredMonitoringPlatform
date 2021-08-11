@@ -12,6 +12,7 @@ import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
+import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
@@ -53,7 +54,7 @@ public class WidgetJobStatusLegend extends WidgetDefinition {
 	}
 
 	@Override
-	public boolean hasPermission() {
-		return CFW.Context.Request.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA);
+	public boolean hasPermission(User user) {
+		return user.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA);
 	}
 }

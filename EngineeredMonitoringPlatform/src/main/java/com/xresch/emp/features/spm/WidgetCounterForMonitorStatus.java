@@ -26,6 +26,7 @@ import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -281,8 +282,8 @@ public class WidgetCounterForMonitorStatus extends WidgetDefinition {
 	}
 	
 	@Override
-	public boolean hasPermission() {
-		return CFW.Context.Request.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM);
+	public boolean hasPermission(User user) {
+		return user.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM);
 	}
 
 }

@@ -12,6 +12,7 @@ import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
+import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
@@ -53,8 +54,8 @@ public class WidgetMeasureLegend extends WidgetDefinition {
 	}
 	
 	@Override
-	public boolean hasPermission() {
-		return CFW.Context.Request.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM);
+	public boolean hasPermission(User user) {
+		return user.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM);
 	}
 
 }

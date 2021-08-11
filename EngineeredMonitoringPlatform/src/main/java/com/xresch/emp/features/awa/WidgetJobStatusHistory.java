@@ -23,6 +23,7 @@ import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -285,8 +286,8 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 	}
 	
 	@Override
-	public boolean hasPermission() {
-		return CFW.Context.Request.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA);
+	public boolean hasPermission(User user) {
+		return user.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA);
 	}
 
 }

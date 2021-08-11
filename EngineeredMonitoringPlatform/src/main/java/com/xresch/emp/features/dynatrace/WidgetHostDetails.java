@@ -20,6 +20,7 @@ import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -125,8 +126,8 @@ public class WidgetHostDetails extends WidgetDefinition {
 	}
 	
 	@Override
-	public boolean hasPermission() {
-		return CFW.Context.Request.hasPermission(FeatureDynatrace.PERMISSION_WIDGETS_DYNATRACE);
+	public boolean hasPermission(User user) {
+		return user.hasPermission(FeatureDynatrace.PERMISSION_WIDGETS_DYNATRACE);
 	}
 
 }
