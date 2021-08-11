@@ -90,7 +90,7 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 			.faicon("fas fa-grip-horizontal")
 			.addPermission(PERMISSION_THEUSINATOR);
 		
-		CFW.Registry.Components.addRegularMenuItem(theusinatorMenu, FeatureCore.MENU_TOOLS);
+		CFW.Registry.Components.addRegularMenuItem(theusinatorMenu, null);
 				
 	}
 
