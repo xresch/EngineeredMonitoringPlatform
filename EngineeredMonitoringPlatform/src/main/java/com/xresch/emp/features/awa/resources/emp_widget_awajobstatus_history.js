@@ -16,7 +16,7 @@
 			description: CFWL('emp_widget_awajobstatus_history_desc', "Fetches the last X job statuses of one or multiple AWA Jobs."),
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
-				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
+				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
 					var jobStats = data.payload;
 					var settings =  widgetObject.JSON_SETTINGS;
 					

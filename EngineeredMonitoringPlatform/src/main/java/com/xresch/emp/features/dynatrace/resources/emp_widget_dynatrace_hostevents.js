@@ -13,7 +13,7 @@
 			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
-				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
+				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
 					
 					emp_dynatrace_renderEvents(widgetObject, data, callback);
 					

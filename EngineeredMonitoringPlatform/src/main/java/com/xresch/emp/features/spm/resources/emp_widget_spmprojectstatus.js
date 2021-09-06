@@ -16,7 +16,7 @@
 			description: CFWL('emp_widget_spmprojectstatus_desc', "Fetches the status of one or multiple SPM Ponitors."),
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
-				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
+				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
 					var monitorStats = data.payload;
 					var settings = widgetObject.JSON_SETTINGS;
 					var renderer = settings.renderer.toLowerCase();

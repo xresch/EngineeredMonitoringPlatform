@@ -16,7 +16,7 @@
 			description: CFWL('emp_widget_spmtimersforprojectstatus_desc', "Fetches the current value for the defined timers of a single project and displays it as defined by the threshold options."), 
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
-				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
+				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
 					var monitorStats = data.payload;
 					var settings = widgetObject.JSON_SETTINGS;
 					

@@ -81,7 +81,7 @@
 			description: CFWL('emp_widget_webexservicestatus_desc', "Fetches the status of Webex services from the given Webex REST URL. (Example: https://service-status.webex.com/customer/dashServices/123)"),
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
-				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
+				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
 					//-------------------------------
 					// Check Data
 					var settings = widgetObject.JSON_SETTINGS;

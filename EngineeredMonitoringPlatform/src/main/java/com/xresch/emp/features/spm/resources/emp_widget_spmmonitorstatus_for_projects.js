@@ -16,7 +16,7 @@
 			description: CFWL('emp_widget_spmmonitorstatus_forprojects_desc', "Fetches the status of all the monitors for the specified projects."),
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
-				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
+				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
 					var monitorStats = data.payload;
 					
 					for(var key in monitorStats){
