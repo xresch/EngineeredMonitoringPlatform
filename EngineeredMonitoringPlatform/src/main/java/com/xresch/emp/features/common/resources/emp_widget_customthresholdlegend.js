@@ -19,7 +19,7 @@
 			defaulttitle: "",
 			defaultwidth: 32,
 			defaultheight: 4,
-			createWidgetInstance: function (widgetObject, callback) {		
+			createWidgetInstance: function (widgetObject, params, callback) {		
 				
 				var settings = widgetObject.JSON_SETTINGS;
 				var html = '<div class="w-100 d-flex flex-wrap word-break-all">';

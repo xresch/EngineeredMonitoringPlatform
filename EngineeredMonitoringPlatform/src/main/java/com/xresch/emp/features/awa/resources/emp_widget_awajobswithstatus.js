@@ -14,7 +14,7 @@
 			menuicon: "fas fa-traffic-light",
 			menulabel: CFWL('emp_widget_awajobswithstatus', "AWA Jobs with Status"),
 			description: CFWL('emp_widget_awajobswithstatus_desc', "Fetches the jobs with the specified status and the given filter(s)."),
-			createWidgetInstance: function (widgetObject, callback) {
+			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					var jobStats = data.payload;

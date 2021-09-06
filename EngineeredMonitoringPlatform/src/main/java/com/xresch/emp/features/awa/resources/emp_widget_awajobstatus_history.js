@@ -14,7 +14,7 @@
 			menuicon: "fas fa-traffic-light",
 			menulabel: CFWL('emp_widget_awajobstatus_history', "AWA Job Status - History"),
 			description: CFWL('emp_widget_awajobstatus_history_desc', "Fetches the last X job statuses of one or multiple AWA Jobs."),
-			createWidgetInstance: function (widgetObject, callback) {
+			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					var jobStats = data.payload;

@@ -15,7 +15,7 @@
 			menulabel: CFWL('emp_widget_mssqlquerystatus', "Query Status"),
 			description: CFWL('emp_widget_mssqlquerystatus', "Executes an SQL Query and displays a threshhold based status."), 
 			usetimeframe: true,
-			createWidgetInstance: function (widgetObject, callback) {
+			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					

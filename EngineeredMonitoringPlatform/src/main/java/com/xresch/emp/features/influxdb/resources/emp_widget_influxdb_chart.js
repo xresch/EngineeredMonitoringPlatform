@@ -16,7 +16,7 @@
 			menulabel: CFWL('emp_widget_influxdb_chart', "InfluxDB Chart"),
 			description: CFWL('emp_widget_influxdb_chart_desc', "This widget uses a influxdb query to fetch the last value(instant) of the matched metrics and displays them as a chart."), 
 			usetimeframe: true,
-			createWidgetInstance: function (widgetObject, callback) {
+			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					//cfw_format_csvToObjectArray

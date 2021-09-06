@@ -11,7 +11,7 @@
 			menulabel: CFWL('emp_widget_dynatrace_hostmetricschart', "Host Metrics Chart"),
 			description: CFWL('emp_widget_dynatrace_hostmetricschart_desc', "Displays a chart for the selected metrics and the selected host."), 
 			usetimeframe: true,
-			createWidgetInstance: function (widgetObject, callback) {
+			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					

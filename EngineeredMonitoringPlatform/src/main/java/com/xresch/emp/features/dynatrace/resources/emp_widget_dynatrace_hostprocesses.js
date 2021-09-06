@@ -11,7 +11,7 @@
 			menulabel: CFWL('emp_widget_dynatrace_hostprocesses', "Host Processes"),
 			description: CFWL('emp_widget_dynatrace_hostprocesses_desc', "Displays a list of the processes running on a host monitored by Dynatrace."), 
 			usetimeframe: true,
-			createWidgetInstance: function (widgetObject, callback) {
+			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					

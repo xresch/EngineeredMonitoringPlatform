@@ -16,7 +16,7 @@
 			description: CFWL('emp_widget_spmmonitorstatus_all_desc', "Fetches the status of all the monitors of the selected SPM environment."),
 			defaultwidth: 16,
 			defaultheight: 24,
-			createWidgetInstance: function (widgetObject, callback) {
+			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, function(data){
 					var monitorStats = data.payload;
