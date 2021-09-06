@@ -46,7 +46,7 @@ public class WidgetHostDetails extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
 		
 		//---------------------------------
 		// Example Data

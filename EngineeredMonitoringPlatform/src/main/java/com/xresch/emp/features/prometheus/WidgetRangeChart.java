@@ -63,7 +63,7 @@ public class WidgetRangeChart extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
 		
 		//---------------------------------
 		// Example Data
@@ -97,11 +97,6 @@ public class WidgetRangeChart extends WidgetDefinition {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Prometheus Widget: The chosen environment seems not configured correctly.");
 			return;
 		}
-		
-		//---------------------------------
-		// Timeframe
-		long earliest = jsonSettings.get("timeframe_earliest").getAsLong();
-		long latest = jsonSettings.get("timeframe_latest").getAsLong();
 		
 		//---------------------------------
 		// Fetch Data

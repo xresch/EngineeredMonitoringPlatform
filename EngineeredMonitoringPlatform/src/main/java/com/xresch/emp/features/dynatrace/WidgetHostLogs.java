@@ -54,7 +54,7 @@ public class WidgetHostLogs extends WidgetDefinition {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
 		
 		WidgetHostLogsSettings settingsObject = new WidgetHostLogsSettings();
 		settingsObject.mapJsonFields(jsonSettings);
@@ -117,12 +117,7 @@ public class WidgetHostLogs extends WidgetDefinition {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatace Host Processes Widget: The chosen environment seems not configured correctly.");
 			return;
 		}
-	
-		//---------------------------------
-		// Timeframe
-		long earliest = jsonSettings.get("timeframe_earliest").getAsLong();
-		long latest = jsonSettings.get("timeframe_latest").getAsLong();
-		
+
 		//---------------------------------
 		// Fetch Data
 		JsonArray array = environment.getLogRecordsForHost(hostID, logName, logQuery, logMaxEntries, earliest, latest);
