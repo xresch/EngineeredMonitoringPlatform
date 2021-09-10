@@ -3,7 +3,6 @@ package com.xresch.emp.features.spm;
 import java.util.ArrayList;
 
 import com.xresch.cfw._main.CFW;
-import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
@@ -15,6 +14,7 @@ import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.response.bootstrap.DynamicItemCreator;
 import com.xresch.cfw.response.bootstrap.HierarchicalHTMLItem;
 import com.xresch.cfw.response.bootstrap.MenuItem;
+import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************

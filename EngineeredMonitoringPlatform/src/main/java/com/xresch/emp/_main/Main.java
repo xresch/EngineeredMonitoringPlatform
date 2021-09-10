@@ -3,10 +3,9 @@ package com.xresch.emp._main;
 import java.util.logging.Logger;
 
 import com.xresch.cfw._main.CFW;
-import com.xresch.cfw._main.CFWAppInterface;
 import com.xresch.cfw._main.CFWApplicationExecutor;
-import com.xresch.cfw._main.CFWExtensionApplication;
 import com.xresch.cfw.logging.CFWLog;
+import com.xresch.cfw.spi.CFWAppInterface;
 import com.xresch.emp.features.awa.FeatureAWA;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
@@ -22,7 +21,6 @@ import com.xresch.emp.features.webex.FeatureWebex;
  * 
  * @author Reto Scheiwiller, (c) Copyright 2020
  **************************************************************************************************************/
-@CFWExtensionApplication
 public class Main implements CFWAppInterface {
 	
 	//Don't do a logger here

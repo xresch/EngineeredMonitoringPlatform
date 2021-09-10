@@ -1,10 +1,10 @@
 package com.xresch.emp.features.webex;
 
 import com.xresch.cfw._main.CFW;
-import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
+import com.xresch.cfw.spi.CFWAppFeature;
 
 /**************************************************************************************************************
  * 

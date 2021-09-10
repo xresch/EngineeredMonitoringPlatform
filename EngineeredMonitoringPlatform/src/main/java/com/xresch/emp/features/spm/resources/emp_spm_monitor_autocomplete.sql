@@ -1,5 +1,9 @@
 SELECT DISTINCT TOP 10 [MonitorID],[MonitorName],[ProjectID],[ProjectName]
-  FROM [TMART].[dbo].[SV_V_Monitors_TimeSeriesData]
+	FROM (
+	SELECT TOP 50000 [MonitorID],[MonitorName],[ProjectID],[ProjectName],[ProjectIsActive]
+		FROM [TMART].[dbo].[SV_V_Monitors_TimeSeriesData]
+		ORDER BY [SeriesTime] DESC
+	) AS T
   WHERE [ProjectIsActive] = 1
   -- AND [MonitorIsActive] = 1
   AND [MonitorName] LIKE ?

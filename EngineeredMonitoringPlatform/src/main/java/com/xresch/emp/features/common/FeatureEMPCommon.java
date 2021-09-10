@@ -1,11 +1,11 @@
 package com.xresch.emp.features.common;
 
 import com.xresch.cfw._main.CFW;
-import com.xresch.cfw._main.CFWAppFeature;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.oracle.WidgetOracleQueryStatus;
 import com.xresch.emp.features.spm.FeatureSPM;
 import com.xresch.emp.features.webex.FeatureWebex;
