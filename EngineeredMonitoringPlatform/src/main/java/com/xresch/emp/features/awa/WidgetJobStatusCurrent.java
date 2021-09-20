@@ -11,6 +11,10 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+
+import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -21,8 +25,13 @@ import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.db.DBInterface;
+import com.xresch.cfw.features.dashboard.Dashboard;
+import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.features.dashboard.FeatureDashboard;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
+import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
@@ -30,7 +39,12 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
 public class WidgetJobStatusCurrent extends WidgetDefinition {
 
+	private static final String LAST_RUN_MINUTES = "last_run_minutes";
+	private static final String JOBLABELS = "joblabels";
+	private static final String JOBNAMES = "jobnames";
+	
 	private static Logger logger = CFWLog.getLogger(WidgetJobStatusCurrent.class.getName());
+	
 	@Override
 	public String getWidgetType() {return "emp_awajobstatus";}
 
@@ -39,20 +53,20 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		return new CFWObject()
 				.addField(AWASettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, "jobnames")
+				.addField(CFWField.newString(FormFieldType.TEXTAREA, JOBNAMES)
 						.setLabel("{!emp_widget_awajobstatus_jobnames!}")
 						.setDescription("{!emp_widget_awajobstatus_jobnames_desc!}")
 						.setValue("")			
 				)
 				
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, "joblabels")
+				.addField(CFWField.newString(FormFieldType.TEXTAREA, JOBLABELS)
 						.setLabel("{!emp_widget_awajobstatus_joblabels!}")
 						.setDescription("{!emp_widget_awajobstatus_joblabels_desc!}")
 						.setValue("")
 						
 				)
 				
-				.addField(CFWField.newInteger(FormFieldType.TEXT, "last_run_minutes")
+				.addField(CFWField.newInteger(FormFieldType.TEXT, LAST_RUN_MINUTES)
 						.setLabel("{!emp_widget_awajobstatus_last_run_minutes!}")
 						.setDescription("{!emp_widget_awajobstatus_last_run_minutes_desc!}")
 						.setValue(0)	
@@ -70,54 +84,80 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = jsonSettings.get("sampledata");
-		
-		if(sampleDataElement != null 
-		&& !sampleDataElement.isJsonNull() 
-		&& sampleDataElement.getAsBoolean()) {
-			createSampleData(response);
+		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
+		if(isSampleData != null && isSampleData) {
+			response.setPayLoad(createSampleData());
 			return;
 		}
+				
+		//---------------------------------
+		// Real Data		
+		response.setPayLoad(loadDataFromAwaAsJsonArray(settings));
+		
+	}
+
+	private JsonArray loadDataFromAwaAsJsonArray(CFWObject widgetSettings) {
 		
 		//---------------------------------
 		// Resolve Jobnames
-		JsonElement jobnamesElement = jsonSettings.get("jobnames");
-		if(jobnamesElement.isJsonNull() || jobnamesElement.getAsString().isEmpty()) {
-			return;
-		}
 		
-		String  jobnamesString = jobnamesElement.getAsString();
-		if(jobnamesString.isEmpty()) {
-			return;
+//		JsonElement jobnamesElement = jsonSettings.get(JOBNAMES);
+//		if(jobnamesElement.isJsonNull() || jobnamesElement.getAsString().isEmpty()) {
+//			return;
+//		}
+//		
+//		String  jobnamesString = jobnamesElement.getAsString();
+//		if(jobnamesString.isEmpty()) {
+//			return;
+//		}
+//		String[] jobnames = jobnamesString.trim().split("[,\t\r\n]+");
+
+		String jobnamesString = (String)widgetSettings.getField(JOBNAMES).getValue();
+		if(Strings.isNullOrEmpty(jobnamesString)) {
+			return null;
 		}
 		String[] jobnames = jobnamesString.trim().split("[,\t\r\n]+");
-
+		
 		//---------------------------------
 		// Resolve Joblabels
-		JsonElement joblabelsElement = jsonSettings.get("joblabels");
+		//JsonElement joblabelsElement = jsonSettings.get(JOBLABELS);
+//		String[] joblabels = null;
+//		if(!joblabelsElement.isJsonNull() && !joblabelsElement.getAsString().isEmpty()) {
+//			joblabels = joblabelsElement.getAsString().trim().split("[,\t\r\n]+");
+//		}
+		
+		String joblabelsString = (String)widgetSettings.getField(JOBLABELS).getValue();
 		String[] joblabels = null;
-		if(!joblabelsElement.isJsonNull() && !joblabelsElement.getAsString().isEmpty()) {
-			joblabels = joblabelsElement.getAsString().trim().split("[,\t\r\n]+");
+		if(!Strings.isNullOrEmpty(joblabelsString)) {
+			joblabels = joblabelsString.trim().split("[,\t\r\n]+");
 		}
+		
 
 		//---------------------------------
 		// Get Environment & DB
-		
-		JsonElement environmentElement = jsonSettings.get("environment");
-		if(environmentElement.isJsonNull()) {
-			return;
-		}
-		AWAEnvironment environment = AWAEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
 
+//		JsonElement environmentElement = jsonSettings.get("environment");
+//		if(environmentElement.isJsonNull()) {
+//			return;
+//		}
+//		AWAEnvironment environment = AWAEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
+
+		Integer environmentID = (Integer)widgetSettings.getField("environment").getValue();
+		AWAEnvironment environment;
+		if(environmentID != null) {
+			environment = AWAEnvironmentManagement.getEnvironment(environmentID);
+		}else {
+			return null;
+		}
 		//---------------------------------
 		// Get DB
 		DBInterface db = environment.getDBInstance();
 		
 		if(db == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "AWA Job Status: The chosen environment seems not configured correctly.");
-			return;
+			return null;
 		}
-			
+		
 		//---------------------------------
 		// Fetch Data
 		JsonArray resultArray = new JsonArray();
@@ -171,15 +211,13 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 				db.close(result);
 			}
 		}
-		
-		response.getContent().append(resultArray.toString());
-		
+		return resultArray;
 	}
 	
-	public void createSampleData(JSONResponse response) { 
+	public JsonArray createSampleData() { 
 		
 		long currentTime = new Date().getTime();
-		response.getContent().append("["
+		JsonElement element = CFW.JSON.stringToJsonElement("["
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"JP_0003_225\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"RUNNING\", \"END_TIME\":"+(currentTime-(1200*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"END_TIME\":"+(currentTime-(2120*60000))+"},"
@@ -196,10 +234,11 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_225\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"END_TIME\":"+(currentTime-(620*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_Vhjklh\", \"LABEL\":\"JP_0003_Vhjklh\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_01\", \"LABEL\":\"JP_01\", \"STATUS\":\"ABNORMAL ENDING\", \"END_TIME\":"+(currentTime-(1440*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_01\", \"LABEL\":\"JP_01_WITH_URL\", \"STATUS\":\"ABNORMAL ENDING\", \"URL\":\"https://somelink.toawainstance.yourcompany.com\", \"END_TIME\":"+(currentTime-(1440*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_A\", \"LABEL\":\"JP_0003_A\", \"STATUS\":\"OVERDUE (ABNORMAL ENDING)\", \"END_TIME\":"+(currentTime-(120*60000))+"}"
 			+"]");
 
+		return element.getAsJsonArray();
 	}
 	
 	@Override
@@ -225,6 +264,125 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA);
+	}
+	
+	
+	public boolean supportsTask() {
+		return true;
+	}
+	
+	/************************************************************
+	 * Override this method to return a description of what the
+	 * task of this widget does.
+	 ************************************************************/
+	public String getTaskDescription() {
+		return "Checks if any of the selected jobs ends with an issue.";
+	}
+	
+	/************************************************************
+	 * Override this method and return a CFWObject containing 
+	 * fields for the task parameters. The settings will be passed 
+	 * to the 
+	 * Always return a new instance, do not reuse a CFWObject.
+	 * @return CFWObject
+	 ************************************************************/
+	public CFWObject getTasksParameters() {
+		return new CFWJobsAlertObject();
+	}
+	
+	/*************************************************************************
+	 * Implement the actions your task should execute.
+	 * See {@link com.xresch.cfw.features.jobs.CFWJobTask#executeTask CFWJobTask.executeTask()} to get
+	 * more details on how to implement this method.
+	 *************************************************************************/
+	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings) throws JobExecutionException {
+		
+		System.out.println("### Start Task");
+		//----------------------------------------
+		// Fetch Data
+		JsonArray dataArray;
+		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
+		if(isSampleData != null && isSampleData) {
+			dataArray = createSampleData();
+		}else {
+			dataArray = loadDataFromAwaAsJsonArray(settings);
+		}
+		
+		if(dataArray == null) {
+			System.out.println("### Data Null: "+isSampleData);
+			return;
+		}
+		
+		//----------------------------------------
+		// Check Condition
+		boolean conditionMatched = false;
+		ArrayList<JsonObject> jobsWithIssues = new ArrayList<>();
+		for(JsonElement element : dataArray) {
+			JsonObject current = element.getAsJsonObject();
+			String status = current.get("STATUS").getAsString();
+			if(status != null && status.equals("ABNORMAL ENDING")) {
+				conditionMatched = true;
+				jobsWithIssues.add(current);
+			}
+		}
+		
+		
+		//----------------------------------------
+		// Handle Alerting
+		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, this.getWidgetType());
+
+		alertObject.mapJobExecutionContext(context);
+
+		AlertType type = alertObject.checkSendAlert(conditionMatched, null);
+		
+		if(!type.equals(AlertType.NONE)) {
+
+			//----------------------------------------
+			// Prepare Contents
+			String linkHTML = widget.createWidgetOriginMessage();
+			
+			//----------------------------------------
+			// RAISE
+			if(type.equals(AlertType.RAISE)) {
+				
+				//----------------------------------------
+				// Create Job List 
+				String joblistText = "";
+				String joblistHTML = "<ul>";
+				for(JsonObject current : jobsWithIssues) {
+					
+					String jobname = current.get("JOBNAME").getAsString();
+					JsonElement url = current.get("URL");
+					
+					joblistText += jobname+", ";
+					
+					if(url == null || url.isJsonNull()) {
+						joblistHTML += "<li>"+jobname+"</li>";
+					}else {
+						joblistHTML += "<li><a href=\""+url.getAsString()+"\">"+jobname+"</a></li>";
+					}
+				}
+				joblistText = joblistText.substring(0, joblistText.length()-2);
+				joblistHTML+="</ul>";
+				
+				//----------------------------------------
+				// Create Message
+				String message = "The following jobs run into an issue: "+joblistText;
+				String messageHTML = "<p>The following jobs run into an issue:</p>";
+				messageHTML += joblistHTML;
+				messageHTML += linkHTML;
+				
+				alertObject.doSendAlert("Alert: AWA Jobs run into an issue", message, messageHTML);
+			}
+			
+			//----------------------------------------
+			// RESOLVE
+			if(type.equals(AlertType.RESOLVE)) {
+				String message = "No more issues detected, the robo-brain sending you this message wishes you a marvelous day!";
+				String messageHTML = "<p>"+message+"</p>"+linkHTML;
+				alertObject.doSendAlert("Resolved: AWA Job Status is fine again.", message, messageHTML);
+			}
+		}
 	}
 	
 }

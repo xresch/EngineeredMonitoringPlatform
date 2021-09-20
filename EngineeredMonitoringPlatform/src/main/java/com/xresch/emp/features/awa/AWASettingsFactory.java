@@ -12,7 +12,7 @@ public class AWASettingsFactory {
 	 * @return
 	 ************************************************************************************/
 	public static CFWField<?> createEnvironmentSelectorField(){
-		return CFWField.newString(FormFieldType.SELECT, "environment")
+		return CFWField.newInteger(FormFieldType.SELECT, "environment")
 				.setLabel("{!emp_widget_awajobstatus_environment!}")
 				.setDescription("{!emp_widget_awajobstatus_environment_desc!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(AWAEnvironment.SETTINGS_TYPE));
