@@ -367,12 +367,12 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 				
 				//----------------------------------------
 				// Create Message
-				String message = "The following jobs run into an issue: "+joblistText;
-				String messageHTML = "<p>The following jobs run into an issue:</p>";
+				String message = "The following job(s) have one of issue: "+joblistText;
+				String messageHTML = "<p>The following job(s) ended with one or more issues:</p>";
 				messageHTML += joblistHTML;
 				messageHTML += linkHTML;
 				
-				alertObject.doSendAlert("Alert: AWA Jobs run into an issue", message, messageHTML);
+				alertObject.doSendAlert("EMP: Alert - AWA job(s) ended with issues", message, messageHTML);
 			}
 			
 			//----------------------------------------
@@ -380,7 +380,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 			if(type.equals(AlertType.RESOLVE)) {
 				String message = "No more issues detected, the robo-brain sending you this message wishes you a marvelous day!";
 				String messageHTML = "<p>"+message+"</p>"+linkHTML;
-				alertObject.doSendAlert("Resolved: AWA Job Status is fine again.", message, messageHTML);
+				alertObject.doSendAlert("EMP: Resolved - AWA Job Status is fine again.", message, messageHTML);
 			}
 		}
 	}
