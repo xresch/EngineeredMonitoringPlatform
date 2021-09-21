@@ -297,7 +297,6 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	 *************************************************************************/
 	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings) throws JobExecutionException {
 		
-		System.out.println("### Start Task");
 		//----------------------------------------
 		// Fetch Data
 		JsonArray dataArray;
@@ -309,7 +308,6 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		}
 		
 		if(dataArray == null) {
-			System.out.println("### Data Null: "+isSampleData);
 			return;
 		}
 		
