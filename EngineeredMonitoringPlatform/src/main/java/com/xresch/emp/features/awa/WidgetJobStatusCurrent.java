@@ -50,21 +50,8 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 
 	@Override
 	public CFWObject getSettings() {
-		return new CFWObject()
-				.addField(AWASettingsFactory.createEnvironmentSelectorField())
-				
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, JOBNAMES)
-						.setLabel("{!emp_widget_awajobstatus_jobnames!}")
-						.setDescription("{!emp_widget_awajobstatus_jobnames_desc!}")
-						.setValue("")			
-				)
-				
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, JOBLABELS)
-						.setLabel("{!emp_widget_awajobstatus_joblabels!}")
-						.setDescription("{!emp_widget_awajobstatus_joblabels_desc!}")
-						.setValue("")
-						
-				)
+		return 
+			createJobSelectionFields()
 				
 				.addField(CFWField.newInteger(FormFieldType.TEXT, LAST_RUN_MINUTES)
 						.setLabel("{!emp_widget_awajobstatus_last_run_minutes!}")
@@ -79,7 +66,26 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	
 		;
 	}
+	
+	public CFWObject createJobSelectionFields() {
+		return new CFWObject()
+		.addField(AWASettingsFactory.createEnvironmentSelectorField())
 		
+		.addField(CFWField.newString(FormFieldType.TEXTAREA, JOBNAMES)
+				.setLabel("{!emp_widget_awajobstatus_jobnames!}")
+				.setDescription("{!emp_widget_awajobstatus_jobnames_desc!}")
+				.setValue("")			
+		)
+		
+		.addField(CFWField.newString(FormFieldType.TEXTAREA, JOBLABELS)
+				.setLabel("{!emp_widget_awajobstatus_joblabels!}")
+				.setDescription("{!emp_widget_awajobstatus_joblabels_desc!}")
+				.setValue("")
+				
+		);
+		
+	}
+	
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
 		//---------------------------------
@@ -337,7 +343,10 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 
 			//----------------------------------------
 			// Prepare Contents
-			String linkHTML = widget.createWidgetOriginMessage();
+			String linkHTML = "";
+			if(widget != null) {
+				linkHTML = widget.createWidgetOriginMessage();
+			}
 			
 			//----------------------------------------
 			// RAISE
@@ -350,6 +359,10 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 				for(JsonObject current : jobsWithIssues) {
 					
 					String jobname = current.get("JOBNAME").getAsString();
+					String label = current.get("LABEL").getAsString();
+					if(!label.equals(jobname)) {
+						jobname += " ("+label+")"; 
+					}
 					JsonElement url = current.get("URL");
 					
 					joblistText += jobname+", ";
@@ -373,7 +386,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 				
 				CFW.Messages.addErrorMessage(message);
 				
-				alertObject.doSendAlert("EMP: Alert - AWA job(s) ended with issues", message, messageHTML);
+				alertObject.doSendAlert(context, "EMP: Alert - AWA job(s) ended with issues", message, messageHTML);
 			}
 			
 			//----------------------------------------
@@ -383,7 +396,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 				String messageHTML = "<p>"+message+"</p>"+linkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
-				alertObject.doSendAlert("EMP: Resolved - AWA Job Status is fine again.", message, messageHTML);
+				alertObject.doSendAlert(context, "EMP: Resolved - AWA Job Status is fine again.", message, messageHTML);
 			}
 		}
 	}

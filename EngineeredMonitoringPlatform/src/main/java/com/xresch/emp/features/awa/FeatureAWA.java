@@ -1,12 +1,18 @@
 package com.xresch.emp.features.awa;
 
+
+import org.quartz.JobExecutionException;
+
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
+import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
@@ -68,6 +74,9 @@ public class FeatureAWA extends CFWAppFeature {
 		CFW.Registry.Parameters.add(new ParameterDefinitionAWAEnvironment());
 		CFW.Registry.Parameters.add(new ParameterDefinitionAWAJobname());
     
+		//----------------------------------
+		// Register Job Task
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskAWAJobIssueAlert());
 		
 		//----------------------------------
 		// Register Manual Page
