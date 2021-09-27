@@ -59,7 +59,7 @@
 							},
 							PROJECT_URL: function(record, value) { 
 					 			if(value != null && value != ""){
-					 				return  '<a class="btn btn-sm btn-primary ml-2" role="button" target="_blank" href="'+value+'" ><i class="fas fa-external-link-square-alt"></i> Open SPM Project</a>'; 
+					 				return  '<a style="color: inherit;" role="button" target="_blank" href="'+value+'" ><i class="fas fa-external-link-square-alt"></i> SPM</a>'; 
 					 			}else {
 					 				return "&nbsp;";
 					 			}
@@ -87,16 +87,18 @@
 					}};
 					
 					//-----------------------------------
-					// Adjust RenderSettings for Table
-					if(widgetObject.JSON_SETTINGS.renderer == "Table"){
-						dataToRender.visiblefields = ['PROJECT_NAME', 'MONITOR_NAME', 'VALUE']; 
-						dataToRender.customizers.PROJECT_NAME = function(record, value) { 
-				 			if(value != null && value != ""){
-				 				return  '<a style="color: inherit;" target="_blank" href="'+record.PROJECT_URL+'" >'+value+'</a>'; 
-				 			}else {
-				 				return "&nbsp;";
-				 			}
-						};
+					// Adjust RenderSettings for Table, Panels, And
+					if(widgetObject.JSON_SETTINGS.renderer.toLowerCase() == "table"
+					|| widgetObject.JSON_SETTINGS.renderer.toLowerCase() == "cards"
+					|| widgetObject.JSON_SETTINGS.renderer.toLowerCase() == "panels"){
+						dataToRender.visiblefields = ['PROJECT_NAME', 'MONITOR_NAME', 'VALUE', 'PROJECT_URL']; 
+					}
+					
+					//-----------------------------------
+					// Adjust RenderSettings for CSV
+					if(widgetObject.JSON_SETTINGS.renderer.toLowerCase() == "csv"){
+						dataToRender.visiblefields = ['PROJECT_ID','PROJECT_NAME', 'MONITOR_ID', 'MONITOR_NAME', 'VALUE']; 
+
 					}
 					
 					//--------------------------
