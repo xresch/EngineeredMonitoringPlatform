@@ -60,19 +60,21 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 
 	@Override
 	public CFWObject getSettings() {
-		return new CFWObject()
-				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
-				
-				.addField(SPMSettingsFactory.createMonitorsSelectorField())
-				
-				.addField(SPMSettingsFactory.createMeasureSelectField())
-								
+		return createMonitorSelectionFields()
 				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
 				.addField(WidgetSettingsFactory.createDisableBoolean())
 				.addField(WidgetSettingsFactory.createSampleDataField())
 				
 	
+		;
+	}
+	
+	public CFWObject createMonitorSelectionFields() {
+		return new CFWObject()
+				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
+				.addField(SPMSettingsFactory.createMonitorsSelectorField())
+				.addField(SPMSettingsFactory.createMeasureSelectField())
 		;
 	}
 

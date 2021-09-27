@@ -1,4 +1,4 @@
-package com.xresch.emp.features.awa;
+package com.xresch.emp.features.spm;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -13,23 +13,23 @@ import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.jobs.FeatureJobs;
 import com.xresch.cfw.features.usermgmt.User;
 
-public class CFWJobTaskAWAJobIssueAlert extends CFWJobTask {
+public class CFWJobTaskSPMMonitorStatusAlert extends CFWJobTask {
 	
-	private WidgetJobStatusCurrent widget = new WidgetJobStatusCurrent();
+	private WidgetMonitorStatus widget = new WidgetMonitorStatus();
 
 	@Override
 	public String uniqueName() {
-		return "AWA: Job Issue Alert";
+		return "SPM: Monitor Status Alert";
 	}
 
 	@Override
 	public String taskDescription() {
-		return "Checks if any of the selected jobs ends with an issue and creates an alert.";
+		return widget.getTaskDescription();
 	}
 
 	@Override
 	public CFWObject getParameters() {
-		return widget.createJobSelectionFields()
+		return widget.createMonitorSelectionFields()
 				.addField(WidgetSettingsFactory.createSampleDataField())
 				.addAllFields(widget.getTasksParameters().getFields())
 			;
@@ -50,7 +50,7 @@ public class CFWJobTaskAWAJobIssueAlert extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA) ) {
+		&& user.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM) ) {
 			return true;
 		}
 		

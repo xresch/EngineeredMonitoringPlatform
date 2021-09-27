@@ -8,6 +8,7 @@ import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
+import com.xresch.emp.features.awa.CFWJobTaskAWAJobIssueAlert;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************
@@ -51,6 +52,7 @@ public class FeatureSPM extends CFWAppFeature {
 		// Register Package
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
+		
 		//----------------------------------
 		// Register Context Settings
 		CFW.Registry.ContextSettings.register(EnvironmentSPM.SETTINGS_TYPE, EnvironmentSPM.class);
@@ -71,6 +73,10 @@ public class FeatureSPM extends CFWAppFeature {
 		//----------------------------------
 		// Register Parameters
 		CFW.Registry.Parameters.add(new ParameterDefinitionSPMEnvironment());
+		
+		//----------------------------------
+		// Register Job Task
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskSPMMonitorStatusAlert());
 		
 		//----------------------------------
 		// Register Manuals
