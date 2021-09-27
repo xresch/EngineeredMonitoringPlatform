@@ -10,11 +10,17 @@ import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 
 public class SPMSettingsFactory {
 	
+	//do not change string values, might corrupt existing widgets
+	public static final String FIELDNAME_MEASURE = "measure";
+	public static final String FIELDNAME_PROJECTS = "JSON_PROJECTS";
+	public static final String FIELDNAME_MONITORS = "JSON_MONITORS";
+	public static final String FIELDNAME_ENVIRONMENT = "environment";
+	
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
 	public static CFWField<?> createEnvironmentSelectorField(){
-		return CFWField.newString(FormFieldType.SELECT, "environment")
+		return CFWField.newInteger(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
 				.setLabel("{!emp_widget_spm_environment!}")
 				.setDescription("{!emp_widget_spm_environment_desc!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE));
@@ -24,7 +30,7 @@ public class SPMSettingsFactory {
 	 * 
 	 ************************************************************************************/
 	public static CFWField<?> createMonitorSelectorField(){
-		return CFWField.newTagsSelector("JSON_MONITORS")
+		return CFWField.newTagsSelector(FIELDNAME_MONITORS)
 				.setLabel("{!emp_widget_spm_monitor!}")
 				.setDescription("{!emp_widget_spm_monitor_desc!}")
 				.addAttribute("maxTags", "1")
@@ -32,7 +38,7 @@ public class SPMSettingsFactory {
 					
 					@Override
 					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-						String environment = request.getParameter("environment");
+						String environment = request.getParameter(FIELDNAME_ENVIRONMENT);
 						
 						return EnvironmentManagerSPM.autocompleteMonitors(Integer.parseInt(environment), searchValue, this.getMaxResults());
 					}
@@ -42,14 +48,14 @@ public class SPMSettingsFactory {
 	 * 
 	 ************************************************************************************/
 	public static CFWField<?> createMonitorsSelectorField(){
-		return CFWField.newTagsSelector("JSON_MONITORS")
+		return CFWField.newTagsSelector(FIELDNAME_MONITORS)
 				.setLabel("{!emp_widget_spm_monitor!}")
 				.setDescription("{!emp_widget_spm_monitor_desc!}")
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
 					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-						String environment = request.getParameter("environment");
+						String environment = request.getParameter(FIELDNAME_ENVIRONMENT);
 						
 						return EnvironmentManagerSPM.autocompleteMonitors(Integer.parseInt(environment), searchValue, this.getMaxResults());
 					}
@@ -60,7 +66,7 @@ public class SPMSettingsFactory {
 	 * 
 	 ************************************************************************************/
 	public static CFWField<?> createProjectsSelectorField(){
-		return 	CFWField.newTagsSelector("JSON_PROJECTS")
+		return 	CFWField.newTagsSelector(FIELDNAME_PROJECTS)
 				.setLabel("{!emp_widget_spm_project!}")
 				.setDescription("{!emp_widget_spm_project_desc!}")
 				.addAttribute("maxTags", "1")
@@ -68,7 +74,7 @@ public class SPMSettingsFactory {
 					
 					@Override
 					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-						String environment = request.getParameter("environment");
+						String environment = request.getParameter(FIELDNAME_ENVIRONMENT);
 						
 						return EnvironmentManagerSPM.autocompleteProjects(Integer.parseInt(environment), searchValue, this.getMaxResults());
 					}
@@ -79,7 +85,7 @@ public class SPMSettingsFactory {
 	 * 
 	 ************************************************************************************/
 	public static CFWField<?> createMeasureSelectField(){
-		return 	CFWField.newString(FormFieldType.SELECT, "measure")
+		return 	CFWField.newString(FormFieldType.SELECT, FIELDNAME_MEASURE)
 				.setLabel("{!emp_widget_spm_measure!}")
 				.setDescription("{!emp_widget_spm_measure_desc!}")
 				.setOptions(new String[]{"Overall Health", "Availability", "Accuracy", "Performance"})

@@ -106,32 +106,12 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Jobnames
-		
-//		JsonElement jobnamesElement = jsonSettings.get(JOBNAMES);
-//		if(jobnamesElement.isJsonNull() || jobnamesElement.getAsString().isEmpty()) {
-//			return;
-//		}
-//		
-//		String  jobnamesString = jobnamesElement.getAsString();
-//		if(jobnamesString.isEmpty()) {
-//			return;
-//		}
-//		String[] jobnames = jobnamesString.trim().split("[,\t\r\n]+");
-
 		String jobnamesString = (String)widgetSettings.getField(JOBNAMES).getValue();
 		if(Strings.isNullOrEmpty(jobnamesString)) {
 			return null;
 		}
 		String[] jobnames = jobnamesString.trim().split("[,\t\r\n]+");
-		
-		//---------------------------------
-		// Resolve Joblabels
-		//JsonElement joblabelsElement = jsonSettings.get(JOBLABELS);
-//		String[] joblabels = null;
-//		if(!joblabelsElement.isJsonNull() && !joblabelsElement.getAsString().isEmpty()) {
-//			joblabels = joblabelsElement.getAsString().trim().split("[,\t\r\n]+");
-//		}
-		
+				
 		String joblabelsString = (String)widgetSettings.getField(JOBLABELS).getValue();
 		String[] joblabels = null;
 		if(!Strings.isNullOrEmpty(joblabelsString)) {
@@ -141,12 +121,6 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 
 		//---------------------------------
 		// Get Environment & DB
-
-//		JsonElement environmentElement = jsonSettings.get("environment");
-//		if(environmentElement.isJsonNull()) {
-//			return;
-//		}
-//		AWAEnvironment environment = AWAEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
 
 		Integer environmentID = (Integer)widgetSettings.getField("environment").getValue();
 		AWAEnvironment environment;
