@@ -366,7 +366,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 			//----------------------------------------
 			// RESOLVE
 			if(type.equals(AlertType.RESOLVE)) {
-				String message = "No more issues detected, the robo-brain sending you this message wishes you a marvelous day!";
+				String message = CFW.Random.randomNoMoreIssueMessages();
 				String messageHTML = "<p>"+message+"</p>"+linkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
