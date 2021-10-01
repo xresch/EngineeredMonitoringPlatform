@@ -35,11 +35,11 @@
 					
 					//---------------------------
 					// Set Colors for Thresholds
-					var excellentVal = settings.threshold_excellent;
-					var goodVal = settings.threshold_good;
-					var warningVal = settings.threshold_warning;
-					var emergencyVal = settings.threshold_emergency;
-					var dangerVal = settings.threshold_danger;
+					var excellentVal 	= settings.THRESHOLD_EXCELLENT;
+					var goodVal 		= settings.THRESHOLD_GOOD;
+					var warningVal 		= settings.THRESHOLD_WARNING;
+					var emergencyVal 	= settings.THRESHOLD_EMERGENCY;
+					var dangerVal 		= settings.THRESHOLD_DANGER;
 					
 					for(var key in monitorStats){
 						var current = monitorStats[key];
@@ -50,7 +50,7 @@
 								,warningVal
 								,emergencyVal
 								,dangerVal
-								,settings.disable);
+								,settings.THRESHOLD_DISABLED);
 						
 						if(current.alertstyle != "cfw-none"){
 							current.textstyle = "white"; 

@@ -29,6 +29,7 @@ import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.utils.CFWConditions;
 import com.xresch.cfw.validation.CustomValidator;
 
 public class WidgetOracleQueryStatus extends WidgetDefinition {
@@ -80,11 +81,11 @@ public class WidgetOracleQueryStatus extends WidgetDefinition {
 						.setDescription("{!emp_widget_oraclequerystatus_detailcolumns_desc!}")
 				)
 
-				.addAllFields(WidgetSettingsFactory.createThresholdFields())
+				.addAllFields(CFWConditions.createThresholdFields())
 										
 				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
-				.addField(WidgetSettingsFactory.createDisableBoolean())
+				//.addField(WidgetSettingsFactory.createDisableBoolean())
 				.addField(WidgetSettingsFactory.createSampleDataField())
 									
 		;

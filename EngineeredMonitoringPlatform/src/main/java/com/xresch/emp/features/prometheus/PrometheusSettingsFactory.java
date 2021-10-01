@@ -6,17 +6,18 @@ import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 
 public class PrometheusSettingsFactory {
 	
+	public static final String FIELDNAME_ENVIRONMENT = "environment";
+
 	/************************************************************************************
 	 * Returns the dynatrace environment selector field.
 	 * 
 	 * @return
 	 ************************************************************************************/
 	public static CFWField<?> createEnvironmentSelectorField(){
-		return CFWField.newString(FormFieldType.SELECT, "environment")
-				.setLabel("{!emp_widget_spm_environment!}")
-				.setDescription("{!emp_widget_spm_environment_desc!}")
+		return CFWField.newInteger(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
+				.setLabel("{!emp_common_environment!}")
+				.setDescription("{!emp_common_environment!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE));
 	}
 		
-
 }
