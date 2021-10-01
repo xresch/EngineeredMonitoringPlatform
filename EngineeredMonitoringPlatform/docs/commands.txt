@@ -1,0 +1,9 @@
+#########################################################
+# Docker
+#########################################################
+#-------------------------------
+# Build image
+#-------------------------------
+mvn clean install
+docker build -t xresch/emp:latest .
+docker build -t xresch/emp:latest -t xresch/emp:1.8.0 .
