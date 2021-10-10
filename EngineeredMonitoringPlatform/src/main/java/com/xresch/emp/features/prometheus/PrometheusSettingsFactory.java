@@ -14,7 +14,7 @@ public class PrometheusSettingsFactory {
 	 * @return
 	 ************************************************************************************/
 	public static CFWField<?> createEnvironmentSelectorField(){
-		return CFWField.newInteger(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
+		return CFWField.newString(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
 				.setLabel("{!emp_common_environment!}")
 				.setDescription("{!emp_common_environment!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE));

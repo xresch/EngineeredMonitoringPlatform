@@ -20,7 +20,7 @@ public class SPMSettingsFactory {
 	 * 
 	 ************************************************************************************/
 	public static CFWField<?> createEnvironmentSelectorField(){
-		return CFWField.newInteger(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
+		return CFWField.newString(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
 				.setLabel("{!emp_widget_spm_environment!}")
 				.setDescription("{!emp_widget_spm_environment_desc!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(EnvironmentSPM.SETTINGS_TYPE));

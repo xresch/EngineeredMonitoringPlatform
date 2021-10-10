@@ -111,10 +111,10 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 		
 		//---------------------------------
 		// Get Environment
-		Integer environmentID = (Integer)widgetSettings.getField(PrometheusSettingsFactory.FIELDNAME_ENVIRONMENT).getValue();
+		String environmentID = (String)widgetSettings.getField(PrometheusSettingsFactory.FIELDNAME_ENVIRONMENT).getValue();
 		PrometheusEnvironment environment;
 		if(environmentID != null) {
-			environment = PrometheusEnvironmentManagement.getEnvironment(environmentID);
+			environment = PrometheusEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
 		}else {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Prometheus Instant Threshold: The db of the chosen environment seems not configured correctly.");
 			return null;

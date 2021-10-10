@@ -107,10 +107,10 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		
 		//---------------------------------
 		// Get Environment
-		Integer environmentID = (Integer)widgetSettings.getField(SPMSettingsFactory.FIELDNAME_ENVIRONMENT).getValue();
+		String environmentID = (String)widgetSettings.getField(SPMSettingsFactory.FIELDNAME_ENVIRONMENT).getValue();
 		EnvironmentSPM environment;
 		if(environmentID != null) {
-			environment = EnvironmentManagerSPM.getEnvironment(environmentID);
+			environment = EnvironmentManagerSPM.getEnvironment(Integer.parseInt(environmentID));
 		}else {
 			return null;
 		}

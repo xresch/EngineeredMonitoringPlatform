@@ -122,10 +122,10 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		//---------------------------------
 		// Get Environment & DB
 
-		Integer environmentID = (Integer)widgetSettings.getField("environment").getValue();
+		String environmentID = (String)widgetSettings.getField("environment").getValue();
 		AWAEnvironment environment;
 		if(environmentID != null) {
-			environment = AWAEnvironmentManagement.getEnvironment(environmentID);
+			environment = AWAEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
 		}else {
 			return null;
 		}
