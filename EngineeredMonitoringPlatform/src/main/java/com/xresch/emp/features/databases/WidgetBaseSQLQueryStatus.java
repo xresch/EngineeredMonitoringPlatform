@@ -397,7 +397,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 					//-----------------------------
 					// Create Label String
 					String labelString = "";
-					for (String fieldname : labelColumns.split(",")) {
+					for (String fieldname : labelColumns.split(" *, *")) {
 						labelString += current.get(fieldname.trim()).getAsString() + " ";
 					}
 					labelString = labelString.substring(0, labelString.length()-1);
@@ -423,7 +423,9 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 					if(!Strings.isNullOrEmpty(detailColumns)) {
 						String detailsString = "";
 						for (String fieldname : detailColumns.split(",")) {
-							detailsString += fieldname+"=\""+current.get(fieldname.trim()).getAsString() + "\" ";
+							if(!fieldname.trim().equals(urlColumn.trim())) {
+								detailsString += fieldname+"=\""+current.get(fieldname.trim()).getAsString() + "\" ";
+							}
 						}
 						metricListHTML += ": "+detailsString.substring(0, detailsString.length()-1);
 					}
