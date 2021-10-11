@@ -1,4 +1,4 @@
-package com.xresch.emp.features.oracle;
+package com.xresch.emp.features.databases.oracle;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
@@ -17,8 +17,8 @@ import com.xresch.emp.features.common.FeatureEMPCommon;
  **************************************************************************************************************/
 public class FeatureOracle extends CFWAppFeature {
 	
-	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.oracle.manual";
-	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.oracle.resources";
+	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.databases.oracle.manual";
+	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.oracle.resources";
 	
 	public static final String PERMISSION_WIDGETS_ORACLE = "Widgets: Oracle";
 	

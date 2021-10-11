@@ -1,4 +1,4 @@
-package com.xresch.emp.features.oracle;
+package com.xresch.emp.features.databases.oracle;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;

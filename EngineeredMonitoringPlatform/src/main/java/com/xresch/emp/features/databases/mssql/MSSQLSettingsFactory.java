@@ -13,8 +13,8 @@ public class MSSQLSettingsFactory {
 	 ************************************************************************************/
 	public static CFWField<?> createEnvironmentSelectorField(){
 		return CFWField.newString(FormFieldType.SELECT, "environment")
-				.setLabel("{!emp_widget_mssqlquerystatus_environment!}")
-				.setDescription("{!emp_widget_mssqlquerystatus_environment_desc!}")
+				.setLabel("{!emp_common_environment!}")
+				.setDescription("{!emp_common_environment!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(MSSQLEnvironment.SETTINGS_TYPE));
 	}
 		

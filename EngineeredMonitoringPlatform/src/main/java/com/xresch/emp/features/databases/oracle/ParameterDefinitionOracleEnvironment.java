@@ -1,4 +1,4 @@
-package com.xresch.emp.features.oracle;
+package com.xresch.emp.features.databases.oracle;
 
 import java.util.HashSet;
 

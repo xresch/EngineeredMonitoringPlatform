@@ -337,7 +337,6 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 			i++;
 		}
 		
-
 		
 		//----------------------------------------
 		// Get alertThreshhold
