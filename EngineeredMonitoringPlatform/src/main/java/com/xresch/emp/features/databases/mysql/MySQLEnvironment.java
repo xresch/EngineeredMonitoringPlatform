@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mysql;
+package com.xresch.emp.features.databases.mysql;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;

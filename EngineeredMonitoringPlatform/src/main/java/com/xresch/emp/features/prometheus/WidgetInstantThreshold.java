@@ -183,6 +183,9 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 		return user.hasPermission(FeaturePrometheus.PERMISSION_WIDGETS_PROMETHEUS);
 	}
 	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
 	public boolean supportsTask() {
 		return true;
 	}
@@ -327,7 +330,7 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 						
 						metricString += entry.getKey()+": "+entry.getValue().toString()+", ";
 					}
-					metricString.substring(0, metricString.length()-2);
+					metricString = metricString.substring(0, metricString.length()-2);
 					
 					
 					//-----------------------------

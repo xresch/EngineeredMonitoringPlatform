@@ -54,11 +54,6 @@
 					if(!CFW.utils.isNullOrEmpty(detailColumns)){
 						visiblefields = detailColumns.trim().split(/ ?, ?/g);
 					}
-					console.log("valueColumn:"+valueColumn);
-					console.log("detailColumns:"+detailColumns);
-					console.log("labelColumns:"+labelColumns);
-					console.log("titlefields:"+titlefields);
-					console.log("visiblefields:"+visiblefields);
 					
 					//---------------------------
 					// Set Colors for Thresholds
@@ -122,6 +117,19 @@
 								maxcolumns: 5,
 							},
 					}};
+					
+					//--------------------------
+					// Add URL Customizer
+					if(!CFW.utils.isNullOrEmpty(settings.urlcolumn)){
+						dataToRender.customizers[settings.urlcolumn] = 
+							function(record, value) { 
+								if(value != null && value != ""){
+					 				return  '<a style="color: inherit;" role="button" target="_blank" href="'+value+'" ><i class="fas fa-external-link-square-alt"></i> Link</a>'; 
+					 			}else {
+					 				return "&nbsp;";
+					 			}
+							};
+					}
 										
 					//--------------------------
 					// Render Widget

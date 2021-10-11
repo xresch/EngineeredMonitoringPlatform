@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mysql;
+package com.xresch.emp.features.databases.mysql;
 
 import java.util.HashSet;
 

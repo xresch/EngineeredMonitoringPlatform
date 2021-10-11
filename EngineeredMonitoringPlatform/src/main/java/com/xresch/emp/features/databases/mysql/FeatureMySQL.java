@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mysql;
+package com.xresch.emp.features.databases.mysql;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
@@ -17,8 +17,8 @@ import com.xresch.emp.features.common.FeatureEMPCommon;
  **************************************************************************************************************/
 public class FeatureMySQL extends CFWAppFeature {
 	
-	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.mysql.manual";
-	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.mysql.resources";
+	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.databases.mysql.manual";
+	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.mysql.resources";
 	
 	public static final String PERMISSION_WIDGETS_MYSQL = "Widgets: MySQL";
 	
