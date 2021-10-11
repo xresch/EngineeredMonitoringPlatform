@@ -12,6 +12,7 @@ public class AWASettingsFactory {
 	 * @return
 	 ************************************************************************************/
 	public static CFWField<?> createEnvironmentSelectorField(){
+		// use string to allow parameter substitution
 		return CFWField.newString(FormFieldType.SELECT, "environment")
 				.setLabel("{!emp_widget_awajobstatus_environment!}")
 				.setDescription("{!emp_widget_awajobstatus_environment_desc!}")

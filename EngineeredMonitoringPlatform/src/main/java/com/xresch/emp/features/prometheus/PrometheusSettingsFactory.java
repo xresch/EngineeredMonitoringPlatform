@@ -14,6 +14,7 @@ public class PrometheusSettingsFactory {
 	 * @return
 	 ************************************************************************************/
 	public static CFWField<?> createEnvironmentSelectorField(){
+		// use string to allow parameter substitution
 		return CFWField.newString(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
 				.setLabel("{!emp_common_environment!}")
 				.setDescription("{!emp_common_environment!}")

@@ -20,6 +20,7 @@ public class SPMSettingsFactory {
 	 * 
 	 ************************************************************************************/
 	public static CFWField<?> createEnvironmentSelectorField(){
+		// use string to allow parameter substitution
 		return CFWField.newString(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
 				.setLabel("{!emp_widget_spm_environment!}")
 				.setDescription("{!emp_widget_spm_environment_desc!}")
