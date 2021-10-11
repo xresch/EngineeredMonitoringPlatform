@@ -1,4 +1,4 @@
-package com.xresch.emp.features.databases.mysql;
+package com.xresch.emp.features.databases.mssql;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -13,28 +13,26 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.databases.WidgetBaseSQLQueryStatus;
 
-public class WidgetMySQLQueryStatus extends WidgetBaseSQLQueryStatus {
+public class WidgetMSSQLQueryStatus extends WidgetBaseSQLQueryStatus {
 
-	
-	private static Logger logger = CFWLog.getLogger(WidgetMySQLQueryStatus.class.getName());
-	
+	private static Logger logger = CFWLog.getLogger(WidgetMSSQLQueryStatus.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_mysqlquerystatus";}
+	public String getWidgetType() {return "emp_mssqlquerystatus";}
 
-
+	@SuppressWarnings("rawtypes")
 	@Override
 	public CFWField createEnvironmentSelectorField() {
-		return MySQLSettingsFactory.createEnvironmentSelectorField();
+		return MSSQLSettingsFactory.createEnvironmentSelectorField();
 	}
 
 	@Override
 	public DBInterface getDatabaseInterface(String environmentID) {
 
-		MySQLEnvironment environment;
+		MSSQLEnvironment environment;
 		if(environmentID != null) {
-			 environment = MySQLEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
+			 environment = MSSQLEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "MySQL Query Status: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "MSSQL Query Status: The chosen environment seems not configured correctly.");
 			return null;
 		}
 		
@@ -43,19 +41,19 @@ public class WidgetMySQLQueryStatus extends WidgetBaseSQLQueryStatus {
 		return environment.getDBInstance();
 
 	}
+
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMySQL.PACKAGE_RESOURCE, "emp_widget_mysqlquerystatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMSSQL.PACKAGE_RESOURCE, "emp_widget_mssqlquerystatus.js") );
 		return array;
 	}
 
+
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureMySQL.PERMISSION_WIDGETS_MYSQL);
+		return user.hasPermission(FeatureMSSQL.PERMISSION_WIDGETS_MYSQL);
 	}
-		
+
 }
-
-

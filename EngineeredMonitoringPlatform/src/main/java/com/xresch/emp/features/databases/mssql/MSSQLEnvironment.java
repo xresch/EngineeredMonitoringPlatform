@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mssql;
+package com.xresch.emp.features.databases.mssql;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;

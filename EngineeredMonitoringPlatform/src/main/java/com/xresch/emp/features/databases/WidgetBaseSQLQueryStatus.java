@@ -61,7 +61,8 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 
 	
 	
-	public abstract CFWField<String> createEnvironmentSelectorField();
+	@SuppressWarnings("rawtypes")
+	public abstract CFWField createEnvironmentSelectorField();
 	
 	public abstract DBInterface getDatabaseInterface(String environmentID);
 	
@@ -137,7 +138,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 		}
 		//---------------------------------
 		// Real Data		
-		response.setPayLoad(loadDataFromMySQL(settings));
+		response.setPayLoad(loadDataFromDBInferface(settings));
 		
 	}
 	
@@ -146,7 +147,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 	 * @param latest time in millis of which to fetch the data.
 	 *********************************************************************/
 	@SuppressWarnings("unchecked")
-	public JsonArray loadDataFromMySQL(CFWObject widgetSettings){
+	public JsonArray loadDataFromDBInferface(CFWObject widgetSettings){
 		
 		//---------------------------------
 		// Resolve Query		
@@ -165,7 +166,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 		DBInterface db =  this.getDatabaseInterface(environmentID);
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "MySQL Query Status: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Database Query Status: The chosen environment seems not configured correctly.");
 			return null;
 		}
 			
@@ -234,12 +235,12 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 		return CFW.Random.randomJSONArrayOfMightyPeople(12);
 	}
 	
-	@Override
-	public ArrayList<FileDefinition> getJavascriptFiles() {
-		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_mysqlquerystatus.js") );
-		return array;
-	}
+//	@Override
+//	public ArrayList<FileDefinition> getJavascriptFiles() {
+//		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
+//		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_mysqlquerystatus.js") );
+//		return array;
+//	}
 
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
@@ -249,7 +250,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "lang_en_emp_mysql.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "lang_en_emp_database.properties"));
 		return map;
 	}
 	
@@ -307,7 +308,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 		if(isSampleData != null && isSampleData) {
 			resultArray = createSampleData();
 		}else {
-			resultArray = loadDataFromMySQL(settings);
+			resultArray = loadDataFromDBInferface(settings);
 		}
 		
 		if(resultArray == null || resultArray.size() == 0) {
@@ -443,7 +444,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 				
 				CFW.Messages.addErrorMessage(messagePlaintext);
 				
-				alertObject.doSendAlert(context, "EMP: Alert - MySQL record(s) reached threshold", messagePlaintext, messageHTML);
+				alertObject.doSendAlert(context, "EMP: Alert - Database record(s) reached threshold", messagePlaintext, messageHTML);
 			}
 			
 			//----------------------------------------
@@ -453,7 +454,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 				String messageHTML = "<p>"+message+"</p>"+widgetLinkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
-				alertObject.doSendAlert(context, "EMP: Resolved - MySQL record(s) below threshold", message, messageHTML);
+				alertObject.doSendAlert(context, "EMP: Resolved - Database record(s) below threshold", message, messageHTML);
 			}
 		}
 	}

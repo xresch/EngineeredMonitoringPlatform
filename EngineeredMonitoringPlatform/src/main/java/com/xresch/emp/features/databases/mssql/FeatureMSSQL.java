@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mssql;
+package com.xresch.emp.features.databases.mssql;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
@@ -17,8 +17,8 @@ import com.xresch.emp.features.common.FeatureEMPCommon;
  **************************************************************************************************************/
 public class FeatureMSSQL extends CFWAppFeature {
 	
-	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.mssql.manual";
-	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.mssql.resources";
+	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.databases.mssql.manual";
+	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.mssql.resources";
 	
 	public static final String PERMISSION_WIDGETS_MYSQL = "Widgets: MSSQL";
 	

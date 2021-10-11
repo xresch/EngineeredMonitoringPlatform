@@ -1,4 +1,4 @@
-package com.xresch.emp.features.mssql;
+package com.xresch.emp.features.databases.mssql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
