@@ -7,6 +7,7 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.dashboard.FeatureDashboard;
+import com.xresch.cfw.features.jobs.FeatureJobs;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.spi.CFWAppFeature;
@@ -31,10 +32,16 @@ public class FeatureDatabases extends CFWAppFeature {
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		
 		//----------------------------------
-		// Register Settings
+		// Register Locales
 		CFW.Localization.registerLocaleFile(
 				Locale.ENGLISH, 
 				FeatureDashboard.URI_DASHBOARD_VIEW, 
+				new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "lang_en_emp_database.properties")
+		);
+		
+		CFW.Localization.registerLocaleFile(
+				Locale.ENGLISH, 
+				FeatureJobs.getJobsURI(), 
 				new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "lang_en_emp_database.properties")
 		);
 		

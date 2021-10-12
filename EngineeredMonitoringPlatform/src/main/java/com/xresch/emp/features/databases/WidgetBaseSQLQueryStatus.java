@@ -68,12 +68,24 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 	
 	@Override
 	public CFWObject getSettings() {
+		
+		return createQueryAndThresholdFields()						
+				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
+				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
+				//.addField(WidgetSettingsFactory.createDisableBoolean())
+				.addField(WidgetSettingsFactory.createSampleDataField())
+									
+		;
+	}
+	
+	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
 				.addField( this.createEnvironmentSelectorField())
 				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_SQLQUERY)
 						.setLabel("{!emp_widget_database_sqlquery!}")
 						.setDescription("{!emp_widget_database_sqlquery_desc!}")
+						.disableSecurity() // Do not convert character like "'" to &#x27; etc...
 						.setValue("")
 						.addValidator(new CustomValidator() {
 							
@@ -114,14 +126,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 						.setDescription("{!emp_widget_database_urlcolumn_desc!}")
 				)
 				
-				.addAllFields(CFWConditions.createThresholdFields())
-										
-				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
-				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
-				//.addField(WidgetSettingsFactory.createDisableBoolean())
-				.addField(WidgetSettingsFactory.createSampleDataField())
-									
-		;
+				.addAllFields(CFWConditions.createThresholdFields());
 	}
 	
 	/*********************************************************************
@@ -173,7 +178,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 		//---------------------------------
 		// Fetch Data
 		JsonArray resultArray = new JsonArray();
-
+		System.out.println(sqlQueryString);
 		ResultSet result = db.preparedExecuteQuery(sqlQueryString);
 		try {
 

@@ -8,6 +8,7 @@ import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
+import com.xresch.emp.features.awa.CFWJobTaskAWAJobIssueAlert;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 /**************************************************************************************************************
@@ -64,6 +65,9 @@ public class FeatureGenericJDBC extends CFWAppFeature {
 		// Register Parameters
 		CFW.Registry.Parameters.add(new ParameterDefinitionGenericJDBCEnvironment());
 		
+		//----------------------------------
+		// Register Job Task
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskGenericJDBCQueryStatus());
 	}
 
 	@Override
