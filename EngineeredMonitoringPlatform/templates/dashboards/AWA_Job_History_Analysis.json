@@ -1,0 +1,114 @@
+{"success": true,"messages": [],"payload": [
+  {
+    "PK_ID": 566,
+    "FK_ID_USER": 1,
+    "NAME": "AWA Job History Analysis",
+    "DESCRIPTION": null,
+    "TAGS": [
+      "awa",
+      "job",
+      "analysis",
+      "tools"
+    ],
+    "IS_SHARED": false,
+    "JSON_SHARE_WITH_USERS": {},
+    "JSON_SHARE_WITH_GROUPS": {},
+    "JSON_EDITORS": {},
+    "JSON_EDITOR_GROUPS": {},
+    "IS_DELETABLE": true,
+    "IS_RENAMABLE": true,
+    "username": "admin",
+    "widgets": [
+      {
+        "PK_ID": 1993,
+        "FK_ID_DASHBOARD": 566,
+        "TYPE": "emp_awajobstatus_history",
+        "X": 24,
+        "Y": 0,
+        "WIDTH": 40,
+        "HEIGHT": 51,
+        "TITLE": "AWA Job Status - History",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "4",
+          "jobnames": "$jobnames$\r\n",
+          "joblabels": null,
+          "statuscount": 7,
+          "sizefactor": "0.25",
+          "borderstyle": "None",
+          "showstatistics": true,
+          "showsparkline": true,
+          "showlabels": false,
+          "disable": false,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 1994,
+        "FK_ID_DASHBOARD": 566,
+        "TYPE": "cfw_parameter",
+        "X": 0,
+        "Y": 0,
+        "WIDTH": 24,
+        "HEIGHT": 51,
+        "TITLE": null,
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "description": "\u003cp\u003eEnter a list of jobnames(separated by comma and/or newline) into the field below. Choose the environment you want to see the jobs for. The settings will be \u003cu\u003e\u003cb\u003etemporarily\u003c/b\u003e\u003c/u\u003e saved in your browser cache.\u003c/p\u003e\u003cp\u003eIf you want to have a permanent dashboard, please contact\u0026nbsp;\u003ca href\u003d\"mailto:adminmail@example.com\"\u003eadminmail@example.com\u003c/a\u003e.\u003c/p\u003e",
+          "JSON_PARAMETERS": {
+            "1": "environment",
+            "2": "jobnames",
+            "3": "executions_to_display"
+          },
+          "showbutton": true,
+          "children": []
+        },
+        "JSON_TASK_PARAMETERS": {}
+      }
+    ],
+    "parameters": [
+      {
+        "PK_ID": 1,
+        "FK_ID_DASHBOARD": 566,
+        "WIDGET_TYPE": "emp_awajobstatus_history",
+        "LABEL": "environment",
+        "PARAM_TYPE": "SELECT",
+        "NAME": "environment",
+        "VALUE": null,
+        "MODE": "MODE_GLOBAL_OVERRIDE",
+        "IS_MODE_CHANGE_ALLOWED": true
+      },
+      {
+        "PK_ID": 2,
+        "FK_ID_DASHBOARD": 566,
+        "WIDGET_TYPE": null,
+        "LABEL": "Textarea",
+        "PARAM_TYPE": "TEXTAREA",
+        "NAME": "jobnames",
+        "VALUE": "JOBNAME_001.02.03_004#WS\r\nJOBNAME_002.03.04_005#WS\r\nJOBNAME_003.04.05_006#WS",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false
+      },
+      {
+        "PK_ID": 3,
+        "FK_ID_DASHBOARD": 566,
+        "WIDGET_TYPE": "emp_awajobstatus_history",
+        "LABEL": "statuscount",
+        "PARAM_TYPE": "TEXT",
+        "NAME": "executions_to_display",
+        "VALUE": "7",
+        "MODE": "MODE_GLOBAL_OVERRIDE",
+        "IS_MODE_CHANGE_ALLOWED": true
+      }
+    ]
+  }
+]}

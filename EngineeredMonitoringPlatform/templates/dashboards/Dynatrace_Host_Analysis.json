@@ -1,0 +1,448 @@
+{"success": true,"messages": [],"payload": [
+  {
+    "PK_ID": 667,
+    "FK_ID_USER": 1,
+    "NAME": "Dynatrace Host Analysis",
+    "DESCRIPTION": null,
+    "TAGS": [
+      "dynatrace",
+      "host",
+      "analysis"
+    ],
+    "IS_SHARED": false,
+    "JSON_SHARE_WITH_USERS": {},
+    "JSON_SHARE_WITH_GROUPS": {},
+    "JSON_EDITORS": {},
+    "JSON_EDITOR_GROUPS": {},
+    "IS_DELETABLE": true,
+    "IS_RENAMABLE": true,
+    "username": "admin",
+    "widgets": [
+      {
+        "PK_ID": 2213,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 11,
+        "Y": 0,
+        "WIDTH": 24,
+        "HEIGHT": 16,
+        "TITLE": "CPU Usage %",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.cpu.user": "builtin:host.cpu.user",
+            "builtin:host.cpu.system": "builtin:host.cpu.system",
+            "builtin:host.cpu.iowait": "builtin:host.cpu.iowait",
+            "builtin:host.cpu.steal": "builtin:host.cpu.steal",
+            "builtin:host.cpu.other": "builtin:host.cpu.other"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": 100,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2214,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 35,
+        "Y": 0,
+        "WIDTH": 24,
+        "HEIGHT": 16,
+        "TITLE": "Memory Usage (%)",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.mem.usage": "builtin:host.mem.usage"
+          },
+          "chart_type": "area",
+          "stacked": false,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": 100,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2216,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 11,
+        "Y": 32,
+        "WIDTH": 24,
+        "HEIGHT": 15,
+        "TITLE": "Disk Throughput Write(Bytes/Sec)",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.disk.bytesWritten": "builtin:host.disk.bytesWritten"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2217,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 11,
+        "Y": 16,
+        "WIDTH": 24,
+        "HEIGHT": 16,
+        "TITLE": "Traffic In(Bytes/Sec)",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.net.nic.trafficIn": "builtin:host.net.nic.trafficIn"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2225,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "cfw_parameter",
+        "X": 0,
+        "Y": 0,
+        "WIDTH": 11,
+        "HEIGHT": 81,
+        "TITLE": null,
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "description": null,
+          "JSON_PARAMETERS": {
+            "35": "environment",
+            "36": "host",
+            "37": "host_for_process"
+          },
+          "showbutton": true
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2227,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 35,
+        "Y": 16,
+        "WIDTH": 24,
+        "HEIGHT": 16,
+        "TITLE": "Traffic Out(Bytes/Sec)",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.net.nic.trafficOut": "builtin:host.net.nic.trafficOut"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2228,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 35,
+        "Y": 32,
+        "WIDTH": 24,
+        "HEIGHT": 15,
+        "TITLE": "Disk Throughput Read(Bytes/Sec)",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.disk.bytesRead": "builtin:host.disk.bytesRead"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2229,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 11,
+        "Y": 47,
+        "WIDTH": 24,
+        "HEIGHT": 15,
+        "TITLE": "DNS Query Time(ms)",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.dns.queryTime": "builtin:host.dns.queryTime"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2230,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 35,
+        "Y": 47,
+        "WIDTH": 24,
+        "HEIGHT": 15,
+        "TITLE": "DNS Query Count",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.dns.queryCount": "builtin:host.dns.queryCount"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2231,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 11,
+        "Y": 62,
+        "WIDTH": 24,
+        "HEIGHT": 15,
+        "TITLE": "DNS Error Count",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.dns.errorCount": "builtin:host.dns.errorCount"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2232,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 35,
+        "Y": 62,
+        "WIDTH": 24,
+        "HEIGHT": 15,
+        "TITLE": "DNS Orphan Count",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.dns.orphanCount": "builtin:host.dns.orphanCount"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2233,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 11,
+        "Y": 77,
+        "WIDTH": 24,
+        "HEIGHT": 15,
+        "TITLE": "Network Received Packets Dropped on Host",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.net.nic.packets.droppedRx": "builtin:host.net.nic.packets.droppedRx"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 2234,
+        "FK_ID_DASHBOARD": 667,
+        "TYPE": "emp_dynatrace_hostmetricschart",
+        "X": 35,
+        "Y": 77,
+        "WIDTH": 24,
+        "HEIGHT": 15,
+        "TITLE": "Network Received Packets Dropped on Host",
+        "TITLE_FONTSIZE": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "JSON_SETTINGS": {
+          "environment": "$environment$",
+          "JSON_HOST": {},
+          "JSON_METRICS": {
+            "builtin:host.net.nic.packets.droppedTx": "builtin:host.net.nic.packets.droppedTx"
+          },
+          "chart_type": "area",
+          "stacked": true,
+          "show_legend": false,
+          "show_axes": true,
+          "pointradius": 0.0,
+          "ymin": 0,
+          "ymax": null,
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      }
+    ],
+    "parameters": [
+      {
+        "PK_ID": 35,
+        "FK_ID_DASHBOARD": 667,
+        "WIDGET_TYPE": null,
+        "LABEL": "Dynatrace Environment",
+        "PARAM_TYPE": "SELECT",
+        "NAME": "environment",
+        "VALUE": null,
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false
+      },
+      {
+        "PK_ID": 36,
+        "FK_ID_DASHBOARD": 667,
+        "WIDGET_TYPE": "emp_dynatrace_hostmetricschart",
+        "LABEL": "JSON_HOST",
+        "PARAM_TYPE": "TAGS_SELECTOR",
+        "NAME": "host",
+        "VALUE": "{}",
+        "MODE": "MODE_GLOBAL_OVERRIDE",
+        "IS_MODE_CHANGE_ALLOWED": false
+      }
+    ]
+  }
+]}
