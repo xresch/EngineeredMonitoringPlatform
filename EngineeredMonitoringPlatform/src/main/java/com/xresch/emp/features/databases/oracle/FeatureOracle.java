@@ -9,6 +9,7 @@ import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.databases.mysql.CFWJobTaskMySQLQueryStatus;
 
 /**************************************************************************************************************
  * 
@@ -63,6 +64,10 @@ public class FeatureOracle extends CFWAppFeature {
 		//----------------------------------
 		// Register Parameters
 		CFW.Registry.Parameters.add(new ParameterDefinitionOracleEnvironment());
+		
+		//----------------------------------
+		// Register Job Task
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskOracleQueryStatus());
 		
 		//----------------------------------
 		// Register Manual Page

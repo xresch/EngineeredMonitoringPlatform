@@ -9,6 +9,7 @@ import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.databases.mssql.CFWJobTaskMSSQLQueryStatus;
 
 /**************************************************************************************************************
  * 
@@ -63,6 +64,11 @@ public class FeatureMySQL extends CFWAppFeature {
 		//----------------------------------
 		// Register Parameters
 		CFW.Registry.Parameters.add(new ParameterDefinitionMySQLEnvironment());
+		
+		//----------------------------------
+		// Register Job Task
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskMySQLQueryStatus());
+		
 		
 		//----------------------------------
 		// Register Manual Page

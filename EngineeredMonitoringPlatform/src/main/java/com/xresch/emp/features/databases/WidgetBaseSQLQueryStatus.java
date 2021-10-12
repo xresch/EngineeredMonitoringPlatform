@@ -178,7 +178,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 		//---------------------------------
 		// Fetch Data
 		JsonArray resultArray = new JsonArray();
-		System.out.println(sqlQueryString);
+
 		ResultSet result = db.preparedExecuteQuery(sqlQueryString);
 		try {
 
@@ -435,7 +435,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 					if(!Strings.isNullOrEmpty(detailColumns)) {
 						String detailsString = "";
 						for (String fieldname : detailColumns.split(",")) {
-							if(!fieldname.trim().equals(urlColumn.trim())) {
+							if(fieldname != null && (urlColumn == null || !fieldname.trim().equals(urlColumn.trim())) ) {
 								detailsString += fieldname+"=\""+current.get(fieldname.trim()).getAsString() + "\" ";
 							}
 						}

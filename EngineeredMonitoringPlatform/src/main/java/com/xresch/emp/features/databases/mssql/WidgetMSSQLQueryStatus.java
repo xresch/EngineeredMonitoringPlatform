@@ -63,7 +63,7 @@ public class WidgetMSSQLQueryStatus extends WidgetBaseSQLQueryStatus {
 
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureMSSQL.PERMISSION_WIDGETS_MYSQL);
+		return user.hasPermission(FeatureMSSQL.PERMISSION_WIDGETS_MSSQL);
 	}
 
 }

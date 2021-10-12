@@ -9,6 +9,7 @@ import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.databases.generic.CFWJobTaskGenericJDBCQueryStatus;
 
 /**************************************************************************************************************
  * 
@@ -20,7 +21,7 @@ public class FeatureMSSQL extends CFWAppFeature {
 	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.databases.mssql.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.mssql.resources";
 	
-	public static final String PERMISSION_WIDGETS_MYSQL = "Widgets: MSSQL";
+	public static final String PERMISSION_WIDGETS_MSSQL = "Widgets: MSSQL";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -65,6 +66,10 @@ public class FeatureMSSQL extends CFWAppFeature {
 		CFW.Registry.Parameters.add(new ParameterDefinitionMSSQLEnvironment());
 		
 		//----------------------------------
+		// Register Job Task
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskMSSQLQueryStatus());
+		
+		//----------------------------------
 		// Register Manual Page
 		FeatureEMPCommon.WIDGET_PAGE.addChild(
 				new ManualPage("MSSQL Widgets")
@@ -80,7 +85,7 @@ public class FeatureMSSQL extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_MYSQL, FeatureUserManagement.CATEGORY_USER)
+				new Permission(PERMISSION_WIDGETS_MSSQL, FeatureUserManagement.CATEGORY_USER)
 					.description("Create and Edit MSSQL Widgets."),
 				true,
 				true);
