@@ -1,6 +1,8 @@
 package com.xresch.emp.features.databases.mssql;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import com.xresch.cfw._main.CFW;
@@ -13,6 +15,7 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.databases.FeatureDatabases;
 import com.xresch.emp.features.databases.WidgetBaseSQLQueryStatus;
+import com.xresch.emp.features.databases.generic.FeatureGenericJDBC;
 
 public class WidgetMSSQLQueryStatus extends WidgetBaseSQLQueryStatus {
 
@@ -43,15 +46,20 @@ public class WidgetMSSQLQueryStatus extends WidgetBaseSQLQueryStatus {
 
 	}
 
-	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
-		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_database_common.js") );
+		ArrayList<FileDefinition> array = super.getJavascriptFiles();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMSSQL.PACKAGE_RESOURCE, "emp_widget_mssqlquerystatus.js") );
 		return array;
 	}
-
+	
+	@Override
+	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
+		HashMap<Locale, FileDefinition> map = super.getLocalizationFiles();
+		System.out.println(CFW.JSON.toJSON(map));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMSSQL.PACKAGE_RESOURCE, "lang_en_emp_mssql.properties"));
+		return map;
+	}
 
 	@Override
 	public boolean hasPermission(User user) {

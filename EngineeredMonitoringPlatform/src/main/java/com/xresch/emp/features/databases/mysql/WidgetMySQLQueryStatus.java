@@ -1,6 +1,8 @@
 package com.xresch.emp.features.databases.mysql;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import com.xresch.cfw._main.CFW;
@@ -13,6 +15,7 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.databases.FeatureDatabases;
 import com.xresch.emp.features.databases.WidgetBaseSQLQueryStatus;
+import com.xresch.emp.features.databases.generic.FeatureGenericJDBC;
 
 public class WidgetMySQLQueryStatus extends WidgetBaseSQLQueryStatus {
 
@@ -47,12 +50,19 @@ public class WidgetMySQLQueryStatus extends WidgetBaseSQLQueryStatus {
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
-		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_database_common.js") );
+		ArrayList<FileDefinition> array = super.getJavascriptFiles();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMySQL.PACKAGE_RESOURCE, "emp_widget_mysqlquerystatus.js") );
 		return array;
 	}
-
+	
+	@Override
+	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
+		HashMap<Locale, FileDefinition> map = super.getLocalizationFiles();
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMySQL.PACKAGE_RESOURCE, "lang_en_emp_mysql.properties"));
+		return map;
+	}
+	
+	
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureMySQL.PERMISSION_WIDGETS_MYSQL);

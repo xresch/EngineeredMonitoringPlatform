@@ -1,4 +1,4 @@
-package com.xresch.emp.features.databases.oracle;
+package com.xresch.emp.features.databases.generic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,29 +13,28 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.emp.features.databases.FeatureDatabases;
 import com.xresch.emp.features.databases.WidgetBaseSQLQueryStatus;
-import com.xresch.emp.features.databases.generic.FeatureGenericJDBC;
 
-public class WidgetOracleQueryStatus extends WidgetBaseSQLQueryStatus {
+public class WidgetGenericJDBCQueryStatus extends WidgetBaseSQLQueryStatus {
 
-	private static Logger logger = CFWLog.getLogger(WidgetOracleQueryStatus.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetGenericJDBCQueryStatus.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_oraclequerystatus";}
+	public String getWidgetType() {return "emp_genericjdbcquerystatus";}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public CFWField createEnvironmentSelectorField() {
-		return OracleSettingsFactory.createEnvironmentSelectorField();
+		return GenericJDBCSettingsFactory.createEnvironmentSelectorField();
 	}
 
 	@Override
 	public DBInterface getDatabaseInterface(String environmentID) {
 
-		OracleEnvironment environment;
+		GenericJDBCEnvironment environment;
 		if(environmentID != null) {
-			 environment = OracleEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
+			 environment = GenericJDBCEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Oracle Query Status: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Generic JDBC Query Status: The chosen environment seems not configured correctly.");
 			return null;
 		}
 		
@@ -48,21 +47,20 @@ public class WidgetOracleQueryStatus extends WidgetBaseSQLQueryStatus {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = super.getJavascriptFiles();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureOracle.PACKAGE_RESOURCE, "emp_widget_oraclequerystatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureGenericJDBC.PACKAGE_RESOURCE, "emp_widget_genericjdbcquerystatus.js") );
 		return array;
 	}
 	
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = super.getLocalizationFiles();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureOracle.PACKAGE_RESOURCE, "lang_en_emp_oracle.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureGenericJDBC.PACKAGE_RESOURCE, "lang_en_emp_genericjdbc.properties"));
 		return map;
 	}
-	
-	
+
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureOracle.PERMISSION_WIDGETS_ORACLE);
+		return user.hasPermission(FeatureGenericJDBC.PERMISSION_WIDGETS_GENERICJDBC);
 	}
 
 }

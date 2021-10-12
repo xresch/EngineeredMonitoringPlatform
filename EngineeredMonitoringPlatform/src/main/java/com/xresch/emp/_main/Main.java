@@ -9,6 +9,7 @@ import com.xresch.cfw.spi.CFWAppInterface;
 import com.xresch.emp.features.awa.FeatureAWA;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.databases.FeatureDatabases;
+import com.xresch.emp.features.databases.generic.FeatureGenericJDBC;
 import com.xresch.emp.features.databases.mssql.FeatureMSSQL;
 import com.xresch.emp.features.databases.mysql.FeatureMySQL;
 import com.xresch.emp.features.databases.oracle.FeatureOracle;
@@ -52,6 +53,7 @@ public class Main implements CFWAppInterface {
 		CFW.Registry.Features.addFeature(FeatureMySQL.class);
 		CFW.Registry.Features.addFeature(FeatureMSSQL.class);
 		CFW.Registry.Features.addFeature(FeatureOracle.class);
+		CFW.Registry.Features.addFeature(FeatureGenericJDBC.class);
 		
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);

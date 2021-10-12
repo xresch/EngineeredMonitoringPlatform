@@ -81,13 +81,14 @@ public class EnvironmentManagerSPM {
 	 * 
 	 ************************************************************************/
 	private static void createEnvironment(EnvironmentSPM environment) {
-
-		environmentsWithDB.remove(environment.getDefaultObject().id());
+		
+		int id = environment.getDefaultObject().id();
+		environmentsWithDB.remove(id);
 
 		if(environment.isDBDefined()) {
 			
 			DBInterface db = DBInterface.createDBInterfaceMSSQL(
-					"EMP_SPM",
+					"SPM:"+id+"-"+environment.getDefaultObject().name(),
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 

@@ -41,6 +41,7 @@ import com.xresch.cfw.utils.CFWConditions;
 import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
 import com.xresch.cfw.validation.CustomValidator;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
+import com.xresch.emp.features.databases.generic.FeatureGenericJDBC;
 import com.xresch.emp.features.prometheus.PrometheusEnvironment;
 import com.xresch.emp.features.prometheus.PrometheusEnvironmentManagement;
 import com.xresch.emp.features.prometheus.PrometheusSettingsFactory;
@@ -245,11 +246,19 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return null;
 	}
+	
+	@Override
+	public ArrayList<FileDefinition> getJavascriptFiles() {
+		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_database_common.js") );
+		return array;
+	}
 
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "lang_en_emp_database.properties"));
+		// doesn'twork, get's overriden
+		//map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "lang_en_emp_database.properties"));
 		return map;
 	}
 	

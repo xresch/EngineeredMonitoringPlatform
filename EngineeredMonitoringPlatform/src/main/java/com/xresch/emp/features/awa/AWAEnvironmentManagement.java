@@ -69,11 +69,12 @@ public class AWAEnvironmentManagement {
 	
 	private static void createEnvironment(AWAEnvironment environment) {
 
-		environmentsWithDB.remove(environment.getDefaultObject().id());
+		Integer id = environment.getDefaultObject().id();
+		environmentsWithDB.remove(id);
 		
 		if(environment.isDBDefined()) {
 			DBInterface db = DBInterface.createDBInterfaceOracle(
-					"EMP_AWA",
+					"AWA:"+id+"-"+environment.getDefaultObject().name(),
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 

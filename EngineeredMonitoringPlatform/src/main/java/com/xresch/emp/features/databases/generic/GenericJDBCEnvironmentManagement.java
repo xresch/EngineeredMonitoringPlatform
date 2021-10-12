@@ -1,4 +1,4 @@
-package com.xresch.emp.features.databases.mssql;
+package com.xresch.emp.features.databases.generic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,27 +15,27 @@ import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
 
-public class MSSQLEnvironmentManagement {
-	private static Logger logger = CFWLog.getLogger(MSSQLEnvironmentManagement.class.getName());
+public class GenericJDBCEnvironmentManagement {
+	private static Logger logger = CFWLog.getLogger(GenericJDBCEnvironmentManagement.class.getName());
 	
 	private static boolean isInitialized = false;
 	
 	// Contains ContextSettings id and the associated database interface
-	private static HashMap<Integer, MSSQLEnvironment> environmentsWithDB = new HashMap<Integer, MSSQLEnvironment>();
+	private static HashMap<Integer, GenericJDBCEnvironment> environmentsWithDB = new HashMap<Integer, GenericJDBCEnvironment>();
 	
 
-	private MSSQLEnvironmentManagement() {
+	private GenericJDBCEnvironmentManagement() {
 		//hide public constructor
 	}
 	public static void initialize() {
 		
 		ContextSettingsChangeListener listener = 
-				new ContextSettingsChangeListener(MSSQLEnvironment.SETTINGS_TYPE) {
+				new ContextSettingsChangeListener(GenericJDBCEnvironment.SETTINGS_TYPE) {
 			
 			@Override
 			public void onChange(AbstractContextSettings setting, boolean isNew) {
-				MSSQLEnvironment env = (MSSQLEnvironment)setting;
-				MSSQLEnvironmentManagement.createEnvironment(env);
+				GenericJDBCEnvironment env = (GenericJDBCEnvironment)setting;
+				GenericJDBCEnvironmentManagement.createEnvironment(env);
 			}
 
 			@Override
@@ -52,28 +52,29 @@ public class MSSQLEnvironmentManagement {
 	
 	private static void createEnvironments() {
 		// Clear environments
-		environmentsWithDB = new HashMap<Integer, MSSQLEnvironment>();
+		environmentsWithDB = new HashMap<Integer, GenericJDBCEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(MSSQLEnvironment.SETTINGS_TYPE);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(GenericJDBCEnvironment.SETTINGS_TYPE);
 
 		for(AbstractContextSettings settings : settingsArray) {
-			MSSQLEnvironment current = (MSSQLEnvironment)settings;
+			GenericJDBCEnvironment current = (GenericJDBCEnvironment)settings;
 			createEnvironment(current);
 			
 		}
 	}
 	
-	private static void createEnvironment(MSSQLEnvironment environment) {
+	private static void createEnvironment(GenericJDBCEnvironment environment) {
 
 		Integer id = environment.getDefaultObject().id();
 		environmentsWithDB.remove(id);
 		
 		if(environment.isDBDefined()) {
-			DBInterface db = DBInterface.createDBInterfaceMSSQL(
-					id+"-"+environment.getDefaultObject().name(),
-					environment.dbHost(), 
-					environment.dbPort(), 
-					environment.dbName(), 
+			
+
+			DBInterface db = DBInterface.createDBInterface(
+					id+"-"+environment.getDefaultObject().name()+":GenericJBDC",
+					environment.dbDriver(), 
+					environment.dbConnectionURL(), 
 					environment.dbUser(), 
 					environment.dbPassword()
 			);
@@ -84,7 +85,7 @@ public class MSSQLEnvironmentManagement {
 	}
 	
 	
-	public static MSSQLEnvironment getEnvironment(int id) {
+	public static GenericJDBCEnvironment getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
 		return environmentsWithDB.get(id);
 	}

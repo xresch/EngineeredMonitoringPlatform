@@ -59,11 +59,14 @@ public class MySQLEnvironmentManagement {
 	}
 	
 	private static void createEnvironment(MySQLEnvironment environment) {
-
-		environmentsWithDB.remove(environment.getDefaultObject().id());
+		
+		Integer id = environment.getDefaultObject().id();
+		
+		environmentsWithDB.remove(id);
 		
 		if(environment.isDBDefined()) {
 			DBInterface db = DBInterface.createDBInterfaceMySQL(
+					id+"-"+environment.getDefaultObject().name(),
 					environment.dbHost(), 
 					environment.dbPort(), 
 					environment.dbName(), 
