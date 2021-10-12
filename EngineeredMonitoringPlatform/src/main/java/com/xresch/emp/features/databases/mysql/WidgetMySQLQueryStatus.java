@@ -11,6 +11,7 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.emp.features.databases.FeatureDatabases;
 import com.xresch.emp.features.databases.WidgetBaseSQLQueryStatus;
 
 public class WidgetMySQLQueryStatus extends WidgetBaseSQLQueryStatus {
@@ -47,6 +48,7 @@ public class WidgetMySQLQueryStatus extends WidgetBaseSQLQueryStatus {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_database_common.js") );
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMySQL.PACKAGE_RESOURCE, "emp_widget_mysqlquerystatus.js") );
 		return array;
 	}

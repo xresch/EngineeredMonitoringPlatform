@@ -60,7 +60,6 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 	private static Logger logger = CFWLog.getLogger(WidgetBaseSQLQueryStatus.class.getName());
 
 	
-	
 	@SuppressWarnings("rawtypes")
 	public abstract CFWField createEnvironmentSelectorField();
 	
