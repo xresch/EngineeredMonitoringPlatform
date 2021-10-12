@@ -19,7 +19,7 @@ public class CFWJobTaskMySQLQueryStatus extends CFWJobTask {
 
 	@Override
 	public String uniqueName() {
-		return "MySQL: Record Issue Alert";
+		return "Alerting: MySQL";
 	}
 
 	@Override

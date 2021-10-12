@@ -19,7 +19,7 @@ public class CFWJobTaskAWAJobIssueAlert extends CFWJobTask {
 
 	@Override
 	public String uniqueName() {
-		return "AWA: Job Issue Alert";
+		return "Alerting: AWA Job Status";
 	}
 
 	@Override

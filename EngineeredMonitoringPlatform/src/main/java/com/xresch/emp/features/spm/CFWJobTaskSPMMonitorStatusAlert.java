@@ -19,7 +19,7 @@ public class CFWJobTaskSPMMonitorStatusAlert extends CFWJobTask {
 
 	@Override
 	public String uniqueName() {
-		return "SPM: Monitor Status Alert";
+		return "Alerting: SPM Monitor Status";
 	}
 
 	@Override

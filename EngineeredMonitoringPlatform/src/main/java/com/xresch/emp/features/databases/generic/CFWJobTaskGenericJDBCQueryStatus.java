@@ -19,7 +19,7 @@ public class CFWJobTaskGenericJDBCQueryStatus extends CFWJobTask {
 
 	@Override
 	public String uniqueName() {
-		return "Generic JDBC: Record Issue Alert";
+		return "Alerting: Generic JDBC";
 	}
 
 	@Override

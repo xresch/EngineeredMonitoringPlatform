@@ -19,7 +19,7 @@ public class CFWJobTaskMSSQLQueryStatus extends CFWJobTask {
 
 	@Override
 	public String uniqueName() {
-		return "MSSQL: Record Issue Alert";
+		return "Alerting: MSSQL";
 	}
 
 	@Override

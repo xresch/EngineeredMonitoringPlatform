@@ -19,7 +19,7 @@ public class CFWJobTaskOracleQueryStatus extends CFWJobTask {
 
 	@Override
 	public String uniqueName() {
-		return "Oracle: Record Issue Alert";
+		return "Alerting: Oracle";
 	}
 
 	@Override
