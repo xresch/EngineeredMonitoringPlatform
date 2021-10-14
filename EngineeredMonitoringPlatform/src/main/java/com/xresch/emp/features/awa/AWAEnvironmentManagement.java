@@ -162,7 +162,7 @@ public class AWAEnvironmentManagement {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
 			return null;
 		}
-		//System.out.println("===== Query ==== \n"+CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_autocomplete_jobnames.sql"));
+
 		ResultSet result = db.preparedExecuteQuery(
 			CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_autocomplete_jobnames.sql"),
 			environment.clientID(),

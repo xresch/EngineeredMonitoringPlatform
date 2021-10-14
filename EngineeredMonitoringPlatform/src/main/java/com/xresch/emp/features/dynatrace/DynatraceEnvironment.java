@@ -837,7 +837,6 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 			String metricsID = currentMetricObject.get("metricId").getAsString();
 			String description = currentMetricObject.get("displayName").getAsString();
 			String metricEntityTypes = currentMetricObject.get("entityType").toString();
-			//System.out.println("metricEntityType: "+metricEntityTypes);
 				
 			suggestions.addItem(metricsID, metricsID, 
 					"<b>Description: </b>"+description

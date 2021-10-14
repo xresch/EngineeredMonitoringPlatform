@@ -56,7 +56,6 @@ public class WidgetMSSQLQueryStatus extends WidgetBaseSQLQueryStatus {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = super.getLocalizationFiles();
-		System.out.println(CFW.JSON.toJSON(map));
 		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMSSQL.PACKAGE_RESOURCE, "lang_en_emp_mssql.properties"));
 		return map;
 	}
