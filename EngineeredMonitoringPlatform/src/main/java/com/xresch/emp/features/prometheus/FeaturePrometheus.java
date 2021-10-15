@@ -9,6 +9,7 @@ import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.spm.CFWJobTaskSPMMonitorStatusAlert;
 
 /**************************************************************************************************************
  * 
@@ -68,6 +69,10 @@ public class FeaturePrometheus extends CFWAppFeature {
 		CFW.Registry.Parameters.add(new ParameterDefinitionPrometheusFilter());
 		CFW.Registry.Parameters.add(new ParameterDefinitionPrometheusInstance());
 		CFW.Registry.Parameters.add(new ParameterDefinitionPrometheusMetric());
+		
+		//----------------------------------
+		// Register Job Task
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskPrometheusInstantAlert());
 		
 		//----------------------------------
 		// Register Manual Page

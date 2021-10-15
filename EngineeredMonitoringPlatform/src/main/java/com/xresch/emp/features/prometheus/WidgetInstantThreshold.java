@@ -55,6 +55,14 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 	 *********************************************************************/
 	@Override
 	public CFWObject getSettings() {
+		return createInstantAndThresholdFields()
+				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
+				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
+				.addField(WidgetSettingsFactory.createSampleDataField())
+		;
+	}
+	
+	public CFWObject createInstantAndThresholdFields() {
 		return new CFWObject()
 				.addField(PrometheusSettingsFactory.createEnvironmentSelectorField())
 
@@ -68,11 +76,6 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 				)
 				
 				.addAllFields(CFW.Conditions.createThresholdFields())
-
-				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
-				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
-				//.addField(WidgetSettingsFactory.createDisableBoolean())
-				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}
 
@@ -195,7 +198,7 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 	 * task of this widget does.
 	 ************************************************************/
 	public String getTaskDescription() {
-		return "Checks if any of the selected values returned by the instant query axceeds the selected threshold.";
+		return "Checks if any of the selected values returned by the instant query exceeds the selected threshold.";
 	}
 	
 	/************************************************************
