@@ -20,7 +20,6 @@ import com.xresch.emp.features.common.FeatureEMPCommon;
  **************************************************************************************************************/
 public class FeatureDatabases extends CFWAppFeature {
 	
-	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.databases.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.resources";
 	
 			
@@ -28,7 +27,6 @@ public class FeatureDatabases extends CFWAppFeature {
 	public void register() {
 		//----------------------------------
 		// Register Settings
-		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		
 		//----------------------------------
@@ -49,9 +47,9 @@ public class FeatureDatabases extends CFWAppFeature {
 		// Register Manual Page
 		FeatureEMPCommon.WIDGET_PAGE.addChild(
 				new ManualPage("Database Widgets")
-					.faicon("fas fa-desktop")
+					.faicon("fas fa-database")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)
-					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "widgets_database.html")
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCE, "z_manual_widgets_database.html")
 			);
 		
 	}

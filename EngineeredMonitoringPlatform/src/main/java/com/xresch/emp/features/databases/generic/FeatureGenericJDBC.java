@@ -18,7 +18,6 @@ import com.xresch.emp.features.common.FeatureEMPCommon;
  **************************************************************************************************************/
 public class FeatureGenericJDBC extends CFWAppFeature {
 	
-	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.databases.generic.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.generic.resources";
 	
 	public static final String PERMISSION_WIDGETS_GENERICJDBC = "Widgets: Generic JDBC";
@@ -50,7 +49,6 @@ public class FeatureGenericJDBC extends CFWAppFeature {
 	public void register() {
 		//----------------------------------
 		// Register Settings
-		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		
 		//----------------------------------

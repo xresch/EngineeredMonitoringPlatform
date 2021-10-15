@@ -18,7 +18,6 @@ import com.xresch.emp.features.databases.generic.CFWJobTaskGenericJDBCQueryStatu
  **************************************************************************************************************/
 public class FeatureMSSQL extends CFWAppFeature {
 	
-	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.databases.mssql.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.mssql.resources";
 	
 	public static final String PERMISSION_WIDGETS_MSSQL = "Widgets: MSSQL";
@@ -50,7 +49,6 @@ public class FeatureMSSQL extends CFWAppFeature {
 	public void register() {
 		//----------------------------------
 		// Register Settings
-		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		
 		//----------------------------------
@@ -69,14 +67,6 @@ public class FeatureMSSQL extends CFWAppFeature {
 		// Register Job Task
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskMSSQLQueryStatus());
 		
-		//----------------------------------
-		// Register Manual Page
-		FeatureEMPCommon.WIDGET_PAGE.addChild(
-				new ManualPage("MSSQL Widgets")
-					.faicon("fas fa-desktop")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
-					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_mssql.html")
-			);
 	}
 
 	@Override

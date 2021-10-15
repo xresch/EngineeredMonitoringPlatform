@@ -18,7 +18,6 @@ import com.xresch.emp.features.databases.mysql.CFWJobTaskMySQLQueryStatus;
  **************************************************************************************************************/
 public class FeatureOracle extends CFWAppFeature {
 	
-	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.databases.oracle.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.oracle.resources";
 	
 	public static final String PERMISSION_WIDGETS_ORACLE = "Widgets: Oracle";
@@ -50,7 +49,6 @@ public class FeatureOracle extends CFWAppFeature {
 	public void register() {
 		//----------------------------------
 		// Register Settings
-		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		
 		//----------------------------------
@@ -69,14 +67,6 @@ public class FeatureOracle extends CFWAppFeature {
 		// Register Job Task
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskOracleQueryStatus());
 		
-		//----------------------------------
-		// Register Manual Page
-		FeatureEMPCommon.WIDGET_PAGE.addChild(
-				new ManualPage("Oracle Widgets")
-					.faicon("fas fa-desktop")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
-					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_oracle.html")
-			);
 	}
 
 	@Override

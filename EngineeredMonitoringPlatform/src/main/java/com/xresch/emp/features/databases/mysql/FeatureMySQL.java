@@ -18,7 +18,6 @@ import com.xresch.emp.features.databases.mssql.CFWJobTaskMSSQLQueryStatus;
  **************************************************************************************************************/
 public class FeatureMySQL extends CFWAppFeature {
 	
-	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.databases.mysql.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.mysql.resources";
 	
 	public static final String PERMISSION_WIDGETS_MYSQL = "Widgets: MySQL";
@@ -50,7 +49,6 @@ public class FeatureMySQL extends CFWAppFeature {
 	public void register() {
 		//----------------------------------
 		// Register Settings
-		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		
 		//----------------------------------
@@ -69,15 +67,6 @@ public class FeatureMySQL extends CFWAppFeature {
 		// Register Job Task
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskMySQLQueryStatus());
 		
-		
-		//----------------------------------
-		// Register Manual Page
-		FeatureEMPCommon.WIDGET_PAGE.addChild(
-				new ManualPage("MySQL Widgets")
-					.faicon("fas fa-desktop")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
-					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_mysql.html")
-			);
 	}
 
 	@Override
