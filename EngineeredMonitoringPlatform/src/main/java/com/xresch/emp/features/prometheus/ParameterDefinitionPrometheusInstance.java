@@ -29,8 +29,11 @@ public class ParameterDefinitionPrometheusInstance extends ParameterDefinition {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
+		
+		// Allow HTML to not mess up Queries
 		CFWField settingsField = CFWField.newString(FormFieldType.TAGS, LABEL)
 				.addAttribute("maxTags", "1")
+				.allowHTML(true)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override

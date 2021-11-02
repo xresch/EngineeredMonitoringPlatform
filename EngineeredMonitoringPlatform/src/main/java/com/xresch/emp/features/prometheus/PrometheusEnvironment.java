@@ -135,7 +135,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "getTargets() - Prometheus Error: "+json.get("error").getAsString());
 				return null;
 			}
 			
@@ -156,7 +156,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "getMetrics() - Prometheus Error: "+json.get("error").getAsString());
 				return null;
 			}
 			
@@ -180,7 +180,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "query() - Prometheus Error: "+json.get("error").getAsString());
 				return null;
 			}
 			
@@ -204,12 +204,13 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 				+"&end="+(latestMillis/1000)
 				+"&step="+interval;
 		
+		
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Prometheus Error: "+json.get("error").getAsString());
+				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "queryRange() - Prometheus Error: "+json.get("error").getAsString());
 				return null;
 			}
 			

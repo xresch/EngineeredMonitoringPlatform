@@ -66,9 +66,11 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 		return new CFWObject()
 				.addField(PrometheusSettingsFactory.createEnvironmentSelectorField())
 
+				// Disable Security to not mess up Queries
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_QUERY)
 						.setLabel("{!emp_widget_prometheus_instant_query!}")
 						.setDescription("{!emp_widget_prometheus_instant_query_desc!}")
+						.disableSecurity()
 				)
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_SUFFIX)
 						.setLabel("{!emp_widget_prometheus_suffix!}")
