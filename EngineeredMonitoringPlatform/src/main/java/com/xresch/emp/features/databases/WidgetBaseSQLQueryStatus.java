@@ -458,7 +458,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 				
 				CFW.Messages.addErrorMessage(messagePlaintext);
 				
-				alertObject.doSendAlert(context, "EMP: Alert - Database record(s) reached threshold", messagePlaintext, messageHTML);
+				alertObject.doSendAlert(context, MessageType.ERROR, "EMP: Alert - Database record(s) reached threshold", messagePlaintext, messageHTML);
 			}
 			
 			//----------------------------------------
@@ -468,7 +468,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 				String messageHTML = "<p>"+message+"</p>"+widgetLinkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
-				alertObject.doSendAlert(context, "EMP: Resolved - Database record(s) below threshold", message, messageHTML);
+				alertObject.doSendAlert(context, MessageType.SUCCESS, "EMP: Resolved - Database record(s) below threshold", message, messageHTML);
 			}
 		}
 	}

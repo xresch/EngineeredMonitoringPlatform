@@ -358,7 +358,7 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 				
 				CFW.Messages.addErrorMessage(messagePlaintext);
 				
-				alertObject.doSendAlert(context, "EMP: Alert - Prometheus metric(s) reached threshold", messagePlaintext, messageHTML);
+				alertObject.doSendAlert(context, MessageType.ERROR, "EMP: Alert - Prometheus metric(s) reached threshold", messagePlaintext, messageHTML);
 			}
 			
 			//----------------------------------------
@@ -368,7 +368,7 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 				String messageHTML = "<p>"+message+"</p>"+linkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
-				alertObject.doSendAlert(context, "EMP: Resolved - Prometheus metric(s) below threshold", message, messageHTML);
+				alertObject.doSendAlert(context, MessageType.SUCCESS, "EMP: Resolved - Prometheus metric(s) below threshold", message, messageHTML);
 			}
 		}
 	}

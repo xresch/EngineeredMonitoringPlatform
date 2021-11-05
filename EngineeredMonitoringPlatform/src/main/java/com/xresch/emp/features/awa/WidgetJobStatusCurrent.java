@@ -360,7 +360,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 				
 				CFW.Messages.addErrorMessage(message);
 				
-				alertObject.doSendAlert(context, "EMP: Alert - AWA job(s) ended with issues", message, messageHTML);
+				alertObject.doSendAlert(context, MessageType.ERROR, "EMP: Alert - AWA job(s) ended with issues", message, messageHTML);
 			}
 			
 			//----------------------------------------
@@ -370,7 +370,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 				String messageHTML = "<p>"+message+"</p>"+linkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
-				alertObject.doSendAlert(context, "EMP: Resolved - AWA Job Status is fine again.", message, messageHTML);
+				alertObject.doSendAlert(context, MessageType.SUCCESS, "EMP: Resolved - AWA Job Status is fine again.", message, messageHTML);
 			}
 		}
 	}

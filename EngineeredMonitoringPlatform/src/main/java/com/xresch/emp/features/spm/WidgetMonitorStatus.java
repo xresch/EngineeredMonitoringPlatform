@@ -401,7 +401,7 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 				
 				CFW.Messages.addErrorMessage(messagePlaintext);
 				
-				alertObject.doSendAlert(context, "EMP: Alert - SPM monitor(s) below threshold", messagePlaintext, messageHTML);
+				alertObject.doSendAlert(context, MessageType.INFO, "EMP: Alert - SPM monitor(s) below threshold", messagePlaintext, messageHTML);
 			}
 			
 			//----------------------------------------
@@ -411,7 +411,7 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 				String messageHTML = "<p>"+message+"</p>"+linkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
-				alertObject.doSendAlert(context, "EMP: Resolved - SPM monitor(s) are above threshold.", message, messageHTML);
+				alertObject.doSendAlert(context, MessageType.INFO, "EMP: Resolved - SPM monitor(s) are above threshold.", message, messageHTML);
 			}
 		}
 	}
