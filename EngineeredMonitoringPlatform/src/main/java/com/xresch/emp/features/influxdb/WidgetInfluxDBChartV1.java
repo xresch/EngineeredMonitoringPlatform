@@ -2,11 +2,13 @@ package com.xresch.emp.features.influxdb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -26,13 +28,16 @@ import com.xresch.cfw.response.CSVResponse;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.PlaintextResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.emp.features.prometheus.PrometheusEnvironment;
+import com.xresch.emp.features.prometheus.PrometheusEnvironmentManagement;
+import com.xresch.emp.features.prometheus.PrometheusSettingsFactory;
+import com.xresch.emp.features.spm.SPMSettingsFactory;
 
-public class WidgetInfluxDBChart extends WidgetDefinition {
+public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(WidgetInfluxDBChart.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetInfluxDBChartV1.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_influxdb_chart";}
-		
+	public String getWidgetType() {return "emp_influxdb_chart_v1";}
 
 	@Override
 	public CFWObject getSettings() {
@@ -40,19 +45,9 @@ public class WidgetInfluxDBChart extends WidgetDefinition {
 				
 				.addField(InfluxDBSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField((CFWField)CFWField.newString(FormFieldType.TEXTAREA, "query")
-						.setLabel("{!emp_widget_influxdb_query!}")
-						.setDescription("{!emp_widget_influxdb_query_desc!}")
-						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(InfluxDBEnvironment.SETTINGS_TYPE))
-						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-							@Override
-							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-								return InfluxDBEnvironment.autocompleteQuery(searchValue, this.getMaxResults());
-							}
-						})
-						.addCssClass("textarea-nowrap")
-						
-				)
+				.addField(InfluxDBSettingsFactory.createDatabaseOrBucketSelectorField())
+				
+				.addField(InfluxDBSettingsFactory.createQueryField())
 			
 				.addField(CFWField.newString(FormFieldType.TEXT, "labels")
 						.setLabel("{!emp_widget_influxdb_labels!}")
@@ -68,43 +63,48 @@ public class WidgetInfluxDBChart extends WidgetDefinition {
 		
 		//---------------------------------
 		// Example Data
-		JsonElement sampleDataElement = jsonSettings.get("sampledata");
-		
-		if(sampleDataElement != null 
-		&& !sampleDataElement.isJsonNull() 
-		&& sampleDataElement.getAsBoolean()) {
+		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
+		if(isSampleData != null && isSampleData) {
 			createSampleData(response);
 			return;
 		}
 		
 		//---------------------------------
-		// Resolve Query
-		JsonElement queryElement = jsonSettings.get("query");
-		if(queryElement.isJsonNull()) {
+		// Resolve Database or Bucket		
+		LinkedHashMap<String,String> databaseNameMap = (LinkedHashMap<String,String>)settings.getField(InfluxDBSettingsFactory.FIELDNAME_DB_OR_BUCKET).getValue();
+		if(databaseNameMap == null || databaseNameMap.isEmpty()) {
+			return;
+		}
+
+		String databaseName = databaseNameMap.values().toArray(new String[]{})[0];
+		
+		//---------------------------------
+		// Resolve Query		
+		String influxdbQuerys = (String)settings.getField(InfluxDBSettingsFactory.FIELDNAME_QUERY).getValue();
+		
+		if(Strings.isNullOrEmpty(influxdbQuerys)) {
 			return;
 		}
 		
-		String influxdbQuerys = queryElement.getAsString();
+
 		
 		//---------------------------------
 		// Get Environment
-		JsonElement environmentElement = jsonSettings.get("environment");
-		if(environmentElement.isJsonNull()) {
+		String environmentID = (String)settings.getField(InfluxDBSettingsFactory.FIELDNAME_ENVIRONMENT).getValue();
+		InfluxDBEnvironment environment;
+		if(environmentID != null) {
+			environment = InfluxDBEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
+		}else {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Influx DB Chart: The chosen environment seems not configured correctly.");
 			return;
 		}
-		
-		InfluxDBEnvironment environment = InfluxDBEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
-		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "InfluxDB Widget: The chosen environment seems not configured correctly.");
-			return;
-		}
-		
+				
 		//---------------------------------
 		// Fetch Data
 		JsonArray resultArray = new JsonArray();
 		String[] queryArray = influxdbQuerys.trim().split("\r\n|\n");
 		for(int i = 0; i < queryArray.length; i++) {
-			JsonObject queryResult = environment.queryRange(queryArray[i], earliest, latest);
+			JsonObject queryResult = environment.v1_queryRange(databaseName, queryArray[i], earliest, latest);
 			
 			if(queryResult != null) {
 				resultArray.add(queryResult);
@@ -116,7 +116,7 @@ public class WidgetInfluxDBChart extends WidgetDefinition {
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.setPayLoad(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart_sample.csv") );
+		response.setPayLoad(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart_sample_v1.csv") );
 		
 	}
 	
@@ -124,7 +124,7 @@ public class WidgetInfluxDBChart extends WidgetDefinition {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		//array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_influxdb_commonFunctions.js") );
-		array.add(  new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart.js") );
+		array.add(  new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart_v1.js") );
 		return array;
 	}
 

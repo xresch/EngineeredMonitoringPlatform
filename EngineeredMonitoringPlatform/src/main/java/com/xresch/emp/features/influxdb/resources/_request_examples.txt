@@ -1,6 +1,140 @@
+####################################################################
+# Influx 1.8 Error Response
+####################################################################
+{"results":[{"statement_id":0,"error":"undefined function avg()"}]}
+
 
 ####################################################################
-# Request with Body Flux Query
+# Influx 1.8 Request 
+####################################################################
+
+curl --get "http://localhost:8086/query" \
+  --user "OneDotXUsername":"yourPasswordOrToken" \
+  --data-urlencode "db=_internal" \
+  --data-urlencode "q=SELECT * FROM runtime limit 10"
+  
+================================
+Response sample
+================================  
+{
+	"results": [
+		{
+			"statement_id": 0,
+			"series": [
+				{
+					"name": "runtime",
+					"columns": [
+						"time",
+						"Alloc",
+						"Frees",
+						"HeapAlloc",
+						"HeapIdle",
+						"HeapInUse",
+						"HeapObjects",
+						"HeapReleased",
+						"HeapSys",
+						"Lookups",
+						"Mallocs",
+						"NumGC",
+						"NumGoroutine",
+						"PauseTotalNs",
+						"Sys",
+						"TotalAlloc",
+						"hostname"
+					],
+					"values": [
+						[
+							"2021-11-10T13:28:10Z",
+							2962944,
+							260309,
+							2962944,
+							61218816,
+							5005312,
+							26039,
+							61054976,
+							66224128,
+							0,
+							286348,
+							6,
+							20,
+							215900,
+							72617361,
+							13886496,
+							"f7daddb0728c"
+						],
+						[...]
+					]
+				}
+			]
+		}
+	]
+}
+
+####################################################################
+# Influx FilterBy Time
+####################################################################
+WHERE time >= '2019-08-09T00:00:00Z' and time < '2019-08-09T10:00:00Z'
+
+================================
+Formatted Timestamps
+================================
+curl --get "http://localhost:8086/query" \
+  --user "OneDotXUsername":"yourPasswordOrToken" \
+  --data-urlencode "db=_internal" \
+  --data-urlencode "epoch=ms" \
+  --data-urlencode "q=SELECT * FROM runtime WHERE time >= '2021-11-12T08:00:00Z' and time < '2021-11-12T09:30:00Z'"
+  
+================================
+With Nanoseconds
+================================
+curl --get "http://localhost:8086/query" \
+  --user "OneDotXUsername":"yourPasswordOrToken" \
+  --data-urlencode "db=_internal" \
+  --data-urlencode "epoch=ms" \
+  --data-urlencode "q=SELECT * FROM runtime WHERE time >= 1636705510000000000 and time < 1636707010000000000"
+
+================================
+With Nanoseconds, group by time
+================================
+curl --get "http://localhost:8086/query" \
+  --user "OneDotXUsername":"yourPasswordOrToken" \
+  --data-urlencode "db=_internal" \
+  --data-urlencode "epoch=ms" \
+  --data-urlencode "q=SELECT mean(*) FROM runtime WHERE time >= 1636705510000000000 and time < 1636707010000000000 group by time(5m)"
+
+####################################################################
+# Influx 1.8 Get Database List
+####################################################################
+curl --get "http://localhost:8086/query" \
+  --data-urlencode "q=SHOW DATABASES"
+
+================================
+Response sample
+================================
+{
+	"results": [
+		{
+			"statement_id": 0,
+			"series": [
+				{
+					"name": "databases",
+					"columns": [
+						"name"
+					],
+					"values": [
+						[
+							"_internal"
+						]
+					]
+				}
+			]
+		}
+	]
+}
+
+
+####################################################################
+# Influx 2.0 Request with Body Flux Query
 ####################################################################
 curl --request POST \
   http://localhost:8086/api/v2/query?org=initOrg  \
@@ -50,7 +184,7 @@ result,table,_start,_stop,_time,_value,_field,_measurement,handler,method,path,r
 ,mean,3,2021-04-13T07:19:45.4608732Z,2021-04-13T07:34:45.4608732Z,2021-04-13T07:30:00Z,254.5,0.025,http_api_request_duration_seconds,platform,GET,/metrics,200,2XX,Go-http-client
   
 ####################################################################
-# Request with Body Flux Query
+# Request 
 ####################################################################
 curl --request POST \
   http://localhost:8086/api/v2/query?org=initOrg  \

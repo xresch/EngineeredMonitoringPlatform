@@ -14,6 +14,7 @@ import com.xresch.emp.features.databases.mssql.FeatureMSSQL;
 import com.xresch.emp.features.databases.mysql.FeatureMySQL;
 import com.xresch.emp.features.databases.oracle.FeatureOracle;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
+import com.xresch.emp.features.influxdb.FeatureInfluxDB;
 import com.xresch.emp.features.prometheus.FeaturePrometheus;
 import com.xresch.emp.features.spm.FeatureSPM;
 import com.xresch.emp.features.spm.FeatureSPMTheusinator;
@@ -47,7 +48,6 @@ public class Main implements CFWAppInterface {
     	CFW.Registry.Features.addFeature(FeatureEMPCommon.class);
 		CFW.Registry.Features.addFeature(FeatureAWA.class);
 		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
-		//CFW.Registry.Features.addFeature(FeatureInfluxDB.class);
 		
 		CFW.Registry.Features.addFeature(FeatureDatabases.class);
 		CFW.Registry.Features.addFeature(FeatureMySQL.class);
@@ -55,6 +55,7 @@ public class Main implements CFWAppInterface {
 		CFW.Registry.Features.addFeature(FeatureOracle.class);
 		CFW.Registry.Features.addFeature(FeatureGenericJDBC.class);
 		
+		CFW.Registry.Features.addFeature(FeatureInfluxDB.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);
     	CFW.Registry.Features.addFeature(FeatureSPMTheusinator.class);

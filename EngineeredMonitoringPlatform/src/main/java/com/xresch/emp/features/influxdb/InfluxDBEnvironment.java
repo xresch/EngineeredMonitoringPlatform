@@ -12,6 +12,7 @@ import com.xresch.cfw._main.CFW.Utils;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.db.CFWSQL;
+import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.core.AutocompleteItem;
 import com.xresch.cfw.features.core.AutocompleteList;
@@ -20,6 +21,7 @@ import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
+import com.xresch.emp.features.spm.EnvironmentManagerSPM;
 
 /**************************************************************************************************************
  * 
@@ -95,7 +97,7 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 			builder.append(host.getValue())
 				.append(":")
 				.append(port.getValue())
-				.append("/api/v1");
+				;
 			
 			apiURL = builder.toString();
 		}
@@ -121,66 +123,36 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 		return this;
 	}
 	
-	/************************************************************************************
-	 * 
-	 ************************************************************************************/
-	public JsonObject getTargets() {
-		
-		String queryURL = getAPIUrlVersion1() + "/targets";
-		
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
-		if(queryResult != null) {
-			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
-			JsonObject json = jsonElement.getAsJsonObject();
-			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
-				return null;
-			}
-			
-			return json;
-		}
-		return null;
-	}
-	
-	/************************************************************************************
-	 * 
-	 ************************************************************************************/
-	public JsonObject getMetrics() {
-		
-		String queryURL = getAPIUrlVersion1() + "/metadata";
-		
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
-		if(queryResult != null) {
-			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
-			JsonObject json = jsonElement.getAsJsonObject();
-			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
-				return null;
-			}
-			
-			return json;
-		}
-		return null;
-	}
 	
 	
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonObject query(String influxdbQuery, long latestMillis) {
+	public JsonObject v1_query(String database, String influxdbQuery) {
 		
+		//---------------------------
+		// Prepare Query
 		String queryURL = getAPIUrlVersion1() 
-				+ "/query?query="+CFW.HTTP.encode(influxdbQuery)
-				+ "&time="+(latestMillis/1000);
+				+ "/query?q="+CFW.HTTP.encode(influxdbQuery)
+				+"&epoch=ms"
+				;
 		
+		if(!Strings.isNullOrEmpty(database)) {
+			queryURL += "&db="+CFW.HTTP.encode(database);
+		}
+		
+
+		//---------------------------
+		// Execute API Call
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
+			
 			JsonObject json = jsonElement.getAsJsonObject();
-			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
-				return null;
-			}
+//			if(json.get("error") != null) {
+//				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
+//				return null;
+//			}
 			
 			return json;
 		}
@@ -190,26 +162,37 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonObject queryRange(String influxdbQuery, long earliestMillis, long latestMillis) {
+	public JsonObject v1_queryRange(String database, String influxdbQuery,  long earliestMillis, long latestMillis) {
 		
-		String interval = Utils.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
+		//---------------------------
+		// Prepare Query
+		String interval = CFW.Utils.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
 		
-		influxdbQuery = influxdbQuery.replace("[interval]", "["+( (interval.endsWith("s")) ? "1m" : interval )+"]");
+		influxdbQuery = influxdbQuery.replace("[interval]", "["+( (interval.endsWith("s")) ? "1m" : interval )+"]")
+									 .replace("[earliest]", ""+earliestMillis*1000000)
+									 .replace("[latest]", ""+latestMillis*1000000)
+									 ;
 
 		String queryURL = getAPIUrlVersion1() 
-				+ "/query_range?query="+CFW.HTTP.encode(influxdbQuery)
-				+"&start="+(earliestMillis/1000)
-				+"&end="+(latestMillis/1000)
-				+"&step="+interval;
+				+ "/query?q="+CFW.HTTP.encode(influxdbQuery)
+				+"&epoch=ms";
 		
+		if(!Strings.isNullOrEmpty(database)) {
+			queryURL += "&db="+CFW.HTTP.encode(database);
+		}
+		
+
+		//---------------------------
+		// Execute API Call
 		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
+			
 			JsonObject json = jsonElement.getAsJsonObject();
-			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
-				return null;
-			}
+//			if(json.get("error") != null) {
+//				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
+//				return null;
+//			}
 			
 			return json;
 		}
@@ -219,37 +202,58 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public AutocompleteResult autocompleteInstance(String searchValue, int limit) {
+	public static AutocompleteResult autocompleteDatabaseOrBucket(int environmentID, String searchValue, int limit) {
 		
 		if(searchValue.length() < 3) {
 			return null;
 		}
 		
-		JsonObject result = getTargets();
+		//---------------------------
+		// Get Environment	
+		InfluxDBEnvironment environment = InfluxDBEnvironmentManagement.getEnvironment(environmentID);
+		
+		if(environment == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			return null;
+		}
+
+		JsonObject result = environment.v1_query(null, "SHOW DATABASES");
 	
-//		{ "data": { "activeTargets": [ { "labels": {
-//        "instance": "127.0.0.1:9090",
-//        "job": "influxdb"
-//      },
-//    }
+//		{"results": [{"statement_id": 0,"series": [
+//						{
+//							"name": "databases",
+//							"columns": [
+//								"name"
+//							],
+//							"values": [
+//								[
+//									"_internal"
+//								],
+//								[...]
+//							]
+
 		
 		AutocompleteList list = new AutocompleteList();
 		if(result != null) {
 			
-			JsonArray targets = result.get("data").getAsJsonObject().get("activeTargets").getAsJsonArray();
+			JsonArray values = result.get("results")
+									.getAsJsonArray().get(0).getAsJsonObject()
+										.get("series").getAsJsonArray().get(0)
+											.getAsJsonObject().get("values").getAsJsonArray()
+										;
+			
 			String lowerSearch = searchValue.toLowerCase();
-			for(JsonElement target : targets) {
-				JsonObject labels = target.getAsJsonObject().get("labels").getAsJsonObject();
-				if(labels.has("instance")) {
-					String instance = labels.get("instance").getAsString();
-					if(instance.toLowerCase().contains(lowerSearch)) {
-						list.addItem(instance);
-					}
-					
-					if(list.size() == limit) { break; }
-				
+			for(JsonElement valuesArray : values) {
+				String databaseName = valuesArray.getAsJsonArray().get(0).getAsString();
+
+				if(lowerSearch.equals("%%%") || databaseName.toLowerCase().contains(lowerSearch)) {
+					list.addItem(databaseName);
 				}
+				
+				if(list.size() == limit) { break; }
+			
 			}
+			
 		}
 		
 		return new AutocompleteResult(list); 
