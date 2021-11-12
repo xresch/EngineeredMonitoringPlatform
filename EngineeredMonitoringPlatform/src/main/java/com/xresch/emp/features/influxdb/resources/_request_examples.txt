@@ -71,7 +71,7 @@ Response sample
 }
 
 ####################################################################
-# Influx FilterBy Time
+# Influx 1.8 FilterBy Time
 ####################################################################
 WHERE time >= '2019-08-09T00:00:00Z' and time < '2019-08-09T10:00:00Z'
 
@@ -101,6 +101,18 @@ curl --get "http://localhost:8086/query" \
   --data-urlencode "db=_internal" \
   --data-urlencode "epoch=ms" \
   --data-urlencode "q=SELECT mean(*) FROM runtime WHERE time >= 1636705510000000000 and time < 1636707010000000000 group by time(5m)"
+  
+
+
+####################################################################
+# Influx 1.8 Widget Sample Multi Query
+####################################################################
+SELECT mean(Alloc) as Alloc
+FROM runtime 
+WHERE time >= [earliest] and time < [latest] group by time([interval]);
+SELECT mean(Frees) as Frees
+FROM runtime 
+WHERE time >= [earliest] and time < [latest] group by time([interval]);
 
 ####################################################################
 # Influx 1.8 Get Database List

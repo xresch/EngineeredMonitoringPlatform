@@ -75,7 +75,7 @@
 			//------------------------
 			// Check Errors
 			if(currentStatement.error != null){
-				CFW.ui.addToastError(currentStatement.error);
+				CFW.ui.addToastDanger(currentStatement.error);
 				continue;
 			}
 			
@@ -143,14 +143,14 @@
 					
 					//---------------------------------
 					// Check for Data and Errors
-					if(CFW.utils.isNullOrEmpty(data.payload) || data.payload[0].results == undefined ){
+					if(CFW.utils.isNullOrEmpty(data.payload) || data.payload.results == undefined ){
 						callback(widgetObject, '');
 						return;
 					}
 
 					//---------------------------------
 					// Prepare InfluxDB data
-					var dataArray = emp_influxdb_convertInfluxToChartRendererStructure(data.payload[0]);
+					var dataArray = emp_influxdb_convertInfluxToChartRendererStructure(data.payload);
 					console.log('=========== dataArray =========');
 					console.log(dataArray);
 					

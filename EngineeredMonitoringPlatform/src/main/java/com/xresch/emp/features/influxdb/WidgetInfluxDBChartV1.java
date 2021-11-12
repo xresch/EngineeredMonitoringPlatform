@@ -80,9 +80,9 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Query		
-		String influxdbQuerys = (String)settings.getField(InfluxDBSettingsFactory.FIELDNAME_QUERY).getValue();
+		String influxdbQuery = (String)settings.getField(InfluxDBSettingsFactory.FIELDNAME_QUERY).getValue();
 		
-		if(Strings.isNullOrEmpty(influxdbQuerys)) {
+		if(Strings.isNullOrEmpty(influxdbQuery)) {
 			return;
 		}
 		
@@ -101,17 +101,10 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 				
 		//---------------------------------
 		// Fetch Data
-		JsonArray resultArray = new JsonArray();
-		String[] queryArray = influxdbQuerys.trim().split("\r\n|\n");
-		for(int i = 0; i < queryArray.length; i++) {
-			JsonObject queryResult = environment.v1_queryRange(databaseName, queryArray[i], earliest, latest);
-			
-			if(queryResult != null) {
-				resultArray.add(queryResult);
-			}
-		}
-		
-		response.getContent().append(resultArray.toString());	
+
+		JsonObject queryResult = environment.queryRangeV1(databaseName, influxdbQuery, earliest, latest);
+
+		response.getContent().append(queryResult);	
 	}
 	
 	public void createSampleData(JSONResponse response) { 

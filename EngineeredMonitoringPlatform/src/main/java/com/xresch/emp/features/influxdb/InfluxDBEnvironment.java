@@ -128,7 +128,7 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonObject v1_query(String database, String influxdbQuery) {
+	public JsonObject queryV1(String database, String influxdbQuery) {
 		
 		//---------------------------
 		// Prepare Query
@@ -162,17 +162,22 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonObject v1_queryRange(String database, String influxdbQuery,  long earliestMillis, long latestMillis) {
+	public JsonObject queryRangeV1(String database, String influxdbQuery,  long earliestMillis, long latestMillis) {
 		
 		//---------------------------
 		// Prepare Query
 		String interval = CFW.Utils.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
 		
-		influxdbQuery = influxdbQuery.replace("[interval]", "["+( (interval.endsWith("s")) ? "1m" : interval )+"]")
+		influxdbQuery = influxdbQuery.replace("[interval]", interval )
 									 .replace("[earliest]", ""+earliestMillis*1000000)
 									 .replace("[latest]", ""+latestMillis*1000000)
+									 .replace("\r\n", " ")
+									 .replace('\n', ' ')
+									 .replace('\r', ' ')
 									 ;
 
+		//System.out.println(influxdbQuery);
+		
 		String queryURL = getAPIUrlVersion1() 
 				+ "/query?q="+CFW.HTTP.encode(influxdbQuery)
 				+"&epoch=ms";
@@ -180,7 +185,6 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 		if(!Strings.isNullOrEmpty(database)) {
 			queryURL += "&db="+CFW.HTTP.encode(database);
 		}
-		
 
 		//---------------------------
 		// Execute API Call
@@ -217,7 +221,7 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 			return null;
 		}
 
-		JsonObject result = environment.v1_query(null, "SHOW DATABASES");
+		JsonObject result = environment.queryV1(null, "SHOW DATABASES");
 	
 //		{"results": [{"statement_id": 0,"series": [
 //						{
