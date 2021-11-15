@@ -68,6 +68,7 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 		;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
 		
@@ -80,7 +81,7 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 		}
 		
 		//---------------------------------
-		// Resolve Database or Bucket		
+		// Resolve Database		
 		LinkedHashMap<String,String> databaseNameMap = (LinkedHashMap<String,String>)settings.getField(InfluxDBSettingsFactory.FIELDNAME_DATABASE).getValue();
 		if(databaseNameMap == null || databaseNameMap.isEmpty()) {
 			return;
@@ -103,7 +104,7 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 		if(environmentID != null) {
 			environment = InfluxDBEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Influx DB Chart: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Influx DB Threshold: The chosen environment seems not configured correctly.");
 			return;
 		}
 				
@@ -117,15 +118,15 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.append(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_chart_sample_v1.json") );
+		response.append(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_threshold_sample_v1.json") );
 		
 	}
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		//array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_influxdb_commonFunctions.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_chart.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_influxdb_commonFunctions.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_threshold.js") );
 		return array;
 	}
 
