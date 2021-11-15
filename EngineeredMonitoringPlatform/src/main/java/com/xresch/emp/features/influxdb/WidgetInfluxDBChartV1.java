@@ -45,10 +45,20 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 				
 				.addField(InfluxDBSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(InfluxDBSettingsFactory.createDatabaseOrBucketSelectorField())
+				.addField(InfluxDBSettingsFactory.createDatabaseSelectorField())
 				
-				.addField(InfluxDBSettingsFactory.createQueryField())
+				.addField(InfluxDBSettingsFactory.createQueryField(
+						"SELECT mean(*)\r\n"
+						+ "FROM runtime \r\n"
+						+ "WHERE time >= [earliest] and time < [latest] group by time([interval]);"
+					)
+				)
 			
+				.addField(CFWField.newString(FormFieldType.TEXT, "valuecolumn")
+						.setLabel("{!emp_widget_influxdb_valuecolumn!}")
+						.setDescription("{!emp_widget_influxdb_valuecolumn_desc!}")
+				)
+				
 				.addField(CFWField.newString(FormFieldType.TEXT, "labels")
 						.setLabel("{!emp_widget_influxdb_labels!}")
 						.setDescription("{!emp_widget_influxdb_labels_desc!}")
@@ -71,7 +81,7 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 		
 		//---------------------------------
 		// Resolve Database or Bucket		
-		LinkedHashMap<String,String> databaseNameMap = (LinkedHashMap<String,String>)settings.getField(InfluxDBSettingsFactory.FIELDNAME_DB_OR_BUCKET).getValue();
+		LinkedHashMap<String,String> databaseNameMap = (LinkedHashMap<String,String>)settings.getField(InfluxDBSettingsFactory.FIELDNAME_DATABASE).getValue();
 		if(databaseNameMap == null || databaseNameMap.isEmpty()) {
 			return;
 		}
@@ -85,8 +95,6 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 		if(Strings.isNullOrEmpty(influxdbQuery)) {
 			return;
 		}
-		
-
 		
 		//---------------------------------
 		// Get Environment
@@ -109,7 +117,7 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.setPayLoad(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart_sample_v1.csv") );
+		response.append(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart_sample_v1.json") );
 		
 	}
 	
@@ -117,7 +125,7 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		//array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_influxdb_commonFunctions.js") );
-		array.add(  new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart_v1.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart_v1.js") );
 		return array;
 	}
 

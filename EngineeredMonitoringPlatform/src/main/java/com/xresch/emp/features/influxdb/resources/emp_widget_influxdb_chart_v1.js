@@ -3,7 +3,8 @@
 	
 	
 	/******************************************************************
-	 * 
+	 *
+	 * @param data the data structure as returned by influx
 	 ******************************************************************/
 	function emp_influxdb_convertInfluxToDataviewerStructure(data){
 		
@@ -33,12 +34,12 @@
 			//------------------------
 			// Check Errors
 			if(currentStatement.error != null){
-				CFW.ui.addToastError(currentStatement.error);
+				CFW.ui.addToastDanger(currentStatement.error);
 				continue;
 			}
 			
 			//------------------------
-			// Convert Series
+			// Convert Series 
 			for(let seriesIndex in currentStatement.series){
 				let currentSeries = currentStatement.series[seriesIndex];
 				let seriesName = currentSeries.name;
@@ -150,20 +151,26 @@
 
 					//---------------------------------
 					// Prepare InfluxDB data
-					var dataArray = emp_influxdb_convertInfluxToChartRendererStructure(data.payload);
+					var mode = 'groupbytitle';
+					var chartLabelFields = null;
+					var xfield = 'time';
+					var yfield = settings.valuecolumn;
+					var dataArray = null;
+					
+					
+					if( !CFW.utils.isNullOrEmpty(settings.labels) ){
+						chartLabelFields = settings.labels.trim().split(/[, ]+/);
+						dataArray = emp_influxdb_convertInfluxToDataviewerStructure(data.payload);
+					}else{
+						mode = 'arrays';
+						chartLabelFields = ['series', 'column'];
+						xfield = 'times';
+						yfield = 'values';
+						dataArray = emp_influxdb_convertInfluxToChartRendererStructure(data.payload);
+					}
+					
 					console.log('=========== dataArray =========');
 					console.log(dataArray);
-					
-					//var monitorStats = emp_widget_influxdb_prepareData(data.payload);
-					var chartLabelFields = ['series', 'column'];
-					
-//					if(!CFW.utils.isNullOrEmpty(settings.labels)){
-//						chartLabelFields = settings.labels.trim().split(/[, ]+/);
-//						console.log('chartLabelFields: '); 
-//						console.log(chartLabelFields); 
-//					}else{
-//						chartLabelFields = emp_widget_influxdb_getChartLabelFields(data.payload);
-//					}
 
 					//---------------------------
 					// Render Settings
@@ -174,9 +181,9 @@
 						rendererSettings:{
 							chart: {
 								charttype: settings.chart_type.toLowerCase(),
-								datamode: 'arrays',
-								xfield: 'times',
-								yfield: 'values',
+								datamode: mode,
+								xfield: xfield,
+								yfield: yfield,
 								stacked: settings.stacked,
 								showlegend: settings.show_legend,
 								// if not set make true

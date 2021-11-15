@@ -11,7 +11,7 @@ import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 public class InfluxDBSettingsFactory {
 	
 	public static final String FIELDNAME_QUERY = "QUERY";
-	public static final String FIELDNAME_DB_OR_BUCKET = "JSON_DATABASE_OR_BUCKET";
+	public static final String FIELDNAME_DATABASE = "JSON_DATABASE";
 	public static final String FIELDNAME_ENVIRONMENT = "ENVIRONMENT";
 
 
@@ -33,10 +33,10 @@ public class InfluxDBSettingsFactory {
 	 * 
 	 * @return
 	 ************************************************************************************/
-	public static CFWField<?> createDatabaseOrBucketSelectorField(){
-		return 	(CFWField)CFWField.newTagsSelector(FIELDNAME_DB_OR_BUCKET)
-				.setLabel("{!emp_widget_influxdb_databasebucket!}")
-				.setDescription("{!emp_widget_influxdb_databasebucket_desc!}")
+	public static CFWField<?> createDatabaseSelectorField(){
+		return 	(CFWField)CFWField.newTagsSelector(FIELDNAME_DATABASE)
+				.setLabel("{!emp_widget_influxdb_database!}")
+				.setDescription("{!emp_widget_influxdb_database_desc!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(InfluxDBEnvironment.SETTINGS_TYPE))
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10, 3) {
 					@Override
@@ -55,17 +55,18 @@ public class InfluxDBSettingsFactory {
 	 * 
 	 * @return
 	 ************************************************************************************/
-	public static CFWField<?> createQueryField(){
+	public static CFWField<?> createQueryField(String defaultValue){
 		return (CFWField)CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY)
 			.setLabel("{!emp_widget_influxdb_query!}")
 			.setDescription("{!emp_widget_influxdb_query_desc!}")
 			.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(InfluxDBEnvironment.SETTINGS_TYPE))
-			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
-				@Override
-				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
-					return InfluxDBEnvironment.autocompleteQuery(searchValue, this.getMaxResults());
-				}
-			})
+//			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+//				@Override
+//				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+//					return InfluxDBEnvironment.autocompleteQuery(searchValue, this.getMaxResults());
+//				}
+//			})
+			.setValue(defaultValue)
 			.addCssClass("textarea-nowrap");
 	}
 	
