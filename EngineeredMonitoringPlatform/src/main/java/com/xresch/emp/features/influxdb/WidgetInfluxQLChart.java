@@ -33,11 +33,11 @@ import com.xresch.emp.features.prometheus.PrometheusEnvironmentManagement;
 import com.xresch.emp.features.prometheus.PrometheusSettingsFactory;
 import com.xresch.emp.features.spm.SPMSettingsFactory;
 
-public class WidgetInfluxDBChartV1 extends WidgetDefinition {
+public class WidgetInfluxQLChart extends WidgetDefinition {
 
-	private static Logger logger = CFWLog.getLogger(WidgetInfluxDBChartV1.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetInfluxQLChart.class.getName());
 	@Override
-	public String getWidgetType() {return "emp_influxdb_chart_v1";}
+	public String getWidgetType() {return "emp_influxdb_influxql_chart";}
 
 	@Override
 	public CFWObject getSettings() {
@@ -55,13 +55,13 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 				)
 			
 				.addField(CFWField.newString(FormFieldType.TEXT, "valuecolumn")
-						.setLabel("{!emp_widget_influxdb_valuecolumn!}")
-						.setDescription("{!emp_widget_influxdb_valuecolumn_desc!}")
+						.setLabel("{!emp_widget_influxdb_influxql_valuecolumn!}")
+						.setDescription("{!emp_widget_influxdb_influxql_valuecolumn_desc!}")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXT, "labels")
-						.setLabel("{!emp_widget_influxdb_labels!}")
-						.setDescription("{!emp_widget_influxdb_labels_desc!}")
+						.setLabel("{!emp_widget_influxdb_influxql_labels!}")
+						.setDescription("{!emp_widget_influxdb_influxql_labels_desc!}")
 				)
 				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
 				.addField(WidgetSettingsFactory.createSampleDataField())
@@ -117,7 +117,7 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.append(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart_sample_v1.json") );
+		response.append(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_chart_sample_v1.json") );
 		
 	}
 	
@@ -125,7 +125,7 @@ public class WidgetInfluxDBChartV1 extends WidgetDefinition {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		//array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_influxdb_commonFunctions.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_chart_v1.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_chart.js") );
 		return array;
 	}
 

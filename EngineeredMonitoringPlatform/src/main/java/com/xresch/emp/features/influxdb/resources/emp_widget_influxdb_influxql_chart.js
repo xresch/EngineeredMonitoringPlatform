@@ -126,12 +126,12 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_influxdb_chart_v1",
+	CFW.dashboard.registerWidget("emp_influxdb_influxql_chart",
 		{
 			category: "Monitoring | InfluxDB",
 			menuicon: "fas fa-chart-bar",
-			menulabel: CFWL('emp_widget_influxdb_chart', "InfluxQL Chart"),
-			description: CFWL('emp_widget_influxdb_chart_desc', "This widget uses a InfluxQL query to fetch time series and displays them as a chart."), 
+			menulabel: CFWL('emp_widget_influxdb_influxql_chart', "InfluxQL Chart"),
+			description: CFWL('emp_widget_influxdb_influxql_chart_desc', "This widget uses a InfluxQL query to fetch time series and displays them as a chart."), 
 			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, params, callback) {
 					

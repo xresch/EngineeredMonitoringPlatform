@@ -59,7 +59,7 @@ public class FeatureInfluxDB extends CFWAppFeature {
     
 		//----------------------------------
 		// Register Widgets
-		CFW.Registry.Widgets.add(new WidgetInfluxDBChartV1());
+		CFW.Registry.Widgets.add(new WidgetInfluxQLChart());
 		
 		//----------------------------------
 		// Register Parameters

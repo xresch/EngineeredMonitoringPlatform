@@ -35,8 +35,8 @@ public class InfluxDBSettingsFactory {
 	 ************************************************************************************/
 	public static CFWField<?> createDatabaseSelectorField(){
 		return 	(CFWField)CFWField.newTagsSelector(FIELDNAME_DATABASE)
-				.setLabel("{!emp_widget_influxdb_database!}")
-				.setDescription("{!emp_widget_influxdb_database_desc!}")
+				.setLabel("{!emp_widget_influxdb_influxql_database!}")
+				.setDescription("{!emp_widget_influxdb_influxql_database_desc!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(InfluxDBEnvironment.SETTINGS_TYPE))
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10, 3) {
 					@Override
@@ -57,8 +57,8 @@ public class InfluxDBSettingsFactory {
 	 ************************************************************************************/
 	public static CFWField<?> createQueryField(String defaultValue){
 		return (CFWField)CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY)
-			.setLabel("{!emp_widget_influxdb_query!}")
-			.setDescription("{!emp_widget_influxdb_query_desc!}")
+			.setLabel("{!emp_widget_influxdb_influxql_query!}")
+			.setDescription("{!emp_widget_influxdb_influxql_query_desc!}")
 			.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(InfluxDBEnvironment.SETTINGS_TYPE))
 //			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 //				@Override
