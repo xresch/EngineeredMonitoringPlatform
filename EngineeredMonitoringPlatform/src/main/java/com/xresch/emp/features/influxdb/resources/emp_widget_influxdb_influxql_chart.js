@@ -42,18 +42,35 @@
 			// Convert Series 
 			for(let seriesIndex in currentStatement.series){
 				let currentSeries = currentStatement.series[seriesIndex];
-				let seriesName = currentSeries.name;
-				let columns = currentSeries.columns;
+				let seriesName = currentSeries.name;				
 				
+				
+				
+				
+				//---------------------------
+				// Loop Series
+				let columns = currentSeries.columns;
+				let tags = currentSeries.tags;
 				for (let valueIndex in currentSeries.values){
 					let currentValues = currentSeries.values[valueIndex];
+					let dataviewerObject = {'series': seriesName};
+					//---------------------------
+					// Tags to Fields
+					if(tags != null){
+						for (let tagsKey in tags){
+							dataviewerObject[tagsKey] = tags[tagsKey];
+						}
+					}
 					
-					let dataviewerObject = {'series': seriesName}
+					//---------------------------
+					// Columns & Values to Fields
 					for(let fieldIndex in currentValues){
 						dataviewerObject[columns[fieldIndex]] = currentValues[fieldIndex];
 					}
 					dataviewerFormat.push(dataviewerObject);
 				}
+				
+				
 				
 			}
 		}
@@ -194,7 +211,9 @@
 								padding: 2
 							}
 					}};
-										
+							
+					console.log('=========== dataToRender =========');
+					console.log(dataToRender);			
 					//--------------------------
 					// Render Widget
 					var renderer = CFW.render.getRenderer('chart');
