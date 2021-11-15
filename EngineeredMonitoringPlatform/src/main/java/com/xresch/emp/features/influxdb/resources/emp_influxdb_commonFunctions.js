@@ -7,10 +7,12 @@
 	/******************************************************************
 	 *
 	 * @param data the data structure as returned by influx
+	 * @param latestValueOnly boolean to define if only the latest value of a series 
+	 *        should be taken
 	 ******************************************************************/
-	function emp_influxdb_convertInfluxQLToDataviewerStructure(data){
+	function emp_influxdb_convertInfluxQLToDataviewerStructure(data, latestValueOnly){
 		
-		/*		{ "results": [ { "statement_id": 0,
+/*		{ "results": [ { "statement_id": 0,
 			"series": [
 				{
 					"name": "runtime",
@@ -40,21 +42,32 @@
 				continue;
 			}
 			
+			
 			//------------------------
-			// Convert Series 
+			// Loop Series 
 			for(let seriesIndex in currentStatement.series){
 				let currentSeries = currentStatement.series[seriesIndex];
 				let seriesName = currentSeries.name;				
-				
-				
-				
-				
-				//---------------------------
-				// Loop Series
 				let columns = currentSeries.columns;
+				
+				//------------------------
+				// Filter Series By Latest 
+				var valuesToConvert = currentSeries.values;
+				if(latestValueOnly){
+					valuesToConvert = [_.maxBy(currentSeries.values, function(o){
+						return o[columns.indexOf('time')];
+					})];
+				}
+				console.log('=========== valuesToConvert ============')
+				console.log(latestValueOnly)
+				console.log(valuesToConvert)
+
+				//---------------------------
+				// Loop Values
+				
 				let tags = currentSeries.tags;
-				for (let valueIndex in currentSeries.values){
-					let currentValues = currentSeries.values[valueIndex];
+				for (let valueIndex in valuesToConvert){
+					let currentValues = valuesToConvert[valueIndex];
 					let dataviewerObject = {'series': seriesName};
 					//---------------------------
 					// Tags to Fields
@@ -100,8 +113,15 @@
 			}
 			
 			//------------------------
+			// Filter Series By Latest 
+			var seriesToConvert = currentStatement.series
+			if(latestValueOnly){
+				seriesToConvert = [_.maxBy(currentStatement.series, 'time')];
+			}
+
+			//------------------------
 			// Convert Series
-			for(let seriesIndex in currentStatement.series){
+			for(let seriesIndex in seriesToConvert){
 				let currentSeries = currentStatement.series[seriesIndex];
 				let seriesName = currentSeries.name;
 				let columns = currentSeries.columns;

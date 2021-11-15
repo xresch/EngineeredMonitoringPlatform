@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-
 import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
@@ -22,23 +17,14 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
-import com.xresch.cfw.db.DBInterface;
-import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
-import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions;
-import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
-import com.xresch.cfw.validation.NumberRangeValidator;
-import com.xresch.emp.features.spm.EnvironmentManagerSPM;
-import com.xresch.emp.features.spm.EnvironmentSPM;
-import com.xresch.emp.features.spm.SPMSettingsFactory;
 
 public class WidgetInfluxQLThreshold extends WidgetDefinition {
 
@@ -79,6 +65,7 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.TEXT, "valuecolumn")
 						.setLabel("{!emp_widget_influxdb_influxql_valuecolumn!}")
 						.setDescription("{!emp_widget_influxdb_influxql_valuecolumn_desc!}")
+						.addValidator(new NotNullOrEmptyValidator())
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXT, "labels")
@@ -87,8 +74,8 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 				)
 		
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_SUFFIX)
-						.setLabel("{!emp_widget_InfluxDB_suffix!}")
-						.setDescription("{!emp_widget_InfluxDB_suffix_desc!}")
+						.setLabel("{!emp_widget_Influxdb_suffix!}")
+						.setDescription("{!emp_widget_Influxdb_suffix_desc!}")
 				)
 				
 				.addAllFields(CFW.Conditions.createThresholdFields())
@@ -160,11 +147,11 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 	/*********************************************************************
 	 * 
 	 *********************************************************************/
-	public JsonArray createSampleData() { 
+	public JsonObject createSampleData() { 
 
-		String jsonString = CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_InfluxDB_instant_threshold_sample.json");
+		String jsonString = CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_threshold_sample_v1.json");
 		
-		JsonArray exampleData = CFW.JSON.stringToJsonElement(jsonString).getAsJsonArray();
+		JsonObject exampleData = CFW.JSON.stringToJsonElement(jsonString).getAsJsonObject();
 		
 		return exampleData;
 		
@@ -176,8 +163,8 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_InfluxDB_commonFunctions.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_InfluxDB_instant_threshold.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_Influxdb_commonFunctions.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_threshold.js") );
 		return array;
 	}
 

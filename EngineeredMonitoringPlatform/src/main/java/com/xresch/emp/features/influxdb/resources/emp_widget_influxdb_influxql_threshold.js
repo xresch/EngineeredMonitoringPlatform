@@ -1,154 +1,15 @@
 
 (function (){
-	
-	
-	/******************************************************************
-	 *
-	 * @param data the data structure as returned by influx
-	 ******************************************************************/
-	function emp_influxdb_convertInfluxQLToDataviewerStructure(data){
 		
-		/*		{ "results": [ { "statement_id": 0,
-			"series": [
-				{
-					"name": "runtime",
-					"columns": [
-						"time",
-						"...",
-					],
-					"values": [
-						[
-							"2021-11-10T13:28:10Z",
-							2962944,
-							260309,
-							2962944,
-							61218816,
-							5005312,
-*/
-
-		var dataviewerFormat = [];
-		
-		for(let index in data.results){
-			let currentStatement = data.results[index];
-			
-			//------------------------
-			// Check Errors
-			if(currentStatement.error != null){
-				CFW.ui.addToastDanger(currentStatement.error);
-				continue;
-			}
-			
-			//------------------------
-			// Convert Series 
-			for(let seriesIndex in currentStatement.series){
-				let currentSeries = currentStatement.series[seriesIndex];
-				let seriesName = currentSeries.name;				
-				
-				
-				
-				
-				//---------------------------
-				// Loop Series
-				let columns = currentSeries.columns;
-				let tags = currentSeries.tags;
-				for (let valueIndex in currentSeries.values){
-					let currentValues = currentSeries.values[valueIndex];
-					let dataviewerObject = {'series': seriesName};
-					//---------------------------
-					// Tags to Fields
-					if(tags != null){
-						for (let tagsKey in tags){
-							dataviewerObject[tagsKey] = tags[tagsKey];
-						}
-					}
-					
-					//---------------------------
-					// Columns & Values to Fields
-					for(let fieldIndex in currentValues){
-						dataviewerObject[columns[fieldIndex]] = currentValues[fieldIndex];
-					}
-					dataviewerFormat.push(dataviewerObject);
-				}
-				
-				
-				
-			}
-		}
-		
-		return dataviewerFormat;
-
-	}
-	
-	
-		/******************************************************************
-	 * 
-	 ******************************************************************/
-	function emp_influxdb_convertInfluxQLToChartRendererStructure(data){
-		
-		var dataviewerFormat = [];
-		
-		for(let index in data.results){
-			let currentStatement = data.results[index];
-			
-			//------------------------
-			// Check Errors
-			if(currentStatement.error != null){
-				CFW.ui.addToastDanger(currentStatement.error);
-				continue;
-			}
-			
-			//------------------------
-			// Convert Series
-			for(let seriesIndex in currentStatement.series){
-				let currentSeries = currentStatement.series[seriesIndex];
-				let seriesName = currentSeries.name;
-				let columns = currentSeries.columns;
-				let timeIndex = 0;
-				
-				let objectForColumns = {};
-				for (let columnIndex in columns){
-					let columnName = columns[columnIndex];
-					
-					//skip time column
-					if(columnName == 'time'){ timeIndex = columnIndex; continue; }
-					
-					objectForColumns[columnName] = {series: seriesName, column : columnName, times: [], values: [] }
-					dataviewerFormat.push(objectForColumns[columnName]);
-				}
-					
-				for (let valueIndex in currentSeries.values){
-					let currentValues = currentSeries.values[valueIndex];
-					
-					for(let fieldIndex in currentValues){
-						let columnName = columns[fieldIndex];
-						if(columnName == 'time'){ continue; }
-						objectForColumns[columnName].times.push(currentValues[timeIndex]);
-						objectForColumns[columnName].values.push(currentValues[fieldIndex]);
-					}
-					
-				}
-				
-			}
-		}
-		
-		return dataviewerFormat;
-
-	}
-	
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-database", "Monitoring | InfluxDB");
-	
-	/******************************************************************
-	 * 
-	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_influxdb_influxql_chart",
+	CFW.dashboard.registerWidget("emp_influxdb_influxql_threshold",
 		{
 			category: "Monitoring | InfluxDB",
-			menuicon: "fas fa-chart-bar",
-			menulabel: CFWL('emp_widget_influxdb_influxql_chart', "InfluxQL Chart"),
-			description: CFWL('emp_widget_influxdb_influxql_chart_desc', "This widget uses a InfluxQL query to fetch time series and displays them as a chart."), 
+			menuicon: "fas fa-thermometer-half",
+			menulabel: CFWL('emp_widget_influxdb_influxql_threshold', "InfluxQL Chart"),
+			description: CFWL('emp_widget_influxdb_influxql_threshold', "This widget uses a InfluxQL query to fetch time series and displays them as a chart."), 
 			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
@@ -168,56 +29,107 @@
 
 					//---------------------------------
 					// Prepare InfluxDB data
-					var mode = 'groupbytitle';
-					var chartLabelFields = null;
-					var xfield = 'time';
-					var yfield = settings.valuecolumn;
-					var dataArray = null;
-					
+					var labelFields = [];
+					var valueColumn = settings.valuecolumn;
+					var dataArray = emp_influxdb_convertInfluxQLToDataviewerStructure(data.payload, true);
 					
 					if( !CFW.utils.isNullOrEmpty(settings.labels) ){
-						chartLabelFields = settings.labels.trim().split(/[, ]+/);
-						dataArray = emp_influxdb_convertInfluxQLToDataviewerStructure(data.payload);
-					}else{
-						mode = 'arrays';
-						chartLabelFields = ['series', 'column'];
-						xfield = 'times';
-						yfield = 'values';
-						dataArray = emp_influxdb_convertInfluxQLToChartRendererStructure(data.payload);
+						labelFields = settings.labels.trim().split(/[, ]+/);
 					}
 					
 					console.log('=========== dataArray =========');
 					console.log(dataArray);
 
 					//---------------------------
+					// Set Colors for Thresholds
+					var excellentVal 	= settings.THRESHOLD_EXCELLENT;
+					var goodVal 		= settings.THRESHOLD_GOOD;
+					var warningVal 		= settings.THRESHOLD_WARNING;
+					var emergencyVal 	= settings.THRESHOLD_EMERGENCY;
+					var dangerVal 		= settings.THRESHOLD_DANGER;
+					
+					for(var key in dataArray){
+						var current = dataArray[key];
+						
+						current.alertstyle =  CFW.colors.getThresholdStyle(current[valueColumn]
+								,excellentVal
+								,goodVal
+								,warningVal
+								,emergencyVal
+								,dangerVal
+								,settings.THRESHOLD_DISABLED);
+						
+						if(current.alertstyle != "cfw-none"){
+							current.textstyle = "white"; 
+						}
+					}
+					
+					//---------------------------
 					// Render Settings
+					var renderType = (settings.renderer == null) ? "tiles" : settings.renderer.toLowerCase() ;
+
 					var dataToRender = {
 						data: dataArray,
-						titlefields: chartLabelFields, 
+						bgstylefield: 'alertstyle',
+						textstylefield: 'textstyle',
+						titlefields: labelFields, 
+						visiblefields: [],
 						titleformat: null, 
+						
+						labels: {},
+						customizers: {
+							value: function(record, value) {
+								if(value == null) return '';
+								return (settings.suffix == null) ? value : value+" "+settings.suffix;
+							},
+							time: function(record, value) { return (value != null) ? new  moment(value).format("YYYY-MM-DD HH:mm") : '';},
+						},
 						rendererSettings:{
-							chart: {
-								charttype: settings.chart_type.toLowerCase(),
-								datamode: mode,
-								xfield: xfield,
-								yfield: yfield,
-								stacked: settings.stacked,
-								showlegend: settings.show_legend,
-								// if not set make true
-								showaxes: (settings.show_axes == null) ? true : settings.show_axes,
-								ymin: settings.ymin,
-								ymax: settings.ymax,
-								pointradius: settings.pointradius,
-								padding: 2
-							}
+							tiles: {
+								sizefactor: widgetObject.JSON_SETTINGS.sizefactor,
+								showlabels: widgetObject.JSON_SETTINGS.showlabels,
+								borderstyle: widgetObject.JSON_SETTINGS.borderstyle
+							},
+							table: {
+								narrow: 	true,
+								striped: 	false,
+								hover: 		false,
+								filterable: false,
+							},
+							panels: {
+								narrow: 	true,
+							},
+							cards: {
+								narrow: 	true,
+								maxcolumns: 5,
+							},
 					}};
+					
+					//-----------------------------------
+					// Adjust RenderSettings
+					if(dataToRender.data.length > 0){
+						if( (renderType == "table" 
+							|| renderType == "panels"
+							|| renderType == "cards"
+							|| renderType == "csv"
+							|| renderType == "json")){
 							
-					console.log('=========== dataToRender =========');
-					console.log(dataToRender);			
+							var visiblefields = Object.keys(dataToRender.data[0]);
+							//remove alertstyle and textstyle
+							visiblefields.pop();
+							visiblefields.pop();
+							dataToRender.visiblefields = visiblefields;
+							// add first field to title
+							dataToRender.titlefields.push(visiblefields[0]); 	
+							dataToRender.titleformat = '{0} - {1}';
+						}
+					}
+					
+					
 					//--------------------------
 					// Render Widget
-					var renderer = CFW.render.getRenderer('chart');
-					callback(widgetObject, renderer.render(dataToRender));
+					var alertRenderer = CFW.render.getRenderer(renderType);
+					callback(widgetObject, alertRenderer.render(dataToRender));
 				});
 			},
 			

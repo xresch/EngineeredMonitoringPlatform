@@ -38,13 +38,13 @@
 					
 					if( !CFW.utils.isNullOrEmpty(settings.labels) ){
 						chartLabelFields = settings.labels.trim().split(/[, ]+/);
-						dataArray = emp_influxdb_convertInfluxQLToDataviewerStructure(data.payload);
+						dataArray = emp_influxdb_convertInfluxQLToDataviewerStructure(data.payload, false);
 					}else{
 						mode = 'arrays';
 						chartLabelFields = ['series', 'column'];
 						xfield = 'times';
 						yfield = 'values';
-						dataArray = emp_influxdb_convertInfluxQLToChartRendererStructure(data.payload);
+						dataArray = emp_influxdb_convertInfluxQLToChartRendererStructure(data.payload, false);
 					}
 					
 					console.log('=========== dataArray =========');

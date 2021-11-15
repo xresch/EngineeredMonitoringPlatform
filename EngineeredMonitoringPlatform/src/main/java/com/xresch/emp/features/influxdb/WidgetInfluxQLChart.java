@@ -118,7 +118,7 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 	
 	public void createSampleData(JSONResponse response) { 
 
-		response.append(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_threshold_sample_v1.json") );
+		response.append(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_chart_sample_v1.json") );
 		
 	}
 	
@@ -126,7 +126,7 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_influxdb_commonFunctions.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_threshold.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_chart.js") );
 		return array;
 	}
 
