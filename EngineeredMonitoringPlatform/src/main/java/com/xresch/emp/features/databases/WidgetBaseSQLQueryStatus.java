@@ -85,7 +85,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_SQLQUERY)
 						.setLabel("{!emp_widget_database_sqlquery!}")
 						.setDescription("{!emp_widget_database_sqlquery_desc!}")
-						.disableSecurity() // Do not convert character like "'" to &#x27; etc...
+						.disableSanitization() // Do not convert character like "'" to &#x27; etc...
 						.setValue("")
 						.addValidator(new CustomValidator() {
 							

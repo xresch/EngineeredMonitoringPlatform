@@ -138,7 +138,7 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 		//---------------------------------
 		// Fetch Data
 
-		JsonObject queryResult = environment.queryRangeV1(databaseName, influxdbQuery, earliest, latest);
+		JsonObject queryResult = environment.queryRangeInfluxQL(databaseName, influxdbQuery, earliest, latest);
 		
 		return queryResult;
 		

@@ -70,7 +70,7 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_QUERY)
 						.setLabel("{!emp_widget_prometheus_instant_query!}")
 						.setDescription("{!emp_widget_prometheus_instant_query_desc!}")
-						.disableSecurity()
+						.disableSanitization()
 				)
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_SUFFIX)
 						.setLabel("{!emp_widget_prometheus_suffix!}")

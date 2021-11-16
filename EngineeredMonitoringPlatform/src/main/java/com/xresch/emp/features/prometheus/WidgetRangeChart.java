@@ -43,7 +43,7 @@ public class WidgetRangeChart extends WidgetDefinition {
 				.addField((CFWField)CFWField.newString(FormFieldType.TEXTAREA, "query")
 						.setLabel("{!emp_widget_prometheus_range_query!}")
 						.setDescription("{!emp_widget_prometheus_range_query_desc!}")
-						.disableSecurity()
+						.disableSanitization()
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE))
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							@Override

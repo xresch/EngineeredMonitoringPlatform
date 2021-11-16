@@ -42,7 +42,7 @@ public class MySQLEnvironment extends AbstractContextSettings {
 	
 	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, MySQLEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.")
-			.disableSecurity()
+			.disableSanitization()
 			.enableEncryption("mysql_DB_PW_Salt");
 	
 	

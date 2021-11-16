@@ -62,7 +62,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 	
 	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, AWAEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.")
-			.disableSecurity()
+			.disableSanitization()
 			.enableEncryption("awa_DB_PW_Salt");
 	
 	private CFWField<Integer> clientID = CFWField.newInteger(FormFieldType.NUMBER, AWAEnvironmentFields.CLIENT_ID)

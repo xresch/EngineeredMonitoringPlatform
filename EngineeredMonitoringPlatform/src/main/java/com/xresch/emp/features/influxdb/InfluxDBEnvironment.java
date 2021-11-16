@@ -2,17 +2,16 @@ package com.xresch.emp.features.influxdb;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
-import com.xresch.cfw._main.CFW.Utils;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.db.CFWSQL;
-import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.core.AutocompleteItem;
 import com.xresch.cfw.features.core.AutocompleteList;
@@ -21,7 +20,6 @@ import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
-import com.xresch.emp.features.spm.EnvironmentManagerSPM;
 
 /**************************************************************************************************************
  * 
@@ -36,7 +34,9 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 	public enum InfluxDBEnvironmentFields{
 		HOST,
 		PORT,
-		USE_HTTPS
+		USE_HTTPS,
+		USERNAME,
+		PASSWORD
 	}
 			
 	private CFWField<String> host = CFWField.newString(FormFieldType.TEXT, InfluxDBEnvironmentFields.HOST)
@@ -48,12 +48,20 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 	private CFWField<Boolean> useHttps = CFWField.newBoolean(FormFieldType.BOOLEAN, InfluxDBEnvironmentFields.USE_HTTPS)
 			.setDescription("Use HTTPS for calling the API.");
 	
+	private CFWField<String> username = CFWField.newString(FormFieldType.TEXT, InfluxDBEnvironmentFields.USERNAME)
+			.setDescription("(Optional)The username used for authentication.");
+	
+	private CFWField<String> password = CFWField.newString(FormFieldType.PASSWORD, InfluxDBEnvironmentFields.PASSWORD)
+			.disableSanitization() //do not sanitize passwords
+			.enableEncryption("emp_influxdb_pw_encryption_salt_653hgjkj76jk5g7u64zYay!")
+			.setDescription("(Optional)The Password used for authentication.");
+	
 	public InfluxDBEnvironment() {
 		initializeFields();
 	}
 		
 	private void initializeFields() {
-		this.addFields(host, port, useHttps);
+		this.addFields(host, port, useHttps, username, password);
 	}
 		
 			
@@ -113,6 +121,24 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 		this.host.setValue(value);
 		return this;
 	}
+	
+	public String username() {
+		return username.getValue();
+	}
+	
+	public InfluxDBEnvironment username(String value) {
+		this.username.setValue(value);
+		return this;
+	}
+	
+	public String password() {
+		return username.getValue();
+	}
+	
+	public InfluxDBEnvironment password(String value) {
+		this.password.setValue(value);
+		return this;
+	}
 		
 	public int port() {
 		return port.getValue();
@@ -128,27 +154,31 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonObject queryV1(String database, String influxdbQuery) {
+	public JsonObject queryInfluxQL(String database, String influxdbQuery) {
 		
 		//---------------------------
 		// Prepare Query
-		String queryURL = getAPIUrlVersion1() 
-				+ "/query?q="+CFW.HTTP.encode(influxdbQuery)
-				+"&epoch=ms"
-				;
+		String queryURL = getAPIUrlVersion1() + "/query";
+		LinkedHashMap<String,String> params = new LinkedHashMap<>();
+		params.put("q", influxdbQuery);
+		params.put("epoch", "ms");
 		
-		if(!Strings.isNullOrEmpty(database)) {
-			queryURL += "&db="+CFW.HTTP.encode(database);
-		}
+		if(!Strings.isNullOrEmpty(database)) 		{  params.put("db", database); }
+		if(!Strings.isNullOrEmpty(this.username())) {  params.put("u", this.username()); }
+		if(!Strings.isNullOrEmpty(this.password())) {  params.put("p", this.password()); }
 		
-
 		//---------------------------
 		// Execute API Call
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
+		CFWHttpResponse queryResult = CFW.HTTP.sendPOSTRequest(queryURL, params, null);
+		
+		System.out.println("=========== TEST =========");
+		
 		if(queryResult != null) {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			
 			JsonObject json = jsonElement.getAsJsonObject();
+			
+			System.out.println(queryResult.getResponseBody());
 //			if(json.get("error") != null) {
 //				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
 //				return null;
@@ -162,7 +192,7 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public JsonObject queryRangeV1(String database, String influxdbQuery,  long earliestMillis, long latestMillis) {
+	public JsonObject queryRangeInfluxQL(String database, String influxdbQuery,  long earliestMillis, long latestMillis) {
 		
 		//---------------------------
 		// Prepare Query
@@ -176,31 +206,32 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 									 .replace('\r', ' ')
 									 ;
 
+		return queryInfluxQL(database, influxdbQuery);
 		//System.out.println(influxdbQuery);
 		
-		String queryURL = getAPIUrlVersion1() 
-				+ "/query?q="+CFW.HTTP.encode(influxdbQuery)
-				+"&epoch=ms";
-		
-		if(!Strings.isNullOrEmpty(database)) {
-			queryURL += "&db="+CFW.HTTP.encode(database);
-		}
-
-		//---------------------------
-		// Execute API Call
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
-		if(queryResult != null) {
-			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
-			
-			JsonObject json = jsonElement.getAsJsonObject();
-//			if(json.get("error") != null) {
-//				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
-//				return null;
-//			}
-			
-			return json;
-		}
-		return null;
+//		String queryURL = getAPIUrlVersion1() 
+//				+ "/query?q="+CFW.HTTP.encode(influxdbQuery)
+//				+"&epoch=ms";
+//		
+//		if(!Strings.isNullOrEmpty(database)) {
+//			queryURL += "&db="+CFW.HTTP.encode(database);
+//		}
+//
+//		//---------------------------
+//		// Execute API Call
+//		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
+//		if(queryResult != null) {
+//			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
+//			
+//			JsonObject json = jsonElement.getAsJsonObject();
+////			if(json.get("error") != null) {
+////				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
+////				return null;
+////			}
+//			
+//			return json;
+//		}
+//		return null;
 	}
 	
 	/************************************************************************************
@@ -221,7 +252,7 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 			return null;
 		}
 
-		JsonObject result = environment.queryV1(null, "SHOW DATABASES");
+		JsonObject result = environment.queryInfluxQL(null, "SHOW DATABASES");
 	
 //		{"results": [{"statement_id": 0,"series": [
 //						{

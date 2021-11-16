@@ -44,7 +44,7 @@ public class GenericJDBCEnvironment extends AbstractContextSettings {
 	
 	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, GenericJDBCEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.")
-			.disableSecurity()
+			.disableSanitization()
 			.enableEncryption("genericjdbc_DB_PW_Salt");
 	
 	

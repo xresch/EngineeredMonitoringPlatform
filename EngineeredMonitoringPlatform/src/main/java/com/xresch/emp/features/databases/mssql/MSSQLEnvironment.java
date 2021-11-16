@@ -42,7 +42,7 @@ public class MSSQLEnvironment extends AbstractContextSettings {
 	
 	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, MSSQLEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.")
-			.disableSecurity()
+			.disableSanitization()
 			.enableEncryption("mssql_DB_PW_Salt");
 	
 	

@@ -48,7 +48,7 @@ public class OracleEnvironment extends AbstractContextSettings {
 	
 	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, OracleEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.")
-			.disableSecurity()
+			.disableSanitization()
 			.enableEncryption("oracle_DB_PW_Salt");
 	
 	
