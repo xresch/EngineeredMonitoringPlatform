@@ -31,7 +31,7 @@
 					// Prepare InfluxDB data
 					var labelFields = [];
 					var valueColumn = settings.valuecolumn;
-					var dataArray = emp_influxdb_convertInfluxQLToDataviewerStructure(data.payload, true);
+					var dataArray = emp_influxdb_convertInfluxQLToDataviewerStructure(data.payload, true, valueColumn);
 					
 					if( !CFW.utils.isNullOrEmpty(settings.labels) ){
 						labelFields = settings.labels.trim().split(/[, ]+/);
@@ -78,8 +78,8 @@
 						
 						labels: {},
 						customizers: {
-							value: function(record, value) {
-								if(value == null) return '';
+							[valueColumn]: function(record, value) {
+								if(CFW.utils.isNullOrEmpty(value) == null) value = 0;
 								return (settings.suffix == null) ? value : value+" "+settings.suffix;
 							},
 							time: function(record, value) { return (value != null) ? new  moment(value).format("YYYY-MM-DD HH:mm") : '';},

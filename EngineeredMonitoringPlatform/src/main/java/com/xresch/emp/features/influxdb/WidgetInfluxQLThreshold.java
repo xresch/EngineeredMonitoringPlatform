@@ -74,8 +74,8 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 				)
 		
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_SUFFIX)
-						.setLabel("{!emp_widget_Influxdb_suffix!}")
-						.setDescription("{!emp_widget_Influxdb_suffix_desc!}")
+						.setLabel("{!emp_widget_influxdb_influxql_suffix!}")
+						.setDescription("{!emp_widget_influxdb_influxql_suffix_desc!}")
 				)
 				
 				.addAllFields(CFW.Conditions.createThresholdFields())

@@ -9,8 +9,9 @@
 	 * @param data the data structure as returned by influx
 	 * @param latestValueOnly boolean to define if only the latest value of a series 
 	 *        should be taken
+	 * @param valueColumn to check if it is not null or empty
 	 ******************************************************************/
-	function emp_influxdb_convertInfluxQLToDataviewerStructure(data, latestValueOnly){
+	function emp_influxdb_convertInfluxQLToDataviewerStructure(data, latestValueOnly, valueColumn){
 		
 /*		{ "results": [ { "statement_id": 0,
 			"series": [
@@ -54,8 +55,10 @@
 				// Filter Series By Latest 
 				var valuesToConvert = currentSeries.values;
 				if(latestValueOnly){
+					let valueIndex = columns.indexOf(valueColumn);
+					let timeIndex = columns.indexOf('time');
 					valuesToConvert = [_.maxBy(currentSeries.values, function(o){
-						return o[columns.indexOf('time')];
+						return ( CFW.utils.isNullOrEmpty(o[valueIndex]) ) ? -1 : o[timeIndex];
 					})];
 				}
 				console.log('=========== valuesToConvert ============')
@@ -80,11 +83,10 @@
 					//---------------------------
 					// Columns & Values to Fields
 					for(let fieldIndex in currentValues){
-						dataviewerObject[columns[fieldIndex]] = currentValues[fieldIndex];
+						dataviewerObject[columns[fieldIndex]] = CFW.utils.setFloatPrecision(currentValues[fieldIndex], 2);
 					}
 					dataviewerFormat.push(dataviewerObject);
 				}
-				
 				
 				
 			}
@@ -113,15 +115,8 @@
 			}
 			
 			//------------------------
-			// Filter Series By Latest 
-			var seriesToConvert = currentStatement.series
-			if(latestValueOnly){
-				seriesToConvert = [_.maxBy(currentStatement.series, 'time')];
-			}
-
-			//------------------------
 			// Convert Series
-			for(let seriesIndex in seriesToConvert){
+			for(let seriesIndex in currentStatement.series){
 				let currentSeries = currentStatement.series[seriesIndex];
 				let seriesName = currentSeries.name;
 				let columns = currentSeries.columns;
@@ -145,7 +140,10 @@
 						let columnName = columns[fieldIndex];
 						if(columnName == 'time'){ continue; }
 						objectForColumns[columnName].times.push(currentValues[timeIndex]);
-						objectForColumns[columnName].values.push(currentValues[fieldIndex]);
+						
+						objectForColumns[columnName].values.push(
+							CFW.utils.setFloatPrecision(currentValues[fieldIndex], 2)
+						);
 					}
 					
 				}

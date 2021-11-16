@@ -110,7 +110,6 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 				
 		//---------------------------------
 		// Fetch Data
-
 		JsonObject queryResult = environment.queryRangeV1(databaseName, influxdbQuery, earliest, latest);
 
 		response.getContent().append(queryResult);	
