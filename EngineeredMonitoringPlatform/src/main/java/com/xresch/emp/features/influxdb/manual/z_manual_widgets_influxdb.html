@@ -1,0 +1,45 @@
+
+<h2>InfluxDB Widgets Setup</h2>
+<p>
+Before the InfluxDB widgets can be used, at least one InfluxDB environment has to be defined by a user with admin permissions.
+The environments can be added in the Context Settings found under &quot;Admin &gt;&gt; Context Settings&quot;.
+</p>
+
+
+<h2>The Query Placeholders</h2>
+<p>
+In order to get the time picker working properly with the widgets, placeholders for time and interval have to be added to the queries. 
+The following placeholders are available:
+</p>
+<ul>
+	<li>[earliest]:<b>&nbsp;</b>This placeholder will be replaced by the earliest time choosen with the time picker in nanoseconds. </li>
+	<li>[latest]:<b>&nbsp;</b>This placeholder will be replaced by the latest time chosen with the time picker in nanoseconds.</li>
+	<li>[interval]:<b>&nbsp;</b>This placeholder will be replaced by an interval string(1m, 5m, 1h, 24h etc...). The interval is based on the span selected timeframe, to provide a good granularity while keeping performance in mind.</li>
+</ul>
+
+<p>When a InfluxQL widget is created, it will contain the following example query, that shows how the placeholders can be used:</p>
+<pre><code>SELECT mean(*)
+FROM runtime 
+WHERE time &gt;= [earliest] and time &lt; [latest] group by time([interval]);
+</code></pre>
+
+<h2>Widgets</h2>
+<h3>InfluxQL Threshold</h3>
+<p>
+The InfluxQL Threshold widget is used to execute a InfluxQL query and display its results as tiles, panels or as a table.
+The widget fetches the data of the latest time picked with the time frame picker.
+You can define thresholds for the values you retrieved to indicate a status with various colors.
+</p>
+<p><b>Compatibility Notice:</b> This widget is using the API version v1 used in InfluxDB 1.x. As of the official documentation, this should also work with InfluxDB 2.x if the bucket is mapped to a database.</p>
+
+<h3>InfluxQL Chart</h3>
+<p>
+The InfluxQL Chart widget is used to execute one or multiple queries and display the results as a chart.
+The widget fetches the data for the time chosen with the time frame picker.
+The legend in the chart will use the metric labels for the title of the series.
+</p>
+<p><b>Compatibility Notice:</b> This widget is using the API version v1 used in InfluxDB 1.x. As of the official documentation, this should also work with InfluxDB 2.x if the bucket is mapped to a database.</p>
+
+
+
+

@@ -71,7 +71,11 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 				@Override
 				public ArrayList<HierarchicalHTMLItem> createDynamicItems() {
 					
-					ArrayList<AbstractContextSettings> environments = CFW.DB.ContextSettings.getContextSettingsForType(EnvironmentSPM.SETTINGS_TYPE);
+					ArrayList<AbstractContextSettings> environments = 
+							CFW.DB.ContextSettings.getContextSettingsForTypeAndUser(
+									EnvironmentSPM.SETTINGS_TYPE
+								  , CFW.Context.Request.getUser());
+					
 					ArrayList<HierarchicalHTMLItem> childitems = new ArrayList<HierarchicalHTMLItem>();
 					
 					for(AbstractContextSettings current : environments) {
