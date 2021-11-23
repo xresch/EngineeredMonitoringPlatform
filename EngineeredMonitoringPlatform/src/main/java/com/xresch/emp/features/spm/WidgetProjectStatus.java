@@ -43,7 +43,7 @@ public class WidgetProjectStatus extends WidgetDefinition {
 				
 				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(SPMSettingsFactory.createProjectsSelectorField())
+				.addField(SPMSettingsFactory.createProjectsSelectorField(1024))
 				
 				.addField(SPMSettingsFactory.createMeasureSelectField())
 				
@@ -89,7 +89,7 @@ public class WidgetProjectStatus extends WidgetDefinition {
 		
 		EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status All: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Project Status: The chosen environment seems not configured correctly.");
 			return;
 		}
 		
@@ -99,7 +99,7 @@ public class WidgetProjectStatus extends WidgetDefinition {
 		db = environment.getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status All: The db of the chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Project Status: The db of the chosen environment seems not configured correctly.");
 			return;
 		}
 		

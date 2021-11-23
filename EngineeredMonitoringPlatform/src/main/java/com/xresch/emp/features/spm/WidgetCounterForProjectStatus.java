@@ -45,7 +45,7 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 		return new CFWObject()
 				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(SPMSettingsFactory.createProjectsSelectorField())
+				.addField(SPMSettingsFactory.createProjectsSelectorField(1))
 				
 				.addField(CFWField.newTagsSelector("JSON_COUNTERNAMES")
 						.setLabel("{!emp_widget_spm_counternames!}")

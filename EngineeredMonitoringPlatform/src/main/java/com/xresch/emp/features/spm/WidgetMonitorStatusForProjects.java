@@ -43,7 +43,7 @@ public class WidgetMonitorStatusForProjects extends WidgetDefinition {
 		return new CFWObject()
 				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(SPMSettingsFactory.createProjectsSelectorField())
+				.addField(SPMSettingsFactory.createProjectsSelectorField(1024))
 				
 				.addField(SPMSettingsFactory.createMeasureSelectField())
 				

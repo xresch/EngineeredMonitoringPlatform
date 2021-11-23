@@ -45,7 +45,7 @@ public class WidgetTimersForProject extends WidgetDefinition {
 		return new CFWObject()
 				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
 				
-				.addField(SPMSettingsFactory.createProjectsSelectorField())
+				.addField(SPMSettingsFactory.createProjectsSelectorField(1))
 				
 				.addField(CFWField.newTagsSelector("JSON_TIMERNAMES")
 						.setLabel("{!emp_widget_spm_timernames!}")

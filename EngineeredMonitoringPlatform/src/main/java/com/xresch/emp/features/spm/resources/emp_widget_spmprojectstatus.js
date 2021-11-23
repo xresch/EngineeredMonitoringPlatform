@@ -45,6 +45,7 @@
 						titlefields: ['PROJECT_NAME'], 
 						titleformat: '{0}', 
 						visiblefields: ['PROJECT_ID', 'VALUE'], 
+						sortbyfields: ['PROJECT_NAME'],
 						labels: {
 							PROJECT_NAME: 'Project',
 							PROJECT_ID: 'ID',

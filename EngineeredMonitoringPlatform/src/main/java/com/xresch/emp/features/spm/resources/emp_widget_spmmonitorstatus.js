@@ -37,12 +37,13 @@
 					}
 
 					var dataToRender = {
-						data: data.payload,
+						data: monitorStats,
 						bgstylefield: 'alertstyle',
 						textstylefield: 'textstyle',
 						titlefields: ['MONITOR_NAME'], 
 						titleformat: '{0}', 
 						visiblefields: ['PROJECT_NAME', 'VALUE'], 
+						sortbyfields: ['PROJECT_NAME', 'MONITOR_NAME'],
 						labels: {
 							PROJECT_NAME: 'Project',
 							PROJECT_URL: 'Link'

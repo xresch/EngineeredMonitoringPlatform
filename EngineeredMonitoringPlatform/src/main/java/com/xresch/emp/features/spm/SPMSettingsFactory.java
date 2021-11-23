@@ -66,11 +66,11 @@ public class SPMSettingsFactory {
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	public static CFWField<?> createProjectsSelectorField(){
+	public static CFWField<?> createProjectsSelectorField(int maxTags){
 		return 	CFWField.newTagsSelector(FIELDNAME_PROJECTS)
 				.setLabel("{!emp_widget_spm_project!}")
 				.setDescription("{!emp_widget_spm_project_desc!}")
-				.addAttribute("maxTags", "1")
+				.addAttribute("maxTags", ""+maxTags)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
