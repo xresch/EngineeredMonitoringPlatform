@@ -30,7 +30,7 @@ function createDatabaseQueryStatusWidget(widgetMenuLabel){
 				
 				//---------------------------------
 				// Use last Column if not specified
-				var valueColumn = settings.valuecolumn;
+				var valueColumn = settings.valuecolumn.trim();
 				if(CFW.utils.isNullOrEmpty(valueColumn)){
 					let keys = Object.keys(data.payload[0]);
 					valueColumn = keys[keys.length-1];
