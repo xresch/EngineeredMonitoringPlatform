@@ -38,7 +38,7 @@ public class SPMSettingsFactory {
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
-					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 						String environment = request.getParameter(FIELDNAME_ENVIRONMENT);
 						
 						return EnvironmentManagerSPM.autocompleteMonitors(Integer.parseInt(environment), searchValue, this.getMaxResults());
@@ -55,7 +55,7 @@ public class SPMSettingsFactory {
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
-					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 						String environment = request.getParameter(FIELDNAME_ENVIRONMENT);
 						
 						return EnvironmentManagerSPM.autocompleteMonitors(Integer.parseInt(environment), searchValue, this.getMaxResults());
@@ -74,7 +74,7 @@ public class SPMSettingsFactory {
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
-					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 						String environment = request.getParameter(FIELDNAME_ENVIRONMENT);
 						
 						return EnvironmentManagerSPM.autocompleteProjects(Integer.parseInt(environment), searchValue, this.getMaxResults());

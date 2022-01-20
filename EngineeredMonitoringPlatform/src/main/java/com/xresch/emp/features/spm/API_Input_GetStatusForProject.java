@@ -20,7 +20,7 @@ public class API_Input_GetStatusForProject extends API_Input_Environment{
 			.setValue(0)
 			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 				@Override
-				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 					String envID = request.getParameter("ENVIRONMENT_ID");
 					if(Strings.isNullOrEmpty(envID)) {
 						CFW.Context.Request.addAlertMessage(MessageType.INFO, "Select an environment to get suggestions.");

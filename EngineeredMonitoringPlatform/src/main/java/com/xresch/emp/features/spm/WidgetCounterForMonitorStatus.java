@@ -54,7 +54,7 @@ public class WidgetCounterForMonitorStatus extends WidgetDefinition {
 							.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							
 							@Override
-							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 								String environment = request.getParameter("environment");
 								String monitors = request.getParameter("JSON_MONITORS");
 								

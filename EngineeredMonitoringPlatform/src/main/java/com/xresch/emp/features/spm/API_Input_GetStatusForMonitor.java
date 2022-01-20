@@ -19,7 +19,7 @@ public class API_Input_GetStatusForMonitor extends API_Input_Environment{
 			.setDescription("The id of the monitor.")
 			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 				@Override
-				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 					String environmentID = request.getParameter("ENVIRONMENT_ID");
 					if(Strings.isNullOrEmpty(environmentID)) {
 						CFW.Context.Request.addAlertMessage(MessageType.INFO, "Select an environment to get suggestions.");

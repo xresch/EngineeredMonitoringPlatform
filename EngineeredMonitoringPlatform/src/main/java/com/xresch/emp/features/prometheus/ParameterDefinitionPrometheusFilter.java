@@ -37,7 +37,7 @@ public class ParameterDefinitionPrometheusFilter extends ParameterDefinition {
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
-					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 						String environmentID = request.getParameter("environment");
 						
 						if(Strings.isNullOrEmpty(environmentID)) {

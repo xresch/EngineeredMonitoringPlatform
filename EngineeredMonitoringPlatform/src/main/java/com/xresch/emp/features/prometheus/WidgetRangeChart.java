@@ -47,7 +47,7 @@ public class WidgetRangeChart extends WidgetDefinition {
 						.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE))
 						.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 							@Override
-							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+							public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 								return PrometheusEnvironment.autocompleteQuery(searchValue, this.getMaxResults());
 							}
 						})

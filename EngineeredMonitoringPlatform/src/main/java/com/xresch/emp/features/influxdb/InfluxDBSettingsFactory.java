@@ -40,7 +40,7 @@ public class InfluxDBSettingsFactory {
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(InfluxDBEnvironment.SETTINGS_TYPE))
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10, 3) {
 					@Override
-					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 						String environment = request.getParameter(FIELDNAME_ENVIRONMENT);
 						return InfluxDBEnvironment.autocompleteDatabaseOrBucket(Integer.parseInt(environment), searchValue, this.getMaxResults());
 					}

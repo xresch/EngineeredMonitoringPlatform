@@ -71,7 +71,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 			.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 				
 				@Override
-				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue) {
+				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 					return AWAEnvironmentManagement.autocompleteClient(request);
 				}
 			});
