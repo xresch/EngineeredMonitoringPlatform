@@ -332,9 +332,9 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 					if(!queryElement.isJsonNull()) {
 						String query = queryElement.getAsString();
 						if(!Strings.isNullOrEmpty(widgetName)) {
-							suggestions.addItem(new AutocompleteItem(query, query, "Source Dashboard: "+dashboardName+", Widget: "+widgetName).setMethodReplace(lastLine));
+							suggestions.addItem(new AutocompleteItem(query, query, "Source Dashboard: "+dashboardName+", Widget: "+widgetName).setMethodReplaceLast(lastLine));
 						}else {
-							suggestions.addItem(new AutocompleteItem(query, query, "Source Dashboard: "+dashboardName).setMethodReplace(lastLine));
+							suggestions.addItem(new AutocompleteItem(query, query, "Source Dashboard: "+dashboardName).setMethodReplaceLast(lastLine));
 						}
 					}
 				}
