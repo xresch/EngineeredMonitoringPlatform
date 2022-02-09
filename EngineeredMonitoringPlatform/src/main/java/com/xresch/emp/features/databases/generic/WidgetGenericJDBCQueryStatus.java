@@ -15,6 +15,11 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.databases.WidgetBaseSQLQueryStatus;
 
+/**************************************************************************************************************
+ * 
+ * @author Reto Scheiwiller, (c) Copyright 2022
+ * @license MIT-License
+ **************************************************************************************************************/
 public class WidgetGenericJDBCQueryStatus extends WidgetBaseSQLQueryStatus {
 
 	private static Logger logger = CFWLog.getLogger(WidgetGenericJDBCQueryStatus.class.getName());

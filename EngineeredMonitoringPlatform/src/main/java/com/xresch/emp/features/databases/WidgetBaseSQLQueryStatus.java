@@ -46,6 +46,11 @@ import com.xresch.emp.features.prometheus.PrometheusEnvironment;
 import com.xresch.emp.features.prometheus.PrometheusEnvironmentManagement;
 import com.xresch.emp.features.prometheus.PrometheusSettingsFactory;
 
+/**************************************************************************************************************
+ * 
+ * @author Reto Scheiwiller, (c) Copyright 2022
+ * @license MIT-License
+ **************************************************************************************************************/
 public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 
 	private static final String FIELDNAME_DETAILCOLUMNS = "detailcolumns";
@@ -414,7 +419,6 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 					}
 					labelString = labelString.substring(0, labelString.length()-1);
 					
-
 					metricListText +=  labelString+" / ";
 					
 					//---------------------------------
@@ -455,10 +459,12 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 				String messageHTML = "<p>"+baseMessage+"</p>";
 				messageHTML += metricListHTML;
 				messageHTML += widgetLinkHTML;
+				messageHTML += "<h3>CSV Data</h3>"+CFW.JSON.formatJsonArrayToCSV(resultArray, ";");
 				
 				CFW.Messages.addErrorMessage(messagePlaintext);
 				
 				alertObject.doSendAlert(context, MessageType.ERROR, "EMP: Alert - Database record(s) reached threshold", messagePlaintext, messageHTML);
+				
 			}
 			
 			//----------------------------------------
