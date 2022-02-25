@@ -71,6 +71,10 @@ public class FeaturePrometheus extends CFWAppFeature {
 		CFW.Registry.Parameters.add(new ParameterDefinitionPrometheusMetric());
 		
 		//----------------------------------
+		// Register Source
+		CFW.Registry.Query.registerSource(new CFWQuerySourcePrometheus(null));
+		
+		//----------------------------------
 		// Register Job Task
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskPrometheusInstantAlert());
 		
