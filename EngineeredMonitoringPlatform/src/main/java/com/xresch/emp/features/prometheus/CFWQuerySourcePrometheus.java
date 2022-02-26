@@ -1,5 +1,6 @@
 package com.xresch.emp.features.prometheus;
 
+import java.util.LinkedHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import com.google.gson.JsonArray;
@@ -10,7 +11,10 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.features.core.AutocompleteList;
+import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.query.CFWQuery;
+import com.xresch.cfw.features.query.CFWQueryAutocompleteHelper;
 import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
 import com.xresch.cfw.features.query.FeatureQuery;
@@ -84,6 +88,50 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	public boolean hasPermission(User user) {
 		return true;
 	}
+	
+	/***********************************************************************************************
+	 * 
+	 ***********************************************************************************************/
+	@Override
+	public void autocomplete(AutocompleteResult result, CFWQueryAutocompleteHelper helper) {
+		
+		// if source name is given, list up to 50 available prometheus environments
+		if( helper.getTokenCount() >= 2 ) {
+			
+			LinkedHashMap<Object, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE);
+			
+			AutocompleteList list = new AutocompleteList();
+			result.addList(list);
+			int i = 0;
+			for (Object envID : environmentMap.keySet() ) {
+
+				Object envName = environmentMap.get(envID);
+				
+				JsonObject envJson = new JsonObject();
+				envJson.addProperty("id", Integer.parseInt(envID.toString()));
+				envJson.addProperty("name", envName.toString());
+				String envJsonString = "environment="+CFW.JSON.toJSON(envJson)+" ";
+				
+				list.addItem(
+					helper.createAutocompleteItem(
+						""
+					  , envJsonString
+					  , "Environment: "+envName
+					  , envJsonString
+					)
+				);
+				
+				i++;
+				
+				if((i % 10) == 0) {
+					list = new AutocompleteList();
+					result.addList(list);
+				}
+				if(i == 50) { break; }
+			}
+		}
+	}
+
 	
 	/******************************************************************
 	 *
