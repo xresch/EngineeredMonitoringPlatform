@@ -20,7 +20,7 @@ sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhos
 <h2>Query Source</h2>
 <p>
 The Prometheus feature adds a source to the query engine. You can fetch data from Prometheus using the source and further process it with the query engine.
-Here is a sample query that executes two queries on two different Prometheus environments. You can use Ctrl+Space to get autocomplete suggestions for the environement.
+Here is a sample query that executes two queries on two different Prometheus environments. You can use Ctrl+Space to get content assist for the environment.
 </p>
 <pre><code>| source prometheus 
 	environment={"id":737,"name":"DEV"} 
