@@ -9,6 +9,7 @@ import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.databases.generic.CFWQuerySourceGenericJDBC;
 import com.xresch.emp.features.databases.mssql.CFWJobTaskMSSQLQueryStatus;
 
 /**************************************************************************************************************
@@ -20,7 +21,7 @@ public class FeatureMySQL extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.mysql.resources";
 	
-	public static final String PERMISSION_WIDGETS_MYSQL = "Widgets: MySQL";
+	public static final String PERMISSION_MYSQL = "Database Extensions: MySQL";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -35,7 +36,7 @@ public class FeatureMySQL extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getDescriptionForFeatureManagement() {
-		return "Dashboard Widgets to fetch data from a MySQL Database.";
+		return "Use MySQL database extensions.(Dashboard Widgets, Query Source, Tasks ...)";
 	};
 	
 	/************************************************************************************
@@ -45,6 +46,10 @@ public class FeatureMySQL extends CFWAppFeature {
 		return true;
 	};
 	
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	@Override
 	public void register() {
 		//----------------------------------
@@ -60,8 +65,12 @@ public class FeatureMySQL extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetMySQLQueryStatus());
 		
 		//----------------------------------
-		// Register Parameters
+		// Register Widget Parameters
 		CFW.Registry.Parameters.add(new ParameterDefinitionMySQLEnvironment());
+		
+		//----------------------------------
+		// Register Query Source
+		CFW.Registry.Query.registerSource(new CFWQuerySourceMySQL(null));
 		
 		//----------------------------------
 		// Register Job Task
@@ -74,7 +83,7 @@ public class FeatureMySQL extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_MYSQL, FeatureUserManagement.CATEGORY_USER)
+				new Permission(PERMISSION_MYSQL, FeatureUserManagement.CATEGORY_USER)
 					.description("Create and Edit MySQL Widgets."),
 				true,
 				true);

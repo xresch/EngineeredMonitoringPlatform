@@ -50,7 +50,7 @@ public class CFWJobTaskGenericJDBCQueryStatus extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeatureGenericJDBC.PERMISSION_WIDGETS_GENERICJDBC) ) {
+		&& user.hasPermission(FeatureGenericJDBC.PERMISSION_GENERICJDBC) ) {
 			return true;
 		}
 		

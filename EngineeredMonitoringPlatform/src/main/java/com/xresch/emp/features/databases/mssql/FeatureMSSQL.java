@@ -20,7 +20,7 @@ public class FeatureMSSQL extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.mssql.resources";
 	
-	public static final String PERMISSION_WIDGETS_MSSQL = "Widgets: MSSQL";
+	public static final String PERMISSION_MSSQL = "Database Extensions: MSSQL";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -35,7 +35,7 @@ public class FeatureMSSQL extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getDescriptionForFeatureManagement() {
-		return "Dashboard Widgets to fetch data from a MSSQL Database.";
+		return "Use MSSQL database extensions.(Dashboard Widgets, Query Source, Tasks ...)";
 	};
 	
 	/************************************************************************************
@@ -75,7 +75,7 @@ public class FeatureMSSQL extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_MSSQL, FeatureUserManagement.CATEGORY_USER)
+				new Permission(PERMISSION_MSSQL, FeatureUserManagement.CATEGORY_USER)
 					.description("Create and Edit MSSQL Widgets."),
 				true,
 				true);

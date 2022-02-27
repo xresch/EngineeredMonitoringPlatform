@@ -65,7 +65,7 @@ public class WidgetGenericJDBCQueryStatus extends WidgetBaseSQLQueryStatus {
 
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureGenericJDBC.PERMISSION_WIDGETS_GENERICJDBC);
+		return user.hasPermission(FeatureGenericJDBC.PERMISSION_GENERICJDBC);
 	}
 
 }

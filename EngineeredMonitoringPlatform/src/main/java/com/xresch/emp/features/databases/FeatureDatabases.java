@@ -22,7 +22,6 @@ public class FeatureDatabases extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.resources";
 	
-			
 	@Override
 	public void register() {
 		//----------------------------------

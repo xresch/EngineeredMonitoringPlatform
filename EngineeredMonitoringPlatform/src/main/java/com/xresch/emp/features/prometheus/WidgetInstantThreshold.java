@@ -185,7 +185,7 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 	 *********************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeaturePrometheus.PERMISSION_WIDGETS_PROMETHEUS);
+		return user.hasPermission(FeaturePrometheus.PERMISSION_PROMETHEUS);
 	}
 	
 	/*********************************************************************

@@ -50,7 +50,7 @@ public class CFWJobTaskPrometheusInstantAlert extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeaturePrometheus.PERMISSION_WIDGETS_PROMETHEUS) ) {
+		&& user.hasPermission(FeaturePrometheus.PERMISSION_PROMETHEUS) ) {
 			return true;
 		}
 		

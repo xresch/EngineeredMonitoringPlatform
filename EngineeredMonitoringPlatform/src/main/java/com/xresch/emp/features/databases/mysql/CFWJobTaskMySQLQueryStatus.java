@@ -50,7 +50,7 @@ public class CFWJobTaskMySQLQueryStatus extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeatureMySQL.PERMISSION_WIDGETS_MYSQL) ) {
+		&& user.hasPermission(FeatureMySQL.PERMISSION_MYSQL) ) {
 			return true;
 		}
 		

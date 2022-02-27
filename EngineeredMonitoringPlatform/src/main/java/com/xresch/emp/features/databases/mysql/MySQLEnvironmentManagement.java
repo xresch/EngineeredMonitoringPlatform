@@ -65,11 +65,12 @@ public class MySQLEnvironmentManagement {
 		environmentsWithDB.remove(id);
 		
 		if(environment.isDBDefined()) {
+			// adding zeroDateTimeBehaviour to prevent SQLExceptions
 			DBInterface db = DBInterface.createDBInterfaceMySQL(
 					id+"-"+environment.getDefaultObject().name(),
 					environment.dbHost(), 
 					environment.dbPort(), 
-					environment.dbName(), 
+					environment.dbName()+"?zeroDateTimeBehavior=convertToNull", 
 					environment.dbUser(), 
 					environment.dbPassword()
 			);

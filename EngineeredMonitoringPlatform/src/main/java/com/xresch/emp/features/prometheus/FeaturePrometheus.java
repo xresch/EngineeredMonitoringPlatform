@@ -21,7 +21,7 @@ public class FeaturePrometheus extends CFWAppFeature {
 	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.prometheus.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.prometheus.resources";
 	
-	public static final String PERMISSION_WIDGETS_PROMETHEUS = "Widgets: Prometheus";
+	public static final String PERMISSION_PROMETHEUS = "Prometheus";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -93,8 +93,8 @@ public class FeaturePrometheus extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_PROMETHEUS, FeatureUserManagement.CATEGORY_USER)
-					.description("Create and Edit Prometheus Widgets."),
+				new Permission(PERMISSION_PROMETHEUS, FeatureUserManagement.CATEGORY_USER)
+					.description("Use the Prometheus extensions(Dashboard Widgets, Query Source)."),
 				true,
 				true);
 	}

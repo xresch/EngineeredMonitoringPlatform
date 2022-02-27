@@ -20,7 +20,7 @@ public class FeatureOracle extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.oracle.resources";
 	
-	public static final String PERMISSION_WIDGETS_ORACLE = "Widgets: Oracle";
+	public static final String PERMISSION_WIDGETS_ORACLE = "Database Extensions: Oracle";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -35,7 +35,7 @@ public class FeatureOracle extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getDescriptionForFeatureManagement() {
-		return "Dashboard Widgets to fetch data from an Oracle Database.";
+		return "Use Oracle database extensions.(Dashboard Widgets, Query Source, Tasks ...)";
 	};
 	
 	/************************************************************************************

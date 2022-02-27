@@ -20,6 +20,7 @@ import com.xresch.cfw.features.query.EnhancedJsonObject;
 import com.xresch.cfw.features.query.FeatureQuery;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
+import com.xresch.emp.features.databases.generic.FeatureGenericJDBC;
 	
 /**************************************************************************************************************
  * 
@@ -86,7 +87,7 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return true;
+		return user.hasPermission(FeaturePrometheus.PERMISSION_PROMETHEUS);
 	}
 	
 	/***********************************************************************************************

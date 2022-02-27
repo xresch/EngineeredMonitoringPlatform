@@ -50,7 +50,7 @@ public class CFWJobTaskMSSQLQueryStatus extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeatureMSSQL.PERMISSION_WIDGETS_MSSQL) ) {
+		&& user.hasPermission(FeatureMSSQL.PERMISSION_MSSQL) ) {
 			return true;
 		}
 		
