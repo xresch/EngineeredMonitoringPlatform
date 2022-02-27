@@ -10,6 +10,7 @@ import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.databases.generic.CFWJobTaskGenericJDBCQueryStatus;
+import com.xresch.emp.features.databases.mysql.CFWQuerySourceMySQL;
 
 /**************************************************************************************************************
  * 
@@ -20,7 +21,7 @@ public class FeatureMSSQL extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.mssql.resources";
 	
-	public static final String PERMISSION_MSSQL = "Database Extensions: MSSQL";
+	public static final String PERMISSION_MSSQL = "Database: MSSQL";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -62,6 +63,10 @@ public class FeatureMSSQL extends CFWAppFeature {
 		//----------------------------------
 		// Register Parameters
 		CFW.Registry.Parameters.add(new ParameterDefinitionMSSQLEnvironment());
+		
+		//----------------------------------
+		// Register Query Source
+		CFW.Registry.Query.registerSource(new CFWQuerySourceMSSQL(null));
 		
 		//----------------------------------
 		// Register Job Task

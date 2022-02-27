@@ -62,7 +62,7 @@ public class WidgetOracleQueryStatus extends WidgetBaseSQLQueryStatus {
 	
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureOracle.PERMISSION_WIDGETS_ORACLE);
+		return user.hasPermission(FeatureOracle.PERMISSION_ORACLE);
 	}
 
 }

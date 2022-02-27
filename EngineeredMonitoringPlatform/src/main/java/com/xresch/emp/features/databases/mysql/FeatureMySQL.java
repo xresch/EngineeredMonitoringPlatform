@@ -21,7 +21,7 @@ public class FeatureMySQL extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.mysql.resources";
 	
-	public static final String PERMISSION_MYSQL = "Database Extensions: MySQL";
+	public static final String PERMISSION_MYSQL = "Database: MySQL";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.

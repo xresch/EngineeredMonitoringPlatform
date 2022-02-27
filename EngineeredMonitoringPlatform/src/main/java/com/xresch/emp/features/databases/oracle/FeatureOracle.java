@@ -10,6 +10,7 @@ import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.databases.mysql.CFWJobTaskMySQLQueryStatus;
+import com.xresch.emp.features.databases.mysql.CFWQuerySourceMySQL;
 
 /**************************************************************************************************************
  * 
@@ -20,7 +21,7 @@ public class FeatureOracle extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.oracle.resources";
 	
-	public static final String PERMISSION_WIDGETS_ORACLE = "Database Extensions: Oracle";
+	public static final String PERMISSION_ORACLE = "Database: Oracle";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -64,6 +65,10 @@ public class FeatureOracle extends CFWAppFeature {
 		CFW.Registry.Parameters.add(new ParameterDefinitionOracleEnvironment());
 		
 		//----------------------------------
+		// Register Query Source
+		CFW.Registry.Query.registerSource(new CFWQuerySourceOracle(null));
+		
+		//----------------------------------
 		// Register Job Task
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskOracleQueryStatus());
 		
@@ -75,7 +80,7 @@ public class FeatureOracle extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_WIDGETS_ORACLE, FeatureUserManagement.CATEGORY_USER)
+				new Permission(PERMISSION_ORACLE, FeatureUserManagement.CATEGORY_USER)
 					.description("Create and Edit Oracle Widgets."),
 				true,
 				true);

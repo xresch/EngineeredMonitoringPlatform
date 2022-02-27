@@ -20,7 +20,7 @@ public class FeatureInfluxDB extends CFWAppFeature {
 	public static final String PACKAGE_MANUAL   = "com.xresch.emp.features.influxdb.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.influxdb.resources";
 	
-	public static final String PERMISSION_WIDGETS_INFLUXDB = "Widgets: InfluxDB";
+	public static final String PERMISSION_WIDGETS_INFLUXDB = "Database: InfluxDB";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -35,7 +35,7 @@ public class FeatureInfluxDB extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getDescriptionForFeatureManagement() {
-		return "Dashboard Widgets and Context Settings for InfluxDB.";
+		return "Use InfluxDB database extensions.(Dashboard Widgets, Query Source, Tasks ...)";
 	};
 	
 	/************************************************************************************

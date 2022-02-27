@@ -50,7 +50,7 @@ public class CFWJobTaskOracleQueryStatus extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeatureOracle.PERMISSION_WIDGETS_ORACLE) ) {
+		&& user.hasPermission(FeatureOracle.PERMISSION_ORACLE) ) {
 			return true;
 		}
 		
