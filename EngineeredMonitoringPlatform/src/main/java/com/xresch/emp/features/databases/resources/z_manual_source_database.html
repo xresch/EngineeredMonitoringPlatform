@@ -1,0 +1,12 @@
+
+<p>With this source you can fetch data from a database by using an SQL query of your choice.</p>
+
+<pre><code class="language-cfwquery">| source {sourcename} 
+	environment={"id":1234, "name":"ElGrandeDatabase"} 
+	query="
+		SELECT * 
+		FROM mighty_table 
+		WHERE time >= $earliest$ AND time &lt;= $latest$
+		ORDER BY time DESC
+		"
+</code></pre>

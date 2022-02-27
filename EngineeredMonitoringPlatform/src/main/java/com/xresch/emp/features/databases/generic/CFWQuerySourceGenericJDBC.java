@@ -70,14 +70,6 @@ public class CFWQuerySourceGenericJDBC extends CFWQuerySourceDatabase {
 	 *
 	 ******************************************************************/
 	@Override
-	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureDatabases.PACKAGE_RESOURCE, "z_manual_source_database.html");
-	}
-	
-	/******************************************************************
-	 *
-	 ******************************************************************/
-	@Override
 	public String descriptionRequiredPermission() {
 		return FeatureGenericJDBC.PERMISSION_GENERICJDBC;
 	}

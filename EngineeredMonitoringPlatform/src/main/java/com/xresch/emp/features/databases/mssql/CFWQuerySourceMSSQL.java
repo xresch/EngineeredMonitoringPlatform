@@ -50,13 +50,6 @@ public class CFWQuerySourceMSSQL extends CFWQuerySourceDatabase {
 		return "Fetches data from a MSSQL database.";
 	}
 	
-	/******************************************************************
-	 *
-	 ******************************************************************/
-	@Override
-	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureDatabases.PACKAGE_RESOURCE, "z_manual_source_database.html");
-	}
 	
 	/******************************************************************
 	 *

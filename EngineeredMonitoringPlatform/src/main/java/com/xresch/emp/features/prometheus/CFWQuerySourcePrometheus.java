@@ -72,7 +72,7 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureQuery.PACKAGE_MANUAL+".sources", "source_json.html");
+		return CFW.Files.readPackageResource(FeaturePrometheus.PACKAGE_MANUAL, "z_manual_prometheus_query_source.html");
 	}
 	/******************************************************************
 	 *

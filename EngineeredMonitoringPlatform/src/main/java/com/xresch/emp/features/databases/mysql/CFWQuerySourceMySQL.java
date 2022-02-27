@@ -49,15 +49,7 @@ public class CFWQuerySourceMySQL extends CFWQuerySourceDatabase {
 	public String descriptionShort() {
 		return "Fetches data from a MySQL database.";
 	}
-	
-	/******************************************************************
-	 *
-	 ******************************************************************/
-	@Override
-	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureDatabases.PACKAGE_RESOURCE, "z_manual_source_database.html");
-	}
-	
+		
 	/******************************************************************
 	 *
 	 ******************************************************************/

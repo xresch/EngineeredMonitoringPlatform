@@ -32,7 +32,6 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 
 	private String contextSettingsType = GenericJDBCEnvironment.SETTINGS_TYPE;
 	
-	
 	private static final String FIELDNAME_ENVIRONMENT = "environment";
 	private static final String FIELDNAME_QUERY = "query";
 
@@ -50,17 +49,24 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 		
 		this.contextSettingsType = contextSettingsType;
 	}
-
 	
 	/******************************************************************
 	 *
 	 ******************************************************************/
 	@Override
 	public String descriptionTime() {
-		return "Use placeholders $earliest$ an $latest$ to insert epoch time in milliseconds into your DB query.";
+		return "Use placeholders $earliest$ and $latest$ to insert epoch time in milliseconds into your DB query.";
+	}
+
+	/******************************************************************
+	 *
+	 ******************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureDatabases.PACKAGE_RESOURCE, "z_manual_source_database.html")
+				.replaceAll("\\{sourcename\\}", this.uniqueName());
 	}
 	
-
 	
 	/***********************************************************************************************
 	 * 
@@ -114,18 +120,17 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 		return new CFWObject()
 				.addField(
 					CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY)
-						.setDescription("The GenericJDBC query to fetch the data.")
+						.setDescription("The SQL query to fetch the data.")
 						.addValidator(new NotNullOrEmptyValidator())
 				)
 				.addField(
 						CFWField.newString(FormFieldType.TEXT, FIELDNAME_ENVIRONMENT)
-							.setDescription("The GenericJDBC environment to fetch the data from.")	
+							.setDescription("The database environment to fetch the data from. Use Ctrl+Space in the query editor for content assist.")	
 					)
 				
 			;
 	}
 	
-
 	
 	/******************************************************************
 	 *

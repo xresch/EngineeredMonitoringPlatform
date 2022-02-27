@@ -1,0 +1,14 @@
+
+<p>With this source you can fetch data from a database by using an SQL query of your choice.</p>
+
+<pre><code class="language-cfwquery">| source prometheus 
+	environment={"id":737,"name":"DEV"} 
+	query='increase(jetty_requests_total{instance="localhost:8888"}[interval])' 
+| source prometheus 
+	environment={"id":929,"name":"TEST"} 
+	query='increase(guava_cache_hit_total{instance="localhost:8888"}[interval])' 
+| remove job
+| formatfield 
+	value=['decimals', 2]
+	value=['threshold', 0, 20, 40, 60, 80, "bg"]
+</code></pre>
