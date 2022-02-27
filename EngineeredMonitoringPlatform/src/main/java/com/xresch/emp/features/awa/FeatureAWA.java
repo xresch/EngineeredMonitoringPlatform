@@ -81,7 +81,7 @@ public class FeatureAWA extends CFWAppFeature {
 		//----------------------------------
 		// Register Manual Page
 		FeatureEMPCommon.WIDGET_PAGE.addChild(
-				new ManualPage("AWA Widgets")
+				new ManualPage("Automic Workload Automation (AWA)")
 					.faicon("fas fa-desktop")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_AWA.html")

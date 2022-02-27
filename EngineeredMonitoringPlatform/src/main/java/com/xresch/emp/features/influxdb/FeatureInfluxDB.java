@@ -70,7 +70,7 @@ public class FeatureInfluxDB extends CFWAppFeature {
 		//----------------------------------
 		// Register Manual Page
 		FeatureEMPCommon.WIDGET_PAGE.addChild(
-				new ManualPage("InfluxDB Widgets")
+				new ManualPage("InfluxDB")
 					.faicon("fas fa-database")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_influxdb.html")

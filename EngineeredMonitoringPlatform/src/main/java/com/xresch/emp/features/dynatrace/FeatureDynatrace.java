@@ -76,7 +76,7 @@ public class FeatureDynatrace extends CFWAppFeature {
 		//----------------------------------
 		// Register Manual Page
 		FeatureEMPCommon.WIDGET_PAGE.addChild(
-				new ManualPage("Dynatrace Widgets")
+				new ManualPage("Dynatrace")
 					.faicon("fas fa-desktop")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_widgets_dynatrace.html")
