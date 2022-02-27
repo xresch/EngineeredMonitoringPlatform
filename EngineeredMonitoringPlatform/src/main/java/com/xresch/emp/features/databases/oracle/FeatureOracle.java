@@ -72,7 +72,6 @@ public class FeatureOracle extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		
-		
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(

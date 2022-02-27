@@ -1,12 +1,12 @@
 package com.xresch.emp.features.prometheus;
 
-import java.util.LinkedHashMap;
+import java.rmi.AccessException;
+import java.util.HashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mchange.v1.db.sql.UnsupportedTypeException;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
@@ -98,7 +98,7 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 		// if source name is given, list up to 50 available prometheus environments
 		if( helper.getTokenCount() >= 2 ) {
 			
-			LinkedHashMap<Object, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE);
+			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE);
 			
 			AutocompleteList list = new AutocompleteList();
 			result.addList(list);
@@ -172,6 +172,7 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 		//-----------------------------
 		// Resolve Environment ID
 		String environmentString = (String)parameters.getField(FIELDNAME_ENVIRONMENT).getValue();
+
 		if(environmentString.startsWith("{")) {
 			JsonObject settingsObject = CFW.JSON.fromJson(environmentString).getAsJsonObject();
 			
@@ -180,10 +181,23 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 			}
 		}
 		
+		int environmentID = Integer.parseInt(environmentString);
+		
+		//-----------------------------
+		// Check Permissions
+		if(this.parent.getContext().checkPermissions()) {
+			System.out.println("CheckPermissions");
+			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE);
+			
+			if( !environmentMap.containsKey(environmentID) ) {
+				throw new AccessException("Missing permission to fetch from the specified prometheus environment with ID "+environmentID);
+			}
+		}
+		
 		//-----------------------------
 		// Resolve Environment & Fetch Data
 		PrometheusEnvironment environment =
-					PrometheusEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
+					PrometheusEnvironmentManagement.getEnvironment(environmentID);
 
 		JsonElement element = environment.queryRange(query, earliestMillis, latestMillis);
 		
