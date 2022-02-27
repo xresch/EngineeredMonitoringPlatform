@@ -1,4 +1,4 @@
-package com.xresch.emp.features.prometheus;
+package com.xresch.emp.features.databases.generic;
 
 import java.rmi.AccessException;
 import java.util.HashMap;
@@ -11,6 +11,8 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.db.CFWSQL;
+import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.query.CFWQuery;
@@ -26,18 +28,16 @@ import com.xresch.cfw.validation.NotNullOrEmptyValidator;
  * @author Reto Scheiwiller, (c) Copyright 2021 
  * @license MIT-License
  **************************************************************************************************************/
-public class CFWQuerySourcePrometheus extends CFWQuerySource {
+public class CFWQuerySourceGenericJDBC extends CFWQuerySource {
 
-	private static final String FIELDNAME_QUERY = "query";
 	private static final String FIELDNAME_ENVIRONMENT = "environment";
-	//private static final String FIELDNAME_TIMEFORMAT = "timeformat";
-
+	private static final String FIELDNAME_QUERY = "query";
 
 
 	/******************************************************************
 	 *
 	 ******************************************************************/
-	public CFWQuerySourcePrometheus(CFWQuery parent) {
+	public CFWQuerySourceGenericJDBC(CFWQuery parent) {
 		super(parent);
 	}
 
@@ -47,7 +47,7 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String uniqueName() {
-		return "prometheus";
+		return "jdbc";
 	}
 
 	/******************************************************************
@@ -55,7 +55,7 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionShort() {
-		return "Fetches data from a prometheus environment.";
+		return "Fetches data from a Generic JDBC environment.";
 	}
 	
 	/******************************************************************
@@ -63,7 +63,7 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionTime() {
-		return "No special handling needed for time input.";
+		return "Use placeholders $earliest$ an $latest$ to insert epoch time in milliseconds into your DB query.";
 	}
 	
 	/******************************************************************
@@ -71,14 +71,14 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureQuery.PACKAGE_MANUAL+".sources", "source_json.html");
+		return CFW.Files.readPackageResource(FeatureQuery.PACKAGE_MANUAL+".sources", "source_database.html");
 	}
 	/******************************************************************
 	 *
 	 ******************************************************************/
 	@Override
 	public String descriptionRequiredPermission() {
-		return "None";
+		return FeatureGenericJDBC.PERMISSION_WIDGETS_GENERICJDBC;
 	}
 
 	/******************************************************************
@@ -95,10 +95,10 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	@Override
 	public void autocomplete(AutocompleteResult result, CFWQueryAutocompleteHelper helper) {
 		
-		// if source name is given, list up to 50 available prometheus environments
+		// if source name is given, list up to 50 available GenericJDBC environments
 		if( helper.getTokenCount() >= 2 ) {
 			
-			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE);
+			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(GenericJDBCEnvironment.SETTINGS_TYPE);
 			
 			AutocompleteList list = new AutocompleteList();
 			result.addList(list);
@@ -141,19 +141,14 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 		return new CFWObject()
 				.addField(
 					CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY)
-						.setDescription("The prometheus query to fetch the data.")
+						.setDescription("The GenericJDBC query to fetch the data.")
 						.addValidator(new NotNullOrEmptyValidator())
 				)
 				.addField(
 						CFWField.newString(FormFieldType.TEXT, FIELDNAME_ENVIRONMENT)
-							.setDescription("The prometheus environment to fetch the data from.")	
+							.setDescription("The GenericJDBC environment to fetch the data from.")	
 					)
 				
-//				.addField(
-//						CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_TIMEFORMAT)
-//							.setDescription("The format of the time in the time field. (Default: 'epoch').")	
-//							.setValue("epoch")
-//					)
 			;
 	}
 	
@@ -168,6 +163,8 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 		//-----------------------------
 		// Resolve Query
 		String query = (String)parameters.getField(FIELDNAME_QUERY).getValue();
+		query.replaceAll("$earliest$", ""+earliestMillis);
+		query.replaceAll("$latest$", ""+latestMillis);
 		
 		//-----------------------------
 		// Resolve Environment ID
@@ -186,83 +183,32 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 		//-----------------------------
 		// Check Permissions
 		if(this.parent.getContext().checkPermissions()) {
-			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE);
+			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(GenericJDBCEnvironment.SETTINGS_TYPE);
 			
 			if( !environmentMap.containsKey(environmentID) ) {
-				throw new AccessException("Missing permission to fetch from the specified prometheus environment with ID "+environmentID);
+				throw new AccessException("Missing permission to fetch from the specified GenericJDBC environment with ID "+environmentID);
 			}
 		}
 		
 		//-----------------------------
 		// Resolve Environment & Fetch Data
-		PrometheusEnvironment environment =
-					PrometheusEnvironmentManagement.getEnvironment(environmentID);
+		GenericJDBCEnvironment environment =
+					GenericJDBCEnvironmentManagement.getEnvironment(environmentID);
 
-		JsonElement element = environment.queryRange(query, earliestMillis, latestMillis);
+		DBInterface dbInterface = environment.getDBInstance();
 		
-		if(element == null) { return; }
+		if(dbInterface == null) { return; }
 		
-		//-----------------------------
-		// Iterate Data
-//		
-//		{
-//			"status": "success",
-//			"data": {
-//				"resultType": "vector",
-//				"result": [
-//					{
-//						"metric": {
-//							"instance": "myserver:9182",
-//							"job": "example_job",
-//							"volume": "C:"
-//						},
-//						"value": [
-//							1594821066.464,
-//							"46.14569686382971"
-//						]
-//					},
-		if(element != null && element.isJsonObject()) {
-			
-			JsonObject resultObject = element.getAsJsonObject();
-			JsonObject dataObject = resultObject.get("data").getAsJsonObject();
-			if(dataObject == null || dataObject.isJsonNull()) {
-				return;
+		JsonArray resultArray = new CFWSQL(dbInterface, null)
+				.custom(query)
+				.getAsJSONArray();
+		
+		if(resultArray != null) {
+			for (JsonElement element : resultArray) {
+				JsonObject object = element.getAsJsonObject();
+				outQueue.add(new EnhancedJsonObject(object));
 			}
 			
-			String resultType = dataObject.get("resultType").getAsString();
-			JsonArray resultArray = dataObject.get("result").getAsJsonArray();
-			
-			for(JsonElement resultElement : resultArray) {
-				JsonObject metricObject = resultElement.getAsJsonObject().get("metric").getAsJsonObject();
-				
-				if(resultType.equals("vector")) {
-					JsonObject recordForQueue = metricObject.deepCopy();
-					JsonArray valueArray = resultElement.getAsJsonObject().get("value").getAsJsonArray();
-					recordForQueue.addProperty("time", valueArray.get(0).getAsDouble()*1000);
-					recordForQueue.addProperty("value", valueArray.get(1).getAsNumber());
-					
-					outQueue.add( new EnhancedJsonObject(recordForQueue));
-					
-				}else if(resultType.equals("matrix")) {
-					JsonArray valuesArray = resultElement.getAsJsonObject().get("values").getAsJsonArray();
-					
-					for(JsonElement valueArrayElement : valuesArray) {
-						JsonArray valueArray = valueArrayElement.getAsJsonArray();
-						
-						JsonObject recordForQueue = metricObject.deepCopy();
-						
-						recordForQueue.addProperty("time", valueArray.get(0).getAsDouble()*1000);
-						recordForQueue.addProperty("value", valueArray.get(1).getAsNumber());
-						
-						outQueue.add( new EnhancedJsonObject(recordForQueue));
-					}
-				}else {
-					throw new Exception("Unrecognized result type: "+resultType);
-				}
-			}
-			
-			
-			return;
 		}
 		
 	}

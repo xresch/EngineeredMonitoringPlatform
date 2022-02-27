@@ -20,7 +20,7 @@ public class FeatureGenericJDBC extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.databases.generic.resources";
 	
-	public static final String PERMISSION_WIDGETS_GENERICJDBC = "Widgets: Generic JDBC";
+	public static final String PERMISSION_WIDGETS_GENERICJDBC = "Database: Generic JDBC";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -35,7 +35,7 @@ public class FeatureGenericJDBC extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getDescriptionForFeatureManagement() {
-		return "Dashboard Widgets to fetch data from a database baesd on a JDBC driver available in the ./extensions directory.";
+		return "Dashboard Widgets and Query Language Source to fetch data from a database based on a JDBC driver available in the ./extensions directory.";
 	};
 	
 	/************************************************************************************
@@ -58,6 +58,10 @@ public class FeatureGenericJDBC extends CFWAppFeature {
 		//----------------------------------
 		// Register Widgets
 		CFW.Registry.Widgets.add(new WidgetGenericJDBCQueryStatus());
+		
+		//----------------------------------
+		// Register Query Source
+		CFW.Registry.Query.registerSource(new CFWQuerySourceGenericJDBC(null));
 		
 		//----------------------------------
 		// Register Parameters
