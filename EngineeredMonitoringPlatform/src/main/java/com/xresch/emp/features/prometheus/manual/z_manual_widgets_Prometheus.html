@@ -1,7 +1,7 @@
 
-<h2>Prometheus Widgets Setup</h2>
+<h2>Prometheus Setup</h2>
 <p>
-Before the Prometheus widgets can be used, at least one Prometheus environment has to be defined by a user with admin permissions.
+Before the Prometheus features can be used, at least one Prometheus environment has to be defined by a user with admin permissions.
 The environments can be added in the Context Settings found under &quot;Admin &gt;&gt; Context Settings&quot;.
 </p>
 
@@ -17,8 +17,26 @@ sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhos
 //Same as above with the placeholder used in EMP 
 sum by(volume)(increase(windows_logical_disk_read_bytes_total{instance="localhost:9182"}[interval]) / 1000000)</code></pre>
 
+<h2>Query Source</h2>
+<p>
+The Prometheus feature adds a source to the query engine. You can fetch data from Prometheus using the source and further process it with the query engine.
+Here is a sample query that executes two queries on two different Prometheus environments. You can use Ctrl+Space to get autocomplete suggestions for the environement.
+</p>
+<pre><code>| source prometheus 
+	environment={"id":737,"name":"DEV"} 
+	query='increase(jetty_requests_total{instance="localhost:8888"}[interval])' 
+| source prometheus 
+	environment={"id":929,"name":"TEST"} 
+	query='increase(guava_cache_hit_total{instance="localhost:8888"}[interval])' 
+| remove job
+| formatfield 
+	value=['decimals', 2]
+	value=['threshold', 0, 20, 40, 60, 80, "bg"]
+	</code></pre>
 
-<h2>Widgets</h2>
+
+
+<h2>Dashboard Widgets</h2>
 <h3>Instant Threshold</h3>
 <p>
 The Instant Threshold widget is used to execute a PromQL query and display its results as tiles, panels or as a table.
