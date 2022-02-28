@@ -150,11 +150,6 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 							.setDescription("The prometheus environment to fetch the data from.")	
 					)
 				
-//				.addField(
-//						CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_TIMEFORMAT)
-//							.setDescription("The format of the time in the time field. (Default: 'epoch').")	
-//							.setValue("epoch")
-//					)
 			;
 	}
 	

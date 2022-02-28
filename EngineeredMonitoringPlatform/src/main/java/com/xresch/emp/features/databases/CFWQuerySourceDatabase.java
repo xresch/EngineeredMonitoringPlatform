@@ -20,8 +20,6 @@ import com.xresch.cfw.features.query.CFWQueryAutocompleteHelper;
 import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
-import com.xresch.emp.features.databases.generic.GenericJDBCEnvironment;
-import com.xresch.emp.features.databases.generic.GenericJDBCEnvironmentManagement;
 	
 /**************************************************************************************************************
  * 
@@ -30,7 +28,7 @@ import com.xresch.emp.features.databases.generic.GenericJDBCEnvironmentManagemen
  **************************************************************************************************************/
 public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 
-	private String contextSettingsType = GenericJDBCEnvironment.SETTINGS_TYPE;
+	private String contextSettingsType;
 	
 	private static final String FIELDNAME_ENVIRONMENT = "environment";
 	private static final String FIELDNAME_QUERY = "query";
@@ -74,7 +72,7 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 	@Override
 	public void autocomplete(AutocompleteResult result, CFWQueryAutocompleteHelper helper) {
 		
-		// if source name is given, list up to 50 available GenericJDBC environments
+		// if source name is given, list up to 50 available database environments
 		if( helper.getTokenCount() >= 2 ) {
 			
 			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
