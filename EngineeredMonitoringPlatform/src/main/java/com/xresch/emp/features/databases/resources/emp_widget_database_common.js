@@ -1,14 +1,14 @@
 /******************************************************************
  * 
  ******************************************************************/
-CFW.dashboard.registerCategory("fas fa-database", "Monitoring | Database");
+CFW.dashboard.registerCategory("fas fa-database", "Database");
 	
 /******************************************************************
  * 
  ******************************************************************/
 function createDatabaseQueryStatusWidget(widgetMenuLabel){
 	return {
-		category: "Monitoring | Database",
+		category: "Database",
 		menuicon: "fas fa-thermometer-half",
 		menulabel: widgetMenuLabel,
 		description: CFWL('emp_widget_database_desc', "Executes a database query and displays the data. Records can be colored by applying a threshhold against the value of a column. Can have tasks that alerts when specific threasholds are reached."), 
