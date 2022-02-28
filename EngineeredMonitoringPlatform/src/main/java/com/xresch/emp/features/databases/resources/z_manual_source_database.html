@@ -1,5 +1,6 @@
 
-<p>With this source you can fetch data from a database by using an SQL query of your choice.</p>
+<p>With this source you can fetch data from a database by using an SQL query of your choice.
+Use the placeholder $earliest$ and $latest$ in your queries to insert epoch time in milliseconds. </p>
 
 <pre><code class="language-cfwquery">| source {sourcename} 
 	environment={"id":1234, "name":"ElGrandeDatabase"} 
@@ -10,3 +11,23 @@
 		ORDER BY time DESC
 		"
 </code></pre>
+
+<p>Depending on your database type, you will need to convert the epoch milliseconds before you can compare it to the timestamp.
+Also you will need to account for timezone differences in case the time zone of your database is not set to UTC.
+The following is an example of doing so for the internal H2 database:</p>
+<pre><code class="language-cfwquery">| source jdbc 
+	environment={"id":1217,"name":"H2 EMP"} 
+	query="
+		SELECT *, FROM CFW_STATS_CPUSAMPLE 
+		WHERE DATEADD(HOUR, -1, TIME) >= DATEADD(MS, $earliest$, DATE '1970-01-01') 
+		  AND DATEADD(HOUR, -1, TIME) &lt;= DATEADD(MS, $latest$, DATE '1970-01-01')
+		LIMIT 100"</code></pre>
+		
+<p>You can also convert the time column values to milliseconds, however this is slower as it has to be done for each database record:</p>
+<pre><code class="language-cfwquery">| source jdbc 
+	environment={"id":1217,"name":"H2 EMP"} 
+	query="
+		SELECT * FROM CFW_STATS_CPUSAMPLE 
+		WHERE (EXTRACT(EPOCH FROM TIME )*1000) >= $earliest$ 
+		  AND (EXTRACT(EPOCH FROM TIME )*1000) &lt;= $latest$ 
+		LIMIT 100""</code></pre>

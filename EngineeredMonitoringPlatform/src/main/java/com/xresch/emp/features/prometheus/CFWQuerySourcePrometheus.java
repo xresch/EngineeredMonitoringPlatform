@@ -1,6 +1,7 @@
 package com.xresch.emp.features.prometheus;
 
 import java.rmi.AccessException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -17,10 +18,8 @@ import com.xresch.cfw.features.query.CFWQuery;
 import com.xresch.cfw.features.query.CFWQueryAutocompleteHelper;
 import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
-import com.xresch.cfw.features.query.FeatureQuery;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
-import com.xresch.emp.features.databases.generic.FeatureGenericJDBC;
 	
 /**************************************************************************************************************
  * 
@@ -143,6 +142,7 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 				.addField(
 					CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY)
 						.setDescription("The prometheus query to fetch the data.")
+						.disableSanitization() //do not mess up the gorgeous queries
 						.addValidator(new NotNullOrEmptyValidator())
 				)
 				.addField(
@@ -153,6 +153,35 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 			;
 	}
 	
+	/******************************************************************
+	 *
+	 ******************************************************************/
+	@Override
+	public void parametersPermissionCheck(CFWObject parameters) throws ParseException {
+		//-----------------------------
+		// Resolve Environment ID
+		String environmentString = (String)parameters.getField(FIELDNAME_ENVIRONMENT).getValue();
+
+		if(environmentString.startsWith("{")) {
+			JsonObject settingsObject = CFW.JSON.fromJson(environmentString).getAsJsonObject();
+			
+			if(settingsObject.get("id") != null) {
+				 environmentString = settingsObject.get("id").getAsInt()+"";
+			}
+		}
+		
+		int environmentID = Integer.parseInt(environmentString);
+		
+		//-----------------------------
+		// Check Permissions
+		if(this.parent.getContext().checkPermissions()) {
+			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE);
+			
+			if( !environmentMap.containsKey(environmentID) ) {
+				throw new ParseException("Missing permission to fetch from the specified prometheus environment with ID "+environmentID, -1);
+			}
+		}
+	}
 
 	
 	/******************************************************************

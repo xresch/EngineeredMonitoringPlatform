@@ -1,6 +1,7 @@
 package com.xresch.emp.features.databases;
 
 import java.rmi.AccessException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -20,6 +21,7 @@ import com.xresch.cfw.features.query.CFWQueryAutocompleteHelper;
 import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
+import com.xresch.emp.features.prometheus.PrometheusEnvironment;
 	
 /**************************************************************************************************************
  * 
@@ -117,8 +119,10 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 	public CFWObject getParameters() {
 		return new CFWObject()
 				.addField(
+					
 					CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY)
 						.setDescription("The SQL query to fetch the data.")
+						.disableSanitization() //do not mess up the gorgeous queries
 						.addValidator(new NotNullOrEmptyValidator())
 				)
 				.addField(
@@ -129,6 +133,35 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 			;
 	}
 	
+	/******************************************************************
+	 *
+	 ******************************************************************/
+	@Override
+	public void parametersPermissionCheck(CFWObject parameters) throws ParseException {
+		//-----------------------------
+		// Resolve Environment ID
+		String environmentString = (String)parameters.getField(FIELDNAME_ENVIRONMENT).getValue();
+
+		if(environmentString.startsWith("{")) {
+			JsonObject settingsObject = CFW.JSON.fromJson(environmentString).getAsJsonObject();
+			
+			if(settingsObject.get("id") != null) {
+				 environmentString = settingsObject.get("id").getAsInt()+"";
+			}
+		}
+		
+		int environmentID = Integer.parseInt(environmentString);
+		
+		//-----------------------------
+		// Check Permissions
+		if(this.parent.getContext().checkPermissions()) {
+			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
+			
+			if( !environmentMap.containsKey(environmentID) ) {
+				throw new ParseException("Missing permission to fetch from the specified prometheus environment with ID "+environmentID, -1);
+			}
+		}
+	}
 	
 	/******************************************************************
 	 *
@@ -139,8 +172,9 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 		//-----------------------------
 		// Resolve Query
 		String query = (String)parameters.getField(FIELDNAME_QUERY).getValue();
-		query.replaceAll("$earliest$", ""+earliestMillis);
-		query.replaceAll("$latest$", ""+latestMillis);
+		query = query.replace("$earliest$", ""+earliestMillis)
+					 .replace("$latest$", ""+latestMillis)
+					 ;
 		
 		//-----------------------------
 		// Resolve Environment ID
