@@ -14,20 +14,36 @@ Use the placeholder $earliest$ and $latest$ in your queries to insert epoch time
 
 <p>Depending on your database type, you will need to convert the epoch milliseconds before you can compare it to the timestamp.
 Also you will need to account for timezone differences in case the time zone of your database is not set to UTC.
-The following is an example of doing so for the internal H2 database:</p>
+
+The following is an example of converting milliseconds to a timestamp for the internal H2 database:</p>
 <pre><code class="language-cfwquery">| source jdbc 
 	environment={"id":1217,"name":"H2 EMP"} 
 	query="
 		SELECT *, FROM CFW_STATS_CPUSAMPLE 
-		WHERE DATEADD(HOUR, -1, TIME) >= DATEADD(MS, $earliest$, DATE '1970-01-01') 
-		  AND DATEADD(HOUR, -1, TIME) &lt;= DATEADD(MS, $latest$, DATE '1970-01-01')
+		WHERE TIME >= DATEADD(MS, $earliest$, DATE '1970-01-01') 
+		  AND TIME &lt;= DATEADD(MS, $latest$, DATE '1970-01-01')
 		LIMIT 100"</code></pre>
 		
-<p>You can also convert the time column values to milliseconds, however this is slower as it has to be done for each database record:</p>
+<p>You can also convert the time column values to milliseconds, however this is slower as it has to be done for each database record.
+This could be a solution if your database does not treat time values in UTC time.</p>
 <pre><code class="language-cfwquery">| source jdbc 
 	environment={"id":1217,"name":"H2 EMP"} 
 	query="
 		SELECT * FROM CFW_STATS_CPUSAMPLE 
 		WHERE (EXTRACT(EPOCH FROM TIME )*1000) >= $earliest$ 
 		  AND (EXTRACT(EPOCH FROM TIME )*1000) &lt;= $latest$ 
-		LIMIT 100""</code></pre>
+		LIMIT 100"</code></pre>
+		
+<p>If the database system does not handle your time column in UTC, and above does not work, you might have to account for time zone differences manually.
+Following is a quick workaround example using the internal H2 database(not needed as it is running with UTC). 
+This workaround would probably run into issues with daylight saving offsets(summer/winter time). 
+So if such a query is used in dashboards or for reports, you might have to adapt to summer/winter time manually. 
+To have proper time handling it is recommended to have the database time handling set to UTC, or if this is not possible,
+you might want to implement your own source and do time filtering in Java. </p>
+<pre><code class="language-cfwquery">| source jdbc 
+	environment={"id":1217,"name":"H2 EMP"} 
+	query="
+		SELECT *, FROM CFW_STATS_CPUSAMPLE 
+		WHERE TIME >= DATEADD(HOUR, -1, DATEADD(MS, $earliest$, DATE '1970-01-01') )
+		  AND TIME &lt;= DATEADD(HOUR, -1, DATEADD(MS, $latest$, DATE '1970-01-01') )
+		LIMIT 100"</code></pre>
