@@ -3,8 +3,10 @@ package com.xresch.emp.features.databases;
 import java.rmi.AccessException;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.TimeZone;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -34,6 +36,7 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 	
 	private static final String FIELDNAME_ENVIRONMENT = "environment";
 	private static final String FIELDNAME_QUERY = "query";
+	private static final String FIELDNAME_TIMEZONE = "timezone";
 
 	
 	/******************************************************************
@@ -129,6 +132,10 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 						CFWField.newString(FormFieldType.TEXT, FIELDNAME_ENVIRONMENT)
 							.setDescription("The database environment to fetch the data from. Use Ctrl+Space in the query editor for content assist.")	
 					)
+				.addField(
+						CFWField.newString(FormFieldType.TEXT, FIELDNAME_TIMEZONE)
+							.setDescription("Parameter can be used to adjust time zone differences between epoch time and the database. See manual for list of available zones.")	
+					)
 				
 			;
 	}
@@ -158,7 +165,7 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
 			
 			if( !environmentMap.containsKey(environmentID) ) {
-				throw new ParseException("Missing permission to fetch from the specified prometheus environment with ID "+environmentID, -1);
+				throw new ParseException("Missing permission to fetch from the specified database environment with ID "+environmentID, -1);
 			}
 		}
 	}
@@ -170,8 +177,22 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 	public void execute(CFWObject parameters, LinkedBlockingQueue<EnhancedJsonObject> outQueue, long earliestMillis, long latestMillis, int limit) throws Exception {
 		
 		//-----------------------------
-		// Resolve Query
+		// Resolve Query Params
 		String query = (String)parameters.getField(FIELDNAME_QUERY).getValue();
+		
+		//-----------------------------
+		// Resolve Timezone Offsets
+		String timezoneParam = (String)parameters.getField(FIELDNAME_TIMEZONE).getValue();
+		
+		TimeZone timezone = TimeZone.getDefault();
+		if(!Strings.isNullOrEmpty(timezoneParam)) {
+			timezone = TimeZone.getTimeZone(timezoneParam);
+			
+		}
+		
+		earliestMillis +=  timezone.getOffset(earliestMillis);
+		latestMillis +=  timezone.getOffset(latestMillis);
+		
 		query = query.replace("$earliest$", ""+earliestMillis)
 					 .replace("$latest$", ""+latestMillis)
 					 ;
