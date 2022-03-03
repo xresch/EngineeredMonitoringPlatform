@@ -30,8 +30,21 @@ public class CFWQuerySourceOracle extends CFWQuerySourceDatabase {
 		OracleEnvironment environment =
 				OracleEnvironmentManagement.getEnvironment(environmentID);
 
+		if(environment == null) { return null; }
+		
 		return environment.getDBInstance();
 	
+	}
+	
+	/******************************************************************
+	 *
+	 ******************************************************************/
+	@Override
+	public String getTimezone(int environmentID) {
+		OracleEnvironment environment =
+				OracleEnvironmentManagement.getEnvironment(environmentID);
+		if(environment == null) { return null; }
+		return environment.timezone();
 	}
 
 	/******************************************************************

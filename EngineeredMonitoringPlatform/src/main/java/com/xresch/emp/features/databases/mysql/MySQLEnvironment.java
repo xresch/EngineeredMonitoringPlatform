@@ -26,6 +26,7 @@ public class MySQLEnvironment extends AbstractContextSettings {
 		DB_NAME,
 		DB_USER,
 		DB_PASSWORD,
+		TIME_ZONE,
 	}
 		
 	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, MySQLEnvironmentFields.DB_HOST)
@@ -45,13 +46,15 @@ public class MySQLEnvironment extends AbstractContextSettings {
 			.disableSanitization()
 			.enableEncryption("mysql_DB_PW_Salt");
 	
+	private CFWField<String> timezone = CFWField.newString(FormFieldType.TIMEZONEPICKER, MySQLEnvironmentFields.TIME_ZONE)
+			.setDescription("The timezone the database is using. Needed to manage differences from GMT properly.");
 	
 	public MySQLEnvironment() {
 		initializeFields();
 	}
 		
 	private void initializeFields() {
-		this.addFields(dbHost, dbPort, dbName, dbUser, dbPassword);
+		this.addFields(dbHost, dbPort, dbName, dbUser, dbPassword, timezone);
 	}
 		
 	
@@ -127,6 +130,15 @@ public class MySQLEnvironment extends AbstractContextSettings {
 		this.dbPassword.setValue(value);
 		return this;
 	}	
+	
+	public String timezone() {
+		return timezone.getValue();
+	}
+	
+	public MySQLEnvironment timezone(String value) {
+		this.timezone.setValue(value);
+		return this;
+	}
 
 	public DBInterface getDBInstance() {
 		return dbInstance;

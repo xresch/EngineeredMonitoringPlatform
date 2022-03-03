@@ -23,6 +23,8 @@ import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 import com.xresch.emp.features.databases.CFWQuerySourceDatabase;
 import com.xresch.emp.features.databases.FeatureDatabases;
+import com.xresch.emp.features.databases.mssql.MSSQLEnvironment;
+import com.xresch.emp.features.databases.mssql.MSSQLEnvironmentManagement;
 	
 /**************************************************************************************************************
  * 
@@ -46,10 +48,24 @@ public class CFWQuerySourceGenericJDBC extends CFWQuerySourceDatabase {
 		GenericJDBCEnvironment environment =
 				GenericJDBCEnvironmentManagement.getEnvironment(environmentID);
 
+		if(environment == null) { return null; }
+		
 		return environment.getDBInstance();
 	
 	}
 
+	/******************************************************************
+	 *
+	 ******************************************************************/
+	@Override
+	public String getTimezone(int environmentID) {
+		GenericJDBCEnvironment environment =
+				GenericJDBCEnvironmentManagement.getEnvironment(environmentID);
+		
+		if(environment == null) { return null; }
+		
+		return environment.timezone();
+	}
 
 	/******************************************************************
 	 *

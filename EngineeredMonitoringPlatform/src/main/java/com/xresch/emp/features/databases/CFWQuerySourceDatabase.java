@@ -40,9 +40,14 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 
 	
 	/******************************************************************
-	 * Return the DB interface for the given Database type.
+	 * Return the DB interface for the given environment ID.
 	 ******************************************************************/
 	public abstract DBInterface getDatabaseInterface(int environmentID);
+
+	/******************************************************************
+	 * Return the time zone for the given environment.
+	 ******************************************************************/
+	public abstract String getTimezone(int environmentID);
 
 	/******************************************************************
 	 *
@@ -180,22 +185,7 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 		// Resolve Query Params
 		String query = (String)parameters.getField(FIELDNAME_QUERY).getValue();
 		
-		//-----------------------------
-		// Resolve Timezone Offsets
-		String timezoneParam = (String)parameters.getField(FIELDNAME_TIMEZONE).getValue();
-		
-		TimeZone timezone = TimeZone.getDefault();
-		if(!Strings.isNullOrEmpty(timezoneParam)) {
-			timezone = TimeZone.getTimeZone(timezoneParam);
-			
-		}
-		
-		earliestMillis +=  timezone.getOffset(earliestMillis);
-		latestMillis +=  timezone.getOffset(latestMillis);
-		
-		query = query.replace("$earliest$", ""+earliestMillis)
-					 .replace("$latest$", ""+latestMillis)
-					 ;
+
 		
 		//-----------------------------
 		// Resolve Environment ID
@@ -220,6 +210,26 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 				throw new AccessException("Missing permission to fetch from the specified database environment with ID "+environmentID);
 			}
 		}
+		
+		//-----------------------------
+		// Resolve Timezone Offsets
+		TimeZone timezone;
+		String timezoneParam = (String)parameters.getField(FIELDNAME_TIMEZONE).getValue();
+		if(!Strings.isNullOrEmpty(timezoneParam)) {
+			timezone = TimeZone.getTimeZone(timezoneParam);
+			
+		}else {
+			timezone = TimeZone.getTimeZone(
+					Strings.nullToEmpty(this.getTimezone(environmentID))
+				);
+		}
+		
+		earliestMillis +=  timezone.getOffset(earliestMillis);
+		latestMillis +=  timezone.getOffset(latestMillis);
+		
+		query = query.replace("$earliest$", ""+earliestMillis)
+					 .replace("$latest$", ""+latestMillis)
+					 ;
 		
 		//-----------------------------
 		// Resolve Environment & Fetch Data

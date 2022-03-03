@@ -27,6 +27,7 @@ public class GenericJDBCEnvironment extends AbstractContextSettings {
 		DB_CONNECTION_URL,
 		DB_USER,
 		DB_PASSWORD,
+		TIME_ZONE,
 	}
 		
 	
@@ -47,13 +48,15 @@ public class GenericJDBCEnvironment extends AbstractContextSettings {
 			.disableSanitization()
 			.enableEncryption("genericjdbc_DB_PW_Salt");
 	
-	
+	private CFWField<String> timezone = CFWField.newString(FormFieldType.TIMEZONEPICKER, GenericJDBCEnvironmentFields.TIME_ZONE)
+			.setDescription("The timezone the database is using. Needed to manage differences from GMT properly.");
+			
 	public GenericJDBCEnvironment() {
 		initializeFields();
 	}
 		
 	private void initializeFields() {
-		this.addFields(dbDriver, dbConnectionURL, dbUser, dbPassword);
+		this.addFields(dbDriver, dbConnectionURL, dbUser, dbPassword, timezone);
 	}
 		
 	
@@ -120,6 +123,15 @@ public class GenericJDBCEnvironment extends AbstractContextSettings {
 		this.dbPassword.setValue(value);
 		return this;
 	}	
+	
+	public String timezone() {
+		return timezone.getValue();
+	}
+	
+	public GenericJDBCEnvironment timezone(String value) {
+		this.timezone.setValue(value);
+		return this;
+	}	
 
 	public DBInterface getDBInstance() {
 		return dbInstance;
@@ -128,7 +140,5 @@ public class GenericJDBCEnvironment extends AbstractContextSettings {
 	public void setDBInstance(DBInterface dbInstance) {
 		this.dbInstance = dbInstance;
 	}
-	
-	
 	
 }

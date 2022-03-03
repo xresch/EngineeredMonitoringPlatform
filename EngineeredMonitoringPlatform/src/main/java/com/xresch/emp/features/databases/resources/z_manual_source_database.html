@@ -12,9 +12,9 @@ Use the placeholder $earliest$ and $latest$ in your queries to insert epoch time
 		"
 </code></pre>
 
+
 <p>Depending on your database type, you will need to convert the epoch milliseconds before you can compare it to the timestamp.
 Also you will need to account for timezone differences in case the time zone of your database is not set to UTC.
-
 The following is an example of converting milliseconds to a timestamp for the internal H2 database:</p>
 <pre><code class="language-cfwquery">| source jdbc 
 	environment={"id":1234,"name":"H2 EMP"} 
@@ -23,6 +23,7 @@ The following is an example of converting milliseconds to a timestamp for the in
 		WHERE TIME >= DATEADD(MS, $earliest$, DATE '1970-01-01') 
 		  AND TIME &lt;= DATEADD(MS, $latest$, DATE '1970-01-01')
 		LIMIT 100"</code></pre>
+
 		
 <p>You can also convert the time column values to milliseconds, however this is slower as it has to be done for each database record.</p>
 <pre><code class="language-cfwquery">| source jdbc 
@@ -33,8 +34,10 @@ The following is an example of converting milliseconds to a timestamp for the in
 		  AND (EXTRACT(EPOCH FROM TIME )*1000) &lt;= $latest$ 
 		LIMIT 100"</code></pre>
 
-		
-<p>If the database system does not handle your time column in UTC, you can use the timezone parameter to handle the difference in time zone. </p>
+
+<p>By default, the time zone that is used for the database is GMT or the time zone set by an administrator in the settings of the database. 
+If you need to use another time zone, you can use the timezone parameter to handle the difference in time zones.
+For values please check the list of <a href="#" onclick="cfw_manual_loadPage('Query|Available Time Zones');">Available Time Zones</a> </p>
 <pre><code class="language-cfwquery">| source jdbc 
 	environment={"id":1234,"name":"H2 EMP"} 
 	timezone="America/Aruba"
@@ -43,6 +46,7 @@ The following is an example of converting milliseconds to a timestamp for the in
 		WHERE (EXTRACT(EPOCH FROM TIME )*1000) >= $earliest$ 
 		  AND (EXTRACT(EPOCH FROM TIME )*1000) &lt;= $latest$ 
 		LIMIT 100"</code></pre>
+
 
 <p>If above does not work for you, you can use a workaround by adding the difference manually. 
 Such workarounds would probably run into issues with daylight saving offsets(summer/winter time). 

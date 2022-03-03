@@ -6,6 +6,8 @@ import com.xresch.cfw.features.query.CFWQuery;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.emp.features.databases.CFWQuerySourceDatabase;
 import com.xresch.emp.features.databases.FeatureDatabases;
+import com.xresch.emp.features.databases.oracle.OracleEnvironment;
+import com.xresch.emp.features.databases.oracle.OracleEnvironmentManagement;
 	
 /**************************************************************************************************************
  * 
@@ -29,11 +31,25 @@ public class CFWQuerySourceMySQL extends CFWQuerySourceDatabase {
 	public DBInterface getDatabaseInterface(int environmentID) {
 		MySQLEnvironment environment =
 				MySQLEnvironmentManagement.getEnvironment(environmentID);
-
+		
+		if(environment == null) { return null; }
+		
 		return environment.getDBInstance();
 	
 	}
 
+	/******************************************************************
+	 *
+	 ******************************************************************/
+	@Override
+	public String getTimezone(int environmentID) {
+		MySQLEnvironment environment =
+				MySQLEnvironmentManagement.getEnvironment(environmentID);
+		
+		if(environment == null) { return null; }
+		
+		return environment.timezone();
+	}
 
 	/******************************************************************
 	 *

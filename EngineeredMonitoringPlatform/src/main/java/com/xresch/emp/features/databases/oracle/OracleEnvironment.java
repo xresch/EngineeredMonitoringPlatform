@@ -27,6 +27,7 @@ public class OracleEnvironment extends AbstractContextSettings {
 		DB_TYPE,
 		DB_USER,
 		DB_PASSWORD,
+		TIME_ZONE,
 	}
 		
 	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, OracleEnvironmentFields.DB_HOST)
@@ -51,13 +52,16 @@ public class OracleEnvironment extends AbstractContextSettings {
 			.disableSanitization()
 			.enableEncryption("oracle_DB_PW_Salt");
 	
+	private CFWField<String> timezone = CFWField.newString(FormFieldType.TIMEZONEPICKER, OracleEnvironmentFields.TIME_ZONE)
+			.setDescription("The timezone the database is using. Needed to manage differences from GMT properly.");
+	
 	
 	public OracleEnvironment() {
 		initializeFields();
 	}
 		
 	private void initializeFields() {
-		this.addFields(dbHost, dbPort, dbName, dbType, dbUser, dbPassword);
+		this.addFields(dbHost, dbPort, dbName, dbType, dbUser, dbPassword, timezone);
 	}
 		
 	
@@ -141,6 +145,15 @@ public class OracleEnvironment extends AbstractContextSettings {
 	
 	public OracleEnvironment dbPassword(String value) {
 		this.dbPassword.setValue(value);
+		return this;
+	}	
+	
+	public String timezone() {
+		return timezone.getValue();
+	}
+	
+	public OracleEnvironment timezone(String value) {
+		this.timezone.setValue(value);
 		return this;
 	}	
 

@@ -26,6 +26,7 @@ public class MSSQLEnvironment extends AbstractContextSettings {
 		DB_NAME,
 		DB_USER,
 		DB_PASSWORD,
+		TIME_ZONE,
 	}
 		
 	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, MSSQLEnvironmentFields.DB_HOST)
@@ -45,13 +46,16 @@ public class MSSQLEnvironment extends AbstractContextSettings {
 			.disableSanitization()
 			.enableEncryption("mssql_DB_PW_Salt");
 	
+	private CFWField<String> timezone = CFWField.newString(FormFieldType.TIMEZONEPICKER, MSSQLEnvironmentFields.TIME_ZONE)
+			.setDescription("The timezone the database is using. Needed to manage differences from GMT properly.");
+		
 	
 	public MSSQLEnvironment() {
 		initializeFields();
 	}
 		
 	private void initializeFields() {
-		this.addFields(dbHost, dbPort, dbName, dbUser, dbPassword);
+		this.addFields(dbHost, dbPort, dbName, dbUser, dbPassword, timezone);
 	}
 		
 	
@@ -125,6 +129,15 @@ public class MSSQLEnvironment extends AbstractContextSettings {
 	
 	public MSSQLEnvironment dbPassword(String value) {
 		this.dbPassword.setValue(value);
+		return this;
+	}	
+	
+	public String timezone() {
+		return timezone.getValue();
+	}
+	
+	public MSSQLEnvironment timezone(String value) {
+		this.timezone.setValue(value);
 		return this;
 	}	
 
