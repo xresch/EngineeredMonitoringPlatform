@@ -11,7 +11,7 @@ The following were the goals in mind when EMP was created:
 - Flexible Permission Management (Users/Roles/Permissions)
 - Extendable with custom widgets to tailor it to specific needs.
 
-# Incuded Widets
+# Included Widets
 EMP is delivered with the following widgets:
 - Standard Widgets
   - Text
@@ -27,12 +27,14 @@ EMP is delivered with the following widgets:
   - Refresh Time
   - Parameters
   - Replica
+- Query
 - Monitoring Widgets
   - Dynatrace
   - MySQL
   - MSSQL
   - Oracle
   - Generic JDBC Widget
+  - Influx DB
   - Prometheus
   - Silk Performance Manager(SPM)
   - Webex(API Service Health Check)
