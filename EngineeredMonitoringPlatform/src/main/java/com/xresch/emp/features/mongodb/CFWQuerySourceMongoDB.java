@@ -11,10 +11,7 @@ import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
 
 import com.google.common.base.Strings;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mongodb.WriteConcern;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -22,8 +19,6 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
-import com.xresch.cfw.db.CFWSQL;
-import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.query.CFWQuery;
@@ -32,7 +27,6 @@ import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
-import com.xresch.emp.features.databases.FeatureDatabases;
 	
 /**************************************************************************************************************
  * 
@@ -44,8 +38,17 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 	private String contextSettingsType = MongoDBEnvironment.SETTINGS_TYPE;
 	
 	private static final String FIELDNAME_ENVIRONMENT = "environment";
-	private static final String FIELDNAME_QUERY = "query";
+	private static final String FIELDNAME_COLLECTION = "collection";
+	private static final String FIELDNAME_FIND = "find";
+	private static final String FIELDNAME_AGGREGATE = "aggregate";
+	private static final String FIELDNAME_SORT = "sort";
 	private static final String FIELDNAME_TIMEZONE = "timezone";
+	
+	private static final JsonWriterSettings writterSettings = 
+			JsonWriterSettings
+			.builder()
+			.outputMode(JsonMode.RELAXED)
+			.build();
 
 	/******************************************************************
 	 *
@@ -115,7 +118,7 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionTime() {
-		return "Use placeholders $earliest$ and $latest$ to insert epoch time in milliseconds into your DB query.";
+		return "Use placeholders $earliest$ and $latest$ to insert epoch time in milliseconds into your MongoDB document.";
 	}
 
 	/******************************************************************
@@ -123,7 +126,7 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureDatabases.PACKAGE_RESOURCE, "z_manual_source_database.html")
+		return CFW.Files.readPackageResource(FeatureMongoDB.PACKAGE_RESOURCE, "z_manual_source_mongodb.html")
 				.replaceAll("\\{sourcename\\}", this.uniqueName());
 	}
 	
@@ -179,16 +182,31 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 	public CFWObject getParameters() {
 		return new CFWObject()
 				.addField(
-					
-					CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY)
-						.setDescription("The SQL query to fetch the data.")
-						.disableSanitization() //do not mess up the gorgeous queries
-						.addValidator(new NotNullOrEmptyValidator())
-				)
-				.addField(
 						CFWField.newString(FormFieldType.TEXT, FIELDNAME_ENVIRONMENT)
 							.setDescription("The database environment to fetch the data from. Use Ctrl+Space in the query editor for content assist.")	
 					)
+				.addField(
+				CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_COLLECTION)
+						.setDescription("Choose the MongoDB collection.")
+						.disableSanitization() //do not mess up the gorgeous queries
+						.addValidator(new NotNullOrEmptyValidator())
+				)	
+				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_FIND)
+						.setDescription("Specify the MongoDB document for the find method.")
+						.disableSanitization() //do not mess up the gorgeous queries
+						.addValidator(new NotNullOrEmptyValidator())
+				)
+				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_SORT)
+						.setDescription("Specify the MongoDB document for that specifies the sort conditions.")
+						.disableSanitization() //do not mess up the gorgeous queries
+						.addValidator(new NotNullOrEmptyValidator())
+						)
+//				.addField(
+//						CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_AGGREGATE)
+//						.setDescription("Specify the MongoDB pipeline array for the aggregate method.")
+//						.disableSanitization() //do not mess up the gorgeous queries
+//						.addValidator(new NotNullOrEmptyValidator())
+//				)
 				.addField(
 						CFWField.newString(FormFieldType.TEXT, FIELDNAME_TIMEZONE)
 							.setDescription("Parameter can be used to adjust time zone differences between epoch time and the database. See manual for list of available zones.")	
@@ -222,7 +240,7 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
 			
 			if( !environmentMap.containsKey(environmentID) ) {
-				throw new ParseException("Missing permission to fetch from the specified database environment with ID "+environmentID, -1);
+				throw new ParseException("Missing permission to fetch from the specified MongoDB environment with ID "+environmentID, -1);
 			}
 		}
 	}
@@ -232,10 +250,6 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public void execute(CFWObject parameters, LinkedBlockingQueue<EnhancedJsonObject> outQueue, long earliestMillis, long latestMillis, int limit) throws Exception {
-		
-		//-----------------------------
-		// Resolve Query Params
-		String query = (String)parameters.getField(FIELDNAME_QUERY).getValue();
 		
 		//-----------------------------
 		// Resolve Environment ID
@@ -250,16 +264,6 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		}
 		
 		int environmentID = Integer.parseInt(environmentString);
-		
-		//-----------------------------
-		// Check Permissions
-		if(this.parent.getContext().checkPermissions()) {
-			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
-			
-			if( !environmentMap.containsKey(environmentID) ) {
-				throw new AccessException("Missing permission to fetch from the specified database environment with ID "+environmentID);
-			}
-		}
 		
 		//-----------------------------
 		// Resolve Timezone Offsets
@@ -277,32 +281,80 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		earliestMillis +=  timezone.getOffset(earliestMillis);
 		latestMillis +=  timezone.getOffset(latestMillis);
 		
-//		query = query.replace("$earliest$", ""+earliestMillis)
-//					 .replace("$latest$", ""+latestMillis)
-//					 ;
+		//-----------------------------
+		// Resolve Collection Param
+		String collectionString = (String)parameters.getField(FIELDNAME_COLLECTION).getValue();
+		
+		if(Strings.isNullOrEmpty(collectionString)) {
+			return;
+		}
 		
 		//-----------------------------
-		// Resolve Environment & Fetch Data
-
-		MongoDatabase mongoDB = this.getDatabaseInterface(environmentID);
+		// Resolve Find Param
+		String findDocString = (String)parameters.getField(FIELDNAME_FIND).getValue();
+		if(findDocString != null) {
+			findDocString = findDocString.replace("$earliest$", ""+earliestMillis)
+				 .replace("$latest$", ""+latestMillis)
+				 ;
+		}
 		
+		//-----------------------------
+		// Resolve Aggregate Param
+//		String aggregateArrayPipeline = (String)parameters.getField(FIELDNAME_AGGREGATE).getValue();
+//		if(aggregateArrayPipeline != null) {
+//			aggregateArrayPipeline = aggregateArrayPipeline.replace("$earliest$", ""+earliestMillis)
+//				 .replace("$latest$", ""+latestMillis)
+//				 ;
+//		}
+		
+		//-----------------------------
+		// Resolve Sort Param
+		String sortDocString = (String)parameters.getField(FIELDNAME_SORT).getValue();
+				
+		//-----------------------------
+		// Check Permissions
+		if(this.parent.getContext().checkPermissions()) {
+			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
+			
+			if( !environmentMap.containsKey(environmentID) ) {
+				throw new AccessException("Missing permission to fetch from the specified database environment with ID "+environmentID);
+			}
+		}
+
+		//-----------------------------
+		// Resolve DB
+		MongoDatabase mongoDB = this.getDatabaseInterface(environmentID);
+	
 		if(mongoDB == null) { return; }
 		
-		MongoCollection<Document> collection = mongoDB.getCollection("executions");
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionString);
 		
-		Document docFilter = Document.parse("{description: 'FailingPlan'}");		
-		FindIterable<Document> result = collection.find(docFilter);
 		
-		Document docSort = Document.parse("{endTime: -1}");
-		result.sort(docSort);
+		//-----------------------------
+		// Fetch Data
+		FindIterable<Document> result;
+		if(!Strings.isNullOrEmpty(findDocString)) {
+			Document findDoc = Document.parse(findDocString);		
+			result = collection.find(findDoc);
+		}else {
+			result = collection.find();
+		}
+//		}else if(!Strings.isNullOrEmpty(findDocString)) {
+//			Document aggPipeline = Document.parse(aggregateArrayPipeline).;		
+//			result = collection.aggregate(aggPipeline);
+//		}
+		
+		//-----------------------------
+		// Sort and Limit
+		if(!Strings.isNullOrEmpty(sortDocString)) {
+			Document docSort = Document.parse(sortDocString);
+			result.sort(docSort);
+		}
+		
 		result.limit(limit);
-
-		JsonWriterSettings writterSettings = 
-				JsonWriterSettings
-					.builder()
-					.outputMode(JsonMode.RELAXED)
-					.build();
 		
+		//-----------------------------
+		// Push to Queue
 		if(result != null) {
 			for (Document currentDoc : result) {
 				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(writterSettings));
