@@ -295,7 +295,6 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		
 		Document docSort = Document.parse("{endTime: -1}");
 		result.sort(docSort);
-		result.
 		result.limit(limit);
 
 		JsonWriterSettings writterSettings = 
