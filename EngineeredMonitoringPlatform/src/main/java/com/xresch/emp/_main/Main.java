@@ -15,6 +15,7 @@ import com.xresch.emp.features.databases.mysql.FeatureMySQL;
 import com.xresch.emp.features.databases.oracle.FeatureOracle;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
 import com.xresch.emp.features.influxdb.FeatureInfluxDB;
+import com.xresch.emp.features.mongodb.FeatureMongoDB;
 import com.xresch.emp.features.prometheus.FeaturePrometheus;
 import com.xresch.emp.features.spm.FeatureSPM;
 import com.xresch.emp.features.spm.FeatureSPMTheusinator;
@@ -55,6 +56,7 @@ public class Main implements CFWAppInterface {
 		CFW.Registry.Features.addFeature(FeatureOracle.class);
 		CFW.Registry.Features.addFeature(FeatureGenericJDBC.class);
 		
+		CFW.Registry.Features.addFeature(FeatureMongoDB.class);
 		CFW.Registry.Features.addFeature(FeatureInfluxDB.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);

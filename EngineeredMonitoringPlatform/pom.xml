@@ -44,6 +44,14 @@
 			<version>19.6.0.0</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver -->
+		<dependency>
+		    <groupId>org.mongodb</groupId>
+		    <artifactId>mongodb-driver</artifactId>
+		    <version>3.12.10</version>
+		</dependency>
+		
+		
 	</dependencies>
 
 
