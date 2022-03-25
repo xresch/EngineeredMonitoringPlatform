@@ -26,6 +26,7 @@ import com.xresch.cfw.features.query.CFWQueryAutocompleteHelper;
 import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
 import com.xresch.cfw.features.usermgmt.User;
+import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 	
 /**************************************************************************************************************
@@ -57,18 +58,6 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		super(parent);
 	}
 	
-	/******************************************************************
-	 *
-	 ******************************************************************/
-	public MongoDatabase getDatabaseInterface(int environmentID) {
-		MongoDBEnvironment environment =
-				MongoDBEnvironmentManagement.getEnvironment(environmentID);
-		
-		if(environment == null) { return null; }
-		
-		return environment.getMongoDB();
-	
-	}
 
 	/******************************************************************
 	 *
@@ -255,7 +244,7 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		// Resolve Environment ID
 		String environmentString = (String)parameters.getField(FIELDNAME_ENVIRONMENT).getValue();
 
-		if(environmentString.startsWith("{")) {
+		if(environmentString != null && environmentString.startsWith("{")) {
 			JsonObject settingsObject = CFW.JSON.fromJson(environmentString).getAsJsonObject();
 			
 			if(settingsObject.get("id") != null) {
@@ -264,6 +253,16 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		}
 		
 		int environmentID = Integer.parseInt(environmentString);
+		
+		//-----------------------------
+		// Get Environment
+		MongoDBEnvironment environment;
+		if(environmentString != null) {
+			 environment = MongoDBEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
+		}else {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "mongodb: The chosen environment seems configured incorrectly or is unavailable.");
+			return;
+		}
 		
 		//-----------------------------
 		// Resolve Timezone Offsets
@@ -283,9 +282,9 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		
 		//-----------------------------
 		// Resolve Collection Param
-		String collectionString = (String)parameters.getField(FIELDNAME_COLLECTION).getValue();
+		String collectionName = (String)parameters.getField(FIELDNAME_COLLECTION).getValue();
 		
-		if(Strings.isNullOrEmpty(collectionString)) {
+		if(Strings.isNullOrEmpty(collectionName)) {
 			return;
 		}
 		
@@ -323,35 +322,7 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 
 		//-----------------------------
 		// Resolve DB
-		MongoDatabase mongoDB = this.getDatabaseInterface(environmentID);
-	
-		if(mongoDB == null) { return; }
-		
-		MongoCollection<Document> collection = mongoDB.getCollection(collectionString);
-		
-		
-		//-----------------------------
-		// Fetch Data
-		FindIterable<Document> result;
-		if(!Strings.isNullOrEmpty(findDocString)) {
-			Document findDoc = Document.parse(findDocString);		
-			result = collection.find(findDoc);
-		}else {
-			result = collection.find();
-		}
-//		}else if(!Strings.isNullOrEmpty(findDocString)) {
-//			Document aggPipeline = Document.parse(aggregateArrayPipeline).;		
-//			result = collection.aggregate(aggPipeline);
-//		}
-		
-		//-----------------------------
-		// Sort and Limit
-		if(!Strings.isNullOrEmpty(sortDocString)) {
-			Document docSort = Document.parse(sortDocString);
-			result.sort(docSort);
-		}
-		
-		result.limit(limit);
+		FindIterable<Document> result = environment.find(collectionName, findDocString, sortDocString, limit);
 		
 		//-----------------------------
 		// Push to Queue
@@ -365,5 +336,4 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		
 	}
 
-	
 }

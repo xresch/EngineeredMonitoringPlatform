@@ -1,5 +1,10 @@
 package com.xresch.emp.features.mongodb;
 
+import org.bson.Document;
+
+import com.google.common.base.Strings;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
@@ -147,6 +152,49 @@ public class MongoDBEnvironment extends AbstractContextSettings {
 
 	public void setMongoDB(MongoDatabase dbInstance) {
 		this.dbInstance = dbInstance;
+	}
+	
+	
+	/*********************************************************************
+	 * Executes a MongoDB find on the given collection and the corresponding
+	 * filtering documents.
+	 * @param collectionName
+	 * @param findDocString
+	 * @param sortDocString
+	 * @param limit
+	 * @return
+	 *********************************************************************/
+	public FindIterable<Document> find(String collectionName
+									 , String findDocString
+									 , String sortDocString
+									 , int limit) {
+		
+		MongoDatabase mongoDB = this.getMongoDB();
+	
+		if(mongoDB == null) { return null; }
+		
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+
+		//-----------------------------
+		// Fetch Data
+		FindIterable<Document> result;
+		if(!Strings.isNullOrEmpty(findDocString)) {
+			Document findDoc = Document.parse(findDocString);		
+			result = collection.find(findDoc);
+		}else {
+			result = collection.find();
+		}
+		
+		//-----------------------------
+		// Sort and Limit
+		if(!Strings.isNullOrEmpty(sortDocString)) {
+			Document docSort = Document.parse(sortDocString);
+			result.sort(docSort);
+		}
+		
+		result.limit(limit);
+		
+		return result;
 	}
 	
 }
