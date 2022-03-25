@@ -1,8 +1,14 @@
 package com.xresch.emp.features.mongodb;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.bson.BsonArray;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.google.common.base.Strings;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -194,6 +200,46 @@ public class MongoDBEnvironment extends AbstractContextSettings {
 		
 		result.limit(limit);
 		
+		return result;
+	}
+	
+	/*********************************************************************
+	 * Executes a MongoDB find on the given collection and the corresponding
+	 * filtering documents.
+	 * @param collectionName
+	 * @param aggregateDocString
+	 * @param limit
+	 * @return
+	 *********************************************************************/
+	public AggregateIterable<Document> aggregate(String collectionName
+									 , String aggregateDocString
+									 , int limit) {
+		
+		MongoDatabase mongoDB = this.getMongoDB();
+	
+		if(mongoDB == null) { return null; }
+		
+		MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+
+		//-----------------------------
+		// Fetch Data
+		AggregateIterable<Document> result;
+		if(!Strings.isNullOrEmpty(aggregateDocString)) {
+
+		    BsonArray array = BsonArray.parse(aggregateDocString);
+		    
+		    ArrayList<Bson> bsonList = new ArrayList<>();
+		    for(int i = 0; i < array.size(); i++) {
+		    	if(array.get(i) instanceof Bson) {
+		    		bsonList.add((Bson)array.get(i));
+		    	}
+		    }
+		    
+			result = collection.aggregate(bsonList);
+		}else {
+			return null;
+		}
+						
 		return result;
 	}
 	

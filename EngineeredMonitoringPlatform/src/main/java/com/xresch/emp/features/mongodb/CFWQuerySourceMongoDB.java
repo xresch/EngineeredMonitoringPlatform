@@ -12,9 +12,7 @@ import org.bson.json.JsonWriterSettings;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonObject;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
@@ -183,19 +181,16 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_FIND)
 						.setDescription("Specify the MongoDB document for the find method.")
 						.disableSanitization() //do not mess up the gorgeous queries
-						.addValidator(new NotNullOrEmptyValidator())
 				)
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_SORT)
 						.setDescription("Specify the MongoDB document for that specifies the sort conditions.")
 						.disableSanitization() //do not mess up the gorgeous queries
-						.addValidator(new NotNullOrEmptyValidator())
 						)
-//				.addField(
-//						CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_AGGREGATE)
-//						.setDescription("Specify the MongoDB pipeline array for the aggregate method.")
-//						.disableSanitization() //do not mess up the gorgeous queries
-//						.addValidator(new NotNullOrEmptyValidator())
-//				)
+				.addField(
+						CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_AGGREGATE)
+						.setDescription("Specify the MongoDB pipeline array for the aggregate method.")
+						.disableSanitization() //do not mess up the gorgeous queries
+				)
 				.addField(
 						CFWField.newString(FormFieldType.TEXT, FIELDNAME_TIMEZONE)
 							.setDescription("Parameter can be used to adjust time zone differences between epoch time and the database. See manual for list of available zones.")	
@@ -299,12 +294,12 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		
 		//-----------------------------
 		// Resolve Aggregate Param
-//		String aggregateArrayPipeline = (String)parameters.getField(FIELDNAME_AGGREGATE).getValue();
-//		if(aggregateArrayPipeline != null) {
-//			aggregateArrayPipeline = aggregateArrayPipeline.replace("$earliest$", ""+earliestMillis)
-//				 .replace("$latest$", ""+latestMillis)
-//				 ;
-//		}
+		String aggregateDocString = (String)parameters.getField(FIELDNAME_AGGREGATE).getValue();
+		if(aggregateDocString != null) {
+			aggregateDocString = aggregateDocString.replace("$earliest$", ""+earliestMillis)
+				 .replace("$latest$", ""+latestMillis)
+				 ;
+		}
 		
 		//-----------------------------
 		// Resolve Sort Param
@@ -321,8 +316,13 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		}
 
 		//-----------------------------
-		// Resolve DB
-		FindIterable<Document> result = environment.find(collectionName, findDocString, sortDocString, limit);
+		// Fetch Data
+		MongoIterable<Document> result;
+		if(Strings.isNullOrEmpty(aggregateDocString)) {
+			result = environment.find(collectionName, findDocString, sortDocString, limit);
+		}else {
+			result = environment.aggregate(collectionName, aggregateDocString, limit);
+		}
 		
 		//-----------------------------
 		// Push to Queue

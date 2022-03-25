@@ -8,7 +8,43 @@ Use the placeholder $earliest$ and $latest$ in your queries to insert epoch time
 	find="{description: '' time: { $gt: $earliest$, $lt: $latest$ } }"
 	sort="{time: -1}"
 </code></pre>
-	
+
+<p>You can as well use the MongoDB aggregate command like this: </p>
+
+<pre><code class="language-cfwquery">| source mongodb 
+	environment={"id":1234,"name":"MongoDB Test"} 
+	collection="timeseries"
+	aggregate="
+	[
+		{ $match: {
+			time: { $gt: $earliest$, $lt: $latest$ } 
+			} 
+		}
+		,{ $group: {
+				 _id: '$seriesname',
+				 count: { $count: {} },
+				 timeMIN: { $min: '$time' },
+				 timeAVG: { $avg: '$time' },
+				 timeMAX: { $max: '$time' },
+				 durationMIN: { $min: '$duration' },
+				 durationAVG: { $avg: '$duration' },
+				 durationMAX: { $max: '$duration' },
+				 durationSUM: { $sum: '$duration' }
+			}
+		}
+		,{ $sort: { 'count': -1 } }
+	]"
+| formatfield 
+	[durationAVG]=decimals
+	[durationMIN, durationAVG, durationMAX, durationSUM]=
+		[
+			['postfix', " ms"]
+			,['align', "right"]
+		]
+	[timeMIN, timeAVG, timeMAX, timeSUM]=['timestamp', "YYYY-MM-DD HH:mm:ss"]
+</code></pre>
+
+
 
 <p>By default, the time zone that is used for the database is GMT or the time zone set by an administrator in the settings of the mongodb. 
 If you need to use another time zone, you can use the timezone parameter to handle the difference in time zones.
@@ -19,4 +55,5 @@ For values please check the list of <a href="#" onclick="cfw_manual_loadPage('Qu
 	collection="timeseries"
 	find="{description: '' time: { $gt: $earliest$, $lt: $latest$ } }"
 	sort="{time: -1}"</code></pre>
-		
+
+	
