@@ -5,7 +5,7 @@ Use the placeholder $earliest$ and $latest$ in your queries to insert epoch time
 <pre><code class="language-cfwquery">| source mongodb 
 	environment={"id":1234,"name":"MongoDB Test"} 
 	collection="timeseries"
-	find="{description: '' time: { $gt: $earliest$, $lt: $latest$ } }"
+	find="{seriesname: 'myseries', time: { $gte: $earliest$, $lte: $latest$ } }"
 	sort="{time: -1}"
 </code></pre>
 
@@ -17,7 +17,7 @@ Use the placeholder $earliest$ and $latest$ in your queries to insert epoch time
 	aggregate="
 	[
 		{ $match: {
-			time: { $gt: $earliest$, $lt: $latest$ } 
+			time: { $gte: $earliest$, $lte: $latest$ } 
 			} 
 		}
 		,{ $group: {
@@ -53,7 +53,7 @@ For values please check the list of <a href="#" onclick="cfw_manual_loadPage('Qu
 	environment={"id":1234,"name":"MongoDB Test"} 
 	timezone="America/Aruba"
 	collection="timeseries"
-	find="{description: '' time: { $gt: $earliest$, $lt: $latest$ } }"
+	find="{seriesname: 'myseries', time: { $gte: $earliest$, $lte: $latest$ } }"
 	sort="{time: -1}"</code></pre>
 
 	
