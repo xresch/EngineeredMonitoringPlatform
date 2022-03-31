@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.bson.Document;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
@@ -20,13 +24,18 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
+import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWConditions;
+import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
+import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 
 public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	
@@ -222,10 +231,217 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		
 	}
 	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
 	public JsonArray createSampleData() { 	
 		return CFW.Random.randomJSONArrayOfMightyPeople(12);
 	}
 	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public boolean supportsTask() {
+		return true;
+	}
+	
+	/************************************************************
+	 * Override this method to return a description of what the
+	 * task of this widget does.
+	 ************************************************************/
+	public String getTaskDescription() {
+		return "Checks if any of the selected values returned by the MongoDB query exceeds the selected threshold.";
+	}
+	
+	/************************************************************
+	 * Override this method and return a CFWObject containing 
+	 * fields for the task parameters. The settings will be passed 
+	 * to the 
+	 * Always return a new instance, do not reuse a CFWObject.
+	 * @return CFWObject
+	 ************************************************************/
+	public CFWObject getTasksParameters() {
+		
+		return new CFWJobsAlertObject()
+				.addField(
+					CFWField.newString(FormFieldType.SELECT, FIELDNAME_ALERT_THRESHOLD)
+					.setDescription("Select the threshhold that should trigger the alert when reached.")
+					.addValidator(new NotNullOrEmptyValidator())
+					.setOptions(CFW.Conditions.CONDITION_OPTIONS())
+					.setValue(CFW.Conditions.CONDITION_EMERGENCY.toString())
+				);
+	}
+	
+	/*************************************************************************
+	 * Implement the actions your task should execute.
+	 * See {@link com.xresch.cfw.features.jobs.CFWJobTask#executeTask CFWJobTask.executeTask()} to get
+	 * more details on how to implement this method.
+	 *************************************************************************/
+	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings) throws JobExecutionException {
+		
+		String valueColumn = (String)settings.getField(FIELDNAME_VALUECOLUMN).getValue();
+		String labelColumns = (String)settings.getField(FIELDNAME_LABELCOLUMNS).getValue();
+		String detailColumns = (String)settings.getField(FIELDNAME_DETAILCOLUMNS).getValue();
+		String urlColumn = (String)settings.getField(FIELDNAME_URLCOLUMN).getValue();
+		
+		//----------------------------------------
+		// Fetch Data
+		JsonArray resultArray;
+		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
+		if(isSampleData != null && isSampleData) {
+			resultArray = createSampleData();
+		}else {
+			resultArray = loadDataFromDBInferface(settings);
+		}
+		
+		if(resultArray == null || resultArray.size() == 0) {
+			return;
+		}
+		
+		//----------------------------------------
+		// Set Column default settings 
+		JsonObject object = resultArray.get(0).getAsJsonObject();
+		Set<String> fields = object.keySet();
+		int i=0;
+		for(String fieldname : fields) {
+			
+			//Set first column as default for label Column
+			if(i == 0
+			&& Strings.isNullOrEmpty(labelColumns)) {
+				labelColumns = fieldname;
+			}
+			
+			//Set last column as default for value
+			if(i == fields.size()-1
+			&& Strings.isNullOrEmpty(valueColumn)) {
+				valueColumn = fieldname;
+			}
+			
+			i++;
+		}
+		
+		//----------------------------------------
+		// Get alertThreshhold
+		String alertThreshholdString = (String)taskParams.getField(FIELDNAME_ALERT_THRESHOLD).getValue();
+		
+		if(alertThreshholdString == null ) {
+			return;
+		}
+
+		ThresholdCondition alertThreshholdCondition = ThresholdCondition.valueOf(alertThreshholdString);
+		
+		//----------------------------------------
+		// Check Condition
+		boolean conditionMatched = false;
+		ArrayList<JsonObject> instantExceedingThreshold = new ArrayList<>();
+		
+		for(JsonElement element : resultArray) {
+			
+			JsonObject current = element.getAsJsonObject();
+			Float value = current.get(valueColumn).getAsFloat();
+
+			ThresholdCondition condition = CFW.Conditions.getConditionForValue(value, settings);
+			if(condition != null 
+			&& CFW.Conditions.compareIsEqualsOrMoreDangerous(alertThreshholdCondition, condition)) {
+				conditionMatched = true;
+				instantExceedingThreshold.add(current);
+			}
+		}
+				
+		//----------------------------------------
+		// Handle Alerting
+		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, this.getWidgetType());
+
+		alertObject.mapJobExecutionContext(context);
+
+		AlertType type = alertObject.checkSendAlert(conditionMatched, null);
+		
+		if(!type.equals(AlertType.NONE)) {
+
+			//----------------------------------------
+			// Prepare Contents
+			String widgetLinkHTML = "";
+			if(widget != null) {
+				widgetLinkHTML = widget.createWidgetOriginMessage();
+			}
+			
+			//----------------------------------------
+			// RAISE
+			if(type.equals(AlertType.RAISE)) {
+				
+				//----------------------------------------
+				// Create Job List 
+				String metricListText = "";
+				String metricListHTML = "<ul>";
+				for(JsonObject current : instantExceedingThreshold) {
+					
+					//-----------------------------
+					// Create Label String
+					String labelString = "";
+					for (String fieldname : labelColumns.split(" *, *")) {
+						labelString += current.get(fieldname.trim()).getAsString() + " ";
+					}
+					labelString = labelString.substring(0, labelString.length()-1);
+					
+					metricListText +=  labelString+" / ";
+					
+					//---------------------------------
+					// Add Label as String and Link
+					if( Strings.isNullOrEmpty(urlColumn) ){
+						metricListHTML += "<li><b>"+labelString+"</b>";
+					}else {
+						String url = current.get(urlColumn.trim()).getAsString();
+						if(Strings.isNullOrEmpty(url)) {
+							metricListHTML += "<li><b>"+labelString+"</b>";
+						}else {
+							metricListHTML += "<li><b><a href=\""+url+"\">"+labelString+"</a></b>";
+						}
+					}
+					
+					//-----------------------------
+					// Create Details String
+					if(!Strings.isNullOrEmpty(detailColumns)) {
+						String detailsString = "";
+						for (String fieldname : detailColumns.split(",")) {
+							if(fieldname != null && (urlColumn == null || !fieldname.trim().equals(urlColumn.trim())) ) {
+								detailsString += fieldname+"=\""+current.get(fieldname.trim()).getAsString() + "\" ";
+							}
+						}
+						metricListHTML += ": "+detailsString.substring(0, detailsString.length()-1);
+					}
+					
+					metricListHTML += "</li>";
+				}
+				
+				metricListText = metricListText.substring(0, metricListText.length()-3);
+				metricListHTML+="</ul>";
+				
+				//----------------------------------------
+				// Create Message
+				String baseMessage = "The following record(s) have reached the threshold "+alertThreshholdString+":";
+				String messagePlaintext = baseMessage+" "+metricListText;
+				String messageHTML = "<p>"+baseMessage+"</p>";
+				messageHTML += metricListHTML;
+				messageHTML += widgetLinkHTML;
+				messageHTML += "<h3>CSV Data</h3>"+CFW.JSON.formatJsonArrayToCSV(resultArray, ";");
+				
+				CFW.Messages.addErrorMessage(messagePlaintext);
+				
+				alertObject.doSendAlert(context, MessageType.ERROR, "EMP: Alert - Database record(s) reached threshold", messagePlaintext, messageHTML);
+				
+			}
+			
+			//----------------------------------------
+			// RESOLVE
+			if(type.equals(AlertType.RESOLVE)) {
+				String message = CFW.Random.randomIssueResolvedMessage();
+				String messageHTML = "<p>"+message+"</p>"+widgetLinkHTML;
+				
+				CFW.Messages.addSuccessMessage("Issue has resolved.");
+				alertObject.doSendAlert(context, MessageType.SUCCESS, "EMP: Resolved - Database record(s) below threshold", message, messageHTML);
+			}
+		}
+	}
 		
 }
 

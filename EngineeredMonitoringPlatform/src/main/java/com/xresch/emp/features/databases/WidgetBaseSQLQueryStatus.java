@@ -5,10 +5,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -33,7 +31,6 @@ import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
-import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -41,10 +38,6 @@ import com.xresch.cfw.utils.CFWConditions;
 import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
 import com.xresch.cfw.validation.CustomValidator;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
-import com.xresch.emp.features.databases.generic.FeatureGenericJDBC;
-import com.xresch.emp.features.prometheus.PrometheusEnvironment;
-import com.xresch.emp.features.prometheus.PrometheusEnvironmentManagement;
-import com.xresch.emp.features.prometheus.PrometheusSettingsFactory;
 
 /**************************************************************************************************************
  * 
