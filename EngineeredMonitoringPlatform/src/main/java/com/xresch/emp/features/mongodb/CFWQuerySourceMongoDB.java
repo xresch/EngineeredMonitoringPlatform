@@ -7,8 +7,6 @@ import java.util.TimeZone;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.bson.Document;
-import org.bson.json.JsonMode;
-import org.bson.json.JsonWriterSettings;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonObject;
@@ -43,12 +41,6 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 	private static final String FIELDNAME_SORT = "sort";
 	private static final String FIELDNAME_TIMEZONE = "timezone";
 	
-	private static final JsonWriterSettings writterSettings = 
-			JsonWriterSettings
-			.builder()
-			.outputMode(JsonMode.RELAXED)
-			.build();
-
 	/******************************************************************
 	 *
 	 ******************************************************************/
@@ -321,17 +313,16 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		if(Strings.isNullOrEmpty(aggregateDocString)) {
 			result = environment.find(collectionName, findDocString, sortDocString, limit);
 		}else {
-			result = environment.aggregate(collectionName, aggregateDocString, limit);
+			result = environment.aggregate(collectionName, aggregateDocString);
 		}
 		
 		//-----------------------------
 		// Push to Queue
 		if(result != null) {
 			for (Document currentDoc : result) {
-				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(writterSettings));
+				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureMongoDB.writterSettings));
 				outQueue.add(new EnhancedJsonObject(object));
 			}
-			
 		}
 		
 	}

@@ -1,5 +1,8 @@
 package com.xresch.emp.features.mongodb;
 
+import org.bson.json.JsonMode;
+import org.bson.json.JsonWriterSettings;
+
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
@@ -22,6 +25,12 @@ public class FeatureMongoDB extends CFWAppFeature {
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.mongodb.resources";
 	
 	public static final String PERMISSION_MONGODB = "Database: MongoDB";
+
+	static final JsonWriterSettings writterSettings = 
+	JsonWriterSettings
+	.builder()
+	.outputMode(JsonMode.RELAXED)
+	.build();
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.

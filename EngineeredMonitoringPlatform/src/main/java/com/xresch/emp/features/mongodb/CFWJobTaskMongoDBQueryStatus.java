@@ -24,7 +24,7 @@ public class CFWJobTaskMongoDBQueryStatus extends CFWJobTask {
 
 	@Override
 	public String taskDescription() {
-		return "Checks if any of the records retrieved with the database query exceeds the specified thresholds.";
+		return "Checks if any of the records retrieved with the MongoDB query exceeds the specified thresholds.";
 	}
 
 	@Override

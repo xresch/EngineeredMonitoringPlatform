@@ -16,6 +16,8 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
+import com.xresch.cfw.features.core.AutocompleteList;
+import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -160,14 +162,36 @@ public class MongoDBEnvironment extends AbstractContextSettings {
 		this.dbInstance = dbInstance;
 	}
 	
-	
+	/*********************************************************************
+	 * Create autocomplete for collections.
+	 *********************************************************************/
+    public AutocompleteResult autocompleteCollection(String searchValue, int maxResults) {
+    	MongoDatabase mongoDB = this.getMongoDB();
+    	
+    	String lowerSearch = searchValue.toLowerCase();
+    	AutocompleteList list = new AutocompleteList();
+    	
+    	int count = 0;
+    	for(String name : mongoDB.listCollectionNames()) {
+    		if(name.toLowerCase().contains(lowerSearch)) {
+    			list.addItem(name, name);
+    			count++;
+    			if(count >= maxResults) {
+    				break;
+    			}
+    		}
+    	}
+    	
+    	return new AutocompleteResult(list);
+    }
+    
 	/*********************************************************************
 	 * Executes a MongoDB find on the given collection and the corresponding
 	 * filtering documents.
 	 * @param collectionName
 	 * @param findDocString
 	 * @param sortDocString
-	 * @param limit
+	 * @param limit positive value to limit, 0 or negative to ignore
 	 * @return
 	 *********************************************************************/
 	public FindIterable<Document> find(String collectionName
@@ -198,7 +222,9 @@ public class MongoDBEnvironment extends AbstractContextSettings {
 			result.sort(docSort);
 		}
 		
-		result.limit(limit);
+		if(limit > 0) {
+			result.limit(limit);
+		}
 		
 		return result;
 	}
@@ -208,12 +234,10 @@ public class MongoDBEnvironment extends AbstractContextSettings {
 	 * filtering documents.
 	 * @param collectionName
 	 * @param aggregateDocString
-	 * @param limit
 	 * @return
 	 *********************************************************************/
 	public AggregateIterable<Document> aggregate(String collectionName
-									 , String aggregateDocString
-									 , int limit) {
+									 , String aggregateDocString) {
 		
 		MongoDatabase mongoDB = this.getMongoDB();
 	

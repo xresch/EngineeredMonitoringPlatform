@@ -22,8 +22,8 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
+import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
@@ -35,8 +35,6 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.validation.NumberRangeValidator;
-import com.xresch.emp.features.awa.AWAEnvironment;
-import com.xresch.emp.features.awa.AWAEnvironmentManagement;
 
 public class WidgetMonitorStatus extends WidgetDefinition {
 
@@ -65,8 +63,6 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
 				.addField(WidgetSettingsFactory.createDisableBoolean())
 				.addField(WidgetSettingsFactory.createSampleDataField())
-				
-	
 		;
 	}
 	
