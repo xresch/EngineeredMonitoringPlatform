@@ -42,25 +42,25 @@ public class MongoDBEnvironment extends AbstractContextSettings {
 		TIME_ZONE,
 	}
 		
-	private CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, MongoDBEnvironmentFields.DB_HOST)
+	protected CFWField<String> dbHost = CFWField.newString(FormFieldType.TEXT, MongoDBEnvironmentFields.DB_HOST)
 			.setDescription("The server name of the database host.");
 	
-	private CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, MongoDBEnvironmentFields.DB_PORT)
+	protected CFWField<Integer> dbPort = CFWField.newInteger(FormFieldType.NUMBER, MongoDBEnvironmentFields.DB_PORT)
 			.setDescription("The port used to access the database.")
 			.setValue(27017);
 	
-	private CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, MongoDBEnvironmentFields.DB_NAME)
+	protected CFWField<String> dbName = CFWField.newString(FormFieldType.TEXT, MongoDBEnvironmentFields.DB_NAME)
 			.setDescription("The name of the database.");
 	
-	private CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, MongoDBEnvironmentFields.DB_USER)
+	protected CFWField<String> dbUser = CFWField.newString(FormFieldType.TEXT, MongoDBEnvironmentFields.DB_USER)
 			.setDescription("The name of the user for accessing the database.");
 	
-	private CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, MongoDBEnvironmentFields.DB_PASSWORD)
+	protected CFWField<String> dbPassword = CFWField.newString(FormFieldType.PASSWORD, MongoDBEnvironmentFields.DB_PASSWORD)
 			.setDescription("The password of the DB user.")
 			.disableSanitization()
 			.enableEncryption("mongodb_DB_PW_Salt");
 	
-	private CFWField<String> timezone = CFWField.newString(FormFieldType.TIMEZONEPICKER, MongoDBEnvironmentFields.TIME_ZONE)
+	protected CFWField<String> timezone = CFWField.newString(FormFieldType.TIMEZONEPICKER, MongoDBEnvironmentFields.TIME_ZONE)
 			.setDescription("The timezone the database is using. Needed to manage differences from GMT properly.");
 	
 	public MongoDBEnvironment() {

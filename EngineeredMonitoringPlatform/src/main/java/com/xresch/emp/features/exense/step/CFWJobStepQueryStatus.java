@@ -19,12 +19,12 @@ public class CFWJobStepQueryStatus extends CFWJobTask {
 
 	@Override
 	public String uniqueName() {
-		return "Alerting: MongoDB";
+		return "Alerting: Step";
 	}
 
 	@Override
 	public String taskDescription() {
-		return "Checks if any of the records retrieved with the MongoDB query exceeds the specified thresholds.";
+		return "Checks if any of the records retrieved from the Step database exceeds the specified thresholds.";
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class CFWJobStepQueryStatus extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeatureStep.PERMISSION_MONGODB) ) {
+		&& user.hasPermission(FeatureStep.PERMISSION_STEP) ) {
 			return true;
 		}
 		

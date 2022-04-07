@@ -9,7 +9,7 @@ import com.xresch.cfw.features.dashboard.parameters.ParameterDefinition;
 
 public class ParameterDefinitionStepEnvironment extends ParameterDefinition {
 
-	public static final String LABEL = "MongoDB Environment";
+	public static final String LABEL = "Step Environment";
 	
 	/***************************************************************
 	 * 
@@ -49,7 +49,7 @@ public class ParameterDefinitionStepEnvironment extends ParameterDefinition {
 	public boolean isAvailable(HashSet<String> widgetTypesArray) {
 		
 		for(String type : widgetTypesArray) {
-			if(type.contains("emp_mongodb")) {
+			if(type.contains(FeatureStep.WIDGET_PREFIX)) {
 				return true;
 			}
 			

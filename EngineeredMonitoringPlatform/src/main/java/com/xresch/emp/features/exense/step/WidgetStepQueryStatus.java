@@ -54,28 +54,28 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 	private static Logger logger = CFWLog.getLogger(WidgetStepQueryStatus.class.getName());
 	
 	@Override
-	public String getWidgetType() {return "emp_mongodb_querystatus";}
+	public String getWidgetType() {return FeatureStep.WIDGET_PREFIX+"_querystatus";}
 
 
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureStep.PACKAGE_RESOURCE, "emp_widget_mongodb_querystatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureStep.PACKAGE_RESOURCE, "emp_widget_step_querystatus.js") );
 		return array;
 	}
 	
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new LinkedHashMap<>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureStep.PACKAGE_RESOURCE, "lang_en_emp_mongodb.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureStep.PACKAGE_RESOURCE, "lang_en_emp_step.properties"));
 		return map;
 	}
 	
 	
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureStep.PERMISSION_MONGODB);
+		return user.hasPermission(FeatureStep.PERMISSION_STEP);
 	}
 	
 	
@@ -97,44 +97,44 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 				.addField(StepSettingsFactory.createCollectionSelectorField())
 								
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY_FIND)
-						.setLabel("{!emp_widget_mongodb_query_find!}")
-						.setDescription("{!emp_widget_mongodb_query_find_desc!}")
+						.setLabel("{!emp_widget_step_query_find!}")
+						.setDescription("{!emp_widget_step_query_find_desc!}")
 						.disableSanitization() // Do not convert character like "'" to &#x27; etc...
 						.setValue("")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY_SORT)
-						.setLabel("{!emp_widget_mongodb_query_sort!}")
-						.setDescription("{!emp_widget_mongodb_query_sort_desc!}")
+						.setLabel("{!emp_widget_step_query_sort!}")
+						.setDescription("{!emp_widget_step_query_sort_desc!}")
 						.disableSanitization() // Do not convert character like "'" to &#x27; etc...
 						.setValue("")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY_AGGREGATE)
-						.setLabel("{!emp_widget_mongodb_query_aggregate!}")
-						.setDescription("{!emp_widget_mongodb_query_aggregate_desc!}")
+						.setLabel("{!emp_widget_step_query_aggregate!}")
+						.setDescription("{!emp_widget_step_query_aggregate_desc!}")
 						.disableSanitization() // Do not convert character like "'" to &#x27; etc...
 						.setValue("")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_VALUECOLUMN)
-						.setLabel("{!emp_widget_mongodb_valuecolumn!}")
-						.setDescription("{!emp_widget_mongodb_valuecolumn_desc!}")
+						.setLabel("{!emp_widget_step_valuecolumn!}")
+						.setDescription("{!emp_widget_step_valuecolumn_desc!}")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_LABELCOLUMNS)
-						.setLabel("{!emp_widget_mongodb_labelcolumns!}")
-						.setDescription("{!emp_widget_mongodb_labelcolumns_desc!}")
+						.setLabel("{!emp_widget_step_labelcolumns!}")
+						.setDescription("{!emp_widget_step_labelcolumns_desc!}")
 				)
 				
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_DETAILCOLUMNS)
-						.setLabel("{!emp_widget_mongodb_detailcolumns!}")
-						.setDescription("{!emp_widget_mongodb_detailcolumns_desc!}")
+						.setLabel("{!emp_widget_step_detailcolumns!}")
+						.setDescription("{!emp_widget_step_detailcolumns_desc!}")
 				)
 
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_URLCOLUMN)
-						.setLabel("{!emp_widget_mongodb_urlcolumn!}")
-						.setDescription("{!emp_widget_mongodb_urlcolumn_desc!}")
+						.setLabel("{!emp_widget_step_urlcolumn!}")
+						.setDescription("{!emp_widget_step_urlcolumn_desc!}")
 				)
 				
 				.addAllFields(CFWConditions.createThresholdFields());

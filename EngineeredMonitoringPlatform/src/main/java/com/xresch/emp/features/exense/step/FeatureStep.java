@@ -3,6 +3,7 @@ package com.xresch.emp.features.exense.step;
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
 
+import com.google.common.util.concurrent.SettableFuture;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
@@ -22,22 +23,25 @@ import com.xresch.emp.features.databases.mssql.CFWJobTaskMSSQLQueryStatus;
  **************************************************************************************************************/
 public class FeatureStep extends CFWAppFeature {
 	
-	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.mongodb.resources";
+	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.exense.step.resources";
 	
-	public static final String PERMISSION_MONGODB = "Database: MongoDB";
-
+	public static final String PERMISSION_STEP = "Exense Step Extensions";
+	public static final String WIDGET_PREFIX = "emp_step";
+	
 	static final JsonWriterSettings writterSettings = 
 	JsonWriterSettings
 	.builder()
 	.outputMode(JsonMode.RELAXED)
 	.build();
+
+
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
 	 ************************************************************************************/
 	@Override
 	public String getNameForFeatureManagement() {
-		return "EMP MongoDB";
+		return "EMP Exense Step";
 	};
 	
 	/************************************************************************************
@@ -45,7 +49,7 @@ public class FeatureStep extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getDescriptionForFeatureManagement() {
-		return "Use MongoDB database extensions.(Dashboard Widgets, Query Source, Tasks ...)";
+		return "Exense Step extensions.(Widgets, Source, Tasks ...)";
 	};
 	
 	/************************************************************************************
@@ -92,8 +96,8 @@ public class FeatureStep extends CFWAppFeature {
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
-				new Permission(PERMISSION_MONGODB, FeatureUserManagement.CATEGORY_USER)
-					.description("Use the MongoDB Extensions(Widgets, Sources, JobTasks, etc...)."),
+				new Permission(PERMISSION_STEP, FeatureUserManagement.CATEGORY_USER)
+					.description("Use the Step Extensions(Widgets, Sources, JobTasks, etc...)."),
 				true,
 				true);
 	}

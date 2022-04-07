@@ -65,7 +65,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 *
 	 ******************************************************************/
 	public String uniqueName() {
-		return "mongodb";
+		return "step";
 	}
 
 	/******************************************************************
@@ -73,7 +73,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionShort() {
-		return "Fetches data from a MongoDB database.";
+		return "Fetches data from a Step database.";
 	}
 		
 	/******************************************************************
@@ -81,7 +81,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionRequiredPermission() {
-		return FeatureStep.PERMISSION_MONGODB;
+		return FeatureStep.PERMISSION_STEP;
 	}
 
 	/******************************************************************
@@ -89,7 +89,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureStep.PERMISSION_MONGODB);
+		return user.hasPermission(FeatureStep.PERMISSION_STEP);
 	}
 	
 	/******************************************************************
@@ -105,7 +105,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureStep.PACKAGE_RESOURCE, "z_manual_source_mongodb.html")
+		return CFW.Files.readPackageResource(FeatureStep.PACKAGE_RESOURCE, "z_manual_source_step.html")
 				.replaceAll("\\{sourcename\\}", this.uniqueName());
 	}
 	
@@ -162,7 +162,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 		return new CFWObject()
 				.addField(
 						CFWField.newString(FormFieldType.TEXT, FIELDNAME_ENVIRONMENT)
-							.setDescription("The database environment to fetch the data from. Use Ctrl+Space in the query editor for content assist.")	
+							.setDescription("The step environment to fetch the data from. Use Ctrl+Space in the query editor for content assist.")	
 					)
 				.addField(
 				CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_COLLECTION)
@@ -216,7 +216,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
 			
 			if( !environmentMap.containsKey(environmentID) ) {
-				throw new ParseException("Missing permission to fetch from the specified MongoDB environment with ID "+environmentID, -1);
+				throw new ParseException("Missing permission to fetch from the specified Step environment with ID "+environmentID, -1);
 			}
 		}
 	}
@@ -247,7 +247,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 		if(environmentString != null) {
 			 environment = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "mongodb: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "step: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		

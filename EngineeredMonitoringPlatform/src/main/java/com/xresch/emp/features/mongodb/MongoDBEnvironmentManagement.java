@@ -14,8 +14,7 @@ import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
 
 public class MongoDBEnvironmentManagement {
-	private static Logger logger = CFWLog.getLogger(MongoDBEnvironmentManagement.class.getName());
-	
+
 	private static boolean isInitialized = false;
 	
 	// Contains ContextSettings id and the associated database interface
