@@ -182,7 +182,7 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 		if(environmentString != null) {
 			 environment = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "mongodb: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 				
