@@ -36,6 +36,7 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWConditions;
 import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
+import com.xresch.emp.features.databases.FeatureDatabases;
 
 public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	
@@ -61,6 +62,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_database_common.js") );
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMongoDB.PACKAGE_RESOURCE, "emp_widget_mongodb_querystatus.js") );
 		return array;
 	}
