@@ -67,7 +67,7 @@ public class MongoDBEnvironment extends AbstractContextSettings {
 		initializeFields();
 	}
 		
-	private void initializeFields() {
+	protected void initializeFields() {
 		this.addFields(dbHost, dbPort, dbName, dbUser, dbPassword, timezone);
 	}
 		

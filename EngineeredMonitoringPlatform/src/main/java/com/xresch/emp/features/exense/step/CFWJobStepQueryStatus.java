@@ -50,7 +50,7 @@ public class CFWJobStepQueryStatus extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeatureStep.PERMISSION_STEP) ) {
+		&& user.hasPermission(FeatureExenseStep.PERMISSION_STEP) ) {
 			return true;
 		}
 		

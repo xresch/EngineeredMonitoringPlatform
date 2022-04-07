@@ -21,7 +21,7 @@ import com.xresch.emp.features.databases.mssql.CFWJobTaskMSSQLQueryStatus;
  * @author Reto Scheiwiller, (c) Copyright 2022
  * @license MIT-License
  **************************************************************************************************************/
-public class FeatureStep extends CFWAppFeature {
+public class FeatureExenseStep extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.exense.step.resources";
 	
@@ -56,7 +56,7 @@ public class FeatureStep extends CFWAppFeature {
 	 * Return if the feature is active by default or if the admin has to enable it.
 	 ************************************************************************************/
 	public boolean activeByDefault() {
-		return true;
+		return false;
 	};
 	
 	

@@ -81,7 +81,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionRequiredPermission() {
-		return FeatureStep.PERMISSION_STEP;
+		return FeatureExenseStep.PERMISSION_STEP;
 	}
 
 	/******************************************************************
@@ -89,7 +89,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureStep.PERMISSION_STEP);
+		return user.hasPermission(FeatureExenseStep.PERMISSION_STEP);
 	}
 	
 	/******************************************************************
@@ -105,7 +105,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureStep.PACKAGE_RESOURCE, "z_manual_source_step.html")
+		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_RESOURCE, "z_manual_source_step.html")
 				.replaceAll("\\{sourcename\\}", this.uniqueName());
 	}
 	
@@ -116,7 +116,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	@Override
 	public void autocomplete(AutocompleteResult result, CFWQueryAutocompleteHelper helper) {
 		
-		// if source name is given, list up to 50 available database environments
+		// if source name is given, list up to 50 available step environments
 		if( helper.getTokenCount() >= 2 ) {
 			
 			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
@@ -303,7 +303,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
 			
 			if( !environmentMap.containsKey(environmentID) ) {
-				throw new AccessException("Missing permission to fetch from the specified database environment with ID "+environmentID);
+				throw new AccessException("Missing permission to fetch from the specified Step environment with ID "+environmentID);
 			}
 		}
 
@@ -320,7 +320,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 		// Push to Queue
 		if(result != null) {
 			for (Document currentDoc : result) {
-				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureStep.writterSettings));
+				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
 				outQueue.add(new EnhancedJsonObject(object));
 			}
 		}

@@ -54,28 +54,28 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 	private static Logger logger = CFWLog.getLogger(WidgetStepQueryStatus.class.getName());
 	
 	@Override
-	public String getWidgetType() {return FeatureStep.WIDGET_PREFIX+"_querystatus";}
+	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_querystatus";}
 
 
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureStep.PACKAGE_RESOURCE, "emp_widget_step_querystatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_querystatus.js") );
 		return array;
 	}
 	
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new LinkedHashMap<>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureStep.PACKAGE_RESOURCE, "lang_en_emp_step.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "lang_en_emp_step.properties"));
 		return map;
 	}
 	
 	
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureStep.PERMISSION_STEP);
+		return user.hasPermission(FeatureExenseStep.PERMISSION_STEP);
 	}
 	
 	
@@ -222,7 +222,7 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 		JsonArray resultArray = new JsonArray();
 		if(result != null) {
 			for (Document currentDoc : result) {
-				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureStep.writterSettings));
+				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
 				resultArray.add(object);
 			}
 		}

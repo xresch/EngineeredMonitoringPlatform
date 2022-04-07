@@ -22,19 +22,15 @@ public class StepEnvironment extends MongoDBEnvironment {
 	}
 	
 	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, StepEnvironmentFields.URL)
-			.setDescription("The URL of the step instance(including http/https, domain and port). Used to create links ")
+			.setDescription("The URL of the step instance(including http/https, domain and port). Will be used to create links.")
 			.setValue("https://yourstepinstance:8080/");
 	
 	// other fields are taken from the superclass
 	
 	public StepEnvironment() {
-		initializeFields();
-	}
-	
-	private void initializeFields() {
-		this.addFields(url, dbHost, dbPort, dbName, dbUser, dbPassword, timezone);
-	}
-		
+		super();
+		this.addFields(url);
+	}		
 	
 	@Override
 	public boolean isDeletable(int id) {
@@ -42,7 +38,7 @@ public class StepEnvironment extends MongoDBEnvironment {
 		int count = new DashboardWidget()
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
-			.and().like(DashboardWidgetFields.TYPE, FeatureStep.WIDGET_PREFIX+"%")
+			.and().like(DashboardWidgetFields.TYPE, FeatureExenseStep.WIDGET_PREFIX+"%")
 			.getCount();
 		
 		if(count == 0) {
