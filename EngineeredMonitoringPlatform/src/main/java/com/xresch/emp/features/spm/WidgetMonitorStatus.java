@@ -303,7 +303,7 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 	 * See {@link com.xresch.cfw.features.jobs.CFWJobTask#executeTask CFWJobTask.executeTask()} to get
 	 * more details on how to implement this method.
 	 *************************************************************************/
-	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings) throws JobExecutionException {
+	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings, Integer offsetMinutes) throws JobExecutionException {
 		
 		//----------------------------------------
 		// Fetch Data
