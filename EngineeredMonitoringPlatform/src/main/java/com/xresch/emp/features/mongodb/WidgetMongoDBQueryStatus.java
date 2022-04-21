@@ -177,8 +177,6 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 			return null;
 		}
 		
-		int environmentID = Integer.parseInt(environmentString);
-		
 		//-----------------------------
 		// Get Environment
 		MongoDBEnvironment environment;
@@ -204,7 +202,8 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		//-----------------------------
 		// Resolve Aggregate Param
 		String aggregateDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_AGGREGATE).getValue();
-		System.out.println("DocString:"+aggregateDocString);
+		System.out.println("=======DocString========\n"+aggregateDocString+"\n======EndDocString");
+		
 		//-----------------------------
 		// Resolve Sort Param
 		String sortDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_SORT).getValue();
@@ -215,6 +214,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		if(Strings.isNullOrEmpty(aggregateDocString)) {
 			result = environment.find(collectionName, findDocString, sortDocString, -1);
 		}else {
+
 			result = environment.aggregate(collectionName, aggregateDocString);
 		}
 		
