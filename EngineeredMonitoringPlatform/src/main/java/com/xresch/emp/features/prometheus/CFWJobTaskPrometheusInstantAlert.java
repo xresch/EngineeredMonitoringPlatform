@@ -63,7 +63,7 @@ public class CFWJobTaskPrometheusInstantAlert extends CFWJobTask {
 		
 		paramsAndSettings.mapJobExecutionContext(context);
 		
-		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings, null);
+		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings);
 	}
 	
 }

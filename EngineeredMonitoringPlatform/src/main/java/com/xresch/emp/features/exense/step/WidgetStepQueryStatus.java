@@ -279,7 +279,7 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 	 * See {@link com.xresch.cfw.features.jobs.CFWJobTask#executeTask CFWJobTask.executeTask()} to get
 	 * more details on how to implement this method.
 	 *************************************************************************/
-	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings, Integer offsetMinutes) throws JobExecutionException {
+	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings) throws JobExecutionException {
 		
 		String valueColumn = (String)settings.getField(FIELDNAME_VALUECOLUMN).getValue();
 		String labelColumns = (String)settings.getField(FIELDNAME_LABELCOLUMNS).getValue();

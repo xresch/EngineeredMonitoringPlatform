@@ -158,7 +158,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		}
 		//---------------------------------
 		// Real Data		
-		response.setPayLoad(loadDataFromDBInferface(settings, null));
+		response.setPayLoad(loadDataFromDBInferface(settings));
 		
 	}
 	
@@ -167,7 +167,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	 * @param offsetMinutes used to replace timeframe params, use null if not applicable
 	 *********************************************************************/
 	@SuppressWarnings("unchecked")
-	public JsonArray loadDataFromDBInferface(CFWObject widgetSettings, Integer offsetMinutes){
+	public JsonArray loadDataFromDBInferface(CFWObject widgetSettings){
 				
 		//-----------------------------
 		// Resolve Environment ID
@@ -200,18 +200,15 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		//-----------------------------
 		// Resolve Find Param
 		String findDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_FIND).getValue();
-		findDocString = CFW.Utils.Time.replaceTimeframePlaceholders(findDocString, offsetMinutes);
 
 		//-----------------------------
 		// Resolve Aggregate Param
 		String aggregateDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_AGGREGATE).getValue();
-		aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, offsetMinutes);
-		
+		System.out.println("DocString:"+aggregateDocString);
 		//-----------------------------
 		// Resolve Sort Param
 		String sortDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_SORT).getValue();
-		sortDocString = CFW.Utils.Time.replaceTimeframePlaceholders(sortDocString, offsetMinutes);
-		
+
 		//-----------------------------
 		// Fetch Data
 		MongoIterable<Document> result;
@@ -281,7 +278,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	 * See {@link com.xresch.cfw.features.jobs.CFWJobTask#executeTask CFWJobTask.executeTask()} to get
 	 * more details on how to implement this method.
 	 *************************************************************************/
-	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings, Integer offsetMinutes) throws JobExecutionException {
+	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings) throws JobExecutionException {
 		
 		String valueColumn = (String)settings.getField(FIELDNAME_VALUECOLUMN).getValue();
 		String labelColumns = (String)settings.getField(FIELDNAME_LABELCOLUMNS).getValue();
@@ -296,7 +293,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 			resultArray = createSampleData();
 		}else {
 						
-			resultArray = loadDataFromDBInferface(settings, offsetMinutes);
+			resultArray = loadDataFromDBInferface(settings);
 		}
 		
 		if(resultArray == null || resultArray.size() == 0) {
