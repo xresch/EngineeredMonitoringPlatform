@@ -202,8 +202,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		//-----------------------------
 		// Resolve Aggregate Param
 		String aggregateDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_AGGREGATE).getValue();
-		System.out.println("=======DocString========\n"+aggregateDocString+"\n======EndDocString");
-		
+
 		//-----------------------------
 		// Resolve Sort Param
 		String sortDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_SORT).getValue();
