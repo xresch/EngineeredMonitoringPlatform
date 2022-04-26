@@ -190,7 +190,7 @@ public class MongoDBEnvironment extends AbstractContextSettings {
 	 * filtering documents.
 	 * @param collectionName
 	 * @param findDocString
-	 * @param sortDocString
+	 * @param sortDocString, can be null or empty
 	 * @param limit positive value to limit, 0 or negative to ignore
 	 * @return
 	 *********************************************************************/

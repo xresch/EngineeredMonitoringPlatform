@@ -27,7 +27,7 @@ public class MongoDBSettingsFactory {
 	}
 
 	public static CFWField<?> createCollectionSelectorField() {
-		return CFWField.newString(FormFieldType.TAGS, FIELDNAME_QUERY_COLLECTION)
+		return CFWField.newArray(FormFieldType.TAGS, FIELDNAME_QUERY_COLLECTION)
 				.setLabel("{!emp_widget_mongodb_query_collection!}")
 				.setDescription("{!emp_widget_mongodb_query_collection_desc!}")
 				.addAttribute("maxTags", "1")

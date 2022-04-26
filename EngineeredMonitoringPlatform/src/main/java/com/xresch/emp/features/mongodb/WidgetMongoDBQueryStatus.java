@@ -189,9 +189,9 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 				
 		//-----------------------------
 		// Resolve Collection Param
-		String collectionName = (String)widgetSettings.getField(MongoDBSettingsFactory.FIELDNAME_QUERY_COLLECTION).getValue();
+		ArrayList<String> collectionName = (ArrayList<String>)widgetSettings.getField(MongoDBSettingsFactory.FIELDNAME_QUERY_COLLECTION).getValue();
 		
-		if(Strings.isNullOrEmpty(collectionName)) {
+		if(collectionName.size() == 0) {
 			return null;
 		}
 		
@@ -211,10 +211,10 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		// Fetch Data
 		MongoIterable<Document> result;
 		if(Strings.isNullOrEmpty(aggregateDocString)) {
-			result = environment.find(collectionName, findDocString, sortDocString, -1);
+			result = environment.find(collectionName.get(0), findDocString, sortDocString, -1);
 		}else {
 
-			result = environment.aggregate(collectionName, aggregateDocString);
+			result = environment.aggregate(collectionName.get(0), aggregateDocString);
 		}
 		
 		//-----------------------------

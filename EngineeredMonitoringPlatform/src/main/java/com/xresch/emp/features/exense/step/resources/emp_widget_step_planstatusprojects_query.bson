@@ -1,0 +1,91 @@
+[{
+    $match: {
+        $$projectsFilter$$
+    }
+}, {
+    $project: {
+        projectid: {
+            $toString: '$_id'
+        },
+        projectname: '$attributes.name'
+    }
+}, {
+    $lookup: {
+        from: 'plans',
+        localField: 'projectid',
+        foreignField: 'attributes.project',
+        as: 'plans',
+        pipeline: [{
+            $match: {
+                visible: {
+                    $eq: true
+                }
+            }
+        }]
+    }
+}, {
+    $unwind: {
+        path: '$plans',
+        preserveNullAndEmptyArrays: false
+    }
+}, {
+    $project: {
+        projectid: true,
+        projectname: true,
+        planid: {
+            $toString: '$plans._id'
+        },
+        planname: '$plans.attributes.name'
+    }
+}, {
+    $lookup: {
+        from: 'executions',
+        localField: 'planid',
+        foreignField: 'planId',
+        as: 'executions',
+        pipeline: [
+	        {$match: {
+				endTime: {
+					$gte: $earliest$,
+					$lte: $latest$
+				}
+			}},
+			{
+                $set: {
+                    duration: {
+                        $subtract: [
+                            '$endTime',
+                            '$startTime'
+                        ]
+                    }
+                }
+            },
+            {
+                $sort: {
+                    endTime: -1
+                }
+            },
+            {
+                $limit: 1
+            }
+        ]
+    }
+}, {
+    $unwind: {
+        path: '$executions',
+        preserveNullAndEmptyArrays: true
+    }
+}, {
+    $project: {
+		_id: false,
+        projectid: true,
+        projectname: true,
+        planid: true,
+        planname: true,
+        status: '$executions.status',
+        result: '$executions.result',
+        duration: '$executions.duration',
+        startTime: '$executions.startTime',
+        endTime: '$executions.endTime'
+    }
+}]

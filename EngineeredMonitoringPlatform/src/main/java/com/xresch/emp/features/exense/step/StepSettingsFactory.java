@@ -12,7 +12,7 @@ import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 public class StepSettingsFactory {
 	
 	public static final String FIELDNAME_ENVIRONMENT = "environment";
-	public static final String FIELDNAME_QUERY_COLLECTION = "JSON_COLLECTION";
+	public static final String FIELDNAME_STEP_PROJECT = "JSON_STEP_PROJECT";
 	/************************************************************************************
 	 * Returns the  environment selector field.
 	 * 
@@ -26,11 +26,11 @@ public class StepSettingsFactory {
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(StepEnvironment.SETTINGS_TYPE));
 	}
 
-	public static CFWField<?> createCollectionSelectorField() {
-		return CFWField.newString(FormFieldType.TAGS, FIELDNAME_QUERY_COLLECTION)
-				.setLabel("{!emp_widget_mongodb_query_collection!}")
-				.setDescription("{!emp_widget_mongodb_query_collection_desc!}")
-				.addAttribute("maxTags", "1")
+	public static CFWField<?> createProjectsSelectorField() {
+		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECT)
+				.setLabel("{!emp_widget_step_projects!}")
+				.setDescription("{!emp_widget_step_projects_desc!}")
+				.addAttribute("maxTags", "128")
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
@@ -52,7 +52,7 @@ public class StepSettingsFactory {
 						}
 						//-------------------------
 						// Do Autocomplete
-						return env.autocompleteCollection(searchValue, this.getMaxResults());
+						return env.autocompleteProjects(searchValue, this.getMaxResults());
 					}
 				});
 	}

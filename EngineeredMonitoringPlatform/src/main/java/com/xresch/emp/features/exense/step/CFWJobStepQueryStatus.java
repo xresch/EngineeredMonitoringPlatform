@@ -15,7 +15,7 @@ import com.xresch.cfw.features.usermgmt.User;
 
 public class CFWJobStepQueryStatus extends CFWJobTask {
 	
-	private WidgetStepQueryStatus widget = new WidgetStepQueryStatus();
+	private WidgetPlanStatusByProject widget = new WidgetPlanStatusByProject();
 
 	@Override
 	public String uniqueName() {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -38,7 +39,7 @@ import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 import com.xresch.emp.features.databases.FeatureDatabases;
 
-public class WidgetStepQueryStatus extends WidgetDefinition  {
+public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	
 	private static final String FIELDNAME_DETAILCOLUMNS = "detailcolumns";
 	private static final String FIELDNAME_LABELCOLUMNS = "labelcolumns";
@@ -52,10 +53,10 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 	
 	private static final String FIELDNAME_ALERT_THRESHOLD = "ALERT_THRESHOLD";
 	
-	private static Logger logger = CFWLog.getLogger(WidgetStepQueryStatus.class.getName());
+	private static Logger logger = CFWLog.getLogger(WidgetPlanStatusByProject.class.getName());
 	
 	@Override
-	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_querystatus";}
+	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_planstatusprojects";}
 
 
 	
@@ -63,7 +64,7 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_database_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_querystatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatusprojects.js") );
 		return array;
 	}
 	
@@ -96,28 +97,7 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
 				.addField(StepSettingsFactory.createEnvironmentSelectorField())
-				.addField(StepSettingsFactory.createCollectionSelectorField())
-								
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY_FIND)
-						.setLabel("{!emp_widget_step_query_find!}")
-						.setDescription("{!emp_widget_step_query_find_desc!}")
-						.disableSanitization() // Do not convert character like "'" to &#x27; etc...
-						.setValue("")
-				)
-				
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY_SORT)
-						.setLabel("{!emp_widget_step_query_sort!}")
-						.setDescription("{!emp_widget_step_query_sort_desc!}")
-						.disableSanitization() // Do not convert character like "'" to &#x27; etc...
-						.setValue("")
-				)
-				
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY_AGGREGATE)
-						.setLabel("{!emp_widget_step_query_aggregate!}")
-						.setDescription("{!emp_widget_step_query_aggregate_desc!}")
-						.disableSanitization() // Do not convert character like "'" to &#x27; etc...
-						.setValue("")
-				)
+				.addField(StepSettingsFactory.createProjectsSelectorField())			
 				
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_VALUECOLUMN)
 						.setLabel("{!emp_widget_step_valuecolumn!}")
@@ -157,7 +137,7 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 		}
 		//---------------------------------
 		// Real Data		
-		response.setPayLoad(loadDataFromDBInferface(settings));
+		response.setPayLoad(loadDataFromStepDB(settings, earliest, latest));
 		
 	}
 	
@@ -166,7 +146,7 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 	 * @param latest time in millis of which to fetch the data.
 	 *********************************************************************/
 	@SuppressWarnings("unchecked")
-	public JsonArray loadDataFromDBInferface(CFWObject widgetSettings){
+	public JsonArray loadDataFromStepDB(CFWObject widgetSettings, long earliest, long latest){
 		
 		//-----------------------------
 		// Resolve Environment ID
@@ -175,8 +155,6 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 		if(Strings.isNullOrEmpty(environmentString)) {
 			return null;
 		}
-		
-		int environmentID = Integer.parseInt(environmentString);
 		
 		//-----------------------------
 		// Get Environment
@@ -187,37 +165,37 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
-				
-		//-----------------------------
-		// Resolve Collection Param
-		String collectionName = (String)widgetSettings.getField(StepSettingsFactory.FIELDNAME_QUERY_COLLECTION).getValue();
 		
-		if(Strings.isNullOrEmpty(collectionName)) {
+
+		//-----------------------------
+		// Resolve Projects Param
+		LinkedHashMap<String,String> projects = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECT).getValue();
+		
+		if(projects.size() == 0) {
 			return null;
 		}
 		
 		//-----------------------------
-		// Resolve Find Param
-		String findDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_FIND).getValue();
-
+		// Create Aggregate Document
+		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatusprojects_query.bson");
+		aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest);
 		
-		//-----------------------------
-		// Resolve Aggregate Param
-		String aggregateDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_AGGREGATE).getValue();
-
+		// Example Project Filter >> $or: [ {'_id': ObjectId('62443ecfee10d74e1b132860')},{'_id': ObjectId('62444fadee10d74e1b1395af')} ]
+		StringBuilder projectsFilter = new StringBuilder("$or: [");
+		for(Entry<String, String> entry : projects.entrySet()) {
+			projectsFilter.append("{'_id': ObjectId('"+entry.getKey()+"')},");
+		}
+		projectsFilter.append("]");
 		
-		//-----------------------------
-		// Resolve Sort Param
-		String sortDocString = (String)widgetSettings.getField(FIELDNAME_QUERY_SORT).getValue();
-				
+		aggregateDocString = aggregateDocString.replace("$$projectsFilter$$", projectsFilter.toString());
+		
+		System.out.println("aggregateDocString:"+aggregateDocString);
+		
 		//-----------------------------
 		// Fetch Data
 		MongoIterable<Document> result;
-		if(Strings.isNullOrEmpty(aggregateDocString)) {
-			result = environment.find(collectionName, findDocString, sortDocString, -1);
-		}else {
-			result = environment.aggregate(collectionName, aggregateDocString);
-		}
+
+		result = environment.aggregate("projects", aggregateDocString);
 		
 		//-----------------------------
 		// Push to Queue
@@ -293,7 +271,8 @@ public class WidgetStepQueryStatus extends WidgetDefinition  {
 		if(isSampleData != null && isSampleData) {
 			resultArray = createSampleData();
 		}else {
-			resultArray = loadDataFromDBInferface(settings);
+			//To Be Done!!!
+			resultArray = loadDataFromStepDB(settings, CFW.Utils.Time.getCurrentDateWithOffset(0, 0, 0, -30).getTime(), System.currentTimeMillis());
 		}
 		
 		if(resultArray == null || resultArray.size() == 0) {
