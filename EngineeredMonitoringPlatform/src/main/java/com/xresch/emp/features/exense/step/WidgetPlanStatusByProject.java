@@ -40,15 +40,7 @@ import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 import com.xresch.emp.features.databases.FeatureDatabases;
 
 public class WidgetPlanStatusByProject extends WidgetDefinition  {
-	
-	private static final String FIELDNAME_DETAILCOLUMNS = "detailcolumns";
-	private static final String FIELDNAME_LABELCOLUMNS = "labelcolumns";
-	private static final String FIELDNAME_VALUECOLUMN = "valuecolumn";
-	private static final String FIELDNAME_URLCOLUMN = "urlcolumn";
-	private static final String FIELDNAME_QUERY_FIND = "find";
-	private static final String FIELDNAME_QUERY_SORT = "sort";
-	private static final String FIELDNAME_QUERY_AGGREGATE = "aggregate";
-	
+		
 	private String FIELDNAME_ENVIRONMENT = StepSettingsFactory.FIELDNAME_ENVIRONMENT;
 	
 	private static final String FIELDNAME_ALERT_THRESHOLD = "ALERT_THRESHOLD";
@@ -63,7 +55,7 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_database_common.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatusprojects.js") );
 		return array;
 	}
@@ -97,28 +89,7 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
 				.addField(StepSettingsFactory.createEnvironmentSelectorField())
-				.addField(StepSettingsFactory.createProjectsSelectorField())			
-				
-				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_VALUECOLUMN)
-						.setLabel("{!emp_widget_step_valuecolumn!}")
-						.setDescription("{!emp_widget_step_valuecolumn_desc!}")
-				)
-				
-				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_LABELCOLUMNS)
-						.setLabel("{!emp_widget_step_labelcolumns!}")
-						.setDescription("{!emp_widget_step_labelcolumns_desc!}")
-				)
-				
-				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_DETAILCOLUMNS)
-						.setLabel("{!emp_widget_step_detailcolumns!}")
-						.setDescription("{!emp_widget_step_detailcolumns_desc!}")
-				)
-
-				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_URLCOLUMN)
-						.setLabel("{!emp_widget_step_urlcolumn!}")
-						.setDescription("{!emp_widget_step_urlcolumn_desc!}")
-				)
-				
+				.addField(StepSettingsFactory.createProjectsSelectorField())							
 				.addAllFields(CFWConditions.createThresholdFields());
 	}
 	
@@ -166,7 +137,6 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 			return null;
 		}
 		
-
 		//-----------------------------
 		// Resolve Projects Param
 		LinkedHashMap<String,String> projects = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECT).getValue();
@@ -188,8 +158,6 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 		projectsFilter.append("]");
 		
 		aggregateDocString = aggregateDocString.replace("$$projectsFilter$$", projectsFilter.toString());
-		
-		System.out.println("aggregateDocString:"+aggregateDocString);
 		
 		//-----------------------------
 		// Fetch Data
@@ -259,10 +227,6 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	 *************************************************************************/
 	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings) throws JobExecutionException {
 		
-		String valueColumn = (String)settings.getField(FIELDNAME_VALUECOLUMN).getValue();
-		String labelColumns = (String)settings.getField(FIELDNAME_LABELCOLUMNS).getValue();
-		String detailColumns = (String)settings.getField(FIELDNAME_DETAILCOLUMNS).getValue();
-		String urlColumn = (String)settings.getField(FIELDNAME_URLCOLUMN).getValue();
 		
 		//----------------------------------------
 		// Fetch Data
@@ -277,28 +241,6 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 		
 		if(resultArray == null || resultArray.size() == 0) {
 			return;
-		}
-		
-		//----------------------------------------
-		// Set Column default settings 
-		JsonObject object = resultArray.get(0).getAsJsonObject();
-		Set<String> fields = object.keySet();
-		int i=0;
-		for(String fieldname : fields) {
-			
-			//Set first column as default for label Column
-			if(i == 0
-			&& Strings.isNullOrEmpty(labelColumns)) {
-				labelColumns = fieldname;
-			}
-			
-			//Set last column as default for value
-			if(i == fields.size()-1
-			&& Strings.isNullOrEmpty(valueColumn)) {
-				valueColumn = fieldname;
-			}
-			
-			i++;
 		}
 		
 		//----------------------------------------
@@ -319,7 +261,7 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 		for(JsonElement element : resultArray) {
 			
 			JsonObject current = element.getAsJsonObject();
-			Float value = current.get(valueColumn).getAsFloat();
+			Float value = current.get("duration").getAsFloat();
 
 			ThresholdCondition condition = CFW.Conditions.getConditionForValue(value, settings);
 			if(condition != null 
@@ -359,7 +301,7 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 					//-----------------------------
 					// Create Label String
 					String labelString = "";
-					for (String fieldname : labelColumns.split(" *, *")) {
+					for (String fieldname : new String[]{"duration"}) {
 						labelString += current.get(fieldname.trim()).getAsString() + " ";
 					}
 					labelString = labelString.substring(0, labelString.length()-1);
@@ -368,29 +310,29 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 					
 					//---------------------------------
 					// Add Label as String and Link
-					if( Strings.isNullOrEmpty(urlColumn) ){
-						metricListHTML += "<li><b>"+labelString+"</b>";
-					}else {
-						String url = current.get(urlColumn.trim()).getAsString();
-						if(Strings.isNullOrEmpty(url)) {
-							metricListHTML += "<li><b>"+labelString+"</b>";
-						}else {
-							metricListHTML += "<li><b><a href=\""+url+"\">"+labelString+"</a></b>";
-						}
-					}
+//					if( Strings.isNullOrEmpty(urlColumn) ){
+//						metricListHTML += "<li><b>"+labelString+"</b>";
+//					}else {
+//						String url = current.get(urlColumn.trim()).getAsString();
+//						if(Strings.isNullOrEmpty(url)) {
+//							metricListHTML += "<li><b>"+labelString+"</b>";
+//						}else {
+//							metricListHTML += "<li><b><a href=\""+url+"\">"+labelString+"</a></b>";
+//						}
+//					}
 					
 					//-----------------------------
 					// Create Details String
-					if(!Strings.isNullOrEmpty(detailColumns)) {
-						String detailsString = "";
-						for (String fieldname : detailColumns.split(",")) {
-							if(fieldname != null && (urlColumn == null || !fieldname.trim().equals(urlColumn.trim())) ) {
-								detailsString += fieldname+"=\""+current.get(fieldname.trim()).getAsString() + "\" ";
-							}
-						}
-						metricListHTML += ": "+detailsString.substring(0, detailsString.length()-1);
-					}
-					
+//					if(!Strings.isNullOrEmpty(detailColumns)) {
+//						String detailsString = "";
+//						for (String fieldname : detailColumns.split(",")) {
+//							if(fieldname != null && (urlColumn == null || !fieldname.trim().equals(urlColumn.trim())) ) {
+//								detailsString += fieldname+"=\""+current.get(fieldname.trim()).getAsString() + "\" ";
+//							}
+//						}
+//						metricListHTML += ": "+detailsString.substring(0, detailsString.length()-1);
+//					}
+//					
 					metricListHTML += "</li>";
 				}
 				

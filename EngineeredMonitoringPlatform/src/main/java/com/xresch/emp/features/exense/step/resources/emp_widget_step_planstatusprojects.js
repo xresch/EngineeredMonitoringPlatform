@@ -1,13 +1,10 @@
 (function (){
 	
-	EXENSE_CATEGORY = "Exense Step";
+	var widgetMenuLabel = CFWL('emp_widget_step_planstatusprojects', "Step Plan Status By Projects")
+	var widgetDescription = CFWL('emp_widget_step_planstatusprojects_desc', "Returns the last status in the selected time range, of all execution plans listed in the selected projects.");
 	
-	CFW.dashboard.registerCategory("fas fa-database", EXENSE_CATEGORY);
-	
-	var widgetDefinition = createDatabaseQueryStatusWidget(CFWL('emp_widget_step_querystatus', "Step Plan Status By Projects")) ;
-	
-	widgetDefinition.category = EXENSE_CATEGORY;
-	
+	var widgetDefinition = createStepStatusWidgetBase(widgetMenuLabel, widgetDescription);
+		
 	CFW.dashboard.registerWidget(
 			"emp_step_planstatusprojects", 
 			widgetDefinition

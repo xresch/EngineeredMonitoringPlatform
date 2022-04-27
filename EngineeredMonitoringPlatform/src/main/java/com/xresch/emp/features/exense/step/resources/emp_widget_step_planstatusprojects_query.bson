@@ -85,7 +85,7 @@
         status: '$executions.status',
         result: '$executions.result',
         duration: '$executions.duration',
-        startTime: '$executions.startTime',
-        endTime: '$executions.endTime'
+        starttime: '$executions.startTime',
+        endtime: '$executions.endTime'
     }
 }]
