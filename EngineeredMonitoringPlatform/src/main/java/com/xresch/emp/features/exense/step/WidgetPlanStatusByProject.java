@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +36,6 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWConditions;
 import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
-import com.xresch.emp.features.databases.FeatureDatabases;
 
 public class WidgetPlanStatusByProject extends WidgetDefinition  {
 		
@@ -99,17 +97,41 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	 *********************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
-		//---------------------------------
-		// Example Data
+
+		//#################################################
+		// Example Data	
+		//#################################################
 		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
 		if(isSampleData != null && isSampleData) {
+			response.addCustomAttribute("url", "http://sampleurl.yourserver.io");
 			response.setPayLoad(createSampleData());
 			return;
 		}
-		//---------------------------------
-		// Real Data		
-		response.setPayLoad(loadDataFromStepDB(settings, earliest, latest));
 		
+		
+		//#################################################
+		// Real Data	
+		//#################################################
+		
+		//-----------------------------
+		// Resolve Environment ID
+		String environmentString = (String)settings.getField(FIELDNAME_ENVIRONMENT).getValue();
+
+		if(Strings.isNullOrEmpty(environmentString)) {
+			return;
+		}
+		
+		//-----------------------------
+		// Get Environment
+		StepEnvironment environment;
+		if(environmentString != null) {
+			 environment = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
+		}else {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
+			return;
+		}
+		response.addCustomAttribute("url", environment.url());
+		response.setPayLoad(loadDataFromStepDB(settings, earliest, latest));
 	}
 	
 	/*********************************************************************

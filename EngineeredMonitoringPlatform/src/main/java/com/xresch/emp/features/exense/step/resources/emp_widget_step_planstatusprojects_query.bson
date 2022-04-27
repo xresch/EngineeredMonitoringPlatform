@@ -82,6 +82,8 @@
         projectname: true,
         planid: true,
         planname: true,
+        schedulerid: '$executions.executionTaskID',
+        schedulername: '$executions.executiontTaskParameters.attributes.name',
         status: '$executions.status',
         result: '$executions.result',
         duration: '$executions.duration',

@@ -11,7 +11,6 @@ CFW.dashboard.registerCategory("fas fa-database", EXENSE_CATEGORY);
  ******************************************************************/
 function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 	
-	
 	return {
 		category: EXENSE_CATEGORY,
 		menuicon: "fas fa-thermometer-half",
@@ -32,6 +31,11 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 					callback(widgetObject, '');
 					return;
 				}							
+				
+				var stepURL = data.url;
+				if(!CFW.utils.isNullOrEmpty(stepURL) && !stepURL.endsWith("/")){
+					stepURL += "/";
+				}
 				
 				//---------------------------
 				// Set Colors for Thresholds
@@ -74,17 +78,33 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 					bgstylefield: 'alertstyle',
 					textstylefield: 'textstyle',
 					titlefields: ["planname"], 
-					visiblefields: ["projectname", "result"],
+					visiblefields: ["result"],
 					titleformat: null, 
 					
 					labels: {},
 					customizers: {
+						
 						value: function(record, value) {
 							if(value == null) return '';
 							return (settings.suffix == null) ? value : value+" "+settings.suffix;
 						},
+						
 						starttime: function(record, value) { return (value != null) ? new  moment(value).format("YYYY-MM-DD HH:mm") : '';},
+						
 						endtime: function(record, value) { return (value != null) ? new  moment(value).format("YYYY-MM-DD HH:mm") : '';},
+						
+						duration: function(record, value) { return (value != null) ? CFW.format.millisToDuration(value) : '';},
+						
+						projectname:  function(record, value) { 
+							if(CFW.utils.isNullOrEmpty(stepURL)) return value;
+							return '<a target="_blank" href="'+stepURL+'#/root/plans/list?tenant='+value+'">'+value+'</a>';
+						},
+						
+						schedulername:  function(record, value) { 
+							if(CFW.utils.isNullOrEmpty(stepURL)) return value;
+							var schedulerid = record['schedulerid'];
+							return '<a target="_blank" href="'+stepURL+'#/root/dashboards/__pp__RTMDashboard?__filter1__=text,taskId,'+schedulerid+'">'+value+'</a>';
+						},
 					},
 					rendererSettings:{
 						tiles: {
