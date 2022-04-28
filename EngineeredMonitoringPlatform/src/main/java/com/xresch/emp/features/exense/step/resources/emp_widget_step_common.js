@@ -57,6 +57,10 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 								,dangerVal
 								,settings.THRESHOLD_DISABLED);
 						
+						// if threshold is undefined do green
+						if(current.alertstyle == "cfw-none"){
+							current.alertstyle = "cfw-excellent"; 
+						}
 						
 					}else if(current.result == "FAILED"){
 						current.alertstyle = "cfw-danger";

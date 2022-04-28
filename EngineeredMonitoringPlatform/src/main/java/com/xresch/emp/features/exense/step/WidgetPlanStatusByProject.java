@@ -108,30 +108,39 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 			return;
 		}
 		
-		
 		//#################################################
 		// Real Data	
 		//#################################################
 		
+		StepEnvironment environment = getStepEnvironment(settings);
+		if(environment == null) {
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
+			return;
+		}
+		
+		response.addCustomAttribute("url", environment.url());
+		response.setPayLoad(loadDataFromStepDB(settings, earliest, latest));
+	}
+
+
+
+	private StepEnvironment getStepEnvironment(CFWObject settings) {
 		//-----------------------------
 		// Resolve Environment ID
 		String environmentString = (String)settings.getField(FIELDNAME_ENVIRONMENT).getValue();
 
 		if(Strings.isNullOrEmpty(environmentString)) {
-			return;
+			return null;
 		}
 		
 		//-----------------------------
 		// Get Environment
-		StepEnvironment environment;
+		StepEnvironment environment = null;
 		if(environmentString != null) {
 			 environment = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
-		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
-			return;
 		}
-		response.addCustomAttribute("url", environment.url());
-		response.setPayLoad(loadDataFromStepDB(settings, earliest, latest));
+		
+		return environment;
 	}
 	
 	/*********************************************************************
@@ -142,19 +151,9 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	public JsonArray loadDataFromStepDB(CFWObject widgetSettings, long earliest, long latest){
 		
 		//-----------------------------
-		// Resolve Environment ID
-		String environmentString = (String)widgetSettings.getField(FIELDNAME_ENVIRONMENT).getValue();
-
-		if(Strings.isNullOrEmpty(environmentString)) {
-			return null;
-		}
-		
-		//-----------------------------
 		// Get Environment
-		StepEnvironment environment;
-		if(environmentString != null) {
-			 environment = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
-		}else {
+		StepEnvironment environment = getStepEnvironment(widgetSettings);
+		if(environment == null) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
@@ -205,7 +204,47 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	 * 
 	 *********************************************************************/
 	public JsonArray createSampleData() { 	
-		return CFW.Random.randomJSONArrayOfMightyPeople(12);
+		
+//		{
+//			"projectid": "62444fadee10d74e1b1395af",
+//			"projectname": "AnotherTestProject",
+//			"planid": "62694470ee10d74e1b26d744",
+//			"planname": "Bla Bla Bla",
+//			"schedulerid": "626944feee10d74e1b26df94",
+//			"schedulername": "Bla Bla Bla",
+//			"status": "ENDED",
+//			"result": "PASSED",
+//			"duration": 37,
+//			"starttime": 1651134840013,
+//			"endtime": 1651134840050
+//		},
+		
+		JsonArray array = new JsonArray();
+		
+		for(int i = 0 ; i < 24; i++) {
+			String alphas = ("["+CFW.Random.randomStringAlphaNumerical(3)+"] ").toUpperCase();
+			String randomProject = CFW.Random.randomFromArray(new String[] {"Project Omega", "Project Alpha", "Project Epsilon"});
+			String randomPlan = CFW.Random.randomFromArray(new String[] {"Test Plan", "Ricks Plan Rolls", "Plan Ahead", "Plan of a Lifetime", "No Plan", "Plan Tage", "Plan E", "Plan ET"});
+			String randomResult = CFW.Random.randomFromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "FAILED", "TECHNICAL_ERROR", "RUNNING"});
+			
+			int offsetMinutes = -1 * CFW.Random.randomIntegerInRange(15, 120);
+			int offsetMultiplier = CFW.Random.randomIntegerInRange(2, 5);
+			JsonObject object = new JsonObject();
+			object.addProperty("projectid", "62444fadee10d74e1b1395af");
+			object.addProperty("projectname", alphas+randomProject);
+			object.addProperty("planid", CFW.Random.randomStringAlphaNumerical(24).toLowerCase());
+			object.addProperty("planname",  alphas+randomPlan);
+			object.addProperty("schedulerid", CFW.Random.randomStringAlphaNumerical(24).toLowerCase());
+			object.addProperty("schedulername", alphas+"Scheduler for "+randomPlan);
+			object.addProperty("status", "ENDED");
+			object.addProperty("result", randomResult);
+			object.addProperty("duration", CFW.Random.randomIntegerInRange(10, 12000) );
+			object.addProperty("starttime", CFW.Utils.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes*offsetMultiplier).getTime());
+			object.addProperty("endtime",  CFW.Utils.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes).getTime());
+			
+			array.add(object);
+		}
+		return array;
 	}
 	
 	/*********************************************************************
