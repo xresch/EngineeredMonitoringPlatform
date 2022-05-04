@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 import org.bson.Document;
+import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -47,8 +48,6 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	
 	@Override
 	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_planstatusprojects";}
-
-
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
@@ -113,7 +112,9 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 		//#################################################
 		
 		StepEnvironment environment = getStepEnvironment(settings);
-		if(environment == null) {
+		if(environment == null) { return; }
+		
+		if(!environment.isDBDefined()) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
@@ -288,6 +289,9 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	 *************************************************************************/
 	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings) throws JobExecutionException {
 		
+		JobDataMap data = context.getMergedJobDataMap();
+		long earliest = data.getLong("earliest");
+		long latest = data.getLong("latest");
 		
 		//----------------------------------------
 		// Fetch Data
@@ -296,8 +300,7 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 		if(isSampleData != null && isSampleData) {
 			resultArray = createSampleData();
 		}else {
-			//To Be Done!!!
-			resultArray = loadDataFromStepDB(settings, CFW.Utils.Time.getCurrentDateWithOffset(0, 0, 0, -30).getTime(), System.currentTimeMillis());
+			resultArray = loadDataFromStepDB(settings, earliest, latest);
 		}
 		
 		if(resultArray == null || resultArray.size() == 0) {

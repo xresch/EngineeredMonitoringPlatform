@@ -3,7 +3,7 @@
  ******************************************************************/
 CATEGORY_EXENSE = "Exense Step";
 	
-CFW.dashboard.registerCategory("fas fa-database", CATEGORY_EXENSE);
+CFW.dashboard.registerCategory("fas fa-desktop", CATEGORY_EXENSE);
 	
 	
 /******************************************************************
