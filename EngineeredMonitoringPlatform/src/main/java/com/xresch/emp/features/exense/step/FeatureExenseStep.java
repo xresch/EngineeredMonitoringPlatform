@@ -89,6 +89,15 @@ public class FeatureExenseStep extends CFWAppFeature {
 		// Register Job Task
 		CFW.Registry.Jobs.registerTask(new CFWJobStepQueryStatus());
 		
+		//----------------------------------
+		// Register Manual Page
+		CFW.Registry.Manual.addManualPage(null,
+				new ManualPage("Exense Step")
+					.faicon("fas fa-desktop")
+					.addPermission(FeatureManual.PERMISSION_MANUAL)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCE, "z_manual_step.html")
+			);
+		
 	}
 
 	@Override
