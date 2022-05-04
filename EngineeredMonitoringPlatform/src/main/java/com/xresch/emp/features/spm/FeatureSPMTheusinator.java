@@ -142,7 +142,7 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 		ManualPage theusinator = new ManualPage("Theusinator").faicon("fas fa-tachometer-alt")
 				.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR);
 		
-		FeatureEMPCommon.TOP_PAGE.addChild(theusinator);
+		CFW.Registry.Manual.addManualPage(null, theusinator);
 		
 			theusinator.addChild(
 				new ManualPage("Introduction")

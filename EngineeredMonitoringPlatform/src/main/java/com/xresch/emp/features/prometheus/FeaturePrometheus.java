@@ -80,7 +80,7 @@ public class FeaturePrometheus extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Manual Page
-		FeatureEMPCommon.WIDGET_PAGE.addChild(
+		CFW.Registry.Manual.addManualPage(null,
 				new ManualPage("Prometheus")
 					.faicon("fas fa-desktop")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)

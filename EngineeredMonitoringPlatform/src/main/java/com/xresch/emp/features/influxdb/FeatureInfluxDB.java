@@ -69,7 +69,7 @@ public class FeatureInfluxDB extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Manual Page
-		FeatureEMPCommon.WIDGET_PAGE.addChild(
+		CFW.Registry.Manual.addManualPage(null,
 				new ManualPage("InfluxDB")
 					.faicon("fas fa-database")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)

@@ -27,7 +27,6 @@ public class FeatureEMPCommon extends CFWAppFeature {
 	public static final String PACKAGE_MANUAL 		= "com.xresch.emp.features.common.manual";
 		
 	public static final ManualPage TOP_PAGE = CFW.Registry.Manual.addManualPage(null, new ManualPage("Engineered Monitoring Platform(EMP)").faicon("fa fa-desktop"));
-	public static final ManualPage WIDGET_PAGE = new ManualPage("Features").faicon("fas fa-th-large");
 	
 	/**********************************************************************
 	 * 
@@ -53,12 +52,9 @@ public class FeatureEMPCommon extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Manuals	
-		WIDGET_PAGE.addPermission(FeatureManual.PERMISSION_MANUAL)
+		TOP_PAGE.addPermission(FeatureManual.PERMISSION_MANUAL)
 				.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_intro.html");
-		
-		TOP_PAGE.addChild(WIDGET_PAGE);
-		registerWidgetsManual(WIDGET_PAGE);
-		
+				
 	}
 	
 	/**********************************************************************

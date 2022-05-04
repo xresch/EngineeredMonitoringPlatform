@@ -131,7 +131,7 @@ public class FeatureSPM extends CFWAppFeature {
 		
     	//----------------------------------
     	// Add SPM Widgets Manual
-		FeatureEMPCommon.WIDGET_PAGE.addChild(
+		CFW.Registry.Manual.addManualPage(null,
 				new ManualPage("SPM")
 					.faicon("fas fa-desktop")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)

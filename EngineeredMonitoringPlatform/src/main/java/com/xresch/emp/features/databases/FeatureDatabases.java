@@ -44,8 +44,8 @@ public class FeatureDatabases extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Manual Page
-		FeatureEMPCommon.WIDGET_PAGE.addChild(
-				new ManualPage("Database")
+		CFW.Registry.Manual.addManualPage(null,
+				new ManualPage("Databases")
 					.faicon("fas fa-database")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCE, "z_manual_widgets_database.html")
