@@ -3,8 +3,7 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring");
-	CFW.dashboard.registerCategory("fas fa-star", "Monitoring | Common");
+	CFW.dashboard.registerCategory("fas fa-star", "Common");
 	
 	
 	/******************************************************************
@@ -12,7 +11,7 @@
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_customthresholdlegend",
 		{
-			category: "Monitoring | Common",
+			category: "Common",
 			menuicon: "fas fa-info-circle",
 			menulabel: CFWL('emp_widget_customthresholdlegend', "Custom Threshold Legend"),
 			description: CFWL('emp_widget_customthresholdlegend_desc', "Displays a legend for the threshold colors with custom labels."),

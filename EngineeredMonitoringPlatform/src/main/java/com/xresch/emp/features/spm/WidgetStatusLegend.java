@@ -31,9 +31,9 @@ public class WidgetStatusLegend extends WidgetDefinition {
 
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
-		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE, "emp_widget_spmhealthlegend.js");
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add(js);
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE,  FeatureSPM.FILE_PATH_COMMON_JS) );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE,  "emp_widget_spmhealthlegend.js") );
 		return array;
 	}
 

@@ -1,16 +1,11 @@
 (function (){
-	
-	/******************************************************************
-	 * 
-	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | AWA");
-	
+		
 	/******************************************************************
 	 * 
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_awajobstatus_legend",
 		{
-			category: "Monitoring | AWA",
+			category: CATEGORY_AWA,
 			menuicon: "fas fa-info-circle",
 			menulabel: CFWL('emp_widget_awajobstatuslegend', "AWA Job Status Legend"),
 			description: CFWL('emp_widget_awajobstatuslegend_desc', "Displays a legend for the colors used by the AWA job status widget."),

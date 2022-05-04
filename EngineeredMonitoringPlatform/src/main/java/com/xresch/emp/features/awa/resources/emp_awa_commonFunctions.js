@@ -1,4 +1,10 @@
 
+/******************************************************************
+ * Register Category
+ ******************************************************************/
+var CATEGORY_AWA="AWA";
+CFW.dashboard.registerCategory("fas fa-desktop", CATEGORY_AWA);
+
 /*********************************************************************
  * Returns a partial CSS style for the given AWA status.
  * @returns style like "cfw-warning"

@@ -1,3 +1,11 @@
+
+
+/******************************************************************
+ * 
+ ******************************************************************/
+var CATEGORY_PROMETHEUS = "Prometheus";
+CFW.dashboard.registerCategory("fas fa-desktop", CATEGORY_PROMETHEUS);
+	
 /*********************************************************************
  * Takes the content of a CFW payload containing a prometheus response
  * and converts the data to a structure that can be used by CFWRenderer.

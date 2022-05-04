@@ -1,6 +1,6 @@
 
 	
-var DYNATRACE_WIDGET_CATEGORY =  "Monitoring | Dynatrace";
+var DYNATRACE_WIDGET_CATEGORY =  "Dynatrace";
 
 /******************************************************************
  * 

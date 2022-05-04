@@ -3,14 +3,9 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | Prometheus");
-	
-	/******************************************************************
-	 * 
-	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_prometheus_instant_threshold",
 		{
-			category: "Monitoring | Prometheus",
+			category: CATEGORY_PROMETHEUS,
 			menuicon: "fas fa-thermometer-half",
 			menulabel: CFWL('emp_widget_prometheus_instant_threshold', "Instant Threshold"),
 			description: CFWL('emp_widget_prometheus_instant_threshold_desc', "A prometheus query that will be used to retrieve the last value(instant) of the matched metrics and colors it by the specified threshold."), 

@@ -3,14 +3,9 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | SPM");
-	
-	/******************************************************************
-	 * 
-	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_spmmonitorstatus_forprojects",
 		{
-			category: "Monitoring | SPM",
+			category: CATEGORY_SPM,
 			menuicon: "fas fa-cogs",
 			menulabel: CFWL('emp_widget_spmmonitorstatus_forprojects', "SPM Monitor Status for Projects"),
 			description: CFWL('emp_widget_spmmonitorstatus_forprojects_desc', "Fetches the status of all the monitors for the specified projects."),

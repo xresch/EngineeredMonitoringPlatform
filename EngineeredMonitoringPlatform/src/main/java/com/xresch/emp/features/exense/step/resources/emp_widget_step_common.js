@@ -1,9 +1,9 @@
 /******************************************************************
  * 
  ******************************************************************/
-EXENSE_CATEGORY = "Exense Step";
+CATEGORY_EXENSE = "Exense Step";
 	
-CFW.dashboard.registerCategory("fas fa-database", EXENSE_CATEGORY);
+CFW.dashboard.registerCategory("fas fa-database", CATEGORY_EXENSE);
 	
 	
 /******************************************************************
@@ -12,7 +12,7 @@ CFW.dashboard.registerCategory("fas fa-database", EXENSE_CATEGORY);
 function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 	
 	return {
-		category: EXENSE_CATEGORY,
+		category: CATEGORY_EXENSE,
 		menuicon: "fas fa-thermometer-half",
 		menulabel: widgetMenuLabel,
 		description: widgetDescription, 
@@ -99,15 +99,22 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 						
 						duration: function(record, value) { return (value != null) ? CFW.format.millisToDuration(value) : '';},
 						
+						planid:  function(record, value) { 
+							if(CFW.utils.isNullOrEmpty(stepURL)) return value;
+							var tenant = record['projectname'];
+							http://localhost:8080/#/root/plans/editor/62694473ee10d74e1b26d76e?tenant=AnotherTestProject
+							return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/plans/editor/'+value+'?tenant='+tenant+'">Edit Plan</a>)</span>';
+						},
+						
 						projectname:  function(record, value) { 
 							if(CFW.utils.isNullOrEmpty(stepURL)) return value;
-							return '<a target="_blank" href="'+stepURL+'#/root/plans/list?tenant='+value+'">'+value+'</a>';
+							return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/plans/list?tenant='+value+'">Show Project</a>)</span>';
 						},
 						
 						schedulername:  function(record, value) { 
 							if(CFW.utils.isNullOrEmpty(stepURL)) return value;
 							var schedulerid = record['schedulerid'];
-							return '<a target="_blank" href="'+stepURL+'#/root/dashboards/__pp__RTMDashboard?__filter1__=text,taskId,'+schedulerid+'">'+value+'</a>';
+							return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/dashboards/__pp__RTMDashboard?__filter1__=text,taskId,'+schedulerid+'">Scheduler Statistics</a>)</span>';
 						},
 					},
 					rendererSettings:{

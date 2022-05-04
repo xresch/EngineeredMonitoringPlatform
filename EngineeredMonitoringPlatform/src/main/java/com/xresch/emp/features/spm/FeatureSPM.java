@@ -20,6 +20,7 @@ public class FeatureSPM extends CFWAppFeature {
 	
 	public static final String PACKAGE_MANUAL = "com.xresch.emp.features.spm.manual";
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.spm.resources";
+	public static final String FILE_PATH_COMMON_JS = "emp_widget_spm_common.js";
 	
 	public static final String PERMISSION_WIDGETS_SPM = "Widgets: SPM";
 	

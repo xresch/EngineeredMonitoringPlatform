@@ -4,14 +4,9 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | Prometheus");
-	
-	/******************************************************************
-	 * 
-	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_prometheus_range_chart",
 		{
-			category: "Monitoring | Prometheus",
+			category: CATEGORY_PROMETHEUS,
 			menuicon: "fas fa-chart-bar",
 			menulabel: CFWL('emp_widget_prometheus_range_chart', "Range Chart"),
 			description: CFWL('emp_widget_prometheus_range_chart_desc', "This widget uses a prometheus query to fetch the last value(instant) of the matched metrics and displays them as a chart."), 

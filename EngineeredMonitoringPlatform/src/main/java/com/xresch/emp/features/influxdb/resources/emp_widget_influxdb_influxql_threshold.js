@@ -6,7 +6,7 @@
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_influxdb_influxql_threshold",
 		{
-			category: "Monitoring | InfluxDB",
+			category: CATEGORY_INFLUXDB,
 			menuicon: "fas fa-thermometer-half",
 			menulabel: CFWL('emp_widget_influxdb_influxql_threshold', "InfluxQL Chart"),
 			description: CFWL('emp_widget_influxdb_influxql_threshold', "This widget uses a InfluxQL query to fetch time series and displays them as a chart."), 

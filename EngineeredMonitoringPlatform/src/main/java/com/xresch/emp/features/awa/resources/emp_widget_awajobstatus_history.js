@@ -1,16 +1,11 @@
 (function (){
-	
-	/******************************************************************
-	 * 
-	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | AWA");
-	
+		
 	/******************************************************************
 	 * 
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_awajobstatus_history",
 		{
-			category: "Monitoring | AWA",
+			category: CATEGORY_AWA,
 			menuicon: "fas fa-traffic-light",
 			menulabel: CFWL('emp_widget_awajobstatus_history', "AWA Job Status - History"),
 			description: CFWL('emp_widget_awajobstatus_history_desc', "Fetches the last X job statuses of one or multiple AWA Jobs."),

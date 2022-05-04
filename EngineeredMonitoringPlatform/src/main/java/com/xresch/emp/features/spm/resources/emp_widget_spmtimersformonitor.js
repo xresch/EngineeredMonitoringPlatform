@@ -1,16 +1,11 @@
 (function (){
-	
-	/******************************************************************
-	 * 
-	 ******************************************************************/
-	CFW.dashboard.registerCategory("fas fa-desktop", "Monitoring | SPM");
-	
+		
 	/******************************************************************
 	 * 
 	 ******************************************************************/
 	CFW.dashboard.registerWidget("emp_spmtimersformonitorstatus",
 		{
-			category: "Monitoring | SPM",
+			category: CATEGORY_SPM,
 			menuicon: "fas fa-cogs",
 			menulabel: CFWL('emp_widget_spmtimersformonitorstatus', "SPM Timers for Monitor"),
 			description: CFWL('emp_widget_spmtimersformonitorstatus_desc', "Fetches the current count for the defined counter of a single monitor and displays it as defined by the threshold options."), 
