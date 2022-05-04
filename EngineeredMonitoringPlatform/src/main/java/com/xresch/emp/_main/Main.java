@@ -49,22 +49,23 @@ public class Main implements CFWAppInterface {
 		// Register Features
     	CFW.Registry.Features.addFeature(FeatureEMPCommon.class);
 		CFW.Registry.Features.addFeature(FeatureAWA.class);
-		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
 		
 		CFW.Registry.Features.addFeature(FeatureDatabases.class);
 		CFW.Registry.Features.addFeature(FeatureMySQL.class);
 		CFW.Registry.Features.addFeature(FeatureMSSQL.class);
 		CFW.Registry.Features.addFeature(FeatureOracle.class);
 		CFW.Registry.Features.addFeature(FeatureGenericJDBC.class);
-		
 		CFW.Registry.Features.addFeature(FeatureMongoDB.class);
+		
+		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
+		CFW.Registry.Features.addFeature(FeatureExenseStep.class);
 		CFW.Registry.Features.addFeature(FeatureInfluxDB.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);
     	CFW.Registry.Features.addFeature(FeatureSPMTheusinator.class);
     	CFW.Registry.Features.addFeature(FeatureWebex.class);
 
-    	CFW.Registry.Features.addFeature(FeatureExenseStep.class);
+    	
 	}
 
 	@Override
