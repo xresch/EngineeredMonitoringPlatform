@@ -385,9 +385,10 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 					// Create Label String
 					String labelString = "";
 					if(!Strings.isNullOrEmpty(projectname)) {
-						labelString += projectname + " >> " + planname +" "+duration+"ms";
+						labelString += projectname + " >> " + planname +" - "+duration+"ms";
 					}else {
-						labelString += planname +" "+duration+"ms";
+						labelString += planname +" - "+duration+"ms";
+						
 					}
 
 					metricListText +=  labelString+" / ";
