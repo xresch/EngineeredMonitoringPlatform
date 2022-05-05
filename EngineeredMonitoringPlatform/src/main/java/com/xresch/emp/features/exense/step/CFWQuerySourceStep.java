@@ -320,7 +320,8 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 		// Push to Queue
 		if(result != null) {
 			for (Document currentDoc : result) {
-				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
+				//TODO
+				JsonObject object = new JsonObject(); //CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
 				outQueue.add(new EnhancedJsonObject(object));
 			}
 		}

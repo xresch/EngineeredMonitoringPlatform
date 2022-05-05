@@ -34,7 +34,9 @@ public class FeatureExenseStep extends CFWAppFeature {
 	.outputMode(JsonMode.RELAXED)
 	.build();
 
-
+	public enum StepExecutionResult {
+		PASSED, FAILED, TECHNICAL_ERROR, RUNNING
+	}
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
@@ -83,7 +85,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Query Source
-		CFW.Registry.Query.registerSource(new CFWQuerySourceStep(null));
+		//CFW.Registry.Query.registerSource(new CFWQuerySourceStep(null));
 		
 		//----------------------------------
 		// Register Job Task

@@ -37,6 +37,7 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWConditions;
 import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
+import com.xresch.emp.features.exense.step.FeatureExenseStep.StepExecutionResult;
 
 public class WidgetPlanStatusByProject extends WidgetDefinition  {
 		
@@ -260,7 +261,7 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 	 * task of this widget does.
 	 ************************************************************/
 	public String getTaskDescription() {
-		return "Checks if any of the selected values returned by the MongoDB query exceeds the selected threshold.";
+		return "Checks if any of the plans exceeds the selected threshold, either by status or by result.";
 	}
 	
 	/************************************************************
@@ -325,16 +326,31 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 		for(JsonElement element : resultArray) {
 			
 			JsonObject current = element.getAsJsonObject();
-			Float value = current.get("duration").getAsFloat();
-
-			ThresholdCondition condition = CFW.Conditions.getConditionForValue(value, settings);
-			if(condition != null 
-			&& CFW.Conditions.compareIsEqualsOrMoreDangerous(alertThreshholdCondition, condition)) {
+			Float duration = current.get("duration").getAsFloat();
+			String result = current.get("result").getAsString();
+			
+			StepExecutionResult execResult = StepExecutionResult.valueOf(result);
+			
+			if(execResult == null || execResult.equals(StepExecutionResult.PASSED)) {
+				//check duration if passed
+				ThresholdCondition condition = CFW.Conditions.getConditionForValue(duration, settings);
+				if(condition != null 
+				&& CFW.Conditions.compareIsEqualsOrMoreDangerous(alertThreshholdCondition, condition)) {
+					conditionMatched = true;
+					instantExceedingThreshold.add(current);
+				}
+			}else if(!execResult.equals(StepExecutionResult.RUNNING)) {
+				//if failed or error
 				conditionMatched = true;
 				instantExceedingThreshold.add(current);
 			}
 		}
-				
+		
+		//----------------------------------------
+		// Handle Alerting
+		StepEnvironment environment = getStepEnvironment(settings);
+		String stepURL = environment.url();
+		
 		//----------------------------------------
 		// Handle Alerting
 		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, this.getWidgetType());
@@ -362,42 +378,44 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 				String metricListHTML = "<ul>";
 				for(JsonObject current : instantExceedingThreshold) {
 					
+					String projectname = current.get("projectname").getAsString();
+					String planname = current.get("planname").getAsString();
+					long duration = current.get("duration").getAsLong();
 					//-----------------------------
 					// Create Label String
 					String labelString = "";
-					for (String fieldname : new String[]{"duration"}) {
-						labelString += current.get(fieldname.trim()).getAsString() + " ";
+					if(!Strings.isNullOrEmpty(projectname)) {
+						labelString += projectname + " >> " + planname +" "+duration+"ms";
+					}else {
+						labelString += planname +" "+duration+"ms";
 					}
-					labelString = labelString.substring(0, labelString.length()-1);
-					
+
 					metricListText +=  labelString+" / ";
 					
 					//---------------------------------
 					// Add Label as String and Link
-//					if( Strings.isNullOrEmpty(urlColumn) ){
-//						metricListHTML += "<li><b>"+labelString+"</b>";
-//					}else {
-//						String url = current.get(urlColumn.trim()).getAsString();
-//						if(Strings.isNullOrEmpty(url)) {
-//							metricListHTML += "<li><b>"+labelString+"</b>";
-//						}else {
-//							metricListHTML += "<li><b><a href=\""+url+"\">"+labelString+"</a></b>";
-//						}
-//					}
-					
-					//-----------------------------
-					// Create Details String
-//					if(!Strings.isNullOrEmpty(detailColumns)) {
-//						String detailsString = "";
-//						for (String fieldname : detailColumns.split(",")) {
-//							if(fieldname != null && (urlColumn == null || !fieldname.trim().equals(urlColumn.trim())) ) {
-//								detailsString += fieldname+"=\""+current.get(fieldname.trim()).getAsString() + "\" ";
-//							}
-//						}
-//						metricListHTML += ": "+detailsString.substring(0, detailsString.length()-1);
-//					}
-//					
-					metricListHTML += "</li>";
+					if(!Strings.isNullOrEmpty(stepURL)) {
+						
+						String planid = current.get("planid").getAsString();
+						String schedulerid = current.get("schedulerid").getAsString();
+						
+						metricListHTML += "<li>"+labelString+"&nbsp;("
+								+"<a target=\"_blank\" href=\""+stepURL+"#/root/plans/editor/"+planid+"?tenant="+projectname+"\">Plan</a>";
+						
+						if(!Strings.isNullOrEmpty(projectname)) {
+							metricListHTML += ", <a target=\"_blank\" href=\""+stepURL+"#/root/plans/list?tenant="+projectname+"\">Project</a>";
+						}
+						
+						if(!Strings.isNullOrEmpty(schedulerid)) {
+							metricListHTML += ", <a target=\"_blank\" href=\""+stepURL+"#/root/dashboards/__pp__RTMDashboard?__filter1__=text,taskId,"+projectname+"\">Stats</a>";
+						}
+						
+						metricListHTML += ")</li>";
+						
+					}else {
+						metricListHTML += "<li>"+labelString+"</li>";
+					}
+			
 				}
 				
 				metricListText = metricListText.substring(0, metricListText.length()-3);
@@ -414,7 +432,7 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 				
 				CFW.Messages.addErrorMessage(messagePlaintext);
 				
-				alertObject.doSendAlert(context, MessageType.ERROR, "EMP: Alert - Database record(s) reached threshold", messagePlaintext, messageHTML);
+				alertObject.doSendAlert(context, MessageType.ERROR, "EMP: Alert - Step plan(s) reached threshold", messagePlaintext, messageHTML);
 				
 			}
 			
@@ -425,7 +443,7 @@ public class WidgetPlanStatusByProject extends WidgetDefinition  {
 				String messageHTML = "<p>"+message+"</p>"+widgetLinkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
-				alertObject.doSendAlert(context, MessageType.SUCCESS, "EMP: Resolved - Database record(s) below threshold", message, messageHTML);
+				alertObject.doSendAlert(context, MessageType.SUCCESS, "EMP: Resolved - Step plan(s) below threshold", message, messageHTML);
 			}
 		}
 	}

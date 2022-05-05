@@ -19,12 +19,12 @@ public class CFWJobStepQueryStatus extends CFWJobTask {
 
 	@Override
 	public String uniqueName() {
-		return "Alerting: Step";
+		return "Alerting: Step Plans Status by Project";
 	}
 
 	@Override
 	public String taskDescription() {
-		return "Checks if any of the records retrieved from the Step database exceeds the specified thresholds.";
+		return widget.getTaskDescription();
 	}
 
 	@Override
