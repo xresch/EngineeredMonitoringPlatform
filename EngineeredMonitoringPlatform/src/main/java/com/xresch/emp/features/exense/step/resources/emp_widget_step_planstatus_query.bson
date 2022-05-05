@@ -1,3 +1,4 @@
+[
 {
     $project: {
         projectid: {
@@ -90,4 +91,5 @@
         starttime: '$executions.startTime',
         endtime: '$executions.endTime'
     }
-}]
+}
+]

@@ -77,6 +77,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Widgets
+		CFW.Registry.Widgets.add(new WidgetPlanStatus());
 		CFW.Registry.Widgets.add(new WidgetPlanStatusByProject());
 		
 		//----------------------------------

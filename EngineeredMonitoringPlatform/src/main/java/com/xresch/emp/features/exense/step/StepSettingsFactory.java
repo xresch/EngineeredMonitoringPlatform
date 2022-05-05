@@ -13,6 +13,7 @@ public class StepSettingsFactory {
 	
 	public static final String FIELDNAME_ENVIRONMENT = "environment";
 	public static final String FIELDNAME_STEP_PROJECT = "JSON_STEP_PROJECT";
+	
 	/************************************************************************************
 	 * Returns the  environment selector field.
 	 * 
@@ -26,6 +27,9 @@ public class StepSettingsFactory {
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(StepEnvironment.SETTINGS_TYPE));
 	}
 
+	/************************************************************************************
+	 *
+	 ************************************************************************************/
 	public static CFWField<?> createProjectsSelectorField() {
 		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECT)
 				.setLabel("{!emp_widget_step_projects!}")
@@ -53,6 +57,40 @@ public class StepSettingsFactory {
 						//-------------------------
 						// Do Autocomplete
 						return env.autocompleteProjects(searchValue, this.getMaxResults());
+					}
+				});
+	}
+	
+	/************************************************************************************
+	 *
+	 ************************************************************************************/
+	public static CFWField<?> createPlansSelectorField() {
+		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECT)
+				.setLabel("{!emp_widget_step_plans!}")
+				.setDescription("{!emp_widget_step_plans_desc!}")
+				.addAttribute("maxTags", "128")
+				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+					
+					@Override
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
+						
+						//-------------------------
+						// Get ID
+						String environmentID = request.getParameter(FIELDNAME_ENVIRONMENT);
+						
+						if(Strings.isNullOrEmpty(environmentID)) {
+							CFW.Messages.addInfoMessage("Please select an environment first.");
+						}
+						
+						//-------------------------
+						// Get mongoDB
+						StepEnvironment env = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
+						if(env == null) {
+							CFW.Messages.addWarningMessage("The chosen environment seems configured incorrectly or is unavailable.");
+						}
+						//-------------------------
+						// Do Autocomplete
+						return env.autocompletePlans(searchValue, this.getMaxResults());
 					}
 				});
 	}
