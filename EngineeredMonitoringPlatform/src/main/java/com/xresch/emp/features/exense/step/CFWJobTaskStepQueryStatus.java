@@ -16,7 +16,7 @@ import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.jobs.FeatureJobs;
 import com.xresch.cfw.features.usermgmt.User;
 
-public class CFWJobStepQueryStatus extends CFWJobTask {
+public class CFWJobTaskStepQueryStatus extends CFWJobTask {
 	
 	private WidgetPlanStatusByProject widget = new WidgetPlanStatusByProject();
 
@@ -65,19 +65,12 @@ public class CFWJobStepQueryStatus extends CFWJobTask {
 	@Override
 	public void executeTask(JobExecutionContext context) throws JobExecutionException {
 		
-		JobDataMap data = context.getMergedJobDataMap();
-		CFWObject paramsAndSettings = this.getParameters();
+		CFWObject jobsettings = this.getParameters();
+		jobsettings.mapJobExecutionContext(context);
 		
-		paramsAndSettings.mapJobExecutionContext(context);
-
-		//------------------------------
-		// Job Settings 
+		CFWTimeframe offset = CFWJobTaskWidgetTaskExecutor.getOffsetFromJobSettings(jobsettings); 
 		
-		CFWTimeframe offset = (CFWTimeframe)paramsAndSettings.getField(CFWJobTaskWidgetTaskExecutor.PARAM_TIMEFRAME_OFFSET).getValue();
-		data.put("earliest", offset.getEarliest()); 
-		data.put("latest", offset.getLatest()); 
-		
-		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings);
+		widget.executeTask(context, jobsettings, null, jobsettings, offset);
 		
 	}
 	

@@ -63,7 +63,7 @@ public class CFWJobTaskAWAJobIssueAlert extends CFWJobTask {
 		
 		paramsAndSettings.mapJobExecutionContext(context);
 		
-		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings);
+		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings, null);
 	}
 	
 }

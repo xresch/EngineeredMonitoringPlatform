@@ -8,6 +8,7 @@ import org.quartz.JobExecutionException;
 
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.features.dashboard.CFWJobTaskWidgetTaskExecutor;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.jobs.FeatureJobs;
@@ -29,10 +30,12 @@ public class CFWJobTaskMongoDBQueryStatus extends CFWJobTask {
 
 	@Override
 	public CFWObject getParameters() {
-		return widget.createQueryAndThresholdFields()
-				.addField(WidgetSettingsFactory.createSampleDataField())
-				.addAllFields(widget.getTasksParameters().getFields())
-			;
+		return new CFWObject()
+			.addField(CFWJobTaskWidgetTaskExecutor.createOffsetMinutesField())
+			.addAllFields(widget.createQueryAndThresholdFields().getFields())
+			.addField(WidgetSettingsFactory.createSampleDataField())
+			.addAllFields(widget.getTasksParameters().getFields())
+		;
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class CFWJobTaskMongoDBQueryStatus extends CFWJobTask {
 		
 		paramsAndSettings.mapJobExecutionContext(context);
 		
-		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings);
+		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings, null);
 	}
 	
 }
