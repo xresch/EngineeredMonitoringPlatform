@@ -3,7 +3,6 @@ package com.xresch.emp.features.exense.step;
 import java.util.HashMap;
 import java.util.Locale;
 
-import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
@@ -16,13 +15,13 @@ import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.jobs.FeatureJobs;
 import com.xresch.cfw.features.usermgmt.User;
 
-public class CFWJobTaskStepQueryStatus extends CFWJobTask {
+public class CFWJobTaskPlanStatus extends CFWJobTask {
 	
-	private WidgetPlanStatusByProject widget = new WidgetPlanStatusByProject();
+	private WidgetPlanStatus widget = new WidgetPlanStatus();
 
 	@Override
 	public String uniqueName() {
-		return "Alerting: Step Plans Status by Project";
+		return "Alerting: Step Plan Status";
 	}
 
 	@Override
