@@ -138,4 +138,40 @@ public class StepEnvironment extends MongoDBEnvironment {
     	return new AutocompleteResult(list);
     }
     
+    /*********************************************************************
+     * Create autocomplete for plans.
+     *********************************************************************/
+    public AutocompleteResult autocompleteUsers(String searchValue, int maxResults) {
+    	
+    	String findDoc = "{'username': {'$regex': '"+searchValue+"', '$options': 'i'}}";
+    	String sortDoc = "{'username': 1}";
+    	
+    	System.out.println(findDoc);
+    	//-----------------------------
+    	// Fetch Data
+    	MongoIterable<Document> result;
+    	
+    	result = this.find("users", findDoc, sortDoc, 0);
+    	
+    	//-----------------------------
+    	// Iterate results
+    	AutocompleteList list = new AutocompleteList();
+    	
+    	if(result != null) {
+    		for (Document currentDoc : result) {
+    			String id = currentDoc.get("_id").toString();
+    			String name = currentDoc.get("username").toString();
+    			System.out.println("id:"+id);
+    			System.out.println("name:"+name);
+    			list.addItem(id, name);
+    			
+    			if(list.size() >= maxResults) {
+    				break;
+    			}
+    		}
+    	}
+    	
+    	return new AutocompleteResult(list);
+    }
+    
 }

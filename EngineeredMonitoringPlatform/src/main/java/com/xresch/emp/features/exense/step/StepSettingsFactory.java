@@ -94,6 +94,40 @@ public class StepSettingsFactory {
 					}
 				});
 	}
+	
+	/************************************************************************************
+	 *
+	 ************************************************************************************/
+	public static CFWField<?> createUsersSelectorField() {
+		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECT)
+				.setLabel("{!emp_widget_step_users!}")
+				.setDescription("{!emp_widget_step_users_desc!}")
+				.addAttribute("maxTags", "128")
+				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+					
+					@Override
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
+						
+						//-------------------------
+						// Get ID
+						String environmentID = request.getParameter(FIELDNAME_ENVIRONMENT);
+						
+						if(Strings.isNullOrEmpty(environmentID)) {
+							CFW.Messages.addInfoMessage("Please select an environment first.");
+						}
+						
+						//-------------------------
+						// Get mongoDB
+						StepEnvironment env = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
+						if(env == null) {
+							CFW.Messages.addWarningMessage("The chosen environment seems configured incorrectly or is unavailable.");
+						}
+						//-------------------------
+						// Do Autocomplete
+						return env.autocompleteUsers(searchValue, this.getMaxResults());
+					}
+				});
+	}
 		
 
 }

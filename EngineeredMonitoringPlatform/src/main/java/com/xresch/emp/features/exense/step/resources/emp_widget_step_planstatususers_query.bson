@@ -1,0 +1,149 @@
+[{
+    $match: {
+        $$usersFilter$$
+    }
+}, {
+    $project: {
+        userid: {
+            $toString: '$_id'
+        },
+        username: '$username'
+    }
+}, {
+    $lookup: {
+        from: 'projects',
+        as: 'projects',
+        'let': {
+            id: '$userid'
+        },
+        pipeline: []
+    }
+}, {
+    $unwind: {
+        path: '$projects',
+        preserveNullAndEmptyArrays: false
+    }
+}, {
+    $unwind: {
+        path: '$projects.members',
+        preserveNullAndEmptyArrays: true
+    }
+}, {
+    $match: {
+        $expr: {
+            $or: [{
+                    $eq: [
+                        true,
+                        '$projects.global'
+                    ]
+                },
+                {
+                    $eq: [
+                        '$username',
+                        '$projects.attributes.owner'
+                    ]
+                },
+                {
+                    $eq: [
+                        '$userid',
+                        '$projects.members.userId'
+                    ]
+                }
+            ]
+        }
+    }
+}, {
+    $project: {
+    _id: 0,
+    projectid: {
+        $toString: '$projects._id'
+    },
+    projectname: '$projects.attributes.name'
+}
+}, {
+    $lookup: {
+        from: 'plans',
+        localField: 'projectid',
+        foreignField: 'attributes.project',
+        as: 'plans',
+        pipeline: [{
+            $match: {
+                visible: {
+                    $eq: true
+                }
+            }
+        }]
+    }
+}, {
+    $unwind: {
+        path: '$plans',
+        preserveNullAndEmptyArrays: false
+    }
+}, {
+    $project: {
+        projectid: true,
+        projectname: true,
+        planid: {
+            $toString: '$plans._id'
+        },
+        planname: '$plans.attributes.name'
+    }
+}, {
+    $lookup: {
+        from: 'executions',
+        localField: 'planid',
+        foreignField: 'planId',
+        as: 'executions',
+        pipeline: [
+	        {$match: {
+				endTime: {
+					$gte: $earliest$,
+					$lte: $latest$
+				}
+			}},
+			{
+                $set: {
+                    duration: {
+                        $subtract: [
+                            '$endTime',
+                            '$startTime'
+                        ]
+                    }
+                }
+            },
+            {
+                $sort: {
+                    endTime: -1
+                }
+            },
+            {
+                $limit: 1
+            }
+        ]
+    }
+}, {
+    $unwind: {
+        path: '$executions',
+        preserveNullAndEmptyArrays: true
+    }
+},{
+	$group: {
+		_id: {"planid": "$planid"}, 
+		"lastexec": { $first: "$$ROOT"}
+	}
+}, {
+    $project: {
+		_id: false,
+        projectid: '$lastexec.projectid',
+        projectname: '$lastexec.projectname',
+        planid: '$lastexec.planid',
+        planname: '$lastexec.planname',
+        schedulerid: '$lastexec.executions.executionTaskID',
+        schedulername: '$lastexec.executions.executiontTaskParameters.attributes.name',
+        status: '$lastexec.executions.status',
+        result: '$lastexec.executions.result',
+        duration: '$lastexec.executions.duration',
+        starttime: '$lastexec.executions.startTime',
+        endtime: '$lastexec.executions.endTime'
+    }
+}]
