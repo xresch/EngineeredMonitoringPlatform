@@ -4,18 +4,14 @@
     }
 }, {
     $project: {
-        userid: {
-            $toString: '$_id'
-        },
+        userid: { $toString: '$_id' },
         username: '$username'
     }
 }, {
     $lookup: {
         from: 'projects',
         as: 'projects',
-        'let': {
-            id: '$userid'
-        },
+        'let': { id: '$userid' },
         pipeline: []
     }
 }, {
@@ -31,35 +27,21 @@
 }, {
     $match: {
         $expr: {
-            $or: [{
-                    $eq: [
-                        true,
-                        '$projects.global'
-                    ]
-                },
-                {
-                    $eq: [
-                        '$username',
-                        '$projects.attributes.owner'
-                    ]
-                },
-                {
-                    $eq: [
-                        '$userid',
-                        '$projects.members.userId'
-                    ]
-                }
+            $or: [
+            	{ $eq: [ true, '$projects.global']},
+                { $eq: ['$username', '$projects.attributes.owner'] },
+                { $eq: ['$userid', '$projects.members.userId'] }
             ]
         }
     }
 }, {
     $project: {
-    _id: 0,
-    projectid: {
-        $toString: '$projects._id'
-    },
-    projectname: '$projects.attributes.name'
-}
+    	_id: 0,
+    	projectid: {
+       		$toString: '$projects._id'
+   		},
+    	projectname: '$projects.attributes.name'
+	}
 }, {
     $lookup: {
         from: 'plans',
