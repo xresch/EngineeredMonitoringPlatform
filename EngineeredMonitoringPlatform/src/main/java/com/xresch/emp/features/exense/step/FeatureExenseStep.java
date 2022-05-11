@@ -3,7 +3,6 @@ package com.xresch.emp.features.exense.step;
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
 
-import com.google.common.util.concurrent.SettableFuture;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
@@ -12,9 +11,6 @@ import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
-import com.xresch.emp.features.common.FeatureEMPCommon;
-import com.xresch.emp.features.databases.generic.CFWQuerySourceGenericJDBC;
-import com.xresch.emp.features.databases.mssql.CFWJobTaskMSSQLQueryStatus;
 
 /**************************************************************************************************************
  * 
@@ -80,6 +76,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetPlanStatus());
 		CFW.Registry.Widgets.add(new WidgetPlanStatusByProject());
 		CFW.Registry.Widgets.add(new WidgetPlanStatusByUser());
+		CFW.Registry.Widgets.add(new WidgetPlanStatusByCurrentUser());
 		CFW.Registry.Widgets.add(new WidgetPlanStatusAll());
 		
 		//----------------------------------
@@ -95,6 +92,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskPlanStatus());
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskPlanStatusByProject());
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskPlanStatusByUser());
+
 		
 		//----------------------------------
 		// Register Manual Page
