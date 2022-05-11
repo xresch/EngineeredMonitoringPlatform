@@ -47,9 +47,11 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 				
 				for(var key in data.payload){
 					var current = data.payload[key];
-					
-					if(current.result == "PASSED"){
-						current.alertstyle =  CFW.colors.getThresholdStyle(current["duration"]
+					var duration = current["duration"];
+					if(current["duration"] == null){ 
+						current.alertstyle = "cfw-gray";
+					}else if(current.result == "PASSED"){
+						current.alertstyle =  CFW.colors.getThresholdStyle(duration
 								,excellentVal
 								,goodVal
 								,warningVal
