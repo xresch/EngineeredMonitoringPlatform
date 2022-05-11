@@ -94,6 +94,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		// Register Job Task
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskPlanStatus());
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskPlanStatusByProject());
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskPlanStatusByUser());
 		
 		//----------------------------------
 		// Register Manual Page
