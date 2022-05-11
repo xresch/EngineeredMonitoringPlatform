@@ -78,6 +78,21 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 					}
 				}
 				
+				
+				//---------------------------
+				// Visible Fields
+				var visiblefields =
+			        [
+				         'projectname'
+						,'planname'
+						,'schedulername'
+						,'status'
+						,'result'
+				        ,'duration'
+				        ,'starttime'
+				        ,'endtime'
+			        ];
+				
 				//---------------------------
 				// Render Settings
 				var dataToRender = {
@@ -140,35 +155,23 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 							maxcolumns: 5,
 						},
 				}};
-				
-				//--------------------------
-				// Add URL Customizer
-				if(!CFW.utils.isNullOrEmpty(settings.urlcolumn)){
-					dataToRender.customizers[settings.urlcolumn] = 
-						function(record, value) { 
-							if(value != null && value != ""){
-				 				return  '<a style="color: inherit;" role="button" target="_blank" href="'+value+'" ><i class="fas fa-external-link-square-alt"></i> Link</a>'; 
-				 			}else {
-				 				return "&nbsp;";
-				 			}
-						};
-				}
-									
+							
 				//--------------------------
 				// Render Widget
 				var renderer = CFW.render.getRenderer(renderType);
+				
+				if(renderType != "tiles"){
+					dataToRender.visiblefields = visiblefields;
+				}	
+				
+				if(renderType == "table"){
+					delete dataToRender.customizers.projectname;
+					delete dataToRender.customizers.schedulername;
+				}
 				callback(widgetObject, renderer.render(dataToRender));
 			});
 		},
 		
-		getEditForm: function (widgetObject) {
-			return CFW.dashboard.getSettingsForm(widgetObject);
-		},
-		
-		onSave: function (form, widgetObject) {
-			widgetObject.JSON_SETTINGS = CFW.format.formToObject(form);
-			return true;	
-		}
 	}
 }	
 	
