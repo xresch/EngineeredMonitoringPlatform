@@ -44,11 +44,12 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 				var warningVal = settings.THRESHOLD_WARNING;
 				var emergencyVal = settings.THRESHOLD_EMERGENCY;
 				var dangerVal = settings.THRESHOLD_DANGER;
+				var isDisabled = settings.THRESHOLD_DISABLED;
 				
 				for(var key in data.payload){
 					var current = data.payload[key];
 					var duration = current["duration"];
-					if(current["duration"] == null){ 
+					if(current["duration"] == null && current.result != "RUNNING"){ 
 						current.alertstyle = "cfw-gray";
 					}else if(current.result == "PASSED"){
 						current.alertstyle =  CFW.colors.getThresholdStyle(duration
@@ -57,10 +58,10 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 								,warningVal
 								,emergencyVal
 								,dangerVal
-								,settings.THRESHOLD_DISABLED);
+								,isDisabled);
 						
 						// if threshold is undefined do green
-						if(current.alertstyle == "cfw-none"){
+						if(current.alertstyle == "cfw-none" || isDisabled){
 							current.alertstyle = "cfw-excellent"; 
 						}
 						
