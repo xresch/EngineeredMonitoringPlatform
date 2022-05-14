@@ -62,9 +62,6 @@
 						return ( CFW.utils.isNullOrEmpty(o[valueIndex]) ) ? -1 : o[timeIndex];
 					})];
 				}
-				console.log('=========== valuesToConvert ============')
-				console.log(latestValueOnly)
-				console.log(valuesToConvert)
 
 				//---------------------------
 				// Loop Values

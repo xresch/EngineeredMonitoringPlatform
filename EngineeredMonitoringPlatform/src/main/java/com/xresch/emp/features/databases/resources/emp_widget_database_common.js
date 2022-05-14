@@ -19,7 +19,6 @@ function createDatabaseQueryStatusWidget(widgetMenuLabel){
 				
 				var settings = widgetObject.JSON_SETTINGS;
 				var renderType = (settings.renderer == null) ? "tiles" : settings.renderer.toLowerCase() ;
-				console.log(settings);
 				
 				//---------------------------------
 				// Check for Data and Errors

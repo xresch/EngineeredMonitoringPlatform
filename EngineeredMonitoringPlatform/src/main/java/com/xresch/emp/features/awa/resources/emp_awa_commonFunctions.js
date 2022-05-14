@@ -53,7 +53,7 @@ function emp_widget_awa_groupByJobname(statusArray){
 		let currentStatus = statusArray[index];
 		let jobname = currentStatus.JOBNAME;
 		let duration = currentStatus.DURATION_SECONDS;
-		console.log(duration)
+
 		//--------------------------------
 		// Initialize group if not exists
 		if(groupedResults[jobname] == undefined){{

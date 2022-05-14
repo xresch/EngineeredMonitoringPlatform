@@ -31,8 +31,7 @@
 					
 					if(!CFW.utils.isNullOrEmpty(settings.labels)){
 						chartLabelFields = settings.labels.trim().split(/[, ]+/);
-						console.log('chartLabelFields: '); 
-						console.log(chartLabelFields); 
+
 					}else{
 						chartLabelFields = emp_widget_prometheus_getChartLabelFields(data.payload);
 					}

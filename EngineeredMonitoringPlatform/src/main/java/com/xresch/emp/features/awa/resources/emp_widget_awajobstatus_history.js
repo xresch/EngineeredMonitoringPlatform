@@ -135,7 +135,6 @@
 							},
 							SUM: function(record, value) {
 								chartRendererSettings.data = record.STATUSES;
-								console.log(chartRendererSettings.data);
 								var chartRenderer = CFW.render.getRenderer('chart');
 
 								return $('<div class="w-100" style="height: 20px; max-width: 200px">').append(chartRenderer.render(chartRendererSettings));

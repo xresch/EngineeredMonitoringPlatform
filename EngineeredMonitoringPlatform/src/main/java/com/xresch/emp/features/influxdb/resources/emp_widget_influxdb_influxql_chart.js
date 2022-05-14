@@ -16,9 +16,7 @@
 				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
 					//cfw_format_csvToObjectArray
 					var settings = widgetObject.JSON_SETTINGS;				
-					
-					console.log('=========== Influx DB Data =========');
-					console.log(data);
+
 					
 					//---------------------------------
 					// Check for Data and Errors
@@ -47,9 +45,6 @@
 						dataArray = emp_influxdb_convertInfluxQLToChartRendererStructure(data.payload, false);
 					}
 					
-					console.log('=========== dataArray =========');
-					console.log(dataArray);
-
 					//---------------------------
 					// Render Settings
 					var dataToRender = {
@@ -72,9 +67,7 @@
 								padding: 2
 							}
 					}};
-							
-					console.log('=========== dataToRender =========');
-					console.log(dataToRender);			
+									
 					//--------------------------
 					// Render Widget
 					var renderer = CFW.render.getRenderer('chart');
