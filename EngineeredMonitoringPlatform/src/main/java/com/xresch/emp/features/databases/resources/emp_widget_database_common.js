@@ -219,37 +219,22 @@ function createDatabaseQueryChartWidget(widgetMenuLabel){
 					rendererSettings:{
 						chart: {
 							// The type of the chart: line|steppedline|area|steppedarea|bar|scatter (to be done radar|pie|doughnut|polarArea|bubble)
-							charttype: 'area',
+							charttype: settings.chart_type,
 							// How should the input data be handled groupbytitle|arrays 
 							datamode: 'groupbytitle',
-							// stack the bars, lines etc...
-							stacked: false,
-							// show or hide the legend
-							showlegend: true, 
-							// show or hide the axes, useful to create sparkline like charts
-							showaxes: true,
-							// make the chart responsive
-							responsive: true,
-							// The name of the field which contains the values for the x-axis
 							xfield: xColumn,
-							// The name of the field which contains the values for the y-axis
 							yfield: yColumn,
-							// The suggested minimum value for the y axis 
-							ymin: 0,
-							// The suggested maximum value for the y axis 
-							ymax: null,
 							//the type of the x axis: linear|logarithmic|category|time
 							xtype: 'time',
 							//the type of the y axis: linear|logarithmic|category|time
 							ytype: 'linear',
-							//the radius for the points shown on line and area charts
-							pointradius: 2,
-							// the padding in pixels of the chart
-							padding: 10,
-							// the color of the x-axes grid lines
-							xaxescolor: 'rgba(128,128,128, 0.2)',
-							// the color of the y-axes grid lines
-							yaxescolor: 'rgba(128,128,128, 0.8)',
+							stacked: settings.stacked,
+							showlegend: settings.show_legend,
+							showaxes: settings.show_axes,
+							ymin: settings.ymin,
+							ymax: settings.ymax,
+							pointradius: settings.pointradius,
+							padding: 2
 						}
 					}
 				};
