@@ -58,6 +58,7 @@ public class FeatureGenericJDBC extends CFWAppFeature {
 		//----------------------------------
 		// Register Widgets
 		CFW.Registry.Widgets.add(new WidgetGenericJDBCQueryStatus());
+		CFW.Registry.Widgets.add(new WidgetGenericJDBCQueryChart());
 		
 		//----------------------------------
 		// Register Parameters
