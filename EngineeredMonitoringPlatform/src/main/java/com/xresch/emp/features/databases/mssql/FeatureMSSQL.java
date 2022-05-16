@@ -58,6 +58,7 @@ public class FeatureMSSQL extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Widgets
+		CFW.Registry.Widgets.add(new WidgetMSSQLQueryChart());
 		CFW.Registry.Widgets.add(new WidgetMSSQLQueryStatus());
 		
 		//----------------------------------

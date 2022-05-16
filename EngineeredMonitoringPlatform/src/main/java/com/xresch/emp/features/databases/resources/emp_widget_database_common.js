@@ -155,7 +155,7 @@ function createDatabaseQueryStatusWidget(widgetMenuLabel){
 function createDatabaseQueryChartWidget(widgetMenuLabel){
 	return {
 		category: "Database",
-		menuicon: "fas fa-chart",
+		menuicon: "fas fa-chart-bar",
 		menulabel: widgetMenuLabel,
 		description: CFWL('emp_widget_database_chart_desc', "Executes a database query and displays the data as a chart."), 
 		usetimeframe: true,
