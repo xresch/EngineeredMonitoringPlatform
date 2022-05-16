@@ -62,6 +62,7 @@ public class FeatureMySQL extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Widgets
+		CFW.Registry.Widgets.add(new WidgetMySQLQueryChart());
 		CFW.Registry.Widgets.add(new WidgetMySQLQueryStatus());
 		
 		//----------------------------------
