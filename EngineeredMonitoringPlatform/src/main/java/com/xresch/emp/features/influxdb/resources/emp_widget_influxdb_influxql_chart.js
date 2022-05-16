@@ -57,6 +57,7 @@
 								datamode: mode,
 								xfield: xfield,
 								yfield: yfield,
+								ytype: settings.y_axis_type,
 								stacked: settings.stacked,
 								showlegend: settings.show_legend,
 								// if not set make true

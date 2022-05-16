@@ -59,7 +59,7 @@ public class WidgetRangeChart extends WidgetDefinition {
 						.setLabel("{!emp_widget_prometheus_labels!}")
 						.setDescription("{!emp_widget_prometheus_labels_desc!}")
 				)
-				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
+				.addAllFields(WidgetSettingsFactory.createDefaultChartFields(false, false))
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}

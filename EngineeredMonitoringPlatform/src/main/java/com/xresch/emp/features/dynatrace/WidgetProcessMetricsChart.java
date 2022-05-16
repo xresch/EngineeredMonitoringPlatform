@@ -40,7 +40,7 @@ public class WidgetProcessMetricsChart extends WidgetDefinition {
 				.addField(DynatraceSettingsFactory.createMetricsSelectorField("PROCESS_GROUP"))
 				
 				
-				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
+				.addAllFields(WidgetSettingsFactory.createDefaultChartFields(false, false))
 				
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;

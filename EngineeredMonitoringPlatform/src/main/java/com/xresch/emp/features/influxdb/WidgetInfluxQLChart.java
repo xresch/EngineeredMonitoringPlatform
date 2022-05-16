@@ -63,7 +63,7 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 						.setLabel("{!emp_widget_influxdb_influxql_labels!}")
 						.setDescription("{!emp_widget_influxdb_influxql_labels_desc!}")
 				)
-				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
+				.addAllFields(WidgetSettingsFactory.createDefaultChartFields(false, false))
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}

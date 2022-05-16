@@ -50,6 +50,7 @@
 								datamode: 'arrays',
 								xfield: 'xvalues',
 								yfield: 'yvalues',
+								ytype: settings.y_axis_type,
 								stacked: settings.stacked,
 								showlegend: settings.show_legend,
 								// if not set make true

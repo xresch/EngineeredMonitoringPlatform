@@ -47,6 +47,7 @@
 								charttype: settings.chart_type.toLowerCase(),
 								xfield: 'time',
 								yfield: 'value',
+								ytype: settings.y_axis_type,
 								stacked: settings.stacked,
 								showlegend: settings.show_legend,
 								// if not set make true

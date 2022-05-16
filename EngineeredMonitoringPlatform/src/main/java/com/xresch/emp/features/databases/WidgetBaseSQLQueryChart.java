@@ -66,7 +66,7 @@ public abstract class WidgetBaseSQLQueryChart extends WidgetDefinition {
 	public CFWObject getSettings() {
 		
 		return createQueryFields()						
-				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
+				.addAllFields(WidgetSettingsFactory.createDefaultChartFields(true, false))
 				.addField(WidgetSettingsFactory.createSampleDataField())
 									
 		;

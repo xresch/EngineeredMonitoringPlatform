@@ -225,9 +225,9 @@ function createDatabaseQueryChartWidget(widgetMenuLabel){
 							xfield: xColumn,
 							yfield: yColumn,
 							//the type of the x axis: linear|logarithmic|category|time
-							xtype: 'time',
+							xtype: settings.x_axis_type,
 							//the type of the y axis: linear|logarithmic|category|time
-							ytype: 'linear',
+							ytype: settings.y_axis_type,
 							stacked: settings.stacked,
 							showlegend: settings.show_legend,
 							showaxes: settings.show_axes,

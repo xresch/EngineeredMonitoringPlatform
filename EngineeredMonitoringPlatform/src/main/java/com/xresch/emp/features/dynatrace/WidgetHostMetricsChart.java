@@ -37,7 +37,7 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 				
 				.addField(DynatraceSettingsFactory.createMetricsSelectorField("HOST"))
 				
-				.addAllFields(WidgetSettingsFactory.createDefaultChartFields())
+				.addAllFields(WidgetSettingsFactory.createDefaultChartFields(false, false))
 				
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
