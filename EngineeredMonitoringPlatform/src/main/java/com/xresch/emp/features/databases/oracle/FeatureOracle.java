@@ -58,6 +58,7 @@ public class FeatureOracle extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Widgets
+		CFW.Registry.Widgets.add(new WidgetOracleQueryChart());
 		CFW.Registry.Widgets.add(new WidgetOracleQueryStatus());
 		
 		//----------------------------------
