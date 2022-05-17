@@ -58,8 +58,6 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	
 	@Override
 	public String getWidgetType() {return "emp_mongodb_querystatus";}
-
-
 	
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
@@ -190,11 +188,13 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 				
 		//-----------------------------
 		// Resolve Collection Param
-		ArrayList<String> collectionName = (ArrayList<String>)widgetSettings.getField(MongoDBSettingsFactory.FIELDNAME_QUERY_COLLECTION).getValue();
+		LinkedHashMap<String,String> collectionNameMap = (LinkedHashMap<String,String>)widgetSettings.getField(MongoDBSettingsFactory.FIELDNAME_QUERY_COLLECTION).getValue();
 		
-		if(collectionName.size() == 0) {
+		if(collectionNameMap.size() == 0) {
 			return null;
 		}
+		
+		String collectionName = collectionNameMap.keySet().toArray(new String[]{})[0];
 		
 		//-----------------------------
 		// Resolve Find Param
@@ -212,10 +212,10 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		// Fetch Data
 		MongoIterable<Document> result;
 		if(Strings.isNullOrEmpty(aggregateDocString)) {
-			result = environment.find(collectionName.get(0), findDocString, sortDocString, -1);
+			result = environment.find(collectionName, findDocString, sortDocString, -1);
 		}else {
 
-			result = environment.aggregate(collectionName.get(0), aggregateDocString);
+			result = environment.aggregate(collectionName, aggregateDocString);
 		}
 		
 		//-----------------------------

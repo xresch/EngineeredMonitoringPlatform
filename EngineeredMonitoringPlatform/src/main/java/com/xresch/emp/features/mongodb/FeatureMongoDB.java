@@ -71,6 +71,7 @@ public class FeatureMongoDB extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Widgets
+		CFW.Registry.Widgets.add(new WidgetMongoDBQueryChart());
 		CFW.Registry.Widgets.add(new WidgetMongoDBQueryStatus());
 		
 		//----------------------------------
