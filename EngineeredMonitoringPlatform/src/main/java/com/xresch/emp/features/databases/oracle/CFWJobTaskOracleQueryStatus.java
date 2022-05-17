@@ -8,6 +8,8 @@ import org.quartz.JobExecutionException;
 
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.datahandling.CFWTimeframe;
+import com.xresch.cfw.features.dashboard.CFWJobTaskWidgetTaskExecutor;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.jobs.FeatureJobs;
@@ -29,7 +31,9 @@ public class CFWJobTaskOracleQueryStatus extends CFWJobTask {
 
 	@Override
 	public CFWObject getParameters() {
-		return widget.createQueryAndThresholdFields()
+		return new CFWObject()
+				.addField(CFWJobTaskWidgetTaskExecutor.createOffsetMinutesField())
+				.addAllFields(widget.createQueryAndThresholdFields().getFields())
 				.addField(WidgetSettingsFactory.createSampleDataField())
 				.addAllFields(widget.getTasksParameters().getFields())
 			;
@@ -59,11 +63,14 @@ public class CFWJobTaskOracleQueryStatus extends CFWJobTask {
 
 	@Override
 	public void executeTask(JobExecutionContext context) throws JobExecutionException {
-		CFWObject paramsAndSettings = this.getParameters();
 		
-		paramsAndSettings.mapJobExecutionContext(context);
+		CFWObject jobsettings = this.getParameters();
+		jobsettings.mapJobExecutionContext(context);
 		
-		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings, null);
+		CFWTimeframe offset = CFWJobTaskWidgetTaskExecutor.getOffsetFromJobSettings(jobsettings); 
+		
+		widget.executeTask(context, jobsettings, null, jobsettings, offset);
+		
 	}
 	
 }
