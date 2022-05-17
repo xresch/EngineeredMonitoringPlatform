@@ -192,7 +192,7 @@ public class WidgetPlanExecutionsLast extends WidgetDefinition  {
 	 *********************************************************************/
 	public JsonArray createSampleData() { 	
 				
-		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData();
+		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData(24);
 		return array;
 	}
 		

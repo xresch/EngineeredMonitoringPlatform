@@ -88,7 +88,7 @@ public class WidgetPlanDurationChart extends WidgetDefinition  {
 		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
 		if(isSampleData != null && isSampleData) {
 			response.addCustomAttribute("url", "http://sampleurl.yourserver.io");
-			response.setPayLoad(createSampleData());
+			response.setPayLoad(createSampleData(earliest, latest));
 			return;
 		}
 		
@@ -169,10 +169,9 @@ public class WidgetPlanDurationChart extends WidgetDefinition  {
 	/*********************************************************************
 	 * 
 	 *********************************************************************/
-	public JsonArray createSampleData() { 	
+	public JsonArray createSampleData(long earliest, long latest) { 	
 				
-		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData();
-		return array;
+		return StepCommonFunctions.defaultStepSeriesExampleData(3,24, earliest, latest);
 	}
 		
 }

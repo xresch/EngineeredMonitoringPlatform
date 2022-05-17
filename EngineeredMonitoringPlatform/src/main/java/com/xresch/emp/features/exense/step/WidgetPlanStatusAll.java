@@ -153,7 +153,7 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 	 *********************************************************************/
 	public JsonArray createSampleData() { 	
 				
-		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData();
+		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData(120);
 		return array;
 	}
 

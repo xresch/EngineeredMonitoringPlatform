@@ -169,10 +169,11 @@ public class StepCommonFunctions {
 	}
 
 	
-	/*********************************************************************
+	/**
+	 * @param planCount TODO*******************************************************************
 	 * 
 	 *********************************************************************/
-	public static JsonArray defaultStepStatusExampleData() {
+	public static JsonArray defaultStepStatusExampleData(int planCount) {
 			
 	//		{
 	//		"projectid": "62444fadee10d74e1b1395af",
@@ -189,7 +190,7 @@ public class StepCommonFunctions {
 	//	},
 			JsonArray array = new JsonArray();
 			
-			for(int i = 0 ; i < 24; i++) {
+			for(int i = 0 ; i < planCount; i++) {
 				String alphas = ("["+CFW.Random.randomStringAlphaNumerical(3)+"] ").toUpperCase();
 				String randomProject = CFW.Random.randomFromArray(new String[] {"Project Omega", "Project Alpha", "Project Epsilon"});
 				String randomPlan = CFW.Random.randomFromArray(new String[] {"Test Plan", "Ricks Plan Rolls", "Plan Ahead", "Plan of a Lifetime", "No Plan", "Plan Tage", "Plan E", "Plan ET"});
@@ -215,6 +216,44 @@ public class StepCommonFunctions {
 			return array;
 		}
 
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public static JsonArray defaultStepSeriesExampleData(int seriesCount, int valuesCount, long earliest, long latest) { 
+		JsonArray array = new JsonArray();
+		
+		long timerange = latest - earliest;
+		long timestep = timerange / valuesCount;
+		
+		for(int j = 0; j < seriesCount; j++) {
+			
+			String alphas = ("["+CFW.Random.randomStringAlphaNumerical(3)+"] ").toUpperCase();
+			String randomProject = CFW.Random.randomFromArray(new String[] {"Project Omega", "Project Alpha", "Project Epsilon"});
+			String randomPlan = CFW.Random.randomFromArray(new String[] {"Test Plan", "Ricks Plan Rolls", "Plan Ahead", "Plan of a Lifetime", "No Plan", "Plan Tage", "Plan E", "Plan ET"});
+			
+			for(int i = 0 ; i < 24; i++) {
+				String randomResult = CFW.Random.randomFromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "FAILED", "TECHNICAL_ERROR", "RUNNING"});
+				
+				int duration = CFW.Random.randomIntegerInRange(10, 12000);
+				JsonObject object = new JsonObject();
+				object.addProperty("projectid", "62444fadee10d74e1b1395af");
+				object.addProperty("projectname", alphas+randomProject);
+				object.addProperty("planid", CFW.Random.randomStringAlphaNumerical(24).toLowerCase());
+				object.addProperty("planname",  alphas+randomPlan);
+				object.addProperty("schedulerid", CFW.Random.randomStringAlphaNumerical(24).toLowerCase());
+				object.addProperty("schedulername", alphas+"Scheduler for "+randomPlan);
+				object.addProperty("status", "ENDED");
+				object.addProperty("result", randomResult);
+				object.addProperty("duration",  duration);
+				object.addProperty("starttime", earliest+(timestep*i)-duration);
+				object.addProperty("endtime",  earliest+(timestep*i));
+				
+				array.add(object);
+			}
+		}
+		
+		return array;
+	}
 
 	public static StepEnvironment resolveEnvironmentFromWidgetSettings(CFWObject settings) {
 		//-----------------------------

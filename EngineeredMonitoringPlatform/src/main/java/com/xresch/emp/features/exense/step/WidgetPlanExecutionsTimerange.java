@@ -91,7 +91,7 @@ public class WidgetPlanExecutionsTimerange extends WidgetDefinition  {
 		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
 		if(isSampleData != null && isSampleData) {
 			response.addCustomAttribute("url", "http://sampleurl.yourserver.io");
-			response.setPayLoad(createSampleData());
+			response.setPayLoad(createSampleData(earliest, latest));
 			return;
 		}
 		
@@ -172,10 +172,9 @@ public class WidgetPlanExecutionsTimerange extends WidgetDefinition  {
 	/*********************************************************************
 	 * 
 	 *********************************************************************/
-	public JsonArray createSampleData() { 	
-				
-		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData();
-		return array;
+	public JsonArray createSampleData(long earliest, long latest) { 	
+		
+		return StepCommonFunctions.defaultStepSeriesExampleData(2,24, earliest, latest);
 	}
 		
 }
