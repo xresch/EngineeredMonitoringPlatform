@@ -173,4 +173,79 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 		
 	}
 }	
+
+
+/******************************************************************
+ * 
+ ******************************************************************/
+function createStepChartWidgetBase(
+		  widgetMenuLabel
+		, widgetDescription
+		, arrayTitleFields
+		, timeField
+		, valueField
+	){
+	return {
+		category: CATEGORY_EXENSE,
+		menuicon: "fas fa-chart-bar",
+		menulabel: widgetMenuLabel,
+		description: widgetDescription, 
+		usetimeframe: true,
+		createWidgetInstance: function (widgetObject, params, callback) {
+				
+			CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
+				
+				var settings = widgetObject.JSON_SETTINGS;
+
+				//---------------------------------
+				// Check for Data and Errors
+				if(CFW.utils.isNullOrEmpty(data.payload) || typeof data.payload == 'string' || data.payload.length == 0){
+					callback(widgetObject, '');
+					return;
+				}
+								
+				//---------------------------
+				// Render Settings
+				var dataToRender = {
+					data: data.payload,
+					//bgstylefield: 'alertstyle',
+					//textstylefield: 'textstyle',
+					titlefields: arrayTitleFields, 
+					//visiblefields: visiblefields,
+					titleformat: null, 
+					labels: {
+						"projectname": "Project"
+						, "planname": "Plan"
+					},
+					customizers: {},
+					rendererSettings:{
+						chart: {
+							// The type of the chart: line|steppedline|area|steppedarea|bar|scatter (to be done radar|pie|doughnut|polarArea|bubble)
+							charttype: settings.chart_type,
+							// How should the input data be handled groupbytitle|arrays 
+							datamode: 'groupbytitle',
+							xfield: timeField,
+							yfield: valueField,
+							//the type of the y axis: linear|logarithmic|category|time
+							ytype: settings.y_axis_type,
+							stacked: settings.stacked,
+							showlegend: settings.show_legend,
+							showaxes: settings.show_axes,
+							ymin: settings.ymin,
+							ymax: settings.ymax,
+							pointradius: settings.pointradius,
+							padding: 2
+						}
+					}
+				};
+												
+				//--------------------------
+				// Render Widget
+				var renderer = CFW.render.getRenderer('chart');
+				callback(widgetObject, renderer.render(dataToRender));
+			});
+		},
+	}
+}	
+	
 	
