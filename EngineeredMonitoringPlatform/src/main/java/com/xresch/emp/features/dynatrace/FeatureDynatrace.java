@@ -63,6 +63,7 @@ public class FeatureDynatrace extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetHostEvents());
 		CFW.Registry.Widgets.add(new WidgetHostLogs());
 		CFW.Registry.Widgets.add(new WidgetHostMetricsChart());
+		CFW.Registry.Widgets.add(new WidgetHostMetricsStatus());
 		CFW.Registry.Widgets.add(new WidgetHostProcesses());
 		CFW.Registry.Widgets.add(new WidgetHostUnitConsumptionByTags());
 		CFW.Registry.Widgets.add(new WidgetProcessEvents());

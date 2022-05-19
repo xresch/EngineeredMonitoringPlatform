@@ -339,7 +339,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		
 		return null;
 	}
-	
+		
 	
 	/************************************************************************************
 	 * 

@@ -10,7 +10,7 @@ CFW.dashboard.registerCategory("fas fa-desktop", DYNATRACE_WIDGET_CATEGORY);
 /******************************************************************
  * 
  ******************************************************************/
-function emp_dynatrace_prepareMetricData(metricsArray){
+function emp_dynatrace_prepareMetricData(metricsArray, singleValues){
 	
 	dataToRender = [];
 	for(let i = 0; i < metricsArray.length; i++ ){
@@ -22,10 +22,21 @@ function emp_dynatrace_prepareMetricData(metricsArray){
 			let dataLength = currentMetric.data.length;
 			for(let j = 0; j < dataLength; j++ ){
 				currentData = currentMetric.data[j];
-				let dataset = {
+				
+				
+				let dataset;
+				if(!singleValues){
+					dataset = {
 						metric: 	 currentMetric.metricId.replace('builtin:', '') +"-"+ currentData.dimensions[currentData.dimensions.length-1],
 						xvalues:	 currentData.timestamps,
 						yvalues:	 currentData.values,
+					}
+				}else{
+					dataset = {
+						metric: 	currentMetric.metricId.replace('builtin:', '') +"-"+ currentData.dimensions[currentData.dimensions.length-1],
+						time:	 	currentData.timestamps[0],
+						value:	 	currentData.values[0],
+					}
 				}
 		
 				dataToRender.push(dataset);
