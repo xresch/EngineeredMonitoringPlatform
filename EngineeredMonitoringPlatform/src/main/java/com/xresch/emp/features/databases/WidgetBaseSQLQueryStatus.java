@@ -68,7 +68,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 	
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
-		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+		return WidgetDataCachePolicy.TIME_BASED;
 	}
 	
 	@Override
