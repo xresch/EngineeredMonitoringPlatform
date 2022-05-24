@@ -16,6 +16,7 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
@@ -27,7 +28,12 @@ public class WidgetHostProcesses extends WidgetDefinition {
 	private static Logger logger = CFWLog.getLogger(WidgetHostProcesses.class.getName());
 	@Override
 	public String getWidgetType() {return "emp_dynatrace_hostprocesses";}
-		
+	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+	}
+			
 
 	@Override
 	public CFWObject getSettings() {

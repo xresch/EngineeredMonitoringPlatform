@@ -23,6 +23,7 @@ import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
@@ -34,6 +35,11 @@ public class WidgetPlanStatusByUser extends WidgetDefinition  {
 	@Override
 	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_planstatususers";}
 	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+	}
+		
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();

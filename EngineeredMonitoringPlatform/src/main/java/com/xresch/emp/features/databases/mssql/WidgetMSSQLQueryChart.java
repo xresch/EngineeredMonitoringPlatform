@@ -10,6 +10,7 @@ import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.db.DBInterface;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -25,7 +26,7 @@ public class WidgetMSSQLQueryChart extends WidgetBaseSQLQueryChart {
 	private static Logger logger = CFWLog.getLogger(WidgetMSSQLQueryChart.class.getName());
 	@Override
 	public String getWidgetType() {return "emp_mssqlquerychart";}
-
+		
 	@SuppressWarnings("rawtypes")
 	@Override
 	public CFWField createEnvironmentSelectorField() {

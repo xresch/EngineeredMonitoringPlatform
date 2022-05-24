@@ -18,6 +18,7 @@ import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
@@ -30,7 +31,12 @@ public class WidgetHostLogs extends WidgetDefinition {
 	private static Logger logger = CFWLog.getLogger(WidgetHostLogs.class.getName());
 	@Override
 	public String getWidgetType() {return "emp_dynatrace_hostlogs";}
-		
+	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+	}
+	
 	class WidgetHostLogsSettings extends CFWObject {
 		public WidgetHostLogsSettings() {
 			this.addField(DynatraceSettingsFactory.createEnvironmentSelectorField())

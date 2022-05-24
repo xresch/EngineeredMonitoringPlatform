@@ -17,6 +17,7 @@ import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
@@ -30,7 +31,12 @@ public class WidgetServiceStatus extends WidgetDefinition {
 	private static Logger logger = CFWLog.getLogger(WidgetServiceStatus.class.getName());
 	@Override
 	public String getWidgetType() {return "emp_webexservicestatus";}
-
+	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.ALWAYS;
+	}	
+	
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()

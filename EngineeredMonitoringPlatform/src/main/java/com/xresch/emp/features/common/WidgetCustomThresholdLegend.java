@@ -13,6 +13,7 @@ import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.validation.LengthValidator;
 import com.xresch.emp.features.common.FeatureEMPCommon;
@@ -23,6 +24,12 @@ public class WidgetCustomThresholdLegend extends WidgetDefinition {
 	@Override
 	public String getWidgetType() {return "emp_customthresholdlegend";}
 
+
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.OFF;
+	}
+	
 	@Override
 	public CFWObject getSettings() {
 		LengthValidator validator = new LengthValidator(0, 1024);

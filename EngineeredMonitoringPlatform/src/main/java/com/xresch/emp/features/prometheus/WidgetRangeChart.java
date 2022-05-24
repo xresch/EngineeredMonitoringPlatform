@@ -20,6 +20,7 @@ import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
@@ -32,7 +33,12 @@ public class WidgetRangeChart extends WidgetDefinition {
 	@Override
 	public String getWidgetType() {return "emp_prometheus_range_chart";}
 		
-
+	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+	}
+	
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()

@@ -30,6 +30,7 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.logging.CFWLog;
@@ -61,6 +62,11 @@ public abstract class WidgetBaseSQLQueryChart extends WidgetDefinition {
 	public abstract CFWField createEnvironmentSelectorField();
 	
 	public abstract DBInterface getDatabaseInterface(String environmentID);
+	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+	}
 	
 	@Override
 	public CFWObject getSettings() {

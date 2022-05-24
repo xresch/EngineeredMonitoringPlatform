@@ -18,6 +18,7 @@ import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
@@ -29,7 +30,12 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 	private static Logger logger = CFWLog.getLogger(WidgetHostUnitConsumptionByTags.class.getName());
 	@Override
 	public String getWidgetType() {return "emp_dynatrace_hostunitconsumptionbytags";}
-		
+	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+	}
+			
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()

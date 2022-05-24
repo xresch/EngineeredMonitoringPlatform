@@ -63,6 +63,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 				.maximumSize(1000)
 				.expireAfterWrite(6, TimeUnit.MINUTES)
 		);
+	
 	private static final Cache<String, CFWHttpResponse> DYNATRACE_CACHE_30MIN = CFW.Caching.addCache("EMP Dynatrace Cache[30min]", 
 			CacheBuilder.newBuilder()
 				.initialCapacity(10)

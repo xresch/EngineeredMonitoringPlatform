@@ -28,6 +28,7 @@ import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
@@ -49,7 +50,12 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 	private static Logger logger = CFWLog.getLogger(WidgetInfluxQLThreshold.class.getName());
 	@Override
 	public String getWidgetType() {return "emp_influxdb_influxql_threshold";}
-		
+	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+	}
+			
 	/*********************************************************************
 	 * 
 	 *********************************************************************/

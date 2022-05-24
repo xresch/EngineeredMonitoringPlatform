@@ -22,6 +22,7 @@ import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
@@ -34,7 +35,12 @@ public class WidgetMonitorStatusAll extends WidgetDefinition {
 	@Override
 	public String getWidgetType() {return "emp_spmmonitorstatus_all";}
 		
-
+	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.ALWAYS;
+	}
+	
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()

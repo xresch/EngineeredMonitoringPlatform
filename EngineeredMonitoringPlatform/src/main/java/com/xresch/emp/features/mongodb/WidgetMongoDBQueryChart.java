@@ -33,6 +33,7 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.logging.CFWLog;
@@ -65,6 +66,11 @@ public class WidgetMongoDBQueryChart extends WidgetDefinition {
 	@Override
 	public String getWidgetType() {return "emp_mongodb_querychart";}
 	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+	}
+		
 	
 	@Override
 	public CFWObject getSettings() {

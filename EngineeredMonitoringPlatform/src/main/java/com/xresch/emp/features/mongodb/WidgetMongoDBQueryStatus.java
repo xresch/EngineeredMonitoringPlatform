@@ -29,6 +29,7 @@ import com.xresch.cfw.features.dashboard.CFWJobTaskWidgetTaskExecutor;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
@@ -59,6 +60,11 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	@Override
 	public String getWidgetType() {return "emp_mongodb_querystatus";}
 	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.TIMEPRESET_BASED;
+	}
+		
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();

@@ -29,6 +29,7 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
@@ -55,6 +56,11 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 	private static Logger logger = CFWLog.getLogger(WidgetMonitorStatus.class.getName());
 	@Override
 	public String getWidgetType() {return "emp_spmmonitorstatus";}
+	
+	@Override
+	public WidgetDataCachePolicy getCachePolicy() {
+		return WidgetDataCachePolicy.ALWAYS;
+	}
 		
 
 	@Override
