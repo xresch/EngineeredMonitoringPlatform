@@ -61,13 +61,13 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 			CacheBuilder.newBuilder()
 				.initialCapacity(10)
 				.maximumSize(1000)
-				.expireAfterAccess(5, TimeUnit.MINUTES)
+				.expireAfterWrite(6, TimeUnit.MINUTES)
 		);
 	private static final Cache<String, CFWHttpResponse> DYNATRACE_CACHE_30MIN = CFW.Caching.addCache("EMP Dynatrace Cache[30min]", 
 			CacheBuilder.newBuilder()
 				.initialCapacity(10)
 				.maximumSize(100)
-				.expireAfterAccess(30, TimeUnit.MINUTES)
+				.expireAfterWrite(30, TimeUnit.MINUTES)
 		);
 			
 	private CFWField<String> apiUrl = CFWField.newString(FormFieldType.TEXT, PrometheusEnvironmentFields.API_URL)
