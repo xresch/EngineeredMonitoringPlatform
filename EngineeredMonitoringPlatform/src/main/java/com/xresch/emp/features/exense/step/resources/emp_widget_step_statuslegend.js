@@ -21,7 +21,6 @@
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-danger">&nbsp;</div> Danger/Failed </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-blue">&nbsp;</div> Running</div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-gray">&nbsp;</div> Unknown/No Data </div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-darkgray">&nbsp;</div> Disabled </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-black">&nbsp;</div> Technical Error </div>'
 					;
 				callback(widgetObject, html);
