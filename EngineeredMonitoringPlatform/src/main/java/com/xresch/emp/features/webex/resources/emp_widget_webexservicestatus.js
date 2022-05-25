@@ -120,20 +120,8 @@
 						customizers: {
 							components: function(record, value) { return (value.length == 0) ? null : emp_widget_webex_creatSubComponentHTML(dataToRender, record, value); }
 						},
-						rendererSettings:{
-							tiles: {
-								sizefactor:  settings.sizefactor,
-								showlabels:  settings.showlabels,
-								borderstyle: settings.borderstyle,
-								popover: false
-							},
-							table: {
-								narrow: 	true,
-								striped: 	false,
-								hover: 		false,
-								filterable: false
-							}
-					}};
+						rendererSettings: CFW.dashboard.createStatusWidgetRendererSettings(settings)
+					};
 					
 					//--------------------------
 					// Adjust Settings for Table

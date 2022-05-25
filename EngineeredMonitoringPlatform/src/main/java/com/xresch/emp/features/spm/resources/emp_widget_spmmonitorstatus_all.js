@@ -14,6 +14,8 @@
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
+					
+					var settings = widgetObject.JSON_SETTINGS;
 					var monitorStats = data.payload;
 					
 					for(var key in monitorStats){
@@ -62,26 +64,8 @@
 					 			}
 							},
 					 	},
-						rendererSettings:{
-							tiles: {
-								sizefactor: widgetObject.JSON_SETTINGS.sizefactor,
-								showlabels: widgetObject.JSON_SETTINGS.showlabels,
-								borderstyle: widgetObject.JSON_SETTINGS.borderstyle
-							},
-							table: {
-								narrow: 	true,
-								striped: 	false,
-								hover: 		false,
-								filterable: false,
-							},
-							panels: {
-								narrow: 	true,
-							},
-							cards: {
-								narrow: 	true,
-								maxcolumns: 5,
-							},
-					}};
+						rendererSettings: CFW.dashboard.createStatusWidgetRendererSettings(settings)
+					};
 					
 					//-----------------------------------
 					// Adjust RenderSettings for Table

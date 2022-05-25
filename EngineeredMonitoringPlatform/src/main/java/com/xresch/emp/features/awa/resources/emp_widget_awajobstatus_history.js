@@ -68,6 +68,11 @@
 								showlabels: false,
 								borderstyle: settings.borderstyle
 							},
+							statuslist: {
+								sizefactor: settings.sizefactor,
+								showlabels: false,
+								borderstyle: settings.borderstyle
+							},
 							table: {
 								narrow: 	true,
 								striped: 	true,

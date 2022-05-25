@@ -64,26 +64,8 @@
 					 			}
 							},
 					 	},
-						rendererSettings:{
-							tiles: {
-								sizefactor: settings.sizefactor,
-								showlabels: settings.showlabels,
-								borderstyle: settings.borderstyle
-							},
-							table: {
-								narrow: 	true,
-								striped: 	false,
-								hover: 		false,
-								filterable: false,
-							},
-							panels: {
-								narrow: 	true,
-							},
-							cards: {
-								narrow: 	true,
-								maxcolumns: 5,
-							},
-					}};
+						rendererSettings: CFW.dashboard.createStatusWidgetRendererSettings(settings)
+					};
 					
 					//-----------------------------------
 					// Adjust RenderSettings for Table

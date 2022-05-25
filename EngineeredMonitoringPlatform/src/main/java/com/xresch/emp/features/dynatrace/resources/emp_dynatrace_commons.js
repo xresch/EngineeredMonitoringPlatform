@@ -140,27 +140,8 @@ function emp_dynatrace_renderEvents(widgetObject, data, callback){
 			startTime: function(record, value) {  return CFW.format.epochToTimestamp(value); },
 			endTime: function(record, value) {  return (value == -1) ? '&nbsp;' : CFW.format.epochToTimestamp(value); },
 		},
-		rendererSettings:{
-			tiles: {
-				sizefactor: settings.sizefactor,
-				showlabels: settings.showlabels,
-				borderstyle: settings.borderstyle
-			},
-			table: {
-				narrow: 	true,
-				striped: 	false,
-				hover: 		false,
-				filterable: false,
-			},
-			panels: {
-				narrow: 	true,
-			},
-			cards: {
-				narrow: 	true,
-				maxcolumns: 5,
-			},
-			
-	}};
+		rendererSettings: CFW.dashboard.createStatusWidgetRendererSettings(settings) 
+	};
 	
 	//-----------------------------------
 	// Adjust RenderSettings
