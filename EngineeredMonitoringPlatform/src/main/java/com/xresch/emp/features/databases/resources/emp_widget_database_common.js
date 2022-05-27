@@ -163,7 +163,7 @@ function createDatabaseQueryChartWidget(widgetMenuLabel){
 				}else{
 					// use second as default
 					let keys = Object.keys(data.payload[0]);
-					titlefields = keys[1];
+					titlefields = [keys[1]];
 				}
 				
 				//---------------------------------
