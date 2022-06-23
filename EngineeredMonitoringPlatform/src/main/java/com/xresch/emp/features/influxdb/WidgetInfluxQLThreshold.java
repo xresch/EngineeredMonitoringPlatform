@@ -80,6 +80,7 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 						+ "FROM runtime \r\n"
 						+ "WHERE time >= [earliest] and time < [latest] group by time([interval]);"
 					)
+					.disableSanitization()
 				)
 			
 				.addField(CFWField.newString(FormFieldType.TEXT, FIELDNAME_VALUECOLUMN)
@@ -150,7 +151,7 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 		if(environmentID != null) {
 			environment = InfluxDBEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Influx DB Chart: The chosen environment seems not configured correctly.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Influx DB Threashold: The chosen environment seems not configured correctly.");
 			return null;
 		}
 				

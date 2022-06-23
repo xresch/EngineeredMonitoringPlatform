@@ -58,6 +58,7 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 						+ "FROM runtime \r\n"
 						+ "WHERE time >= [earliest] and time < [latest] group by time([interval]);"
 					)
+					.disableSanitization()
 				)
 			
 				.addField(CFWField.newString(FormFieldType.TEXT, "valuecolumn")
