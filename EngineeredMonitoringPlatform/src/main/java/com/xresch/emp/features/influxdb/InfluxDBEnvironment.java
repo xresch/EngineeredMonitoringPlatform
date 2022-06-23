@@ -199,8 +199,11 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 		String interval = CFW.Utils.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
 		
 		influxdbQuery = influxdbQuery.replace("[interval]", interval )
+									 .replace("$interval$", interval )
 									 .replace("[earliest]", ""+earliestMillis*1000000)
+									 .replace("$earliest$", ""+earliestMillis*1000000)
 									 .replace("[latest]", ""+latestMillis*1000000)
+									 .replace("$latest$", ""+latestMillis*1000000)
 									 .replace("\r\n", " ")
 									 .replace('\n', ' ')
 									 .replace('\r', ' ')
