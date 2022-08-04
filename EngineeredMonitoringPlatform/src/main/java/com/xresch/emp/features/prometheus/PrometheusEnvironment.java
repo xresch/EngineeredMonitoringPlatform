@@ -170,12 +170,13 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 	 * 
 	 ************************************************************************************/
 	public JsonObject query(String prometheusQuery, long latestMillis) {
-		
-		String queryURL = getAPIUrlVersion1() 
-				+ "/query?query="+CFW.HTTP.encode(prometheusQuery)
-				+ "&time="+(latestMillis/1000);
-		
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
+				
+		CFWHttpResponse queryResult = 
+				CFW.HTTP.newRequestBuilder(getAPIUrlVersion1()+"/query")
+						.param("query", prometheusQuery)
+						.param("time", ""+(latestMillis/1000))
+						.send()
+						;
 		if(queryResult != null) {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
@@ -197,15 +198,16 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		String interval = Utils.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
 		
 		prometheusQuery = prometheusQuery.replace("[interval]", "["+( (interval.endsWith("s")) ? "1m" : interval )+"]");
+		
+		CFWHttpResponse queryResult = 
+				CFW.HTTP.newRequestBuilder(getAPIUrlVersion1()+"/query_range")
+						.param("query", prometheusQuery)
+						.param("start", ""+(earliestMillis/1000))
+						.param("end", ""+(latestMillis/1000))
+						.param("step", interval)
+						.send()
+						;
 
-		String queryURL = getAPIUrlVersion1() 
-				+ "/query_range?query="+CFW.HTTP.encode(prometheusQuery)
-				+"&start="+(earliestMillis/1000)
-				+"&end="+(latestMillis/1000)
-				+"&step="+interval;
-		
-		
-		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
 		if(queryResult != null) {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
