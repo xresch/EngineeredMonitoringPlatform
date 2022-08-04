@@ -28,9 +28,16 @@ public class AWAEnvironmentManagement {
 	private static HashMap<Integer, AWAEnvironment> environmentsWithDB = new HashMap<Integer, AWAEnvironment>();
 	
 
+	/*****************************************************************
+	 * 
+	 *****************************************************************/
 	private AWAEnvironmentManagement() {
 		//hide public constructor
 	}
+	
+	/*****************************************************************
+	 * 
+	 *****************************************************************/
 	public static void initialize() {
 		
 		ContextSettingsChangeListener listener = 
@@ -54,6 +61,9 @@ public class AWAEnvironmentManagement {
 		isInitialized = true;
 	}
 	
+	/*****************************************************************
+	 * 
+	 *****************************************************************/
 	private static void createEnvironments() {
 		// Clear environments
 		environmentsWithDB = new HashMap<Integer, AWAEnvironment>();
@@ -67,6 +77,9 @@ public class AWAEnvironmentManagement {
 		}
 	}
 	
+	/*****************************************************************
+	 * 
+	 *****************************************************************/
 	private static void createEnvironment(AWAEnvironment environment) {
 
 		Integer id = environment.getDefaultObject().id();
@@ -88,14 +101,13 @@ public class AWAEnvironmentManagement {
 		}
 	}
 	
-	
+	/*****************************************************************
+	 * 
+	 *****************************************************************/
 	public static AWAEnvironment getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
 		return environmentsWithDB.get(id);
 	}
-	
-
-	
 	
 	/*****************************************************************
 	 * 

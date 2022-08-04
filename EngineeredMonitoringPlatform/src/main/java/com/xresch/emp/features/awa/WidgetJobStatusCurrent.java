@@ -47,14 +47,23 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	
 	private static Logger logger = CFWLog.getLogger(WidgetJobStatusCurrent.class.getName());
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_awajobstatus";}
-
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.ALWAYS;
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		return 
@@ -74,6 +83,9 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		;
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public CFWObject createJobSelectionFields() {
 		return new CFWObject()
 		.addField(AWASettingsFactory.createEnvironmentSelectorField())
@@ -93,6 +105,9 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
 		//---------------------------------
@@ -108,7 +123,10 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		response.setPayLoad(loadDataFromAwaAsJsonArray(settings));
 		
 	}
-
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	private JsonArray loadDataFromAwaAsJsonArray(CFWObject widgetSettings) {
 		
 		//---------------------------------
@@ -127,8 +145,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		
 
 		//---------------------------------
-		// Get Environment & DB
-
+		// Get Environment
 		String environmentID = (String)widgetSettings.getField("environment").getValue();
 		AWAEnvironment environment;
 		if(environmentID != null) {
@@ -136,71 +153,21 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		}else {
 			return null;
 		}
-		//---------------------------------
-		// Get DB
-		DBInterface db = environment.getDBInstance();
-		
-		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "AWA Job Status: The chosen environment seems not configured correctly.");
-			return null;
-		}
 		
 		//---------------------------------
 		// Fetch Data
-		JsonArray resultArray = new JsonArray();
-		for(int i = 0; i < jobnames.length; i++) {
-
-			String currentJobname = jobnames[i].trim();
-			ResultSet result = db.preparedExecuteQuerySilent(
-					CFW.Files.readPackageResource(FeatureAWA.PACKAGE_RESOURCE, "emp_awa_last_jobstatus.sql"),
-					environment.clientID(),
-					currentJobname);
-			try {
-				JsonObject object = new JsonObject();
-				object.addProperty("JOBNAME", currentJobname);
-				
-				if(joblabels != null && i < joblabels.length) {
-					object.addProperty("LABEL", joblabels[i]);
-				}else {
-					object.addProperty("LABEL", currentJobname);
-				}
-				
-				if(result != null && result.next()){
-
-					OffsetDateTime startTime = result.getObject("START_TIME", OffsetDateTime.class);
-					OffsetDateTime endTime = result.getObject("END_TIME", OffsetDateTime.class);
-
-					int runID = result.getInt("ID");
-					String type = result.getString("TYPE");
-					String URL = environment.getJobWorkflowURL(currentJobname, type, runID);
-					
-					object.addProperty("STATUS", result.getString("STATUS"));
-					object.addProperty("CLIENT_ID", result.getString("CLIENT_ID"));
-					object.addProperty("TYPE", type);
-					object.addProperty("START_TIME", (startTime != null) ? startTime.toInstant().toEpochMilli() : null );
-					object.addProperty("END_TIME", (endTime != null) ? endTime.toInstant().toEpochMilli() : null);
-					object.addProperty("HOST_DESTINATION", result.getString("HOST_DESTINATION"));
-					object.addProperty("HOST_SOURCE", result.getString("HOST_SOURCE"));
-					object.addProperty("DURATION_SECONDS", result.getInt("DURATION_SECONDS"));
-					object.addProperty("STATUS_CODE", result.getInt("STATUS_CODE"));
-					object.addProperty("URL", URL);
-
-				}else {
-					object.addProperty("status", "UNKNOWN");
-				}
-				
-				resultArray.add(object);
-				
-			} catch (SQLException e) {
-				new CFWLog(logger)
-					.severe("Error fetching Widget data.", e);
-			}finally {
-				db.close(result);
-			}
+		
+		if(environment.source().equals(AWAEnvironment.SOURCE_REST_API)) {
+			return environment.fetchFromAPILast(jobnames, joblabels);
+		}else {
+			return environment.fetchFromDatabase(jobnames, joblabels);
 		}
-		return resultArray;
+
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public JsonArray createSampleData() { 
 		
 		long currentTime = new Date().getTime();
@@ -228,6 +195,9 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		return element.getAsJsonArray();
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
@@ -235,12 +205,18 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.PACKAGE_RESOURCE, "emp_widget_awajobstatus_current.js") );
 		return array;
 	}
-
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return null;
 	}
-
+	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
@@ -248,12 +224,17 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		return map;
 	}
 	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA);
 	}
 	
-	
+	/************************************************************************************
+	 * 
+	 ************************************************************************************/
 	public boolean supportsTask() {
 		return true;
 	}

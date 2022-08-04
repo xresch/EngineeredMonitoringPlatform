@@ -177,6 +177,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 						.param("time", ""+(latestMillis/1000))
 						.send()
 						;
+		
 		if(queryResult != null) {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
