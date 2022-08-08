@@ -79,7 +79,7 @@ public class MongoDBEnvironment extends AbstractContextSettings {
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
 			.and().like(DashboardWidgetFields.TYPE, "emp_mongodb%")
-			.getCount();
+			.executeCount();
 		
 		if(count == 0) {
 			return true;

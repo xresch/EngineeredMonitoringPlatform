@@ -66,7 +66,7 @@ public class MSSQLEnvironment extends AbstractContextSettings {
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
 			.and().like(DashboardWidgetFields.TYPE, "emp_mssql%")
-			.getCount();
+			.executeCount();
 		
 		if(count == 0) {
 			return true;

@@ -126,7 +126,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
 			.and().like(DashboardWidgetFields.TYPE, "emp_awa%")
-			.getCount();
+			.executeCount();
 		
 		if(count == 0) {
 			return true;

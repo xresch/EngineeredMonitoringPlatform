@@ -67,7 +67,7 @@ public class GenericJDBCEnvironment extends AbstractContextSettings {
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
 			.and().like(DashboardWidgetFields.TYPE, "emp_genericjdbc%")
-			.getCount();
+			.executeCount();
 		
 		if(count == 0) {
 			return true;

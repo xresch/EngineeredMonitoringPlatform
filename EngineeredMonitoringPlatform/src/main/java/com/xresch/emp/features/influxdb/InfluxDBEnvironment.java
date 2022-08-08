@@ -71,7 +71,7 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 		int count = new DashboardWidget()
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
-			.getCount();
+			.executeCount();
 		
 		if(count == 0) {
 			return true;

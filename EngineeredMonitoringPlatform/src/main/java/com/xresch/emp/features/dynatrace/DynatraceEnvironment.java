@@ -94,7 +94,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
 			//.custom("AND \"TYPE\" LIKE 'emp_prometheus%'")
-			.getCount();
+			.executeCount();
 		
 		if(count == 0) {
 			return true;

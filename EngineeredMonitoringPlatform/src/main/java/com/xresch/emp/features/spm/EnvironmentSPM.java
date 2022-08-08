@@ -75,7 +75,7 @@ public class EnvironmentSPM extends AbstractContextSettings {
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
 			.custom("AND (\"TYPE\" LIKE 'emp_spm%')")
-			.getCount();
+			.executeCount();
 		
 		if(count == 0) {
 			return true;
