@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>com.xresch</groupId>
 			<artifactId>cfw</artifactId>
-			<version>6.0.0</version>
+			<version>7.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 
