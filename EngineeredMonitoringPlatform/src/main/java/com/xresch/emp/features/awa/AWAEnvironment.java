@@ -159,7 +159,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 			finalClientID = finalClientID.substring(finalClientID.length() - 4);
 			
 			String jobURL = urlString+"awi/#"+urlDBPartString+":"+finalClientID
-						+"@pm/monitor/"+CFW.HTTP.encode(jobname)
+						+"@executions/executions/EXECUTION/"+CFW.HTTP.encode(jobname)
 						+"&id="+runID
 						+"&type="+type
 						+"&src=eh";
