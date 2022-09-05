@@ -25,10 +25,10 @@ public class FeatureExenseStep extends CFWAppFeature {
 	public static final String WIDGET_PREFIX = "emp_step";
 	
 	static final JsonWriterSettings writterSettings = 
-	JsonWriterSettings
-	.builder()
-	.outputMode(JsonMode.RELAXED)
-	.build();
+		JsonWriterSettings
+		.builder()
+		.outputMode(JsonMode.RELAXED)
+		.build();
 
 	public enum StepExecutionResult {
 		PASSED, FAILED, TECHNICAL_ERROR, RUNNING
