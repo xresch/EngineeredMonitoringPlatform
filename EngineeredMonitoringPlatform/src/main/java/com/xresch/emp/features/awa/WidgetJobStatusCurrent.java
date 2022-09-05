@@ -58,7 +58,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	 ************************************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
-		return WidgetDataCachePolicy.ALWAYS;
+		return WidgetDataCachePolicy.TIME_BASED;
 	}
 	
 	/************************************************************************************
@@ -120,14 +120,14 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 				
 		//---------------------------------
 		// Real Data		
-		response.setPayLoad(loadDataFromAwaAsJsonArray(settings));
+		response.setPayLoad(loadDataFromAwaAsJsonArray(settings, earliest, latest));
 		
 	}
 	
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/
-	private JsonArray loadDataFromAwaAsJsonArray(CFWObject widgetSettings) {
+	private JsonArray loadDataFromAwaAsJsonArray(CFWObject widgetSettings, long earliest, long latest) {
 		
 		//---------------------------------
 		// Resolve Jobnames
@@ -158,7 +158,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		// Fetch Data
 		
 		if(environment.source().equals(AWAEnvironment.SOURCE_REST_API)) {
-			return environment.fetchFromAPILast(jobnames, joblabels);
+			return environment.fetchFromAPILast(jobnames, joblabels, earliest, latest );
 		}else {
 			return environment.fetchFromDatabase(jobnames, joblabels);
 		}
@@ -272,7 +272,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		if(isSampleData != null && isSampleData) {
 			dataArray = createSampleData();
 		}else {
-			dataArray = loadDataFromAwaAsJsonArray(settings);
+			dataArray = loadDataFromAwaAsJsonArray(settings, offset.getEarliest(), offset.getLatest());
 		}
 		
 		if(dataArray == null) {

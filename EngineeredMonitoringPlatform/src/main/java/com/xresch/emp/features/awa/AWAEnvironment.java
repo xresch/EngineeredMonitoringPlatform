@@ -3,6 +3,7 @@ package com.xresch.emp.features.awa;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.ibm.icu.text.SimpleDateFormat;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
@@ -36,8 +38,10 @@ public class AWAEnvironment extends AbstractContextSettings {
 	public static final String SETTINGS_TYPE = "AWA Environment";
 	public static final String SOURCE_DATABASE = "Database";
 	public static final String SOURCE_REST_API = "REST API";
-		
+	
 	private DBInterface dbInstance = null;
+	
+	private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 	
 	public enum AWAEnvironmentFields{
 		SOURCE,
@@ -322,7 +326,16 @@ public class AWAEnvironment extends AbstractContextSettings {
 	/************************************************************************************
 	 * Fetches the last execution from the API
 	 ************************************************************************************/
-	public JsonArray fetchFromAPILast(String[] jobnames, String[] joblabels) {
+	public JsonArray fetchFromAPILast(String[] jobnames, String[] joblabels, long earliest, long latest) {
+		
+		
+		String earliestString = formatter.format(new Date(earliest));
+		String latestString = formatter.format(new Date(latest));
+		
+		System.out.println("earliest: "+earliest);
+		System.out.println("earliestString: "+earliestString);
+		System.out.println("latest: "+latest);
+		System.out.println("latestString: "+latestString);
 		
 		//---------------------------------
 		// Fetch Data
@@ -340,9 +353,12 @@ public class AWAEnvironment extends AbstractContextSettings {
 						.header("Content-Type", "application/json")
 						.param("name",currentJobname)
 						.param("include_deactivated", "true")
+						.param("time_frame_from", earliestString)
+						.param("time_frame_to", latestString)
+						.param("time_frame_option", "activation")
 						//.bodyJSON("{\"name\": \""+currentJobname+"\"}")
 						.send()
-						;
+					;
 			
 			
 			//---------------------------------
@@ -356,13 +372,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 				object.addProperty("LABEL", currentJobname);
 			}
 			
-			System.out.println("==========================");
-			System.out.println("queryResult: "+queryResult);
 			if(queryResult != null){
-				
-				System.out.println("queryResult.getStatus(): "+queryResult.getStatus());
-				System.out.println("queryResult.getHeaders(): "+CFW.JSON.toJSON(queryResult.getHeaders()) );
-				System.out.println("queryResult.getResponseBody(): "+queryResult.getResponseBody());
 				
 				//---------------------------------
 				// Get Last execution Object
