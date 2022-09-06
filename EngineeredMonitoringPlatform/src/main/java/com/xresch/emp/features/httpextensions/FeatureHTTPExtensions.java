@@ -8,8 +8,8 @@ import com.xresch.cfw.spi.CFWAppFeature;
 
 public class FeatureHTTPExtensions extends CFWAppFeature {
 
-    // Fields
-    public static final String PACKAGE_RESOURCES = "com.xresch.emp.features.httpextensions.resources";
+	// Fields
+	public static final String PACKAGE_RESOURCES = "com.xresch.emp.features.httpextensions.resources";
 
 	public static final String PERMISSION_HTTP_EXTENSIONS = "HTTP Extensions";
 	public static final String WIDGET_PREFIX = "emp_httpextensions";
@@ -40,51 +40,51 @@ public class FeatureHTTPExtensions extends CFWAppFeature {
 	/************************************************************************************
 	 *
 	 ************************************************************************************/
-    @Override
-    public void register() {
+	@Override
+	public void register() {
 
-        // Register packages
-        CFW.Files.addAllowedPackage(PACKAGE_RESOURCES);
+		// Register packages
+		CFW.Files.addAllowedPackage(PACKAGE_RESOURCES);
 
-        // Register Widget
-        CFW.Registry.Widgets.add(new WidgetHTTPResponseCheck());
-    }
-
-	/************************************************************************************
-	 *
-	 ************************************************************************************/
-    @Override
-    public void initializeDB() {
-    	//----------------------------------
-    			// Permissions
-    			CFW.DB.Permissions.oneTimeCreate(
-    					new Permission(PERMISSION_HTTP_EXTENSIONS, FeatureUserManagement.CATEGORY_USER)
-    						.description("Use the HTTP Extensions(Widgets, Sources, JobTasks, etc...)."),
-    					true,
-    					true);
-    }
-    
-	/************************************************************************************
-	 *
-	 ************************************************************************************/
-    @Override
-    public void addFeature(CFWApplicationExecutor cfwApplicationExecutor) {
-
-    }
+		// Register Widget
+		CFW.Registry.Widgets.add(new WidgetHTTPEvaluateResponse());
+	}
 
 	/************************************************************************************
 	 *
 	 ************************************************************************************/
-    @Override
-    public void startTasks() {
+	@Override
+	public void initializeDB() {
+		//----------------------------------
+				// Permissions
+				CFW.DB.Permissions.oneTimeCreate(
+						new Permission(PERMISSION_HTTP_EXTENSIONS, FeatureUserManagement.CATEGORY_USER)
+							.description("Use the HTTP Extensions(Widgets, Sources etc...)."),
+						true,
+						false);
+	}
+	
+	/************************************************************************************
+	 *
+	 ************************************************************************************/
+	@Override
+	public void addFeature(CFWApplicationExecutor cfwApplicationExecutor) {
 
-    }
+	}
 
 	/************************************************************************************
 	 *
 	 ************************************************************************************/
-    @Override
-    public void stopFeature() {
+	@Override
+	public void startTasks() {
 
-    }
+	}
+
+	/************************************************************************************
+	 *
+	 ************************************************************************************/
+	@Override
+	public void stopFeature() {
+
+	}
 }

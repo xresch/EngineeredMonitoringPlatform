@@ -351,11 +351,12 @@ public class AWAEnvironment extends AbstractContextSettings {
 						.GET()
 						.authenticationBasic(this.apiUsername(), this.apiPassword())
 						.header("Content-Type", "application/json")
-						.param("name",currentJobname)
-						.param("include_deactivated", "true")
+						.param("name", currentJobname)
+						.param("include_deactivated", "false")
+						.param("max_results", "1")
 						.param("time_frame_from", earliestString)
 						.param("time_frame_to", latestString)
-						.param("time_frame_option", "activation")
+						.param("time_frame_option", "all")
 						//.bodyJSON("{\"name\": \""+currentJobname+"\"}")
 						.send()
 					;
@@ -387,8 +388,13 @@ public class AWAEnvironment extends AbstractContextSettings {
 					continue;
 				}
 				
+				System.out.println("=============================");
+				System.out.println("Jobname: "+currentJobname);
+				System.out.println("ResultObject: "+resultObject);
+				
 				JsonElement dataElement = resultObject.get("data");
 				if(dataElement == null || !dataElement.isJsonArray()) {
+					System.out.println("A");
 					object.addProperty("STATUS", "UNKNOWN");
 					resultArray.add(object);
 					continue;
@@ -396,6 +402,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 				
 				JsonArray dataArray = dataElement.getAsJsonArray();
 				if(dataArray.isEmpty()) {
+					System.out.println("B");
 					object.addProperty("STATUS", "UNKNOWN");
 					resultArray.add(object);
 					continue;

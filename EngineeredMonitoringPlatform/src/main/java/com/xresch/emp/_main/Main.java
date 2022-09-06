@@ -15,6 +15,7 @@ import com.xresch.emp.features.databases.mysql.FeatureMySQL;
 import com.xresch.emp.features.databases.oracle.FeatureOracle;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
 import com.xresch.emp.features.exense.step.FeatureExenseStep;
+import com.xresch.emp.features.httpextensions.FeatureHTTPExtensions;
 import com.xresch.emp.features.influxdb.FeatureInfluxDB;
 import com.xresch.emp.features.mongodb.FeatureMongoDB;
 import com.xresch.emp.features.prometheus.FeaturePrometheus;
@@ -59,6 +60,7 @@ public class Main implements CFWAppInterface {
 		
 		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
 		CFW.Registry.Features.addFeature(FeatureExenseStep.class);
+		CFW.Registry.Features.addFeature(FeatureHTTPExtensions.class);
 		CFW.Registry.Features.addFeature(FeatureInfluxDB.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);
