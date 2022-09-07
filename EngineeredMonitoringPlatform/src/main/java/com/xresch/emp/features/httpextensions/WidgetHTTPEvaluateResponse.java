@@ -20,10 +20,21 @@ import com.xresch.cfw.features.dashboard.WidgetDataCache;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.utils.CFWHttp;
+import com.xresch.cfw.utils.CFWHttp.CFWHttpRequestBuilder;
+import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 import com.xresch.cfw.validation.NumberRangeValidator;
 
 public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
+
+	private static final String PARAM_METHOD = "METHOD";
+	private static final String PARAM_URL = "URL";
+	private static final String PARAM_USERNAME = "USERNAME";
+	private static final String PARAM_PASSWORD = "PASSWORD";
+	
+	private static final String PARAM_STATUS_CODE = "STATUS_CODE";
+	private static final String PARAM_CHECK_FOR = "CHECK_FOR";
+	private static final String PARAM_CHECK_TYPE = "CHECK_TYPE";
+
 
 
 	private enum CheckType {
@@ -66,30 +77,49 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 	public CFWObject getSettings() {
 		return new CFWObject()
 
-				// URL textarea which contains the URL to check the response for
-				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, "URL")
+				.addField(CFWField.newString(CFWField.FormFieldType.SELECT, PARAM_METHOD)
+						.setLabel("{!emp_widget_evaluateresponse_method_label!}")
+						.setDescription("{!emp_widget_evaluateresponse_method_desc!}")
+						.addOption("GET")
+						.addOption("POST")
+						.setValue("GET")
+					)
+				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_URL)
 						.setLabel("{!emp_widget_evaluateresponse_url_label!}")
 						.setDescription("{!emp_widget_evaluateresponse_url_desc!}")
 						.setValue("")
 					)
 
+				.addField(CFWField.newString(CFWField.FormFieldType.TEXT, PARAM_USERNAME)
+						.setLabel("{!emp_widget_evaluateresponse_username_label!}")
+						.setDescription("{!emp_widget_evaluateresponse_username_desc!}")
+						.setValue(null)
+					)
+				
+				.addField(CFWField.newString(CFWField.FormFieldType.PASSWORD, PARAM_PASSWORD)
+						.setLabel("{!emp_widget_evaluateresponse_username_label!}")
+						.setDescription("{!emp_widget_evaluateresponse_username_desc!}")
+						// DO NOT TOUCH! Changing salt will corrupt all password stored in the database
+						.enableEncryption("emp_httpextensions_encryptionSalt-fFDSgasTR1")
+						.disableSanitization()
+						.setValue(null)
+					)
+				
 				// Labels for the URL ?
-
-				.addField(CFWField.newString(CFWField.FormFieldType.SELECT, "CHECK_TYPE")
+				.addField(CFWField.newString(CFWField.FormFieldType.SELECT, PARAM_CHECK_TYPE)
 						.setLabel("{!emp_widget_evaluateresponse_checktype_label!}")
 						.setDescription("{!emp_widget_evaluateresponse_checktype_desc!}")
 						.setOptions(checkTypeOptions)
 						.setValue("Contains")
 					)
 
-				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, "CHECK_FOR")
+				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_CHECK_FOR)
 						.setLabel("{!emp_widget_evaluateresponse_matchfor_label!}")
 						.setDescription("{!emp_widget_evaluateresponse_matchfor_desc!}")
 						.setValue("")
 					)
 
-				// Textarea that contains the statuscode of the request
-				.addField(CFWField.newInteger(CFWField.FormFieldType.NUMBER, "STATUS_CODE")
+				.addField(CFWField.newInteger(CFWField.FormFieldType.NUMBER, PARAM_STATUS_CODE)
 						.setLabel("{!emp_widget_evaluateresponse_statuscode_label!}")
 						.setDescription("{!emp_widget_evaluateresponse_statuscode_desc!}")
 						.addValidator(new NumberRangeValidator(0, 999))
@@ -107,17 +137,25 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 
 		//------------------------------------
 		// Get Parameters
-		String url = (String) cfwObject.getField("URL").getValue();
+		String method = (String) cfwObject.getField(PARAM_METHOD).getValue();
+		if(Strings.isNullOrEmpty(method)){
+			method = "GET";
+		}
+		
+		String url = (String) cfwObject.getField(PARAM_URL).getValue();
 		if (Strings.isNullOrEmpty(url)) {
 			return;
 		}
 
-		String[] splittedURLs = url.trim().split("\\r\\n|\\n");
-		String checkType = (String) cfwObject.getField("CHECK_TYPE").getValue();
-		String checkFor = (String) cfwObject.getField("CHECK_FOR").getValue();
+		String username = (String) cfwObject.getField(PARAM_USERNAME).getValue();
+		String password = (String) cfwObject.getField(PARAM_PASSWORD).getValue();
 		
-		Integer expectedResponseCode = (Integer) cfwObject.getField("STATUS_CODE").getValue();
+		String[] splittedURLs = url.trim().split("\\r\\n|\\n");
+		String checkType = (String) cfwObject.getField(PARAM_CHECK_TYPE).getValue();
+		String checkFor = (String) cfwObject.getField(PARAM_CHECK_FOR).getValue();
 
+		
+		Integer expectedResponseCode = (Integer) cfwObject.getField(PARAM_STATUS_CODE).getValue();
 
 		//------------------------------------
 		// Iterate URLs and Build Response
@@ -126,25 +164,32 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 		for (String splittedURL : splittedURLs) {
 
 			//----------------------------------------
-			// Call URL
-			CFWHttp.CFWHttpResponse response = CFW.HTTP.sendGETRequest(splittedURL);
+			// Build Request and Call URL
+			//CFWHttp.CFWHttpResponse response = CFW.HTTP.sendGETRequest(splittedURL);
 
-//			CFWHttp.CFWHttpResponse response =
-//					CFW.HTTP.newRequestBuilder(splittedURL)
-//							.GET()
-//							.header("headerName", "value")
-//							.authenticationBasic(username, password)
-//					;
+			CFWHttpRequestBuilder requestBuilder = CFW.HTTP.newRequestBuilder(splittedURL);
+			
+			if(method.trim().toUpperCase().equals("POST")) {
+				requestBuilder.POST();
+			}else {
+				requestBuilder.GET();
+			}
+			
+			if(!Strings.isNullOrEmpty(username)) {
+				requestBuilder.authenticationBasic(username, password);
+			}
+			
+			
+			CFWHttpResponse response = requestBuilder.send();
 
 			//----------------------------------------
 			// Create Data Object
 			JsonObject returnObject = new JsonObject();
 
-			returnObject.addProperty("URL", splittedURL);
-			returnObject.addProperty("CHECK_TYPE", checkType);
-			returnObject.addProperty("CHECK_FOR", checkFor);
+			returnObject.addProperty(PARAM_URL, splittedURL);
+			returnObject.addProperty(PARAM_CHECK_TYPE, checkType);
+			returnObject.addProperty(PARAM_CHECK_FOR, checkFor);
 
-			
 			//----------------------------------------
 			// Check response content
 			boolean result = false;
@@ -199,7 +244,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			// Check response code
 			int actualResponseStatusCode = response.getStatus();
 			
-			returnObject.addProperty("STATUS_CODE", actualResponseStatusCode);
+			returnObject.addProperty(PARAM_STATUS_CODE, actualResponseStatusCode);
 			
 			if(expectedResponseCode != null) {
 				boolean isValid =  (expectedResponseCode == actualResponseStatusCode);
