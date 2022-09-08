@@ -14,16 +14,61 @@
 				' different kinds of checks on the response.'),
 				createWidgetInstance: function (widgetObject, params, callback) {
 
-					// This method is used to fetch data from serverside for this widget. This request will be forwarded
-					// to your serverside WidgetDefinition.fetchData() method.
-
-					// Callback function
-					callback(widgetObject, "");
-
 					CFW.dashboard.fetchWidgetData(widgetObject, params, function(data) {
 
+						var settings = widgetObject.JSON_SETTINGS;
 						var result = data.payload;
 
+						//--------------------
+						// Handle Empty Response
+						if (data.payload == null) {
+							callback(widgetObject, "No Data");
+							return;
+						}
+
+						//--------------------
+						// Handle Debug Response
+						console.log("settings.DEBUG_MODE: "+settings.DEBUG_MODE)
+						if(settings.DEBUG_MODE){
+							
+							console.log("a");
+							var debugObject = data.payload[0];
+							
+							//-------------------------------
+							// Build Info List	
+							debugHTML = '<ul>';
+								debugHTML += '<li><b>URL:&nbsp;</b>'+debugObject.URL+'</li>';
+								debugHTML += '<li><b>Response Status:&nbsp;</b>'+debugObject.RESPONSE_STATUS+'</li>';
+								debugHTML += '<li><b>Response Headers:&nbsp;</b>';
+									debugHTML += '<ul>';
+										for(var key in debugObject.RESPONSE_HEADERS){
+											var value = debugObject.RESPONSE_HEADERS[key];
+											debugHTML += '<li><b>'+key+':&nbsp;</b>'+value+'</li>';
+										}
+									debugHTML += '</li></ul>';
+							debugHTML += '</li></ul>';
+								
+							//-------------------------------
+							// Create Respones Body Code Block
+							var pre = $("<pre>");
+							var code = $("<code>");
+							code.text(debugObject.RESPONSE_BODY == null ? "" : debugObject.RESPONSE_BODY)
+							pre.append(code);
+							
+							//-------------------------------
+							// Sewing Lesson: Stitch stuff together
+							var debugInfoWrapper = $('<div id="debugInfo-widget-'+widgetObject.PK_ID+'">');	
+							debugInfoWrapper.append(debugHTML);
+							debugInfoWrapper.append('<p><b>Response Body:</b></p>');
+							debugInfoWrapper.append(pre);
+			
+							console.log(debugInfoWrapper);
+							
+							callback(widgetObject, debugInfoWrapper);
+							//callback(widgetObject, "Debug Info");
+							return;
+						}
+						
 						//--------------------
 						// PREPARE COLORS
 						for(var key in result){
@@ -42,7 +87,7 @@
 
 							//--------------------
 							// Check Disabled
-							if(widgetObject.JSON_SETTINGS.disable) {
+							if(settings.disable) {
 								current.alertstyle = "cfw-darkgray";
 								continue;
 							}
@@ -63,11 +108,6 @@
 
 							}
 
-						}
-
-						// Check if data is null
-						if (data.payload == null) {
-							callback(widgetObject, "No Data");
 						}
 
 						// Copied from BlackboxExporter
@@ -94,9 +134,9 @@
 							},
 							rendererSettings:{
 								tiles: {
-									sizefactor: widgetObject.JSON_SETTINGS.sizefactor,
-									showlabels: widgetObject.JSON_SETTINGS.showlabels,
-									borderstyle: widgetObject.JSON_SETTINGS.borderstyle
+									sizefactor: settings.sizefactor,
+									showlabels: settings.showlabels,
+									borderstyle: settings.borderstyle
 								},
 								table: {
 									narrow: 	true,
@@ -115,12 +155,12 @@
 
 						//-----------------------------------
 						// Adjust RenderSettings for Table
-						if(widgetObject.JSON_SETTINGS.renderer == "tiles"){
+						if(settings.renderer == "tiles"){
 							dataToRender.visiblefields = ['CHECK_TYPE', 'STATUS_CODE'];
 						}
 						//-----------------------------------
 						// Adjust RenderSettings for Table
-						if(widgetObject.JSON_SETTINGS.renderer == "table"){
+						if(settings.renderer == "table"){
 							dataToRender.bgstylefield = null;
 							dataToRender.textstylefield = null;
 						}
@@ -131,7 +171,7 @@
 							callback(widgetObject, "unknown");
 						}else{
 
-							var renderType = widgetObject.JSON_SETTINGS.renderer;
+							var renderType = settings.renderer;
 							if(renderType == null){ renderType = 'tiles'}
 
 							var alertRenderer = CFW.render.getRenderer(renderType.toLowerCase());

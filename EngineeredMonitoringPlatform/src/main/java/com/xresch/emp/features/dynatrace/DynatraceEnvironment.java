@@ -250,7 +250,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, requestParams, this.getTokenHeader());
 		
 		if(queryResult != null) {			
-			return queryResult.getRequestBodyAsJsonArray();
+			return queryResult.getResponseBodyAsJsonArray();
 		}
 		
 		return null;
@@ -269,7 +269,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		
 		CFWHttpResponse queryResult = doGetCached30Minutes(queryURL, requestParams, this.getTokenHeader());
 		if(queryResult != null) {			
-			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+			JsonObject payload = queryResult.getResponseBodyAsJsonObject();
 			
 			if(!payload.get("nextPageKey").isJsonNull()) {
 				CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Over 5000 metrics available. Only the first 5000 were loaded.");
@@ -297,7 +297,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		
 		CFWHttpResponse queryResult = doGetCached30Minutes(queryURL, requestParams, this.getTokenHeader());
 		if(queryResult != null) {			
-			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+			JsonObject payload = queryResult.getResponseBodyAsJsonObject();
 						
 			if(payload.get("metrics") != null) {
 				return payload.get("metrics").getAsJsonArray();
@@ -334,7 +334,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 
 		CFWHttpResponse queryResult = doGetCached30Minutes(queryURL, requestParams, this.getTokenHeader());
 		if(queryResult != null) {			
-			return queryResult.getRequestBodyAsJsonObject();
+			return queryResult.getResponseBodyAsJsonObject();
 			
 		}
 		
@@ -434,7 +434,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		
 		CFWHttpResponse queryResult = CFW.HTTP.sendPOSTRequest(postLogAnalysisJobURL, requestParams, this.getTokenHeader());
 		if(queryResult != null) {	
-			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+			JsonObject payload = queryResult.getResponseBodyAsJsonObject();
 
 			if(payload.get("jobId") != null) {
 				String jobId = payload.get("jobId").getAsString();
@@ -456,7 +456,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 					CFWHttpResponse jobStatusResult = CFW.HTTP.sendGETRequest(getJobStatusURL, null, this.getTokenHeader());
 
 					if(jobStatusResult != null) {			
-						JsonObject jobStatusObject = jobStatusResult.getRequestBodyAsJsonObject();
+						JsonObject jobStatusObject = jobStatusResult.getResponseBodyAsJsonObject();
 
 						if(jobStatusObject.get("logAnalysisStatus") != null 
 						&& jobStatusObject.get("logAnalysisStatus").getAsString().equals("READY")) {
@@ -467,7 +467,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 							CFWHttpResponse getLogRecordsResult = CFW.HTTP.sendGETRequest(getLogRecordsURL, null, this.getTokenHeader());
 							if(getLogRecordsResult != null) {
 								
-								JsonObject logRecordsObject = getLogRecordsResult.getRequestBodyAsJsonObject();
+								JsonObject logRecordsObject = getLogRecordsResult.getResponseBodyAsJsonObject();
 								if(logRecordsObject.get("records") != null) {
 									return logRecordsObject.get("records").getAsJsonArray();
 								}
@@ -504,7 +504,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		
 		CFWHttpResponse queryResult = CFW.HTTP.sendPOSTRequest(postLogAnalysisJobURL, requestParams, this.getTokenHeader());
 		if(queryResult != null) {	
-			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+			JsonObject payload = queryResult.getResponseBodyAsJsonObject();
 
 			if(payload.get("jobId") != null) {
 				String jobId = payload.get("jobId").getAsString();
@@ -526,7 +526,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 					CFWHttpResponse jobStatusResult = CFW.HTTP.sendGETRequest(getJobStatusURL, null, this.getTokenHeader());
 
 					if(jobStatusResult != null) {			
-						JsonObject jobStatusObject = jobStatusResult.getRequestBodyAsJsonObject();
+						JsonObject jobStatusObject = jobStatusResult.getResponseBodyAsJsonObject();
 
 						if(jobStatusObject.get("logAnalysisStatus") != null 
 						&& jobStatusObject.get("logAnalysisStatus").getAsString().equals("READY")) {
@@ -537,7 +537,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 							CFWHttpResponse getLogRecordsResult = CFW.HTTP.sendGETRequest(getLogRecordsURL, null, this.getTokenHeader());
 							if(getLogRecordsResult != null) {
 								
-								JsonObject logRecordsObject = getLogRecordsResult.getRequestBodyAsJsonObject();
+								JsonObject logRecordsObject = getLogRecordsResult.getResponseBodyAsJsonObject();
 								if(logRecordsObject.get("records") != null) {
 									return logRecordsObject.get("records").getAsJsonArray();
 								}
@@ -574,7 +574,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		
 		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, requestParams, this.getTokenHeader());
 		if(queryResult != null) {			
-			JsonObject payload = queryResult.getRequestBodyAsJsonObject();
+			JsonObject payload = queryResult.getResponseBodyAsJsonObject();
 			
 			if(payload.get("events") != null) {
 				return payload.get("events").getAsJsonArray();
@@ -601,7 +601,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, requestParams, this.getTokenHeader());
 		
 		if(queryResult != null) {			
-			return queryResult.getRequestBodyAsJsonArray();
+			return queryResult.getResponseBodyAsJsonArray();
 		}
 		
 		return null;
@@ -625,7 +625,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		CFWHttpResponse queryResult = doGetCached5Minutes(queryURL, requestParams, this.getTokenHeader());
 		
 		if(queryResult != null) {			
-			return queryResult.getRequestBodyAsJsonArray();
+			return queryResult.getResponseBodyAsJsonArray();
 		}
 		
 		return null;

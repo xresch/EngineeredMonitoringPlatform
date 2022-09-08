@@ -377,7 +377,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 				
 				//---------------------------------
 				// Get Last execution Object
-				JsonObject resultObject = queryResult.getRequestBodyAsJsonObject();
+				JsonObject resultObject = queryResult.getResponseBodyAsJsonObject();
 				
 				JsonElement errorElement = resultObject.get("error");
 				

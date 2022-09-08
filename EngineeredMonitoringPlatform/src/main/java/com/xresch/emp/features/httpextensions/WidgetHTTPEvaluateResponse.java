@@ -46,6 +46,8 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 	private static final String PARAM_STATUS_CODE = "STATUS_CODE";
 	private static final String PARAM_CHECK_FOR = "CHECK_FOR";
 	private static final String PARAM_CHECK_TYPE = "CHECK_TYPE";
+	
+	private static final String PARAM_DEBUG_MODE = "DEBUG_MODE";
 
 
 
@@ -154,6 +156,12 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 						
 				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
+				
+				.addField(CFWField.newBoolean(CFWField.FormFieldType.BOOLEAN, PARAM_DEBUG_MODE)
+						.setLabel("{!emp_widget_evaluateresponse_debugmode_label!}")
+						.setDescription("{!emp_widget_evaluateresponse_debugmode_desc!}")
+						.setValue(false)
+					)
 				;
 
 	}
@@ -183,9 +191,10 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 		String checkType = (String) cfwObject.getField(PARAM_CHECK_TYPE).getValue();
 		String checkFor = (String) cfwObject.getField(PARAM_CHECK_FOR).getValue();
 
-		
 		Integer expectedResponseCode = (Integer) cfwObject.getField(PARAM_STATUS_CODE).getValue();
-
+		
+		boolean debugMode = (Boolean) cfwObject.getField(PARAM_DEBUG_MODE).getValue();
+		
 		//------------------------------------
 		// Iterate URLs and Build Response
 		JsonArray jsonArray = new JsonArray();
@@ -212,6 +221,24 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			
 			
 			CFWHttpResponse response = requestBuilder.send();
+			
+			//------------------------------------
+			// Handle Debug Mode
+			if(debugMode) {
+				JsonObject debugObject = new JsonObject();
+				
+				
+				debugObject.addProperty("URL", requestBuilder.buildURLwithParams());
+				debugObject.addProperty("RESPONSE_STATUS", response.getStatus());
+				debugObject.add("RESPONSE_HEADERS", response.getHeadersAsJson());
+				debugObject.addProperty("RESPONSE_BODY", response.getResponseBody());
+				
+				
+				jsonArray.add(debugObject);
+				jsonResponse.setPayLoad(jsonArray);
+				return;
+			}
+			
 
 			//----------------------------------------
 			// Create Data Object
@@ -224,49 +251,52 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			//----------------------------------------
 			// Check response content
 			boolean result = false;
-			switch (CheckType.valueOf(checkType) ) {
-
-				case STARTS_WITH:
-					result = response.getResponseBody().startsWith(checkFor);
-					break;
-
-				case ENDS_WITH:
-					result = response.getResponseBody().endsWith(checkFor);
-					break;
-
-				case CONTAINS:
-					result = response.getResponseBody().contains(checkFor);
-					break;
+			if(Strings.isNullOrEmpty(checkFor)) {
+				result = true;
+			}else {
+				switch (CheckType.valueOf(checkType) ) {
+	
+					case STARTS_WITH:
+						result = response.getResponseBody().startsWith(checkFor);
+						break;
+	
+					case ENDS_WITH:
+						result = response.getResponseBody().endsWith(checkFor);
+						break;
+	
+					case CONTAINS:
+						result = response.getResponseBody().contains(checkFor);
+						break;
+							
+					case DOES_NOT_CONTAIN:
+						result = !response.getResponseBody().contains(checkFor);
+						break;
+	
+					case EQUALS:
+						result = response.getResponseBody().equals(checkFor);
+						break;
+	
+					case NOT_EQUALS:
+						result = !response.getResponseBody().equals(checkFor);
+						break;
+	
+					case MATCH_REGEX:
+						Pattern pattern = Pattern.compile(checkFor, Pattern.MULTILINE | Pattern.DOTALL);
+						Matcher matcher = pattern.matcher(response.getResponseBody());
 						
-				case DOES_NOT_CONTAIN:
-					result = !response.getResponseBody().contains(checkFor);
-					break;
-
-				case EQUALS:
-					result = response.getResponseBody().equals(checkFor);
-					break;
-
-				case NOT_EQUALS:
-					result = !response.getResponseBody().equals(checkFor);
-					break;
-
-				case MATCH_REGEX:
-					Pattern pattern = Pattern.compile(checkFor, Pattern.MULTILINE | Pattern.DOTALL);
-					Matcher matcher = pattern.matcher(response.getResponseBody());
-					
-					result = matcher.find();
-					break;
-					
-				case DO_NOT_MATCH_REGEX:
-					Pattern pattern2 = Pattern.compile(checkFor, Pattern.MULTILINE | Pattern.DOTALL);
-					Matcher matcher2 = pattern2.matcher(response.getResponseBody());
-					
-					result = !matcher2.find();
-					break;
-					
-		   
+						result = matcher.find();
+						break;
+						
+					case DO_NOT_MATCH_REGEX:
+						Pattern pattern2 = Pattern.compile(checkFor, Pattern.MULTILINE | Pattern.DOTALL);
+						Matcher matcher2 = pattern2.matcher(response.getResponseBody());
+						
+						result = !matcher2.find();
+						break;
+				}
 			}
-
+			
+			
 			returnObject.addProperty("CHECK_RESULT", result);
 			// Add object to the returnArray
 			jsonArray.add(returnObject);
