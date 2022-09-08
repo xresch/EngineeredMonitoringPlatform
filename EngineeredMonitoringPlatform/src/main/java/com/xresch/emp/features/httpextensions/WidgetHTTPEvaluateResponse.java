@@ -14,9 +14,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
+import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWField.CFWFieldFlag;
+import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDataCache;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
@@ -25,10 +26,19 @@ import com.xresch.cfw.utils.CFWHttp.CFWHttpRequestBuilder;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 import com.xresch.cfw.validation.NumberRangeValidator;
 
+/**************************************************************************************************************
+ * 
+ * @author Joel Laeubin (Base implementation)
+ * @author Reto Scheiwiller (integration into EMP, ehancements etc...)
+ * 
+ * (c) Copyright 2022 
+ * 
+ * @license MIT-License
+ **************************************************************************************************************/
 public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 
 	private static final String PARAM_METHOD = "METHOD";
-	private static final String PARAM_URL = "URL";
+	private static final String PARAM_URLS = "URLS";
 	private static final String PARAM_HEADERS = "JSON_HEADERS";
 	private static final String PARAM_USERNAME = "USERNAME";
 	private static final String PARAM_PASSWORD = "PASSWORD";
@@ -88,9 +98,9 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 					)
 				
-				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_URL)
-						.setLabel("{!emp_widget_evaluateresponse_url_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_url_desc!}")
+				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_URLS)
+						.setLabel("{!emp_widget_evaluateresponse_urls_label!}")
+						.setDescription("{!emp_widget_evaluateresponse_urls_desc!}")
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						.setValue("")
 					)
@@ -159,7 +169,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			method = "GET";
 		}
 		
-		String url = (String) cfwObject.getField(PARAM_URL).getValue();
+		String url = (String) cfwObject.getField(PARAM_URLS).getValue();
 		if (Strings.isNullOrEmpty(url)) {
 			return;
 		}
@@ -207,7 +217,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			// Create Data Object
 			JsonObject returnObject = new JsonObject();
 
-			returnObject.addProperty(PARAM_URL, splittedURL);
+			returnObject.addProperty("URL", splittedURL);
 			returnObject.addProperty(PARAM_CHECK_TYPE, checkType);
 			returnObject.addProperty(PARAM_CHECK_FOR, checkFor);
 
@@ -287,8 +297,8 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> fileDefinitions = new ArrayList<>();
-		FileDefinition js = new FileDefinition(FileDefinition.HandlingType.JAR_RESOURCE,
-				FeatureHTTPExtensions.PACKAGE_RESOURCES, "widget_responsechecker.js");
+		FileDefinition js = new FileDefinition(HandlingType.JAR_RESOURCE,
+				FeatureHTTPExtensions.PACKAGE_RESOURCES, "widget_evaluateresponse.js");
 		fileDefinitions.add(js);
 		return fileDefinitions;
 	}
@@ -296,8 +306,8 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(FileDefinition.HandlingType.JAR_RESOURCE, FeatureHTTPExtensions.PACKAGE_RESOURCES, "lang_en_widget_responsechecker.properties"));
-		map.put(Locale.GERMAN, new FileDefinition(FileDefinition.HandlingType.JAR_RESOURCE, FeatureHTTPExtensions.PACKAGE_RESOURCES, "lang_de_widget_responsechecker.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureHTTPExtensions.PACKAGE_RESOURCES, "lang_en_widget_evaluateresponse.properties"));
+		map.put(Locale.GERMAN, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureHTTPExtensions.PACKAGE_RESOURCES, "lang_de_widget_evaluateresponse.properties"));
 		return map;
 	}
 }

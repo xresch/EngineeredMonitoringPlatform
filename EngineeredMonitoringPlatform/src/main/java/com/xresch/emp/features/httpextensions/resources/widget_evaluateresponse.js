@@ -9,8 +9,8 @@
 			{
 				category: 'HTTP',
 				menuicon: 'fas fa-flask',
-				menulabel: 'Check Response',
-				description: CFWL('emp_widget_evaluateresponse_url_desc', 'Takes an URL and performs' +
+				menulabel: 'Evaluate Response',
+				description: CFWL('emp_widget_evaluateresponse_urls_desc', 'Takes an URL and performs' +
 				' different kinds of checks on the response.'),
 				createWidgetInstance: function (widgetObject, params, callback) {
 

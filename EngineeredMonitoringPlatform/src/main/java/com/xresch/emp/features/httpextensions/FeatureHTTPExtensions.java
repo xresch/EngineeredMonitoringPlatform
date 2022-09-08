@@ -2,6 +2,9 @@ package com.xresch.emp.features.httpextensions;
 
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
+import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.features.manual.FeatureManual;
+import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
@@ -43,11 +46,22 @@ public class FeatureHTTPExtensions extends CFWAppFeature {
 	@Override
 	public void register() {
 
+		//----------------------------------
 		// Register packages
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCES);
 
+		//----------------------------------
 		// Register Widget
 		CFW.Registry.Widgets.add(new WidgetHTTPEvaluateResponse());
+		
+		//----------------------------------
+		// Register Manual Page
+		CFW.Registry.Manual.addManualPage(null,
+				new ManualPage("HTTP Extensions")
+					.faicon("fas fa-code")
+					.addPermission(FeatureHTTPExtensions.PERMISSION_HTTP_EXTENSIONS)
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCES, "manual_httpextensions.html")
+			);
 	}
 
 	/************************************************************************************
@@ -56,12 +70,12 @@ public class FeatureHTTPExtensions extends CFWAppFeature {
 	@Override
 	public void initializeDB() {
 		//----------------------------------
-				// Permissions
-				CFW.DB.Permissions.oneTimeCreate(
-						new Permission(PERMISSION_HTTP_EXTENSIONS, FeatureUserManagement.CATEGORY_USER)
-							.description("Use the HTTP Extensions(Widgets, Sources etc...)."),
-						true,
-						false);
+		// Permissions
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_HTTP_EXTENSIONS, FeatureUserManagement.CATEGORY_USER)
+					.description("Use the HTTP Extensions(Widgets, Sources etc...)."),
+				true,
+				false);
 	}
 	
 	/************************************************************************************
