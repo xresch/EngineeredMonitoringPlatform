@@ -16,6 +16,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.datahandling.CFWField.CFWFieldFlag;
 import com.xresch.cfw.features.dashboard.WidgetDataCache;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
@@ -83,25 +84,29 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 						.addOption("GET")
 						.addOption("POST")
 						.setValue("GET")
+						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 					)
 				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_URL)
 						.setLabel("{!emp_widget_evaluateresponse_url_label!}")
 						.setDescription("{!emp_widget_evaluateresponse_url_desc!}")
+						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						.setValue("")
 					)
 
 				.addField(CFWField.newString(CFWField.FormFieldType.TEXT, PARAM_USERNAME)
 						.setLabel("{!emp_widget_evaluateresponse_username_label!}")
 						.setDescription("{!emp_widget_evaluateresponse_username_desc!}")
+						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						.setValue(null)
 					)
 				
 				.addField(CFWField.newString(CFWField.FormFieldType.PASSWORD, PARAM_PASSWORD)
-						.setLabel("{!emp_widget_evaluateresponse_username_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_username_desc!}")
+						.setLabel("{!emp_widget_evaluateresponse_password_label!}")
+						.setDescription("{!emp_widget_evaluateresponse_password_desc!}")
 						// DO NOT TOUCH! Changing salt will corrupt all password stored in the database
 						.enableEncryption("emp_httpextensions_encryptionSalt-fFDSgasTR1")
 						.disableSanitization()
+						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						.setValue(null)
 					)
 				
@@ -111,12 +116,14 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 						.setDescription("{!emp_widget_evaluateresponse_checktype_desc!}")
 						.setOptions(checkTypeOptions)
 						.setValue("Contains")
+						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 					)
 
 				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_CHECK_FOR)
 						.setLabel("{!emp_widget_evaluateresponse_matchfor_label!}")
 						.setDescription("{!emp_widget_evaluateresponse_matchfor_desc!}")
 						.setValue("")
+						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 					)
 
 				.addField(CFWField.newInteger(CFWField.FormFieldType.NUMBER, PARAM_STATUS_CODE)
@@ -124,6 +131,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 						.setDescription("{!emp_widget_evaluateresponse_statuscode_desc!}")
 						.addValidator(new NumberRangeValidator(0, 999))
 						.setValue(200)
+						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 					)
 						
 				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())
