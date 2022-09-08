@@ -6,6 +6,7 @@ import com.google.common.base.Strings;
 import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
+import com.xresch.cfw.datahandling.CFWField.CFWFieldFlag;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
@@ -24,7 +25,9 @@ public class DynatraceSettingsFactory {
 		return CFWField.newString(FormFieldType.SELECT, "environment")
 			.setLabel("{!emp_widget_dynatrace_environment!}")
 			.setDescription("{!emp_widget_dynatrace_environment_desc!}")
-			.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(DynatraceEnvironment.SETTINGS_TYPE));
+			.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(DynatraceEnvironment.SETTINGS_TYPE))
+			.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
+			;
 	}
 
 	/************************************************************************************
@@ -38,6 +41,7 @@ public class DynatraceSettingsFactory {
 				.setLabel("{!emp_widget_dynatrace_host!}")
 				.setDescription("{!emp_widget_dynatrace_host_desc!}")
 				.addAttribute("maxTags", "1")
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
@@ -66,6 +70,7 @@ public class DynatraceSettingsFactory {
 				.setLabel("{!emp_widget_dynatrace_processgroup!}")
 				.setDescription("{!emp_widget_dynatrace_processgroup_desc!}")
 				.addAttribute("maxTags", "1")
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
@@ -106,6 +111,7 @@ public class DynatraceSettingsFactory {
 				.setLabel("{!emp_widget_dynatrace_processgroup!}")
 				.setDescription("{!emp_widget_dynatrace_processgroup_desc!}")
 				.addAttribute("maxTags", "1")
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
@@ -144,6 +150,7 @@ public class DynatraceSettingsFactory {
 		return 	CFWField.newTagsSelector("JSON_METRICS")
 				.setLabel("{!emp_widget_dynatrace_metrics!}")
 				.setDescription("{!emp_widget_dynatrace_metrics_desc!}")
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
@@ -172,6 +179,7 @@ public class DynatraceSettingsFactory {
 				.setLabel("{!emp_widget_dynatrace_log!}")
 				.setDescription("{!emp_widget_dynatrace_log_desc!}")
 				.addAttribute("maxTags", "1")
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
@@ -209,7 +217,9 @@ public class DynatraceSettingsFactory {
 		
 		return CFWField.newString(FormFieldType.TEXT, "LOG_QUERY")
 				.setLabel("{!emp_widget_dynatrace_logquery!}")
-				.setDescription("{!emp_widget_dynatrace_logquery_desc!}");
+				.setDescription("{!emp_widget_dynatrace_logquery_desc!}")
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
+				;
 	}
 	
 	/************************************************************************************
@@ -221,6 +231,7 @@ public class DynatraceSettingsFactory {
 		return CFWField.newInteger(FormFieldType.NUMBER, "LOG_MAX_ENTRIES")
 				.setLabel("{!emp_widget_dynatrace_logmaxentries!}")
 				.setDescription("{!emp_widget_dynatrace_logmaxentries_desc!}")
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 				.setValue(50)
 				.addValidator(new NumberRangeValidator(1, 10000));
 	}

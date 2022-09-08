@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.google.common.base.Strings;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
+import com.xresch.cfw.datahandling.CFWField.CFWFieldFlag;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
@@ -23,7 +24,9 @@ public class MongoDBSettingsFactory {
 		return CFWField.newString(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
 				.setLabel("{!emp_common_environment!}")
 				.setDescription("{!emp_common_environment_desc!}")
-				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(MongoDBEnvironment.SETTINGS_TYPE));
+				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(MongoDBEnvironment.SETTINGS_TYPE))
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
+				;
 	}
 
 	public static CFWField<?> createCollectionSelectorField() {
@@ -31,6 +34,7 @@ public class MongoDBSettingsFactory {
 				.setLabel("{!emp_widget_mongodb_query_collection!}")
 				.setDescription("{!emp_widget_mongodb_query_collection_desc!}")
 				.addAttribute("maxTags", "1")
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override
