@@ -29,6 +29,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 
 	private static final String PARAM_METHOD = "METHOD";
 	private static final String PARAM_URL = "URL";
+	private static final String PARAM_HEADERS = "JSON_HEADERS";
 	private static final String PARAM_USERNAME = "USERNAME";
 	private static final String PARAM_PASSWORD = "PASSWORD";
 	
@@ -86,12 +87,19 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 						.setValue("GET")
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 					)
+				
 				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_URL)
 						.setLabel("{!emp_widget_evaluateresponse_url_label!}")
 						.setDescription("{!emp_widget_evaluateresponse_url_desc!}")
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						.setValue("")
 					)
+				
+				.addField(CFWField.newValueLabel(PARAM_HEADERS)
+						.setLabel("{!emp_widget_evaluateresponse_headers_label!}")
+						.setDescription("{!emp_widget_evaluateresponse_headers_desc!}")
+						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
+						)
 
 				.addField(CFWField.newString(CFWField.FormFieldType.TEXT, PARAM_USERNAME)
 						.setLabel("{!emp_widget_evaluateresponse_username_label!}")
@@ -140,6 +148,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void fetchData(HttpServletRequest httpServletRequest, JSONResponse jsonResponse, CFWObject cfwObject, JsonObject jsonObject, long l, long l1) {
 
@@ -157,6 +166,8 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 
 		String username = (String) cfwObject.getField(PARAM_USERNAME).getValue();
 		String password = (String) cfwObject.getField(PARAM_PASSWORD).getValue();
+		
+		LinkedHashMap<String, String> headers = (LinkedHashMap<String, String>) cfwObject.getField(PARAM_HEADERS).getValue();
 		
 		String[] splittedURLs = url.trim().split("\\r\\n|\\n");
 		String checkType = (String) cfwObject.getField(PARAM_CHECK_TYPE).getValue();
@@ -186,6 +197,8 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			if(!Strings.isNullOrEmpty(username)) {
 				requestBuilder.authenticationBasic(username, password);
 			}
+			
+			requestBuilder.headers(headers);
 			
 			
 			CFWHttpResponse response = requestBuilder.send();
