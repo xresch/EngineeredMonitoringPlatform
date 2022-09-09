@@ -1,5 +1,7 @@
 package com.xresch.emp.features.httpextensions;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -39,6 +41,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 
 	private static final String PARAM_METHOD = "METHOD";
 	private static final String PARAM_URLS = "URLS";
+	private static final String PARAM_LABELS = "LABELS";
 	private static final String PARAM_HEADERS = "JSON_HEADERS";
 	private static final String PARAM_USERNAME = "USERNAME";
 	private static final String PARAM_PASSWORD = "PASSWORD";
@@ -106,6 +109,13 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						.setValue("")
 					)
+				
+				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_LABELS)
+						.setLabel("{!emp_widget_evaluateresponse_labels_label!}")
+						.setDescription("{!emp_widget_evaluateresponse_labels_desc!}")
+						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
+						.setValue("")
+						)
 				
 				.addField(CFWField.newValueLabel(PARAM_HEADERS)
 						.setLabel("{!emp_widget_evaluateresponse_headers_label!}")
@@ -177,17 +187,25 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			method = "GET";
 		}
 		
-		String url = (String) cfwObject.getField(PARAM_URLS).getValue();
-		if (Strings.isNullOrEmpty(url)) {
+		String urls = (String) cfwObject.getField(PARAM_URLS).getValue();
+		if (Strings.isNullOrEmpty(urls)) {
 			return;
 		}
-
+		String[] splittedURLs = urls.trim().split("\\r\\n|\\n");
+		
+		
+		String labels = (String) cfwObject.getField(PARAM_LABELS).getValue();
+		String[] splittedLabels = new String[] {};
+		if (!Strings.isNullOrEmpty(labels)) {
+			splittedLabels = labels.trim().split("\\r\\n|\\n");
+		}
+		
+		
 		String username = (String) cfwObject.getField(PARAM_USERNAME).getValue();
 		String password = (String) cfwObject.getField(PARAM_PASSWORD).getValue();
 		
 		LinkedHashMap<String, String> headers = (LinkedHashMap<String, String>) cfwObject.getField(PARAM_HEADERS).getValue();
 		
-		String[] splittedURLs = url.trim().split("\\r\\n|\\n");
 		String checkType = (String) cfwObject.getField(PARAM_CHECK_TYPE).getValue();
 		String checkFor = (String) cfwObject.getField(PARAM_CHECK_FOR).getValue();
 
@@ -199,6 +217,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 		// Iterate URLs and Build Response
 		JsonArray jsonArray = new JsonArray();
 
+		int index = 0;
 		for (String splittedURL : splittedURLs) {
 
 			//----------------------------------------
@@ -226,8 +245,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			// Handle Debug Mode
 			if(debugMode) {
 				JsonObject debugObject = new JsonObject();
-				
-				
+								
 				debugObject.addProperty("URL", requestBuilder.buildURLwithParams());
 				debugObject.addProperty("RESPONSE_STATUS", response.getStatus());
 				debugObject.add("RESPONSE_HEADERS", response.getHeadersAsJson());
@@ -244,6 +262,18 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			// Create Data Object
 			JsonObject returnObject = new JsonObject();
 
+			if(index < splittedLabels.length 
+			&& !Strings.isNullOrEmpty(splittedLabels[index])) {
+				returnObject.addProperty("LABEL", splittedLabels[index]);
+			}else {
+				
+				try {
+					returnObject.addProperty("LABEL", new URL(splittedURL).getHost());
+				} catch (MalformedURLException e) {
+					returnObject.addProperty("LABEL", splittedURL);
+				}
+			}
+			
 			returnObject.addProperty("URL", splittedURL);
 			returnObject.addProperty(PARAM_CHECK_TYPE, checkType);
 			returnObject.addProperty(PARAM_CHECK_FOR, checkFor);
@@ -296,11 +326,8 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 				}
 			}
 			
-			
 			returnObject.addProperty("CHECK_RESULT", result);
-			// Add object to the returnArray
-			jsonArray.add(returnObject);
-			
+
 			//----------------------------------------
 			// Check response code
 			int actualResponseStatusCode = response.getStatus();
@@ -316,10 +343,15 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 				}
 				
 			}
+			
+			//----------------------------------------
+			// Add Object to the Result Array
+			jsonArray.add(returnObject);
+			index++;
 
 		}
 
-		// Add jsonArray to the payload - this will be the data.payload in JavaScript
+		// Add jsonArray to the payload
 		jsonResponse.setPayLoad(jsonArray);
 
 	}

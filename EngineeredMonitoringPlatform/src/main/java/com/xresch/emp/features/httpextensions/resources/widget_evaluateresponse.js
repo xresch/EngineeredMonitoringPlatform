@@ -116,9 +116,9 @@
 							data: data.payload,
 							bgstylefield: 'alertstyle',
 							textstylefield: 'textstyle',
-							titlefields: ['URL'],
+							titlefields: ['LABEL'],
 							titledelimiter: ' - ',
-							visiblefields: ['URL', 'CHECK_TYPE', 'CHECK_FOR', 'CHECK_RESULT', 'STATUS_CODE', 'STATUS_CODE_VALID', 'STATUS_CODE_MESSAGE' ] ,
+							visiblefields: ['LABEL', 'URL', 'CHECK_TYPE', 'CHECK_FOR', 'CHECK_RESULT', 'STATUS_CODE', 'STATUS_CODE_VALID', 'STATUS_CODE_MESSAGE' ] ,
 							labels: {
 								URL: 'URL'
 							},
