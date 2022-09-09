@@ -9,9 +9,8 @@
 			{
 				category: 'HTTP',
 				menuicon: 'fas fa-flask',
-				menulabel: 'Evaluate Response',
-				description: CFWL('emp_widget_evaluateresponse_urls_desc', 'Takes an URL and performs' +
-				' different kinds of checks on the response.'),
+				menulabel: CFWL('emp_widget_httpextensions_evaluateresponse', 'Evaluate Response'),
+				description: CFWL('emp_widget_httpextensions_evaluateresponse_desc', 'Calls one or multiple URLs and performs different kinds of checks on the responses.'),
 				createWidgetInstance: function (widgetObject, params, callback) {
 
 					CFW.dashboard.fetchWidgetData(widgetObject, params, function(data) {
@@ -103,9 +102,6 @@
 									current.alertstyle = "cfw-danger";
 									break;
 
-								case "failed":
-									current.alertstyle = "cfw-gray";
-
 							}
 
 						}
@@ -117,10 +113,10 @@
 							bgstylefield: 'alertstyle',
 							textstylefield: 'textstyle',
 							titlefields: ['LABEL'],
-							titledelimiter: ' - ',
 							visiblefields: ['LABEL', 'URL', 'CHECK_TYPE', 'CHECK_FOR', 'CHECK_RESULT', 'STATUS_CODE', 'STATUS_CODE_VALID', 'STATUS_CODE_MESSAGE' ] ,
 							labels: {
-								URL: 'URL'
+								URL: 'URL',
+								STATUS_CODE_MESSAGE: 'Message'
 							},
 							customizers: {
 								URL: function(record, value){

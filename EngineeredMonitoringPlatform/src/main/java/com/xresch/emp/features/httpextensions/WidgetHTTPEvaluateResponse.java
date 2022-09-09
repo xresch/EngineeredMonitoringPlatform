@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +24,9 @@ import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.WidgetDataCache;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
+import com.xresch.cfw.utils.CFWHttp;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpRequestBuilder;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 import com.xresch.cfw.validation.NumberRangeValidator;
@@ -39,6 +42,8 @@ import com.xresch.cfw.validation.NumberRangeValidator;
  **************************************************************************************************************/
 public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 
+	private static Logger logger = CFWLog.getLogger(WidgetHTTPEvaluateResponse.class.getName());
+	
 	private static final String PARAM_METHOD = "METHOD";
 	private static final String PARAM_URLS = "URLS";
 	private static final String PARAM_LABELS = "LABELS";
@@ -95,8 +100,8 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 		return new CFWObject()
 
 				.addField(CFWField.newString(CFWField.FormFieldType.SELECT, PARAM_METHOD)
-						.setLabel("{!emp_widget_evaluateresponse_method_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_method_desc!}")
+						.setLabel("{!emp_widget_httpextensions_method!}")
+						.setDescription("{!emp_widget_httpextensions_method_desc!}")
 						.addOption("GET")
 						.addOption("POST")
 						.setValue("GET")
@@ -104,35 +109,35 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 					)
 				
 				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_URLS)
-						.setLabel("{!emp_widget_evaluateresponse_urls_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_urls_desc!}")
+						.setLabel("{!emp_widget_httpextensions_urls!}")
+						.setDescription("{!emp_widget_httpextensions_urls_desc!}")
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						.setValue("")
 					)
 				
 				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_LABELS)
-						.setLabel("{!emp_widget_evaluateresponse_labels_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_labels_desc!}")
+						.setLabel("{!emp_widget_httpextensions_labels!}")
+						.setDescription("{!emp_widget_httpextensions_labels_desc!}")
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						.setValue("")
 						)
 				
 				.addField(CFWField.newValueLabel(PARAM_HEADERS)
-						.setLabel("{!emp_widget_evaluateresponse_headers_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_headers_desc!}")
+						.setLabel("{!emp_widget_httpextensions_headers!}")
+						.setDescription("{!emp_widget_httpextensions_headers_desc!}")
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						)
 
 				.addField(CFWField.newString(CFWField.FormFieldType.TEXT, PARAM_USERNAME)
-						.setLabel("{!emp_widget_evaluateresponse_username_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_username_desc!}")
+						.setLabel("{!emp_widget_httpextensions_username!}")
+						.setDescription("{!emp_widget_httpextensions_username_desc!}")
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 						.setValue(null)
 					)
 				
 				.addField(CFWField.newString(CFWField.FormFieldType.PASSWORD, PARAM_PASSWORD)
-						.setLabel("{!emp_widget_evaluateresponse_password_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_password_desc!}")
+						.setLabel("{!emp_widget_httpextensions_password!}")
+						.setDescription("{!emp_widget_httpextensions_password_desc!}")
 						// DO NOT TOUCH! Changing salt will corrupt all password stored in the database
 						.enableEncryption("emp_httpextensions_encryptionSalt-fFDSgasTR1")
 						.disableSanitization()
@@ -142,23 +147,23 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 				
 				// Labels for the URL ?
 				.addField(CFWField.newString(CFWField.FormFieldType.SELECT, PARAM_CHECK_TYPE)
-						.setLabel("{!emp_widget_evaluateresponse_checktype_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_checktype_desc!}")
+						.setLabel("{!emp_widget_httpextensions_checktype!}")
+						.setDescription("{!emp_widget_httpextensions_checktype_desc!}")
 						.setOptions(checkTypeOptions)
 						.setValue("Contains")
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 					)
 
 				.addField(CFWField.newString(CFWField.FormFieldType.TEXTAREA, PARAM_CHECK_FOR)
-						.setLabel("{!emp_widget_evaluateresponse_matchfor_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_matchfor_desc!}")
+						.setLabel("{!emp_widget_httpextensions_matchfor!}")
+						.setDescription("{!emp_widget_httpextensions_matchfor_desc!}")
 						.setValue("")
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 					)
 
 				.addField(CFWField.newInteger(CFWField.FormFieldType.NUMBER, PARAM_STATUS_CODE)
-						.setLabel("{!emp_widget_evaluateresponse_statuscode_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_statuscode_desc!}")
+						.setLabel("{!emp_widget_httpextensions_statuscode!}")
+						.setDescription("{!emp_widget_httpextensions_statuscode_desc!}")
 						.addValidator(new NumberRangeValidator(0, 999))
 						.setValue(200)
 						.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
@@ -168,8 +173,8 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
 				
 				.addField(CFWField.newBoolean(CFWField.FormFieldType.BOOLEAN, PARAM_DEBUG_MODE)
-						.setLabel("{!emp_widget_evaluateresponse_debugmode_label!}")
-						.setDescription("{!emp_widget_evaluateresponse_debugmode_desc!}")
+						.setLabel("{!emp_widget_httpextensions_debugmode!}")
+						.setDescription("{!emp_widget_httpextensions_debugmode_desc!}")
 						.setValue(false)
 					)
 				;
@@ -200,7 +205,6 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			splittedLabels = labels.trim().split("\\r\\n|\\n");
 		}
 		
-		
 		String username = (String) cfwObject.getField(PARAM_USERNAME).getValue();
 		String password = (String) cfwObject.getField(PARAM_PASSWORD).getValue();
 		
@@ -221,8 +225,13 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 		for (String splittedURL : splittedURLs) {
 
 			//----------------------------------------
+			// Check URL
+			if(!splittedURL.contains("://") 
+			&& !splittedURL.startsWith("http") ) {
+				splittedURL = "https://"+splittedURL;
+			}
+			//----------------------------------------
 			// Build Request and Call URL
-			//CFWHttp.CFWHttpResponse response = CFW.HTTP.sendGETRequest(splittedURL);
 
 			CFWHttpRequestBuilder requestBuilder = CFW.HTTP.newRequestBuilder(splittedURL);
 			
@@ -238,8 +247,15 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 			
 			requestBuilder.headers(headers);
 			
-			
+
 			CFWHttpResponse response = requestBuilder.send();
+
+			if(response.errorOccured()) {
+				CFW.Messages.addInfoMessage("Hint: Check if your URLs include the right protocol(http/https).");
+				CFW.Messages.addInfoMessage("Another Hint: The application server might not have access to the URL. Check with the application support.");
+				return;
+			}
+			
 			
 			//------------------------------------
 			// Handle Debug Mode
@@ -368,8 +384,8 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureHTTPExtensions.PACKAGE_RESOURCES, "lang_en_widget_evaluateresponse.properties"));
-		map.put(Locale.GERMAN, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureHTTPExtensions.PACKAGE_RESOURCES, "lang_de_widget_evaluateresponse.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureHTTPExtensions.PACKAGE_RESOURCES, "lang_en_httpextensions.properties"));
+		map.put(Locale.GERMAN, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureHTTPExtensions.PACKAGE_RESOURCES, "lang_de_httpextensions.properties"));
 		return map;
 	}
 }
