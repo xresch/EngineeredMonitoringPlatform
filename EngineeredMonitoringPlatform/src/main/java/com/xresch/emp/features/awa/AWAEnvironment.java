@@ -352,12 +352,11 @@ public class AWAEnvironment extends AbstractContextSettings {
 						.authenticationBasic(this.apiUsername(), this.apiPassword())
 						.header("Content-Type", "application/json")
 						.param("name", currentJobname)
-						.param("include_deactivated", "false")
+						//.param("include_deactivated", "true")
 						.param("max_results", "1")
-						.param("time_frame_from", earliestString)
+						.param("time_frame_from", "1970-01-01T00:00:00Z")
 						.param("time_frame_to", latestString)
-						.param("time_frame_option", "all")
-						//.bodyJSON("{\"name\": \""+currentJobname+"\"}")
+						//.param("time_frame_option", "all")
 						.send()
 					;
 			
