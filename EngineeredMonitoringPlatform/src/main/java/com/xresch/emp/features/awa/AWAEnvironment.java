@@ -61,8 +61,8 @@ public class AWAEnvironment extends AbstractContextSettings {
 	
 	private CFWField<String> source = CFWField.newString(FormFieldType.SELECT, AWAEnvironmentFields.SOURCE)
 			.setDescription("The source from which to fetch the data.")
-			.addOption(SOURCE_DATABASE)
-			.addOption(SOURCE_REST_API)
+			.addOption(SOURCE_DATABASE, "Database (Recommended)")
+			.addOption(SOURCE_REST_API, "REST API (Experimental)")
 			.setValue(SOURCE_DATABASE);
 	
 	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, AWAEnvironmentFields.URL)
