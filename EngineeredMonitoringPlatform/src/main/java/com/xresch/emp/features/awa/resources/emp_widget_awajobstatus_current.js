@@ -70,9 +70,15 @@
 					};
 					
 					//--------------------------
-					// Adjust Settings for Table
-					if(widgetObject.JSON_SETTINGS.renderer == "Table"){
+					// Adjust Settings for Renderers
+					var renderType = widgetObject.JSON_SETTINGS.renderer;
+					if(renderType == null){ renderType = 'tiles'};
+					renderType.toLowerCase();
+					
+					if(renderType == "table"){
 						dataToRender.visiblefields = ['LABEL','JOBNAME', 'STATUS']; 
+					}else if(renderType != "tiles"){
+						dataToRender.visiblefields = ['LABEL','JOBNAME', 'STATUS', 'STATUS_CODE', 'START_TIME', 'END_TIME', 'TYPE', 'URL']; 
 					}
 					
 					//--------------------------
@@ -81,10 +87,9 @@
 					if(  data.payload == null || typeof data.payload == 'string'){
 						callback(widgetObject, "");
 					}else{
-						var renderType = widgetObject.JSON_SETTINGS.renderer;
-						if(renderType == null){ renderType = 'tiles'};
 						
-						var alertRenderer = CFW.render.getRenderer(renderType.toLowerCase());
+						
+						var alertRenderer = CFW.render.getRenderer(renderType);
 						callback(widgetObject, alertRenderer.render(dataToRender));
 					}
 					
