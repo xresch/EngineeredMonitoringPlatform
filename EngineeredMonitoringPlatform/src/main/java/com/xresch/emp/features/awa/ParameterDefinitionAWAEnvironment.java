@@ -26,7 +26,7 @@ public class ParameterDefinitionAWAEnvironment extends ParameterDefinition {
 		CFWField settingsField = AWASettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

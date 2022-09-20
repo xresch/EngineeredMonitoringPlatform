@@ -26,7 +26,7 @@ public class ParameterDefinitionMongoDBEnvironment extends ParameterDefinition {
 		CFWField settingsField = MongoDBSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

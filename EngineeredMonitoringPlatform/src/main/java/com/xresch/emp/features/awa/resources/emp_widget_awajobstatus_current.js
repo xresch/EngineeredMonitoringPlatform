@@ -15,6 +15,10 @@
 				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
 					var jobStats = data.payload;
 					
+					if(data.payload == null){
+						return callback(widgetObject, "");
+					}
+					
 					for(var key in jobStats){
 						var current = jobStats[key];
 						var status = current.STATUS;

@@ -65,7 +65,7 @@ public class WidgetProcessLogs extends WidgetDefinition {
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
 		
 		WidgetProcessLogsSettings settingsObject = new WidgetProcessLogsSettings();
-		settingsObject.mapJsonFields(jsonSettings, true);
+		settingsObject.mapJsonFields(jsonSettings, true, true);
 		
 		//---------------------------------
 		// Example Data

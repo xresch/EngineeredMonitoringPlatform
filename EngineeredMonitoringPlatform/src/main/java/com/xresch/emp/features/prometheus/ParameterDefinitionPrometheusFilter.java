@@ -53,7 +53,7 @@ public class ParameterDefinitionPrometheusFilter extends ParameterDefinition {
 				
 		
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

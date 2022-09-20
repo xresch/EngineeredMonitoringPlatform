@@ -26,7 +26,7 @@ public class ParameterDefinitionSPMEnvironment extends ParameterDefinition {
 		CFWField settingsField = SPMSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

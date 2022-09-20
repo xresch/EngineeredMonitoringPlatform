@@ -26,7 +26,7 @@ public class ParameterDefinitionDynatraceEnvironment extends ParameterDefinition
 		CFWField settingsField = DynatraceSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

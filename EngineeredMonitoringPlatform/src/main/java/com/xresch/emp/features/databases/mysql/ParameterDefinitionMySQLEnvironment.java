@@ -26,7 +26,7 @@ public class ParameterDefinitionMySQLEnvironment extends ParameterDefinition {
 		CFWField settingsField = MySQLSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

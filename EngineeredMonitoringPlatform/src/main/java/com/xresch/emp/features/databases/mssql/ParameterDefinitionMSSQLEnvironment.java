@@ -26,7 +26,7 @@ public class ParameterDefinitionMSSQLEnvironment extends ParameterDefinition {
 		CFWField settingsField = MSSQLSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

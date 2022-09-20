@@ -26,7 +26,7 @@ public class ParameterDefinitionStepEnvironment extends ParameterDefinition {
 		CFWField settingsField = StepSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

@@ -26,7 +26,7 @@ public class ParameterDefinitionInfluxDBEnvironment extends ParameterDefinition 
 		CFWField settingsField = InfluxDBSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

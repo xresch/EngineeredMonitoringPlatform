@@ -93,7 +93,7 @@ public class ServletTheusinator extends HttpServlet
 		// Create Environment 
 		//------------------------------
 		EnvironmentSPM spm = new EnvironmentSPM();
-		spm.mapJsonFields(settings.settings(), true);
+		spm.mapJsonFields(settings.settings(), true, true);
 		
 		String queryString = request.getQueryString().replaceAll("service=.*?&|&service=.*?", "")
 									.replaceAll("env=.*?&|&env=.*?", "");

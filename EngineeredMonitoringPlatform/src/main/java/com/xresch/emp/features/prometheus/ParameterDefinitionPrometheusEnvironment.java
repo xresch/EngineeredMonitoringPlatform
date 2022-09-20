@@ -32,7 +32,7 @@ public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinitio
 		CFWField settingsField = PrometheusSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;

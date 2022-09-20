@@ -26,7 +26,7 @@ public class ParameterDefinitionGenericJDBCEnvironment extends ParameterDefiniti
 		CFWField settingsField = GenericJDBCSettingsFactory.createEnvironmentSelectorField();
 				
 		if(fieldValue != null) {
-			settingsField.setValueConvert(fieldValue);
+			settingsField.setValueConvert(fieldValue, true);
 		}
 	
 		return settingsField;
