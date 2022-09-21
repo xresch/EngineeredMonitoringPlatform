@@ -77,7 +77,7 @@
 					// Adjust Settings for Renderers
 					var renderType = widgetObject.JSON_SETTINGS.renderer;
 					if(renderType == null){ renderType = 'tiles'};
-					renderType.toLowerCase();
+					renderType = renderType.toLowerCase();
 					
 					if(renderType == "table"){
 						dataToRender.visiblefields = ['LABEL','JOBNAME', 'STATUS']; 
