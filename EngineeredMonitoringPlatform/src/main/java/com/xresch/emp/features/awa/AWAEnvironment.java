@@ -159,7 +159,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 				) {
 			if(!urlString.endsWith("/")) { urlString += "/"; url.setValue(urlString); };
 			
-			String finalClientID = "00"+clientID.getValue();
+			String finalClientID = "0000"+clientID.getValue();
 			finalClientID = finalClientID.substring(finalClientID.length() - 4);
 			
 			String jobURL = urlString+"awi/#"+urlDBPartString+":"+finalClientID
