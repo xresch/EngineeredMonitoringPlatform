@@ -1,8 +1,5 @@
 package com.xresch.emp.features.awa;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,13 +22,10 @@ import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
-import com.xresch.cfw.db.DBInterface;
-import com.xresch.cfw.features.dashboard.Dashboard;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
-import com.xresch.cfw.features.dashboard.FeatureDashboard;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
-import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
@@ -41,9 +35,9 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
 public class WidgetJobStatusCurrent extends WidgetDefinition {
 
-	private static final String LAST_RUN_MINUTES = "last_run_minutes";
-	private static final String JOBLABELS = "joblabels";
-	private static final String JOBNAMES = "jobnames";
+	protected static final String LAST_RUN_MINUTES = "last_run_minutes";
+	protected static final String JOBLABELS = "joblabels";
+	protected static final String JOBNAMES = "jobnames";
 	
 	private static Logger logger = CFWLog.getLogger(WidgetJobStatusCurrent.class.getName());
 	
