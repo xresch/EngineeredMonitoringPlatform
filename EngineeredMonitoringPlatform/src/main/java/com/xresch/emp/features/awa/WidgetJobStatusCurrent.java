@@ -173,7 +173,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 			+ "{ \"JOBNAME\":\"JP_0003_C\", \"LABEL\":\"Some Very Long Label with blanks for breaks\", \"STATUS\":\"ABNORMAL ENDING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0_A\", \"LABEL\":\"JP__A\", \"STATUS\":\"WAITING\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_226\", \"LABEL\":\"JP_0003_226\", \"STATUS\":\"OVERDUE (UNKNOWN)\", \"END_TIME\":"+(currentTime-(4120*60000))+"},"
-			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"OVERDUE (ENDED OK)\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
+			+ "{ \"JOBNAME\":\"JP_0002_B\", \"LABEL\":\"Job B\", \"STATUS\":\"BLOCKED\", \"END_TIME\":"+(currentTime-(120*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_234\", \"LABEL\":\"Crazy Job\", \"STATUS\":\"ABNORMAL ENDING\", \"END_TIME\":"+(currentTime-(9120*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_V\", \"LABEL\":\"JP_0003_V\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(34120*60000))+"},"
 			+ "{ \"JOBNAME\":\"JP_0003_Chjkl\", \"LABEL\":\"The Holy C\", \"STATUS\":\"ENDED OK\", \"END_TIME\":"+(currentTime-(120*60000))+"},"

@@ -62,7 +62,7 @@
 								
 								case 'cfw-danger': 
 									worstStatusStyle = 'cfw-danger';
-									worstStatusText  = "ABNORMAL ENDING";
+									worstStatusText  = "ABEND / BLOCKED";
 								break;
 								
 								case 'cfw-emergency': 
@@ -112,6 +112,9 @@
 									joblistRenderData.data = value;
 									joblistRenderData.titlefields = ['LABEL'];
 									joblistRenderData.visiblefields = ['END_TIME', 'STATUS']; 
+									joblistRenderData.rendererSettings.tiles.showlabels = false; 
+									joblistRenderData.rendererSettings.tiles.sizefactor = 0.5; 
+									
 					 				return  CFW.render.getRenderer("tiles").render(joblistRenderData); 
 								
 					 			}else {
@@ -125,7 +128,6 @@
 					//--------------------------
 					// Create Tiles and Status Bar
 
-					
 					var tiles = CFW.render.getRenderer('tiles').render(dataToRender);
 					tiles.removeClass('h-100');
 					tiles.css('height', '90%');

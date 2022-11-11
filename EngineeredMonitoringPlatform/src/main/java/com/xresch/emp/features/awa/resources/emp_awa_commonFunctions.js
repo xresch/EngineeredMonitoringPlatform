@@ -23,6 +23,8 @@ function emp_widget_awa_getStatusStyle(status){
 							break;					
 		case "ENDED OK": 	style = "cfw-excellent"; 
 							break;
+		case "BLOCKED": 	style = "cfw-danger"; 
+							break;
 		case "ABNORMAL ENDING": 		style = "cfw-danger"; 
 							break;
 		case "UNKNOWN": 	style = "cfw-gray"; 
