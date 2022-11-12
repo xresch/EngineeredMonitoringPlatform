@@ -124,6 +124,10 @@
 						},
 						rendererSettings: CFW.dashboard.createStatusWidgetRendererSettings(widgetObject.JSON_SETTINGS)
 					};
+					
+					//--------------------------
+					// Set Expanding
+					dataToRender.rendererSettings.tiles.expandsingle = true;
 
 					//--------------------------
 					// Create Tiles and Status Bar
