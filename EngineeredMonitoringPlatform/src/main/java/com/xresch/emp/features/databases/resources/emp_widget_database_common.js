@@ -194,8 +194,7 @@ function createDatabaseQueryChartWidget(widgetMenuLabel){
 				chartsettings.padding = 2;
 				chartsettings.xfield = xColumn;
 				chartsettings.yfield =yColumn;
-				
-				console.log(chartsettings);			
+						
 				var dataToRender = {
 					data: data.payload,
 					//bgstylefield: 'alertstyle',

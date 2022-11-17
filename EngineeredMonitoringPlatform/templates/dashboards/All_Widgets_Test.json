@@ -1,6 +1,6 @@
 {"success": true,"messages": [],"payload": [
   {
-    "PK_ID": 2305,
+    "PK_ID": 2782,
     "FK_ID_USER": 1,
     "NAME": "All Widgets Test",
     "DESCRIPTION": null,
@@ -10,21 +10,23 @@
     "JSON_SHARE_WITH_GROUPS": {},
     "JSON_EDITORS": {},
     "JSON_EDITOR_GROUPS": {},
+    "IS_PUBLIC": false,
     "IS_DELETABLE": true,
     "IS_RENAMABLE": true,
-    "children": [],
     "username": "admin",
     "widgets": [
       {
-        "PK_ID": 7713,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14696,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 0,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": "cfw-black",
@@ -36,19 +38,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7714,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14697,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_text",
         "X": 0,
         "Y": 3,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Text",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -57,19 +60,20 @@
           "content": "Some Content",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7715,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14698,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 8,
         "Y": 3,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -81,19 +85,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7716,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14699,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_list",
         "X": 16,
         "Y": 3,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "List",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -103,19 +108,20 @@
           "isordered": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7717,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14700,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_checklist",
         "X": 24,
         "Y": 3,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Checklist",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -125,19 +131,20 @@
           "strikethrough": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7718,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14701,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_table",
         "X": 32,
         "Y": 3,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "CSV Table",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -150,19 +157,20 @@
           "striped": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7719,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14702,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_tags",
         "X": 40,
         "Y": 3,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Tags",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -171,19 +179,20 @@
           "tags": "apple, pinapple, banana, durian, orange",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7720,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14703,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_image",
         "X": 48,
         "Y": 3,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Image",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -192,19 +201,20 @@
           "url": "/resources/images/login_background.jpg",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7721,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14704,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_htmleditor",
         "X": 56,
         "Y": 3,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "HTML Editor",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -213,19 +223,20 @@
           "content": "\u003ch2\u003eYour Title\u003c/h2\u003e\u003cp\u003eYour fancy introduction.\u003c/p\u003e\u003cul\u003e\u003cli\u003eSome Bulletpoint\u003c/li\u003e\u003cli\u003eAnother Bulletpoint\u003c/li\u003e\u003c/ul\u003e",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7723,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14705,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_website",
         "X": 0,
         "Y": 15,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Website",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -234,19 +245,20 @@
           "url": "https://www.xresch.com",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7725,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14706,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_youtubevideo",
         "X": 8,
         "Y": 15,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Youtube Video",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -255,19 +267,20 @@
           "url": "https://www.youtube.com/watch?v\u003dVnEZ0p-_VQQ",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7726,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14707,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_refreshtime",
         "X": 16,
         "Y": 15,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -278,19 +291,20 @@
           "format": "HH:mm",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7727,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14708,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_parameter",
         "X": 24,
         "Y": 15,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Parameters",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -303,19 +317,20 @@
           "showbutton": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7728,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14709,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_replica",
         "X": 32,
         "Y": 15,
         "WIDTH": 32,
         "HEIGHT": 12,
         "TITLE": "Replica Test",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -329,19 +344,20 @@
           },
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7730,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14710,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 27,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": "cfw-black",
@@ -353,19 +369,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7731,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14711,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_customthresholdlegend",
         "X": 0,
         "Y": 30,
         "WIDTH": 64,
         "HEIGHT": 6,
         "TITLE": "Custom Threshold Widget",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -380,19 +397,20 @@
           "labeldarkgray": "Disabled",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7732,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14712,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 36,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": "cfw-black",
@@ -404,19 +422,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7733,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14713,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_awajobstatus",
         "X": 0,
         "Y": 39,
         "WIDTH": 8,
         "HEIGHT": 19,
         "TITLE": "AWA Job Status - Current",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -434,19 +453,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7734,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14714,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_awajobstatus_history",
         "X": 16,
         "Y": 39,
         "WIDTH": 48,
         "HEIGHT": 19,
         "TITLE": "AWA Job Status - History",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -465,19 +485,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7735,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14715,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_awajobswithstatus",
         "X": 8,
         "Y": 39,
         "WIDTH": 8,
         "HEIGHT": 19,
         "TITLE": "AWA Jobs with Status",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -495,19 +516,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7736,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14716,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_awajobstatus_legend",
         "X": 0,
         "Y": 58,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -515,19 +537,20 @@
         "JSON_SETTINGS": {
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7737,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14717,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 61,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": "cfw-black",
@@ -539,19 +562,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7738,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14718,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_dynatrace_hostdetails",
         "X": 0,
         "Y": 64,
         "WIDTH": 16,
         "HEIGHT": 12,
         "TITLE": "Host Details",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -562,19 +586,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7739,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14719,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_dynatrace_hostevents",
         "X": 48,
         "Y": 76,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Host Events",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -590,19 +615,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7740,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14720,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_dynatrace_hostlogs",
         "X": 16,
         "Y": 64,
         "WIDTH": 16,
         "HEIGHT": 12,
         "TITLE": "Host Logs",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -616,19 +642,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7741,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14721,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_dynatrace_hostmetricschart",
         "X": 16,
         "Y": 76,
         "WIDTH": 16,
         "HEIGHT": 12,
         "TITLE": "Host Metrics Chart",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -637,29 +664,34 @@
           "environment": "961",
           "JSON_HOST": {},
           "JSON_METRICS": {},
-          "chart_type": "area",
-          "stacked": false,
-          "show_legend": false,
-          "show_axes": true,
-          "pointradius": 0.0,
-          "ymin": 0,
-          "ymax": null,
           "sampledata": true,
-          "children": []
+          "children": [],
+          "JSON_CHART_SETTINGS": {
+            "charttype": "area",
+            "xtype": "time",
+            "ytype": "linear",
+            "ymin": 0.0,
+            "ymax": null,
+            "stacked": false,
+            "showlegend": false,
+            "showaxes": true,
+            "pointradius": 0.0
+          }
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7742,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14722,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_dynatrace_hostprocesses",
         "X": 32,
         "Y": 64,
         "WIDTH": 16,
         "HEIGHT": 12,
         "TITLE": "Host Processes",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -670,19 +702,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7743,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14723,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_dynatrace_hostunitconsumptionbytags",
         "X": 32,
         "Y": 76,
         "WIDTH": 16,
         "HEIGHT": 12,
         "TITLE": "Host Unit Consumption By Tags",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -693,19 +726,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7744,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14724,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_dynatrace_processevents",
         "X": 56,
         "Y": 76,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Process Events",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -722,19 +756,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7745,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14725,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_dynatrace_processlogs",
         "X": 48,
         "Y": 64,
         "WIDTH": 16,
         "HEIGHT": 12,
         "TITLE": "Process Logs",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -749,19 +784,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7746,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14726,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_dynatrace_processmetricschart",
         "X": 0,
         "Y": 76,
         "WIDTH": 16,
         "HEIGHT": 12,
         "TITLE": "Process Metrics Chart",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -771,29 +807,34 @@
           "JSON_HOST": {},
           "JSON_PROCESS": {},
           "JSON_METRICS": {},
-          "chart_type": "area",
-          "stacked": false,
-          "show_legend": false,
-          "show_axes": true,
-          "pointradius": 0.0,
-          "ymin": 0,
-          "ymax": null,
           "sampledata": true,
-          "children": []
+          "children": [],
+          "JSON_CHART_SETTINGS": {
+            "charttype": "area",
+            "xtype": "time",
+            "ytype": "linear",
+            "ymin": 0.0,
+            "ymax": null,
+            "stacked": false,
+            "showlegend": false,
+            "showaxes": true,
+            "pointradius": 0.0
+          }
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7747,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14727,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 88,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": "cfw-black",
@@ -805,19 +846,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7748,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14728,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_oraclequerystatus",
         "X": 0,
         "Y": 91,
         "WIDTH": 64,
         "HEIGHT": 10,
         "TITLE": "Query Status",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -841,19 +883,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7749,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14729,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 101,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": "cfw-black",
@@ -865,19 +908,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7750,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14730,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_prometheus_instant_threshold",
         "X": 0,
         "Y": 104,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "Instant Threshold",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -899,19 +943,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7751,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14731,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_prometheus_range_chart",
         "X": 8,
         "Y": 104,
         "WIDTH": 56,
         "HEIGHT": 12,
         "TITLE": "Range Chart",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -920,29 +965,34 @@
           "environment": "737",
           "query": null,
           "labels": null,
-          "chart_type": "area",
-          "stacked": false,
-          "show_legend": true,
-          "show_axes": false,
-          "pointradius": 0.0,
-          "ymin": 0,
-          "ymax": null,
           "sampledata": true,
-          "children": []
+          "children": [],
+          "JSON_CHART_SETTINGS": {
+            "charttype": "area",
+            "xtype": "time",
+            "ytype": "linear",
+            "ymin": 0.0,
+            "ymax": null,
+            "stacked": false,
+            "showlegend": true,
+            "showaxes": false,
+            "pointradius": 0.0
+          }
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7752,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14732,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 116,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": "cfw-black",
@@ -954,19 +1004,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7753,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14733,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_spmprojectstatus",
         "X": 0,
         "Y": 119,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "SPM Project Status",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -983,19 +1034,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7754,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14734,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_spmmonitorstatus",
         "X": 8,
         "Y": 119,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "SPM Monitor Status",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1012,19 +1064,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7755,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14735,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_spmmonitorstatus_forprojects",
         "X": 16,
         "Y": 119,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "SPM Monitor Status for Projects",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1041,19 +1094,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7756,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14736,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_spmmonitorstatus_all",
         "X": 40,
         "Y": 119,
         "WIDTH": 24,
         "HEIGHT": 24,
         "TITLE": "SPM Monitor Status All",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1069,19 +1123,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7757,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14737,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_spmcounterformonitorstatus",
         "X": 24,
         "Y": 119,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "SPM Counters for Monitor",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1103,19 +1158,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7758,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14738,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_spmcounterforprojectstatus",
         "X": 32,
         "Y": 119,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "SPM Counters for Project",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1137,19 +1193,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7759,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14739,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_spmtimersformonitorstatus",
         "X": 0,
         "Y": 131,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "SPM Timers for Monitor",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1171,19 +1228,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7760,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14740,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_spmtimersforprojectstatus",
         "X": 8,
         "Y": 131,
         "WIDTH": 8,
         "HEIGHT": 12,
         "TITLE": "SPM Timers for Project",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1205,19 +1263,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7761,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14741,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_smplegend",
         "X": 16,
         "Y": 131,
         "WIDTH": 24,
         "HEIGHT": 6,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1225,19 +1284,20 @@
         "JSON_SETTINGS": {
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7762,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14742,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_spmmeasurelegend",
         "X": 16,
         "Y": 137,
         "WIDTH": 24,
         "HEIGHT": 6,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1245,19 +1305,20 @@
         "JSON_SETTINGS": {
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7763,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14743,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 143,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": "cfw-black",
@@ -1269,19 +1330,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7764,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14744,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_webexservicestatus",
         "X": 0,
         "Y": 146,
         "WIDTH": 33,
         "HEIGHT": 11,
         "TITLE": "Webex Service Status",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1296,19 +1358,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 7765,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14745,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_webexservicestatus_legend",
         "X": 33,
         "Y": 146,
         "WIDTH": 31,
         "HEIGHT": 11,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1316,19 +1379,20 @@
         "JSON_SETTINGS": {
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 8417,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14746,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 157,
         "WIDTH": 64,
         "HEIGHT": 3,
         "TITLE": null,
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": "cfw-black",
@@ -1340,19 +1404,20 @@
           "sizefactor": "1",
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 8418,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14747,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_mysqlquerystatus",
         "X": 0,
         "Y": 160,
         "WIDTH": 21,
         "HEIGHT": 29,
         "TITLE": "MySQL Query Status",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1376,19 +1441,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 8419,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14748,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_mssqlquerystatus",
         "X": 21,
         "Y": 160,
         "WIDTH": 21,
         "HEIGHT": 29,
         "TITLE": "MSSQL Query Status",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1412,19 +1478,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 8420,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 14749,
+        "FK_ID_DASHBOARD": 2782,
         "TYPE": "emp_oraclequerystatus",
         "X": 42,
         "Y": 160,
         "WIDTH": 22,
         "HEIGHT": 29,
         "TITLE": "Oracle Query Status",
+        "TITLE_LINK": null,
         "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
         "CONTENT_FONTSIZE": null,
         "FOOTER": null,
         "BGCOLOR": null,
@@ -1448,22 +1515,20 @@
           "sampledata": true,
           "children": []
         },
-        "JSON_TASK_PARAMETERS": {},
-        "children": []
+        "JSON_TASK_PARAMETERS": {}
       }
     ],
     "parameters": [
       {
-        "PK_ID": 1315,
-        "FK_ID_DASHBOARD": 2305,
+        "PK_ID": 1959,
+        "FK_ID_DASHBOARD": 2782,
         "WIDGET_TYPE": null,
         "LABEL": "Text",
         "PARAM_TYPE": "TEXT",
         "NAME": "Text",
         "VALUE": "Default Value",
         "MODE": "MODE_SUBSTITUTE",
-        "IS_MODE_CHANGE_ALLOWED": false,
-        "children": []
+        "IS_MODE_CHANGE_ALLOWED": false
       }
     ]
   }
