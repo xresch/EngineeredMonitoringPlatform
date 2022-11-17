@@ -47,27 +47,21 @@
 					
 					//---------------------------
 					// Render Settings
+					
+					var chartsettings = Object.assign({}, settings.JSON_CHART_SETTINGS);
+					chartsettings.datamode = mode;
+					chartsettings.xfield = xfield;
+					chartsettings.yfield = yfield;
+					chartsettings.padding = 2;
+					
 					var dataToRender = {
 						data: dataArray,
 						titlefields: chartLabelFields, 
 						titleformat: null, 
 						rendererSettings:{
-							chart: {
-								charttype: settings.chart_type.toLowerCase(),
-								datamode: mode,
-								xfield: xfield,
-								yfield: yfield,
-								ytype: settings.y_axis_type,
-								stacked: settings.stacked,
-								showlegend: settings.show_legend,
-								// if not set make true
-								showaxes: (settings.show_axes == null) ? true : settings.show_axes,
-								ymin: settings.ymin,
-								ymax: settings.ymax,
-								pointradius: settings.pointradius,
-								padding: 2
-							}
-					}};
+							chart: chartsettings
+						}
+					};
 									
 					//--------------------------
 					// Render Widget

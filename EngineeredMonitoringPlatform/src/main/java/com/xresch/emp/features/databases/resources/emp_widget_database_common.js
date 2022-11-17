@@ -189,6 +189,13 @@ function createDatabaseQueryChartWidget(widgetMenuLabel){
 								
 				//---------------------------
 				// Render Settings
+				
+				var chartsettings = Object.assign({}, settings.JSON_CHART_SETTINGS);
+				chartsettings.padding = 2;
+				chartsettings.xfield = xColumn;
+				chartsettings.yfield =yColumn;
+				
+				console.log(chartsettings);			
 				var dataToRender = {
 					data: data.payload,
 					//bgstylefield: 'alertstyle',
@@ -199,25 +206,7 @@ function createDatabaseQueryChartWidget(widgetMenuLabel){
 					labels: {},
 					customizers: {},
 					rendererSettings:{
-						chart: {
-							// The type of the chart: line|steppedline|area|steppedarea|bar|scatter (to be done radar|pie|doughnut|polarArea|bubble)
-							charttype: settings.chart_type,
-							// How should the input data be handled groupbytitle|arrays 
-							datamode: 'groupbytitle',
-							xfield: xColumn,
-							yfield: yColumn,
-							//the type of the x axis: linear|logarithmic|category|time
-							xtype: settings.x_axis_type,
-							//the type of the y axis: linear|logarithmic|category|time
-							ytype: settings.y_axis_type,
-							stacked: settings.stacked,
-							showlegend: settings.show_legend,
-							showaxes: settings.show_axes,
-							ymin: settings.ymin,
-							ymax: settings.ymax,
-							pointradius: settings.pointradius,
-							padding: 2
-						}
+						chart: chartsettings
 					}
 				};
 												

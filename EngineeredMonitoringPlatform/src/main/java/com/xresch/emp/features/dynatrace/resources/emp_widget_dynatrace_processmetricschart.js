@@ -34,6 +34,13 @@
 
 					//---------------------------
 					// Render Settings
+									
+					var chartsettings = Object.assign({}, settings.JSON_CHART_SETTINGS);
+					chartsettings.datamode = 'arrays';
+					chartsettings.xfield = 'xvalues';
+					chartsettings.yfield = 'yvalues';
+					chartsettings.padding = 2;
+					
 					var renderParams = {
 						data: dataToRender,
 						//visiblefields: ["entityId", "displayName", "discoveredName", "tags", "osType", "osArchitecture", "osVersion", "cpuCores", "ipAddresses", "logicalCpuCores","monitoringMode","networkZoneId", "agentVersion","consumedHostUnits", "bitness", "oneAgentCustomHostName" ],
@@ -45,23 +52,9 @@
 							agentVersion: function(record, value) {  return JSON.stringify(value); },
 						},
 						rendererSettings:{
-							chart: {
-								charttype: settings.chart_type.toLowerCase(),
-								datamode: 'arrays',
-								xfield: 'xvalues',
-								yfield: 'yvalues',
-								ytype: settings.y_axis_type,
-								stacked: settings.stacked,
-								showlegend: settings.show_legend,
-								// if not set make true
-								showaxes: (settings.show_axes == null) ? true : settings.show_axes,
-								ymin: settings.ymin,
-								ymax: settings.ymax,
-								pointradius: settings.pointradius,
-								padding: 2
-							}
-							
-					}};
+							chart: chartsettings
+						}
+					};
 					
 					//--------------------------
 					// Render Widget

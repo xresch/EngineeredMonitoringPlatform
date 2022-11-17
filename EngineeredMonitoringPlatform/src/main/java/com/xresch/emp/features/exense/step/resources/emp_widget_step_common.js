@@ -188,6 +188,12 @@ function createStepChartWidgetBase(
 								
 				//---------------------------
 				// Render Settings
+				
+				var chartsettings = Object.assign({}, settings.JSON_CHART_SETTINGS);
+				chartsettings.xfield = timeField;
+				chartsettings.yfield = valueField;
+				chartsettings.padding = 2;
+					
 				var dataToRender = {
 					data: data.payload,
 					//bgstylefield: 'alertstyle',
@@ -201,7 +207,7 @@ function createStepChartWidgetBase(
 					},
 					customizers: {},
 					rendererSettings:{
-						chart: {
+						chart: chartsettings /*{
 							// The type of the chart: line|steppedline|area|steppedarea|bar|scatter (to be done radar|pie|doughnut|polarArea|bubble)
 							charttype: settings.chart_type,
 							// How should the input data be handled groupbytitle|arrays 
@@ -217,7 +223,7 @@ function createStepChartWidgetBase(
 							ymax: settings.ymax,
 							pointradius: settings.pointradius,
 							padding: 2
-						}
+						}*/
 					}
 				};
 												

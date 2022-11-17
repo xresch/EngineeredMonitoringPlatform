@@ -38,12 +38,18 @@
 
 					//---------------------------
 					// Render Settings
+					
+					var chartsettings = Object.assign({}, settings.JSON_CHART_SETTINGS);
+					chartsettings.xfield = 'time';
+					chartsettings.yfield = 'value';
+					chartsettings.padding = 2;
+					
 					var dataToRender = {
 						data: monitorStats,
 						titlefields: chartLabelFields, 
 						titleformat: null, 
 						rendererSettings:{
-							chart: {
+							chart: chartsettings /*{
 								charttype: settings.chart_type.toLowerCase(),
 								xfield: 'time',
 								yfield: 'value',
@@ -56,8 +62,9 @@
 								ymax: settings.ymax,
 								pointradius: settings.pointradius,
 								padding: 2
-							}
-					}};
+							}*/
+						}
+					};
 										
 					//--------------------------
 					// Render Widget
