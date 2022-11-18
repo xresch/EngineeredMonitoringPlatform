@@ -60,7 +60,7 @@ public class WidgetHostLogs extends WidgetDefinition {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest, int timezoneOffsetMinutes) { 
 		
 		WidgetHostLogsSettings settingsObject = new WidgetHostLogsSettings();
 		settingsObject.mapJsonFields(jsonSettings, true, true);

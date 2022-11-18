@@ -63,7 +63,7 @@ public class WidgetProjectStatus extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest, int timezoneOffsetMinutes) { 
 		//---------------------------------
 		// Example Data
 		JsonElement sampleDataElement = jsonSettings.get("sampledata");

@@ -32,7 +32,7 @@ public class WidgetServiceStatusLegend extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest) { /* do nothing */ }
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest, int timezoneOffsetMinutes) { /* do nothing */ }
 
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {

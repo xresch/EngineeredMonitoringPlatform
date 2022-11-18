@@ -182,7 +182,7 @@ public class WidgetHTTPEvaluateResponse extends WidgetDefinition {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void fetchData(HttpServletRequest httpServletRequest, JSONResponse jsonResponse, CFWObject cfwObject, JsonObject jsonObject, long l, long l1) {
+	public void fetchData(HttpServletRequest httpServletRequest, JSONResponse jsonResponse, CFWObject cfwObject, JsonObject jsonObject, long l, long l1, int timezoneOffsetMinutes) {
 
 		//------------------------------------
 		// Get Parameters
