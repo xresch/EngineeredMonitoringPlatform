@@ -1,4 +1,4 @@
-SELECT DISTINCT TOP 10 [MonitorID],[MonitorName],[ProjectID],[ProjectName]
+SELECT DISTINCT TOP 30 [MonitorID],[MonitorName],[ProjectID],[ProjectName]
 	FROM (
 	SELECT TOP 50000 [MonitorID],[MonitorName],[ProjectID],[ProjectName],[ProjectIsActive]
 		FROM [TMART].[dbo].[SV_V_Monitors_TimeSeriesData]

@@ -1,4 +1,4 @@
-SELECT DISTINCT TOP 10 [ProjectID]
+SELECT DISTINCT TOP 20 [ProjectID]
       ,[ProjectName]
       ,[MonitorID]
       ,[MonitorName]

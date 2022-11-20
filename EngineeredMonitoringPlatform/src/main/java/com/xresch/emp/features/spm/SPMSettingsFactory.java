@@ -39,7 +39,7 @@ public class SPMSettingsFactory {
 				.setDescription("{!emp_widget_spm_monitor_desc!}")
 				.addAttribute("maxTags", "1")
 				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
-				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+				.setAutocompleteHandler(new CFWAutocompleteHandler(20) {
 					
 					@Override
 					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {

@@ -1,4 +1,4 @@
-SELECT DISTINCT TOP 10 [ProjectID]
+SELECT DISTINCT TOP 20 [ProjectID]
       ,[ProjectName]
 	  ,[MeasureName] 
 FROM [TMART].[dbo].[SV_V_Monitors_TimeSeriesData]
