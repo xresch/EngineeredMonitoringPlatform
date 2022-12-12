@@ -131,7 +131,6 @@
 
 					//--------------------------
 					// Create Tiles and Status Bar
-
 					var tiles = CFW.render.getRenderer('tiles').render(dataToRender);
 					tiles.removeClass('h-100');
 					tiles.css('height', '90%');
