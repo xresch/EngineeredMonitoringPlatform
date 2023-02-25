@@ -22,6 +22,7 @@ import com.xresch.cfw.features.query.CFWQuery;
 import com.xresch.cfw.features.query.CFWQueryAutocompleteHelper;
 import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
+import com.xresch.cfw.utils.ResultSetUtils.ResultSetAsJsonReader;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 import com.xresch.emp.features.prometheus.PrometheusEnvironment;
 	
@@ -136,6 +137,7 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 				.addField(
 						CFWField.newString(FormFieldType.TEXT, FIELDNAME_ENVIRONMENT)
 							.setDescription("The database environment to fetch the data from. Use Ctrl+Space in the query editor for content assist.")	
+							.addValidator(new NotNullOrEmptyValidator())
 					)
 				.addField(
 						CFWField.newString(FormFieldType.TEXT, FIELDNAME_TIMEZONE)
@@ -185,12 +187,20 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 		// Resolve Query Params
 		String query = (String)parameters.getField(FIELDNAME_QUERY).getValue();
 		
-
+		if(Strings.isNullOrEmpty(query)) {
+			CFW.Messages.addWarningMessage("source: Please specify the parameter 'query' for the databese source.");
+			return;
+		}
 		
 		//-----------------------------
 		// Resolve Environment ID
 		String environmentString = (String)parameters.getField(FIELDNAME_ENVIRONMENT).getValue();
 
+		if(Strings.isNullOrEmpty(environmentString)) {
+			CFW.Messages.addWarningMessage("source: Please specify the parameter 'environment' for the databese source(use Ctrl+Space for list of suggestions).");
+			return;
+		}
+		
 		if(environmentString.startsWith("{")) {
 			JsonObject settingsObject = CFW.JSON.fromJson(environmentString).getAsJsonObject();
 			
@@ -238,17 +248,20 @@ public abstract class CFWQuerySourceDatabase extends CFWQuerySource {
 		
 		if(dbInterface == null) { return; }
 		
-		JsonArray resultArray = new CFWSQL(dbInterface, null)
+		//add limiting to getAsJSONArray()
+		ResultSetAsJsonReader resultReader = new CFWSQL(dbInterface, null)
 				.custom(query)
-				.getAsJSONArray();
+				.getAsJSONReader();
 		
-		if(resultArray != null) {
-			for (JsonElement element : resultArray) {
-				JsonObject object = element.getAsJsonObject();
-				outQueue.add(new EnhancedJsonObject(object));
-			}
+		int recordCounter = 0;
+		JsonObject object;
+		while( (object = resultReader.next()) != null) {
 			
+			if( this.isLimitReached(limit, recordCounter)) { break; }
+			
+			outQueue.add(new EnhancedJsonObject(object));
 		}
+			
 		
 	}
 
