@@ -20,7 +20,7 @@
 				
 				//--------------------------------
 				// Evaluate Status
-				var worstStatusStyle 		= 'cfw-excellent';
+				var worstStatusStyle 		= 'cfw-green';
 
 				
 				for(var key in monitorStats){
@@ -30,12 +30,12 @@
 					current.VALUE = current.VALUE.toFixed(1);
 					
 					if(widgetObject.JSON_SETTINGS.disable) { current.alertstyle = "cfw-darkgray"; }
-					else if (current.VALUE == 100) 		{ current.alertstyle = "cfw-excellent"; } 
+					else if (current.VALUE == 100) 		{ current.alertstyle = "cfw-green"; } 
 					
-					else if (current.VALUE >= 75) 	{ current.alertstyle = "cfw-good"; } 
-					else if (current.VALUE >= 50) 	{ current.alertstyle = "cfw-warning"; } 
-					else if (current.VALUE >= 25) 	{ current.alertstyle = "cfw-emergency"; } 
-					else if (current.VALUE >= 0)  	{ current.alertstyle = "cfw-danger"; } 
+					else if (current.VALUE >= 75) 	{ current.alertstyle = "cfw-limegreen"; } 
+					else if (current.VALUE >= 50) 	{ current.alertstyle = "cfw-yellow"; } 
+					else if (current.VALUE >= 25) 	{ current.alertstyle = "cfw-orange"; } 
+					else if (current.VALUE >= 0)  	{ current.alertstyle = "cfw-red"; } 
 					else if (current.VALUE == 'NaN' 
 						  || current.VALUE < 0) { 		  current.alertstyle = "cfw-gray"; } 
 					

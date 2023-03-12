@@ -37,8 +37,8 @@ import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions;
-import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
+import com.xresch.cfw.utils.CFWState;
+import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.cfw.validation.CustomValidator;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 
@@ -116,7 +116,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 						.setDescription("{!emp_widget_database_urlcolumn_desc!}")
 				)
 				
-				.addAllFields(CFWConditions.createThresholdFields());
+				.addAllFields(CFWState.createThresholdFields());
 	}
 	
 	/*********************************************************************
@@ -287,8 +287,8 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 					CFWField.newString(FormFieldType.SELECT, FIELDNAME_ALERT_THRESHOLD)
 					.setDescription("Select the threshhold that should trigger the alert when reached.")
 					.addValidator(new NotNullOrEmptyValidator())
-					.setOptions(CFW.Conditions.CONDITION_OPTIONS())
-					.setValue(CFW.Conditions.CONDITION_EMERGENCY.toString())
+					.setOptions(CFW.Conditions.STATE_OPTIONS())
+					.setValue(CFW.Conditions.STATE_ORANGE.toString())
 				);
 	}
 	
@@ -349,7 +349,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 			return;
 		}
 
-		ThresholdCondition alertThreshholdCondition = ThresholdCondition.valueOf(alertThreshholdString);
+		CFWStateOption alertThreshholdCondition = CFWStateOption.valueOf(alertThreshholdString);
 		
 		//----------------------------------------
 		// Check Condition
@@ -361,7 +361,7 @@ public abstract class WidgetBaseSQLQueryStatus extends WidgetDefinition {
 			JsonObject current = element.getAsJsonObject();
 			Float value = current.get(valueColumn).getAsFloat();
 
-			ThresholdCondition condition = CFW.Conditions.getConditionForValue(value, settings);
+			CFWStateOption condition = CFW.Conditions.getConditionForValue(value, settings);
 			if(condition != null 
 			&& CFW.Conditions.compareIsEqualsOrMoreDangerous(alertThreshholdCondition, condition)) {
 				conditionMatched = true;

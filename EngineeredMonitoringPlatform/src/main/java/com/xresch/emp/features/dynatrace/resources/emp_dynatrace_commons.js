@@ -107,9 +107,9 @@ function emp_dynatrace_renderEvents(widgetObject, data, callback){
 			continue;
 		}
 		if(current.eventStatus == "CLOSED"){
-				current.alertstyle = 'cfw-excellent';
+				current.alertstyle = 'cfw-green';
 		}else if(current.eventStatus == "OPEN"){
-			current.alertstyle = 'cfw-emergency';
+			current.alertstyle = 'cfw-orange';
 		}else {
 			current.alertstyle = 'cfw-none';
 		}  

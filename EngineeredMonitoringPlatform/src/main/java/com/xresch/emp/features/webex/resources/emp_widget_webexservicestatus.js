@@ -25,11 +25,11 @@
 			}
 			
 			switch(current.status.toLowerCase()){
-				case "operational": current.alertstyle = "cfw-excellent"; 
+				case "operational": current.alertstyle = "cfw-green"; 
 									break;
 				case "unknown": 	current.alertstyle = "cfw-gray"; 
 									break;
-				default: 			current.alertstyle = "cfw-danger"; 
+				default: 			current.alertstyle = "cfw-red"; 
 				break;
 			}
 			

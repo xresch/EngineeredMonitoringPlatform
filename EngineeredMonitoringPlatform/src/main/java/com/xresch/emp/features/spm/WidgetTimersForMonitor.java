@@ -31,7 +31,7 @@ import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions;
+import com.xresch.cfw.utils.CFWState;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 public class WidgetTimersForMonitor extends WidgetDefinition {
@@ -76,7 +76,7 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 						})
 				)
 				
-				.addAllFields(CFWConditions.createThresholdFields())
+				.addAllFields(CFWState.createThresholdFields())
 				
 				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())

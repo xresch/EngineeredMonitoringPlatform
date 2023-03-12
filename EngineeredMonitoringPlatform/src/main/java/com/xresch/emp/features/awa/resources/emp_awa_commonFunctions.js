@@ -7,7 +7,7 @@ CFW.dashboard.registerCategory("fas fa-desktop", CATEGORY_AWA);
 
 /*********************************************************************
  * Returns a partial CSS style for the given AWA status.
- * @returns style like "cfw-warning"
+ * @returns style like "cfw-yellow"
  * 
 *********************************************************************/
 function emp_widget_awa_getStatusStyle(status){
@@ -17,15 +17,15 @@ function emp_widget_awa_getStatusStyle(status){
 	//--------------------
 	// Add Colors
 	switch(status.toUpperCase()){
-		case "RUNNING": 	style = "cfw-warning"; 
+		case "RUNNING": 	style = "cfw-yellow"; 
 							break;
 		case "WAITING": 	style = "cfw-cyan"; 
 							break;					
-		case "ENDED OK": 	style = "cfw-excellent"; 
+		case "ENDED OK": 	style = "cfw-green"; 
 							break;
-		case "BLOCKED": 	style = "cfw-danger"; 
+		case "BLOCKED": 	style = "cfw-red"; 
 							break;
-		case "ABNORMAL ENDING": 		style = "cfw-danger"; 
+		case "ABNORMAL ENDING": 		style = "cfw-red"; 
 							break;
 		case "UNKNOWN": 	style = "cfw-gray"; 
 							break;
@@ -35,7 +35,7 @@ function emp_widget_awa_getStatusStyle(status){
 		case "OVERDUE (ABNORMAL ENDING)":
 		case "OVERDUE (UNKNOWN)":
 		case "OVERDUE":	
-							style = "cfw-emergency"; 
+							style = "cfw-orange"; 
 							break;
 	}
 	
@@ -44,7 +44,7 @@ function emp_widget_awa_getStatusStyle(status){
 
 /*********************************************************************
  * 
- * @returns style like "cfw-warning"
+ * @returns style like "cfw-yellow"
  * 
 *********************************************************************/
 function emp_widget_awa_groupByJobname(statusArray){

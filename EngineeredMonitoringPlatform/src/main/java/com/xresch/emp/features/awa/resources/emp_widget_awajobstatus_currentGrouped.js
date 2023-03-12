@@ -23,7 +23,7 @@
 					
 					//---------------------------------
 					// Iterate All Jobs
-					var worstStatusStyle = 'cfw-excellent';
+					var worstStatusStyle = 'cfw-green';
 					var worstStatusText  = "ENDED OK";
 					
 					for(var key in jobStats){
@@ -57,16 +57,16 @@
 						// Get Status Color
 						current.alertstyle = emp_widget_awa_getStatusStyle(current.STATUS);
 						
-						if(worstStatusStyle != 'cfw-danger'){
+						if(worstStatusStyle != 'cfw-red'){
 							switch(current.alertstyle){
 								
-								case 'cfw-danger': 
-									worstStatusStyle = 'cfw-danger';
+								case 'cfw-red': 
+									worstStatusStyle = 'cfw-red';
 									worstStatusText  = "ABEND / BLOCKED";
 								break;
 								
-								case 'cfw-emergency': 
-									worstStatusStyle = 'cfw-emergency';
+								case 'cfw-orange': 
+									worstStatusStyle = 'cfw-orange';
 									worstStatusText  = "OVERDUE";
 								break;
 								

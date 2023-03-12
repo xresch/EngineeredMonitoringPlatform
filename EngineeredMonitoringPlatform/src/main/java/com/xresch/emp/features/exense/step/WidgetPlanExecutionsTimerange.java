@@ -30,7 +30,7 @@ import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions;
+import com.xresch.cfw.utils.CFWState;
 import com.xresch.cfw.validation.NumberRangeValidator;
 
 public class WidgetPlanExecutionsTimerange extends WidgetDefinition  {
@@ -81,7 +81,7 @@ public class WidgetPlanExecutionsTimerange extends WidgetDefinition  {
 		return new CFWObject()
 				.addField(StepSettingsFactory.createEnvironmentSelectorField())
 				.addField(StepSettingsFactory.createPlansSelectorField())	
-				.addAllFields(CFWConditions.createThresholdFields());
+				.addAllFields(CFWState.createThresholdFields());
 	}
 	
 	

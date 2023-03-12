@@ -30,7 +30,7 @@ import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions;
+import com.xresch.cfw.utils.CFWState;
 import com.xresch.cfw.validation.NumberRangeValidator;
 
 public class WidgetPlanExecutionsLast extends WidgetDefinition  {
@@ -89,7 +89,7 @@ public class WidgetPlanExecutionsLast extends WidgetDefinition  {
 						.addValidator(new NumberRangeValidator(1, -1))
 				)
 				
-				.addAllFields(CFWConditions.createThresholdFields());
+				.addAllFields(CFWState.createThresholdFields());
 	}
 	
 	

@@ -14,7 +14,7 @@ import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
+import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.emp.features.exense.step.FeatureExenseStep.StepExecutionResult;
 
 public class StepCommonFunctions {
@@ -40,7 +40,7 @@ public class StepCommonFunctions {
 			return;
 		}
 	
-		ThresholdCondition alertThreshholdCondition = ThresholdCondition.valueOf(alertThreshholdString);
+		CFWStateOption alertThreshholdCondition = CFWStateOption.valueOf(alertThreshholdString);
 		
 		//----------------------------------------
 		// Check Condition
@@ -57,7 +57,7 @@ public class StepCommonFunctions {
 			
 			if(execResult == null || execResult.equals(StepExecutionResult.PASSED)) {
 				//check duration if passed
-				ThresholdCondition condition = CFW.Conditions.getConditionForValue(duration, settings);
+				CFWStateOption condition = CFW.Conditions.getConditionForValue(duration, settings);
 				if(condition != null 
 				&& CFW.Conditions.compareIsEqualsOrMoreDangerous(alertThreshholdCondition, condition)) {
 					conditionMatched = true;

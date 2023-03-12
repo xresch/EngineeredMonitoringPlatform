@@ -28,7 +28,7 @@ import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions;
+import com.xresch.cfw.utils.CFWState;
 
 public class WidgetPlanStatusByUser extends WidgetDefinition  {
 		
@@ -78,7 +78,7 @@ public class WidgetPlanStatusByUser extends WidgetDefinition  {
 		return new CFWObject()
 				.addField(StepSettingsFactory.createEnvironmentSelectorField())
 				.addField(StepSettingsFactory.createUsersSelectorField())							
-				.addAllFields(CFWConditions.createThresholdFields());
+				.addAllFields(CFWState.createThresholdFields());
 	}
 	
 	

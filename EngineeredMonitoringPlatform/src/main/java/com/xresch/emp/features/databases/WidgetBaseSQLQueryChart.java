@@ -37,8 +37,8 @@ import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions;
-import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
+import com.xresch.cfw.utils.CFWState;
+import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.cfw.validation.CustomValidator;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 

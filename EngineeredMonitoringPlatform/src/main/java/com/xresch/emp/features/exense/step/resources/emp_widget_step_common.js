@@ -38,11 +38,11 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 				
 				//---------------------------
 				// Set Colors for Thresholds
-				var excellentVal = settings.THRESHOLD_EXCELLENT;
-				var goodVal = settings.THRESHOLD_GOOD;
-				var warningVal = settings.THRESHOLD_WARNING;
-				var emergencyVal = settings.THRESHOLD_EMERGENCY;
-				var dangerVal = settings.THRESHOLD_DANGER;
+				var excellentVal = settings.THRESHOLD_GREEN;
+				var goodVal = settings.THRESHOLD_LIMEGREEN;
+				var warningVal = settings.THRESHOLD_YELLOW;
+				var emergencyVal = settings.THRESHOLD_ORANGE;
+				var dangerVal = settings.THRESHOLD_RED;
 				var isDisabled = settings.THRESHOLD_DISABLED;
 				
 				for(var key in data.payload){
@@ -61,11 +61,11 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 						
 						// if threshold is undefined do green
 						if(current.alertstyle == "cfw-none" || isDisabled){
-							current.alertstyle = "cfw-excellent"; 
+							current.alertstyle = "cfw-green"; 
 						}
 						
 					}else if(current.result == "FAILED"){
-						current.alertstyle = "cfw-danger";
+						current.alertstyle = "cfw-red";
 					}else if(current.result == "TECHNICAL_ERROR"){
 						current.alertstyle = "cfw-black";
 					}else if(current.result == "RUNNING"){

@@ -20,7 +20,7 @@ import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions;
+import com.xresch.cfw.utils.CFWState;
 import com.xresch.emp.features.dynatrace.DynatraceEnvironment.EntityType;
 
 public class WidgetHostMetricsStatus extends WidgetDefinition {
@@ -48,7 +48,7 @@ public class WidgetHostMetricsStatus extends WidgetDefinition {
 				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
 				
-				.addAllFields(CFWConditions.createThresholdFields())
+				.addAllFields(CFWState.createThresholdFields())
 				
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;

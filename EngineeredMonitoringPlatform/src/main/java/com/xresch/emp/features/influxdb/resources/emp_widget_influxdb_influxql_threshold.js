@@ -36,11 +36,11 @@
 					
 					//---------------------------
 					// Set Colors for Thresholds
-					var excellentVal 	= settings.THRESHOLD_EXCELLENT;
-					var goodVal 		= settings.THRESHOLD_GOOD;
-					var warningVal 		= settings.THRESHOLD_WARNING;
-					var emergencyVal 	= settings.THRESHOLD_EMERGENCY;
-					var dangerVal 		= settings.THRESHOLD_DANGER;
+					var excellentVal 	= settings.THRESHOLD_GREEN;
+					var goodVal 		= settings.THRESHOLD_LIMEGREEN;
+					var warningVal 		= settings.THRESHOLD_YELLOW;
+					var emergencyVal 	= settings.THRESHOLD_ORANGE;
+					var dangerVal 		= settings.THRESHOLD_RED;
 					
 					for(var key in dataArray){
 						var current = dataArray[key];

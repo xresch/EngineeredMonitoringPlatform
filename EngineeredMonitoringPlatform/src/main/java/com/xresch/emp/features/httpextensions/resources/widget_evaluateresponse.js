@@ -95,11 +95,11 @@
 							// Get Status Color
 							switch (success) {
 								case true:
-									current.alertstyle = "cfw-excellent";
+									current.alertstyle = "cfw-green";
 									break;
 
 								case false:
-									current.alertstyle = "cfw-danger";
+									current.alertstyle = "cfw-red";
 									break;
 
 							}

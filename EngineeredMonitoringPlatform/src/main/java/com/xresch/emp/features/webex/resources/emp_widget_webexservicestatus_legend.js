@@ -19,8 +19,8 @@
 			defaultheight: 4,
 			createWidgetInstance: function (widgetObject, params, callback) {		
 				var html = 
-					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-excellent">&nbsp;</div>Operational</div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-danger">&nbsp;</div>Other</div>'
+					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-green">&nbsp;</div>Operational</div>'
+					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-red">&nbsp;</div>Other</div>'
 					;
 				callback(widgetObject, html);
 			},

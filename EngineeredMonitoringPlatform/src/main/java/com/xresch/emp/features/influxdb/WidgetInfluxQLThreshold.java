@@ -35,7 +35,7 @@ import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWConditions.ThresholdCondition;
+import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 import com.xresch.cfw.validation.NumberRangeValidator;
 
@@ -243,8 +243,8 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 					CFWField.newString(FormFieldType.SELECT, FIELDNAME_ALERT_THRESHOLD)
 					.setDescription("Select the threshhold that should trigger the alert when reached.")
 					.addValidator(new NotNullOrEmptyValidator())
-					.setOptions(CFW.Conditions.CONDITION_OPTIONS())
-					.setValue(CFW.Conditions.CONDITION_EMERGENCY.toString())
+					.setOptions(CFW.Conditions.STATE_OPTIONS())
+					.setValue(CFW.Conditions.STATE_ORANGE.toString())
 				)
 				.addField(
 					CFWField.newInteger(FormFieldType.NUMBER, FIELDNAME_ALERT_TIMESPAN_MINUTES)
@@ -294,7 +294,7 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 			return;
 		}
 
-		ThresholdCondition alertThreshholdCondition = ThresholdCondition.valueOf(alertThreshholdString);
+		CFWStateOption alertThreshholdCondition = CFWStateOption.valueOf(alertThreshholdString);
 		
 		//----------------------------------------
 		// Get Results
@@ -381,7 +381,7 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 				
 				Float valueToCheck = firstValues.get(valueIndex).getAsFloat();
 				
-				ThresholdCondition condition = CFW.Conditions.getConditionForValue(valueToCheck, settings);
+				CFWStateOption condition = CFW.Conditions.getConditionForValue(valueToCheck, settings);
 				if(condition != null 
 				&& CFW.Conditions.compareIsEqualsOrMoreDangerous(alertThreshholdCondition, condition)) {
 					conditionMatched = true;
