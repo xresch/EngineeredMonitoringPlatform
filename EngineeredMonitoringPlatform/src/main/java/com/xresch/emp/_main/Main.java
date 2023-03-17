@@ -8,11 +8,6 @@ import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.spi.CFWAppInterface;
 import com.xresch.emp.features.awa.FeatureAWA;
 import com.xresch.emp.features.common.FeatureEMPCommon;
-import com.xresch.emp.features.databases.FeatureDatabases;
-import com.xresch.emp.features.databases.generic.FeatureGenericJDBC;
-import com.xresch.emp.features.databases.mssql.FeatureMSSQL;
-import com.xresch.emp.features.databases.mysql.FeatureMySQL;
-import com.xresch.emp.features.databases.oracle.FeatureOracle;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
 import com.xresch.emp.features.exense.step.FeatureExenseStep;
 import com.xresch.emp.features.httpextensions.FeatureHTTPExtensions;
@@ -51,11 +46,6 @@ public class Main implements CFWAppInterface {
     	CFW.Registry.Features.addFeature(FeatureEMPCommon.class);
 		CFW.Registry.Features.addFeature(FeatureAWA.class);
 		
-		CFW.Registry.Features.addFeature(FeatureDatabases.class);
-		CFW.Registry.Features.addFeature(FeatureMySQL.class);
-		CFW.Registry.Features.addFeature(FeatureMSSQL.class);
-		CFW.Registry.Features.addFeature(FeatureOracle.class);
-		CFW.Registry.Features.addFeature(FeatureGenericJDBC.class);
 		CFW.Registry.Features.addFeature(FeatureMongoDB.class);
 		
 		CFW.Registry.Features.addFeature(FeatureDynatrace.class);

@@ -1,25 +1,17 @@
 package com.xresch.emp.features.mongodb;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.bson.Document;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
@@ -28,22 +20,13 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
-import com.xresch.cfw.datahandling.CFWTimeframe;
-import com.xresch.cfw.db.DBInterface;
-import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.extensions.databases.FeatureDBExtensions;
+import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
-import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
-import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
-import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWState;
-import com.xresch.cfw.utils.CFWState.CFWStateOption;
-import com.xresch.cfw.validation.CustomValidator;
-import com.xresch.cfw.validation.NotNullOrEmptyValidator;
-import com.xresch.emp.features.databases.FeatureDatabases;
 
 /**************************************************************************************************************
  * 
@@ -228,7 +211,7 @@ public class WidgetMongoDBQueryChart extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDatabases.PACKAGE_RESOURCE, "emp_widget_database_common.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDBExtensions.PACKAGE_RESOURCE, "cfw_dbextensions_common.js") );
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMongoDB.PACKAGE_RESOURCE, "emp_widget_mongodb_querychart.js") );
 		return array;
 	}
