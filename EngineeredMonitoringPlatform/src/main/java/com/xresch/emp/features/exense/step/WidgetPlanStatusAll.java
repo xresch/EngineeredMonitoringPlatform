@@ -85,8 +85,11 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 	 * 
 	 *********************************************************************/
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest, int timezoneOffsetMinutes) { 
-
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
+		
+		long earliest = timeframe.getEarliest();
+		long latest = timeframe.getLatest();
+		
 		//#################################################
 		// Example Data	
 		//#################################################

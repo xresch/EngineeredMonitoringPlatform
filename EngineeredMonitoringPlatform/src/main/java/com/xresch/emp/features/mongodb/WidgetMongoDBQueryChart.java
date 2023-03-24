@@ -20,6 +20,7 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.extensions.databases.FeatureDBExtensions;
 import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
@@ -42,7 +43,6 @@ public class WidgetMongoDBQueryChart extends WidgetDefinition {
 	private static final String FIELDNAME_SERIESCOLUMNS = "seriescolumns";
 	private static final String FIELDNAME_XCOLUMN = "xcolumn";
 	private static final String FIELDNAME_YCOLUMN = "ycolumn";
-	private static final String FIELDNAME_SQLQUERY = "sqlquery";
 	
 	private static Logger logger = CFWLog.getLogger(WidgetMongoDBQueryChart.class.getName());
 	
@@ -112,7 +112,11 @@ public class WidgetMongoDBQueryChart extends WidgetDefinition {
 	 * 
 	 *********************************************************************/
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest, int timezoneOffsetMinutes) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
+		
+		long earliest = timeframe.getEarliest();
+		long latest = timeframe.getLatest();
+
 		//---------------------------------
 		// Example Data
 		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();

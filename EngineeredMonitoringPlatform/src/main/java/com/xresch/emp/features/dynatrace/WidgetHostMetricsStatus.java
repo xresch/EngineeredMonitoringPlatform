@@ -13,6 +13,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWObject;
+import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.dashboard.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
 import com.xresch.cfw.features.dashboard.WidgetDataCache.WidgetDataCachePolicy;
@@ -55,7 +56,10 @@ public class WidgetHostMetricsStatus extends WidgetDefinition {
 	}
 
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest, int timezoneOffsetMinutes) { 
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
+		
+		long earliest = timeframe.getEarliest();
+		long latest = timeframe.getLatest();
 		
 		//---------------------------------
 		// Example Data

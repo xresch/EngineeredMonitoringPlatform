@@ -85,8 +85,11 @@ public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
 	 * 
 	 *********************************************************************/
 	@Override
-	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, long earliest, long latest, int timezoneOffsetMinutes) { 
-
+	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
+		
+		long earliest = timeframe.getEarliest();
+		long latest = timeframe.getLatest();
+		
 		//#################################################
 		// Example Data	
 		//#################################################
@@ -117,7 +120,6 @@ public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
 	 * 
 	 * @param latest time in millis of which to fetch the data.
 	 *********************************************************************/
-	@SuppressWarnings("unchecked")
 	public JsonArray loadDataFromStepDB(CFWObject widgetSettings, long earliest, long latest){
 		
 		//-----------------------------
