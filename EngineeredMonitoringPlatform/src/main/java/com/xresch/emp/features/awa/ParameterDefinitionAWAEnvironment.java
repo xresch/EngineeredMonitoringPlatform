@@ -5,6 +5,7 @@ import java.util.HashSet;
 import javax.servlet.http.HttpServletRequest;
 
 import com.xresch.cfw.datahandling.CFWField;
+import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.dashboard.parameters.ParameterDefinition;
 
 public class ParameterDefinitionAWAEnvironment extends ParameterDefinition {
@@ -15,7 +16,7 @@ public class ParameterDefinitionAWAEnvironment extends ParameterDefinition {
 	 * 
 	 ***************************************************************/
 	@Override
-	public String getParamLabel() { return LABEL; }
+	public String getParamUniqueName() { return LABEL; }
 
 	/***************************************************************
 	 * 
@@ -37,11 +38,18 @@ public class ParameterDefinitionAWAEnvironment extends ParameterDefinition {
 	 ***************************************************************/
 	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public CFWField getFieldForWidget(HttpServletRequest request, String dashboardid, Object fieldValue) {
+	public CFWField getFieldForWidget(HttpServletRequest request, String dashboardid, Object parameterValue, CFWTimeframe timeframe) {
 
-		return getFieldForSettings(request, dashboardid, fieldValue);
+		return getFieldForSettings(request, dashboardid, parameterValue);
 	}
 	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	@Override
+	public boolean isDynamic() {
+		return false;
+	}
 	/***************************************************************
 	 * 
 	 ***************************************************************/

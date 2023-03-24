@@ -8,6 +8,7 @@ import com.google.common.base.Strings;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
+import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.parameters.ParameterDefinition;
@@ -21,7 +22,7 @@ public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinitio
 	 * 
 	 ***************************************************************/
 	@Override
-	public String getParamLabel() { return LABEL; }
+	public String getParamUniqueName() { return LABEL; }
 
 	/***************************************************************
 	 * 
@@ -43,9 +44,17 @@ public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinitio
 	 ***************************************************************/
 	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public CFWField getFieldForWidget(HttpServletRequest request, String dashboardid, Object fieldValue) {
+	public CFWField getFieldForWidget(HttpServletRequest request, String dashboardid, Object parameterValue, CFWTimeframe timeframe) {
 
-		return getFieldForSettings(request, dashboardid, fieldValue);
+		return getFieldForSettings(request, dashboardid, parameterValue);
+	}
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	@Override
+	public boolean isDynamic() {
+		return false;
 	}
 	
 	/***************************************************************
