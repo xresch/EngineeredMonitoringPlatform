@@ -263,7 +263,7 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 					Strings.nullToEmpty(this.getTimezone(environmentID))
 				);
 		}
-		
+
 		earliestMillis +=  timezone.getOffset(earliestMillis);
 		latestMillis +=  timezone.getOffset(latestMillis);
 		
@@ -279,14 +279,14 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		// Resolve Find Param
 		String findDocString = (String)parameters.getField(FIELDNAME_FIND).getValue();
 		if(findDocString != null) {
-			findDocString = CFW.Utils.Time.replaceTimeframePlaceholders(findDocString, earliestMillis, latestMillis);
+			findDocString = CFW.Utils.Time.replaceTimeframePlaceholders(findDocString, earliestMillis, latestMillis, 0);
 		}
 		
 		//-----------------------------
 		// Resolve Aggregate Param
 		String aggregateDocString = (String)parameters.getField(FIELDNAME_AGGREGATE).getValue();
 		if(aggregateDocString != null) {
-			aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliestMillis, latestMillis);
+			aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliestMillis, latestMillis, 0);
 		}
 		
 		//-----------------------------

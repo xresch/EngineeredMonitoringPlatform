@@ -134,7 +134,7 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 		//-----------------------------
 		// Create Aggregate Document
 		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatusall_query.bson");
-		aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest);
+		aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
 		
 		//-----------------------------
 		// Fetch Data

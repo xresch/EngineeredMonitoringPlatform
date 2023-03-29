@@ -133,7 +133,7 @@ public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
 		//-----------------------------
 		// Create Aggregate Document
 		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatususers_query.bson");
-		aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest);
+		aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
 		
 
 		User currentUser = CFW.Context.Request.getUser();

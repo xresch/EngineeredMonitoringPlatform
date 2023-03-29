@@ -163,7 +163,7 @@ public class WidgetPlanExecutionsLast extends WidgetDefinition  {
 		//-----------------------------
 		// Create Aggregate Document
 		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planexecutionslast_query.bson");
-		aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest);
+		aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
 		
 		// Example Project Filter >> $or: [ {'_id': ObjectId('62443ecfee10d74e1b132860')},{'_id': ObjectId('62444fadee10d74e1b1395af')} ]
 		StringBuilder projectsFilter = new StringBuilder("$or: [");
