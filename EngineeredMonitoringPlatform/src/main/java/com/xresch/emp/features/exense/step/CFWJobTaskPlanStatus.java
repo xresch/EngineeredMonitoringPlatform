@@ -10,7 +10,7 @@ import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.dashboard.CFWJobTaskWidgetTaskExecutor;
-import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
 import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.jobs.FeatureJobs;
 import com.xresch.cfw.features.usermgmt.User;

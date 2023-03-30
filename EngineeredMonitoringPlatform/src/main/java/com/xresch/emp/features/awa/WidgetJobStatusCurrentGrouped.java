@@ -7,7 +7,7 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
-import com.xresch.cfw.features.dashboard.WidgetSettingsFactory;
+import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
 
 public class WidgetJobStatusCurrentGrouped extends WidgetJobStatusCurrent {
 
