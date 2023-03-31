@@ -279,14 +279,14 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		// Resolve Find Param
 		String findDocString = (String)parameters.getField(FIELDNAME_FIND).getValue();
 		if(findDocString != null) {
-			findDocString = CFW.Utils.Time.replaceTimeframePlaceholders(findDocString, earliestMillis, latestMillis, 0);
+			findDocString = CFW.Time.replaceTimeframePlaceholders(findDocString, earliestMillis, latestMillis, 0);
 		}
 		
 		//-----------------------------
 		// Resolve Aggregate Param
 		String aggregateDocString = (String)parameters.getField(FIELDNAME_AGGREGATE).getValue();
 		if(aggregateDocString != null) {
-			aggregateDocString = CFW.Utils.Time.replaceTimeframePlaceholders(aggregateDocString, earliestMillis, latestMillis, 0);
+			aggregateDocString = CFW.Time.replaceTimeframePlaceholders(aggregateDocString, earliestMillis, latestMillis, 0);
 		}
 		
 		//-----------------------------

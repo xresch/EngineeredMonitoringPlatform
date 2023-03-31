@@ -208,8 +208,8 @@ public class StepCommonFunctions {
 				object.addProperty("status", "ENDED");
 				object.addProperty("result", randomResult);
 				object.addProperty("duration", CFW.Random.randomIntegerInRange(10, 12000) );
-				object.addProperty("starttime", CFW.Utils.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes*offsetMultiplier).getTime());
-				object.addProperty("endtime",  CFW.Utils.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes).getTime());
+				object.addProperty("starttime", CFW.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes*offsetMultiplier).getTime());
+				object.addProperty("endtime",  CFW.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes).getTime());
 				
 				array.add(object);
 			}

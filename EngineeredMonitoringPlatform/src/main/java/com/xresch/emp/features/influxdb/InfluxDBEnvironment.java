@@ -196,7 +196,7 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 		
 		//---------------------------
 		// Prepare Query
-		String interval = CFW.Utils.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
+		String interval = CFW.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
 		
 		influxdbQuery = influxdbQuery.replace("[interval]", interval )
 									 .replace("$interval$", interval )
