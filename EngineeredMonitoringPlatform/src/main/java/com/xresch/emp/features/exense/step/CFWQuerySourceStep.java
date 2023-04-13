@@ -117,7 +117,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	public void autocomplete(AutocompleteResult result, CFWQueryAutocompleteHelper helper) {
 		
 		// if source name is given, list up to 50 available step environments
-		if( helper.getTokenCount() >= 2 ) {
+		if( helper.getCommandTokenCount() >= 2 ) {
 			
 			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
 			

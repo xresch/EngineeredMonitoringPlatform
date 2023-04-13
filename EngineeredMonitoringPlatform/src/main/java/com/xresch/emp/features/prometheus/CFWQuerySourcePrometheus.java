@@ -96,7 +96,7 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	public void autocomplete(AutocompleteResult result, CFWQueryAutocompleteHelper helper) {
 		
 		// if source name is given, list up to 50 available prometheus environments
-		if( helper.getTokenCount() >= 2 ) {
+		if( helper.getCommandTokenCount() >= 2 ) {
 			
 			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE);
 			
