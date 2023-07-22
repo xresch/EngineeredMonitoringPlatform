@@ -50,7 +50,6 @@ public class Main implements CFWAppInterface {
 		
 		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
 		CFW.Registry.Features.addFeature(FeatureExenseStep.class);
-		CFW.Registry.Features.addFeature(FeatureHTTPExtensions.class);
 		CFW.Registry.Features.addFeature(FeatureInfluxDB.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);
     	CFW.Registry.Features.addFeature(FeatureSPM.class);
