@@ -10,7 +10,6 @@ import com.xresch.emp.features.awa.FeatureAWA;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
 import com.xresch.emp.features.exense.step.FeatureExenseStep;
-import com.xresch.emp.features.httpextensions.FeatureHTTPExtensions;
 import com.xresch.emp.features.influxdb.FeatureInfluxDB;
 import com.xresch.emp.features.mongodb.FeatureMongoDB;
 import com.xresch.emp.features.prometheus.FeaturePrometheus;
