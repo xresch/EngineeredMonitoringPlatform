@@ -1,0 +1,131 @@
+{"success": true,"messages": [],"payload": [
+  {
+    "PK_ID": 2791,
+    "FK_ID_USER": 1,
+    "NAME": "Query: Statistics Example",
+    "DESCRIPTION": null,
+    "TAGS": null,
+    "IS_SHARED": false,
+    "JSON_SHARE_WITH_USERS": {},
+    "JSON_SHARE_WITH_GROUPS": {},
+    "JSON_EDITORS": {},
+    "JSON_EDITOR_GROUPS": {},
+    "TIME_CREATED": 1693847077199,
+    "IS_PUBLIC": false,
+    "START_FULLSCREEN": false,
+    "IS_DELETABLE": true,
+    "IS_RENAMABLE": true,
+    "username": "admin",
+    "widgets": [
+      {
+        "PK_ID": 14884,
+        "FK_ID_DASHBOARD": 2791,
+        "TYPE": "cfw_widget_queryresults",
+        "X": 9,
+        "Y": 0,
+        "WIDTH": 55,
+        "HEIGHT": 44,
+        "TITLE": null,
+        "TITLE_LINK": null,
+        "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": "top",
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "INVISIBLE": false,
+        "MANUAL_LOAD": false,
+        "PARAM_WIDGET_LOAD": false,
+        "JSON_SETTINGS": {
+          "query": "| source random records\u003d10000\r\n| stats by\u003d[$group_by$] \r\n\t# regular count \r\n\tCOUNT\u003dcount() \r\n\t# various statistics\r\n\tMIN\u003dmin(VALUE) \r\n\tAVG\u003davg(VALUE) \r\n\tMAX\u003dmax(VALUE)\r\n\tSUM\u003dsum(VALUE)\r\n\tMEDIAN\u003dmedian(VALUE)\r\n\t#using percentile function without defining percentile will result in median\t\r\n\t\"75th\"\u003dperc(VALUE)\t\r\n\t\"80th\"\u003dperc(VALUE, 80)\t\r\n\t\"90th\"\u003dperc(VALUE, 90)\t\r\n\tSTDEV\u003dstdev(VALUE, 90)\r\n\tFIRST\u003dfirst(LIKES_TIRAMISU)\r\n\tLAST\u003dlast(LIKES_TIRAMISU)\r\n| formatfield \r\n\tCOUNT\u003d[\u0027threshold\u0027, 0, 100, 200, 300, 350, \"bg\"]\r\n\tAVG\u003d[\u0027threshold\u0027, 0, 48, 50, 52, 54, \"bg\"]\r\n\tMAX\u003d[\u0027threshold\u0027, 100, 98, 70, 50, 0, \"bg\"]\t\r\n| sort $sort_by$ reversenulls\u003dtrue",
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 14885,
+        "FK_ID_DASHBOARD": 2791,
+        "TYPE": "cfw_parameter",
+        "X": 0,
+        "Y": 0,
+        "WIDTH": 9,
+        "HEIGHT": 22,
+        "TITLE": "Parameters",
+        "TITLE_LINK": null,
+        "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "INVISIBLE": false,
+        "MANUAL_LOAD": false,
+        "PARAM_WIDGET_LOAD": false,
+        "JSON_SETTINGS": {
+          "description": null,
+          "JSON_PARAMETERS": {
+            "1990": "group_by",
+            "1991": "sort_by"
+          },
+          "showbutton": true,
+          "buttonlabel": null,
+          "checkpassword": false,
+          "password": null,
+          "JSON_AFFECTED_WIDGETS": {}
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 14886,
+        "FK_ID_DASHBOARD": 2791,
+        "TYPE": "cfw_widget_queryresults",
+        "X": 0,
+        "Y": 22,
+        "WIDTH": 9,
+        "HEIGHT": 22,
+        "TITLE": "Status By Deviation from Average",
+        "TITLE_LINK": null,
+        "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": "top",
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "INVISIBLE": false,
+        "MANUAL_LOAD": false,
+        "PARAM_WIDGET_LOAD": false,
+        "JSON_SETTINGS": {
+          "query": "| source random records\u003d10000\r\n| stats by\u003d[$group_by$] \r\n\t# regular count \r\n\tCOUNT\u003dcount() \r\n\t# various statistics\r\n\tMIN\u003dmin(VALUE) \r\n\tAVG\u003davg(VALUE) \r\n\tMAX\u003dmax(VALUE)\r\n\tSUM\u003dsum(VALUE)\r\n\tMEDIAN\u003dmedian(VALUE)\r\n\t#using percentile function without defining percentile will result in median\t\r\n\t\"75th\"\u003dperc(VALUE)\t\r\n\t\"80th\"\u003dperc(VALUE, 80)\t\r\n\t\"90th\"\u003dperc(VALUE, 90)\t\r\n\tSTDEV\u003dstdev(VALUE, 90)\r\n\tFIRST\u003dfirst(LIKES_TIRAMISU)\r\n\tLAST\u003dlast(LIKES_TIRAMISU)\r\n| formatrecord \r\n\t[(AVG  \u003c\u003d 15 OR AVG \u003e\u003d 85), \"cfw-red\"] \r\n\t[(AVG  \u003c\u003d 25 OR AVG \u003e\u003d 75), \"cfw-orange\"] \r\n\t[(AVG  \u003c\u003d 35 OR AVG \u003e\u003d 65), \"cfw-yellow\", \"black\"] \r\n\t[(AVG  \u003c\u003d 45 OR AVG \u003e\u003d 55), \"cfw-limegreen\"] \r\n\t[true, \"cfw-green\"] \r\n| sort $sort_by$ reversenulls\u003dtrue\r\n| display as\u003dstatusmap menu\u003dfalse",
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      }
+    ],
+    "parameters": [
+      {
+        "PK_ID": 1990,
+        "FK_ID_DASHBOARD": 2791,
+        "WIDGET_TYPE": null,
+        "LABEL": "Select",
+        "PARAM_TYPE": "VALUE_LABEL",
+        "NAME": "group_by",
+        "VALUE": "{\"FIRSTNAME\":\"Firstname\",\"LASTNAME\":\"Lastname\",\"FIRSTNAME, LASTNAME\":\"First \\u0026 Lastname\",\"LOCATION\":\"Location\",\"LIKES_TIRAMISU\":\"Likes Tiramisu\",\"FIRSTNAME, LIKES_TIRAMISU\":\"Firstname \\u0026 Likes Tiramisu\"}",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": false
+      },
+      {
+        "PK_ID": 1992,
+        "FK_ID_DASHBOARD": 2791,
+        "WIDGET_TYPE": null,
+        "LABEL": "Select",
+        "PARAM_TYPE": "VALUE_LABEL",
+        "NAME": "sort_by",
+        "VALUE": "{\"FIRSTNAME\":\"Firstname\",\"LASTNAME\":\"Lastname\",\"FIRSTNAME, LASTNAME\":\"First \\u0026 Lastname\",\"LOCATION\":\"Location\",\"COUNT reverse\\u003dtrue\":\"Count\",\"MIN reverse\\u003dtrue\":\"Minimum\",\"AVG reverse\\u003dtrue\":\"Average\",\"MAX reverse\\u003dtrue\":\"Maximum\",\"MEDIAN reverse\\u003dtrue\":\"Median\",\"75th reverse\\u003dtrue\":\"75th\",\"80th reverse\\u003dtrue\":\"80th\",\"90th reverse\\u003dtrue\":\"90th\",\"STDEV reverse\\u003dtrue\":\"Standard Deviation\"}",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": false
+      }
+    ]
+  }
+]}

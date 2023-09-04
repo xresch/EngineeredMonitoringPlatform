@@ -1,0 +1,131 @@
+{"success": true,"messages": [],"payload": [
+  {
+    "PK_ID": 2792,
+    "FK_ID_USER": 1,
+    "NAME": "Query: Statistics Matrix Example",
+    "DESCRIPTION": null,
+    "TAGS": null,
+    "IS_SHARED": false,
+    "JSON_SHARE_WITH_USERS": {},
+    "JSON_SHARE_WITH_GROUPS": {},
+    "JSON_EDITORS": {},
+    "JSON_EDITOR_GROUPS": {},
+    "TIME_CREATED": 1693858904283,
+    "IS_PUBLIC": false,
+    "START_FULLSCREEN": false,
+    "IS_DELETABLE": true,
+    "IS_RENAMABLE": true,
+    "username": "admin",
+    "widgets": [
+      {
+        "PK_ID": 14887,
+        "FK_ID_DASHBOARD": 2792,
+        "TYPE": "cfw_widget_queryresults",
+        "X": 11,
+        "Y": 0,
+        "WIDTH": 53,
+        "HEIGHT": 44,
+        "TITLE": null,
+        "TITLE_LINK": null,
+        "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": "top",
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "INVISIBLE": false,
+        "MANUAL_LOAD": false,
+        "PARAM_WIDGET_LOAD": false,
+        "JSON_SETTINGS": {
+          "query": "| meta BY \u003d $group_by$ \r\n| source random records\u003d100 type\u003dseries\r\n| sort $column_value$\r\n| statsmatrix \r\n\tcolumn\u003d$column_value$\r\n\trow\u003dmeta(BY)\r\n\tCOUNT\u003dcount() AVG\u003davg($statistics_for$) SUM\u003dsum($statistics_for$)\r\n| sort meta(BY)\r\n| formatfield\r\n\tmeta(BY)\u003d[ [\u0027css\u0027,\u0027color\u0027, \"white\"], [\u0027css\u0027,\u0027font-weight\u0027, \"bold\"] ]",
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 14888,
+        "FK_ID_DASHBOARD": 2792,
+        "TYPE": "cfw_parameter",
+        "X": 0,
+        "Y": 0,
+        "WIDTH": 11,
+        "HEIGHT": 44,
+        "TITLE": "Parameters",
+        "TITLE_LINK": null,
+        "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "INVISIBLE": false,
+        "MANUAL_LOAD": false,
+        "PARAM_WIDGET_LOAD": false,
+        "JSON_SETTINGS": {
+          "description": null,
+          "JSON_PARAMETERS": {
+            "1990": "group_by",
+            "1994": "column_value",
+            "1995": "statistics_for"
+          },
+          "showbutton": true,
+          "buttonlabel": null,
+          "checkpassword": false,
+          "password": null,
+          "JSON_AFFECTED_WIDGETS": {}
+        },
+        "JSON_TASK_PARAMETERS": {}
+      }
+    ],
+    "parameters": [
+      {
+        "PK_ID": 1993,
+        "FK_ID_DASHBOARD": 2792,
+        "WIDGET_TYPE": null,
+        "LABEL": "Select",
+        "PARAM_TYPE": "VALUE_LABEL",
+        "NAME": "group_by",
+        "VALUE": "{\"[ITEM]\":\"Item\",\"[ITEM, BOX_SIZE]\":\"Item \\u0026 Box Size\",\"[ITEM, CLASS]\":\"Item \\u0026 Class\",\"[ITEM, BOX_SIZE, CLASS]\":\"Item \\u0026 Box Size \\u0026 Class\",\"[WAREHOUSE, ITEM, BOX_SIZE, CLASS]\":\"Warehouse \\u0026 Item \\u0026 Box Size \\u0026 Class\",\"[BOX_SIZE]\":\"Box Size\",\"[CLASS]\":\"Class\",\"[WAREHOUSE]\":\"Warehouse\"}",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": false
+      },
+      {
+        "PK_ID": 1994,
+        "FK_ID_DASHBOARD": 2792,
+        "WIDGET_TYPE": null,
+        "LABEL": "Select",
+        "PARAM_TYPE": "VALUE_LABEL",
+        "NAME": "column_value",
+        "VALUE": "{\"CLASS\":\"Class\",\"BOX_SIZE\":\"Box Size\",\"ITEM\":\"Item\"}",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": false
+      },
+      {
+        "PK_ID": 1995,
+        "FK_ID_DASHBOARD": 2792,
+        "WIDGET_TYPE": null,
+        "LABEL": "Select",
+        "PARAM_TYPE": "VALUE_LABEL",
+        "NAME": "statistics_for",
+        "VALUE": "{\"COUNT\":\"Count\",\"PRICE\":\"Price\",\"BOX_SIZE\":\"Box Size\",\"TOTAL\":\"Total\"}",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": false
+      },
+      {
+        "PK_ID": 1997,
+        "FK_ID_DASHBOARD": 2792,
+        "WIDGET_TYPE": null,
+        "LABEL": "Select",
+        "PARAM_TYPE": "VALUE_LABEL",
+        "NAME": "statistics",
+        "VALUE": "{\"COUNT\\u003dcount($statistics_for$) AVG\\u003davg($statistics_for$) SUM\\u003dsum($statistics_for$)\":\"Count \\u0026 Avg \\u0026 Sum\"}",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": false
+      }
+    ]
+  }
+]}

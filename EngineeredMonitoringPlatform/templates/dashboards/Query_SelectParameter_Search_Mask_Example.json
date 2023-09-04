@@ -1,0 +1,169 @@
+{"success": true,"messages": [],"payload": [
+  {
+    "PK_ID": 2787,
+    "FK_ID_USER": 1,
+    "NAME": "Custom Search Mask Example",
+    "DESCRIPTION": null,
+    "TAGS": null,
+    "IS_SHARED": false,
+    "JSON_SHARE_WITH_USERS": {},
+    "JSON_SHARE_WITH_GROUPS": {},
+    "JSON_EDITORS": {},
+    "JSON_EDITOR_GROUPS": {},
+    "TIME_CREATED": 1679478637021,
+    "IS_PUBLIC": false,
+    "START_FULLSCREEN": false,
+    "IS_DELETABLE": true,
+    "IS_RENAMABLE": true,
+    "username": "admin",
+    "widgets": [
+      {
+        "PK_ID": 14840,
+        "FK_ID_DASHBOARD": 2787,
+        "TYPE": "cfw_parameter",
+        "X": 0,
+        "Y": 0,
+        "WIDTH": 46,
+        "HEIGHT": 12,
+        "TITLE": "Parameters",
+        "TITLE_LINK": null,
+        "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": null,
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "INVISIBLE": false,
+        "MANUAL_LOAD": false,
+        "PARAM_WIDGET_LOAD": false,
+        "JSON_SETTINGS": {
+          "description": "\u003cspan\u003e\u003c/span\u003e",
+          "JSON_PARAMETERS": {
+            "1974": "firstname",
+            "1976": "likes_tiramisu",
+            "1977": "value_larger_or_equals",
+            "1978": "value_lower_or_equals",
+            "1979": "sort_by"
+          },
+          "showbutton": true,
+          "buttonlabel": "Search",
+          "checkpassword": false,
+          "password": null,
+          "JSON_AFFECTED_WIDGETS": {}
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 14844,
+        "FK_ID_DASHBOARD": 2787,
+        "TYPE": "cfw_htmleditor",
+        "X": 46,
+        "Y": 0,
+        "WIDTH": 18,
+        "HEIGHT": 12,
+        "TITLE": "Parameter Values",
+        "TITLE_LINK": null,
+        "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": "top",
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "INVISIBLE": false,
+        "MANUAL_LOAD": false,
+        "PARAM_WIDGET_LOAD": false,
+        "JSON_SETTINGS": {
+          "content": "\u003cdiv\u003eFirstname \u003d $firstname$\u003c/div\u003e\u003cdiv\u003eLikes Best Italian Dessert \u003d $likes_tiramisu$\u0026nbsp;\u003c/div\u003e\u003cdiv\u003eValue Lower Or Equals \u003d $value_lower_or_equals$\u003c/div\u003e\u003cdiv\u003eValue Larger Or Equals \u003d $value_larger_or_equals$\u003cbr\u003e\u003c/div\u003e"
+        },
+        "JSON_TASK_PARAMETERS": {}
+      },
+      {
+        "PK_ID": 14845,
+        "FK_ID_DASHBOARD": 2787,
+        "TYPE": "cfw_widget_queryresults",
+        "X": 0,
+        "Y": 12,
+        "WIDTH": 64,
+        "HEIGHT": 118,
+        "TITLE": "Results",
+        "TITLE_LINK": null,
+        "TITLE_FONTSIZE": null,
+        "TITLE_POSITION": "top",
+        "CONTENT_FONTSIZE": null,
+        "FOOTER": null,
+        "BGCOLOR": null,
+        "FGCOLOR": null,
+        "INVISIBLE": false,
+        "MANUAL_LOAD": false,
+        "PARAM_WIDGET_LOAD": false,
+        "JSON_SETTINGS": {
+          "query": "| source random records \u003d 5000\r\n| filter \r\n    FIRSTNAME \u003d\u003d $firstname$\r\n    # select will give empty string when null option is available, use if()-function to check on nulls\r\n    AND LIKES_TIRAMISU \u003d\u003d if( (\u0027$likes_tiramisu$\u0027 \u003d\u003d \u0027\u0027) , null, $likes_tiramisu$+\"\" ) \r\n    AND VALUE \u003e\u003d $value_larger_or_equals$ \r\n    AND VALUE \u003c\u003d $value_lower_or_equals$\r\n| rename URL \u003d LINK\r\n| set APP \u003d \u0027https://www.yourapp.url/user/details?id\u003d\u0027+ID\r\n| formatfield \r\n\tVALUE\u003d[\r\n\t\t  [threshold,80,60,40,20,0]\r\n\t\t, [postfix,\u0027 $\u0027]\r\n\t\t, [align,\u0027right\u0027]\r\n\t]\r\n\tLINK\u003d[link, \u0027\u0027, \u0027text\u0027]\r\n\tAPP\u003d[link, \u0027Open App\u0027, \u0027button\u0027]\r\n\tLAST_LOGIN\u003d[timestamp]\r\n| sort $sort_by$ \r\n| keep LINK, APP, ID, FIRSTNAME, LASTNAME, LOCATION, LAST_LOGIN, TIME, LIKES_TIRAMISU, VALUE \r\n| display menu\u003dtrue titlefields\u003d[LASTNAME, FIRSTNAME]",
+          "sampledata": false
+        },
+        "JSON_TASK_PARAMETERS": {}
+      }
+    ],
+    "parameters": [
+      {
+        "PK_ID": 1974,
+        "FK_ID_DASHBOARD": 2787,
+        "WIDGET_TYPE": null,
+        "LABEL": "Query Select",
+        "PARAM_TYPE": "TEXTAREA",
+        "NAME": "firstname",
+        "VALUE": "| source random records\u003d1000\r\n| keep FIRSTNAME\r\n| distinct FIRSTNAME",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": true
+      },
+      {
+        "PK_ID": 1976,
+        "FK_ID_DASHBOARD": 2787,
+        "WIDGET_TYPE": null,
+        "LABEL": "Query Select",
+        "PARAM_TYPE": "TEXTAREA",
+        "NAME": "likes_tiramisu",
+        "VALUE": "| source random records\u003d1000\r\n| keep LIKES_TIRAMISU\r\n| distinct LIKES_TIRAMISU",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": true
+      },
+      {
+        "PK_ID": 1977,
+        "FK_ID_DASHBOARD": 2787,
+        "WIDGET_TYPE": null,
+        "LABEL": "Number",
+        "PARAM_TYPE": "NUMBER",
+        "NAME": "value_larger_or_equals",
+        "VALUE": "0",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": false
+      },
+      {
+        "PK_ID": 1978,
+        "FK_ID_DASHBOARD": 2787,
+        "WIDGET_TYPE": null,
+        "LABEL": "Number",
+        "PARAM_TYPE": "NUMBER",
+        "NAME": "value_lower_or_equals",
+        "VALUE": "100",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": false
+      },
+      {
+        "PK_ID": 1979,
+        "FK_ID_DASHBOARD": 2787,
+        "WIDGET_TYPE": null,
+        "LABEL": "Select",
+        "PARAM_TYPE": "VALUE_LABEL",
+        "NAME": "sort_by",
+        "VALUE": "{\"VALUE reverse\\u003dtrue\":\"Value\",\"LASTNAME\":\"Lastname\",\"LOCATION\":\"Location\"}",
+        "MODE": "MODE_SUBSTITUTE",
+        "IS_MODE_CHANGE_ALLOWED": false,
+        "IS_DYNAMIC": false
+      }
+    ]
+  }
+]}
