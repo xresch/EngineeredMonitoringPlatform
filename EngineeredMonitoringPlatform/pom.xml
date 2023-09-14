@@ -9,6 +9,15 @@
 	<!-- ================= PROPERTIES ================== -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		
+		<folderName>EMPServer</folderName> <!-- making folder without version name, as antrun can't handle regex with folders -->
+		<binariesFolder>${basedir}/target/${folderName}</binariesFolder>
+		
+		<releaseName>EMPServer_v${version}</releaseName> <!-- making versioned folder for zipping -->
+		<zipFolder>${basedir}/target/${releaseName}</zipFolder>
+		
+		<skipMakeFolder>true</skipMakeFolder>
+		
 	</properties>
 
 	<!-- ================= DEPENDENCIES ================== -->
@@ -74,6 +83,65 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<!-- ================= ANTRUN: Create Server Folder ================== -->
+			<plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>           
+                        <configuration>
+                        	<skip>${skipMakeFolder}</skip>
+						    <target>
+						    
+						    	<!-- ##### Copy CFWServer folder ##### -->
+						        <mkdir dir="${binariesFolder}" />
+						        
+						        <copy todir="${binariesFolder}">
+								  <fileset dir="../../CoreFramework/target/CFWServer"/>
+								</copy>
+								
+								<!-- ##### Copy config folder ##### -->
+								<delete dir="${binariesFolder}/config"/>
+						        <mkdir dir="${binariesFolder}/config" />
+						        <copy todir="${binariesFolder}/config">
+						            <fileset dir="${basedir}/config"  />
+						        </copy>
+						        
+						        <!-- ##### Copy resource folder ##### -->
+						        <delete dir="${binariesFolder}/resources"/>
+						        <mkdir dir="${binariesFolder}/resources" />
+						        <copy todir="${binariesFolder}/resources">
+						            <fileset dir="${basedir}/resources"  />
+						        </copy>
+						        
+						        <!-- ##### Copy jars to extensions ##### -->
+						        <copy todir="${binariesFolder}/extensions" file="${basedir}/target/emp-${version}.jar"></copy>
+						        <copy todir="${binariesFolder}/extensions">
+								  <fileset dir="${basedir}/target/lib"/>
+								</copy>
+						        
+						        
+						        <!-- ##### Copy License ##### -->
+						        <delete file="${binariesFolder}/LICENSE"/>
+						        <copy file="${basedir}/LICENSE" tofile="${binariesFolder}/LICENSE"></copy>
+						        
+						        
+						        <!-- ##### Create Zip file with Version ##### -->
+						        <mkdir dir="${zipFolder}" />
+						        <copy todir="${zipFolder}">
+								  <fileset dir="${binariesFolder}"/>
+								</copy>
+						        <zip destfile="${basedir}/target/${releaseName}.zip" basedir="${zipFolder}"/>
+						    </target>
+						</configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			
 		</plugins>
 
