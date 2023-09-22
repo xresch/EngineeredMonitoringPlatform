@@ -652,8 +652,16 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		
 			JsonObject currentHostObject = hostArray.get(i).getAsJsonObject();
 			String hostID = currentHostObject.get("entityId").getAsString();
-			String displayName = currentHostObject.get("displayName").getAsString();
-			String discoveredName = currentHostObject.get("discoveredName").getAsString();
+			
+			String displayName = 
+						( !currentHostObject.get("displayName").isJsonNull() )
+						? currentHostObject.get("displayName").getAsString()
+						: "N/A";
+			
+			String discoveredName = 
+					( !currentHostObject.get("discoveredName").isJsonNull() )
+					? currentHostObject.get("discoveredName").getAsString()
+					: "N/A";
 
 			if(hostID.toLowerCase().contains(searchValue)
 			|| displayName.toLowerCase().contains(searchValue)
@@ -661,7 +669,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 				
 				suggestions.addItem(hostID, displayName, 
 						"<b>Tags: </b>"+currentHostObject.get("tags").toString()
-						+", <b>OS Type: </b>"+currentHostObject.get("osType").getAsString());
+						+", <b>OS Type: </b>"+currentHostObject.get("osType").toString());
 				
 				if(suggestions.getItems().size() == limit) {
 					break;
