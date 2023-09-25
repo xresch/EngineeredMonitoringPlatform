@@ -651,15 +651,19 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		for(int i = 0; i < hostArray.size(); i++) {
 		
 			JsonObject currentHostObject = hostArray.get(i).getAsJsonObject();
+			
+			if(currentHostObject == null) {
+				continue;
+			}
 			String hostID = currentHostObject.get("entityId").getAsString();
 			
 			String displayName = 
-						( !currentHostObject.get("displayName").isJsonNull() )
+						( currentHostObject.get("displayName") != null && !currentHostObject.get("displayName").isJsonNull() )
 						? currentHostObject.get("displayName").getAsString()
 						: "N/A";
 			
 			String discoveredName = 
-					( !currentHostObject.get("discoveredName").isJsonNull() )
+					( currentHostObject.get("discoveredName") != null &&  !currentHostObject.get("discoveredName").isJsonNull() )
 					? currentHostObject.get("discoveredName").getAsString()
 					: "N/A";
 
