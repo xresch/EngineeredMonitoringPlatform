@@ -38,14 +38,46 @@ import com.xresch.emp.features.spm.SPMSettingsFactory;
 public class WidgetInfluxQLChart extends WidgetDefinition {
 
 	private static Logger logger = CFWLog.getLogger(WidgetInfluxQLChart.class.getName());
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_influxdb_influxql_chart";}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureInfluxDB.WIDGET_CATEGORY_INFFLUXDB;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "InfluxQL Chart"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
@@ -75,7 +107,10 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@SuppressWarnings("unchecked")
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
@@ -126,12 +161,18 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 		response.getContent().append(queryResult);	
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public void createSampleData(JSONResponse response) { 
 
 		response.append(CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_chart_sample_v1.json") );
 		
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
@@ -139,12 +180,18 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureInfluxDB.PACKAGE_RESOURCE, "emp_widget_influxdb_influxql_chart.js") );
 		return array;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return null;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
@@ -152,6 +199,9 @@ public class WidgetInfluxQLChart extends WidgetDefinition {
 		return map;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureInfluxDB.PERMISSION_WIDGETS_INFLUXDB);

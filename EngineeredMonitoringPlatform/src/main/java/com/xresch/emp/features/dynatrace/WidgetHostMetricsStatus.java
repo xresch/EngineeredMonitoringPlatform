@@ -27,14 +27,47 @@ import com.xresch.emp.features.dynatrace.DynatraceEnvironment.EntityType;
 public class WidgetHostMetricsStatus extends WidgetDefinition {
 
 	private static Logger logger = CFWLog.getLogger(WidgetHostMetricsStatus.class.getName());
-	@Override
-	public String getWidgetType() {return "emp_dynatrace_hostmetricsstatus";}
 	
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String getWidgetType() {return FeatureDynatrace.WIDGET_PREFIX + "_hostmetricsstatus";}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureDynatrace.WIDGET_CATEGORY_DYNATRACE;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Host Metric Status"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureDynatrace.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
@@ -54,7 +87,10 @@ public class WidgetHostMetricsStatus extends WidgetDefinition {
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
 		
@@ -121,12 +157,18 @@ public class WidgetHostMetricsStatus extends WidgetDefinition {
 		response.getContent().append(CFW.JSON.toJSON(queryResult));	
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public void createSampleData(JSONResponse response) { 
 
 		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatrace.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostmetricschart_sample.json") );
 		
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
@@ -134,12 +176,18 @@ public class WidgetHostMetricsStatus extends WidgetDefinition {
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatrace.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostmetricsstatus.js") );
 		return array;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return new ArrayList<FileDefinition>();
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
@@ -147,6 +195,9 @@ public class WidgetHostMetricsStatus extends WidgetDefinition {
 		return map;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureDynatrace.PERMISSION_WIDGETS_DYNATRACE);

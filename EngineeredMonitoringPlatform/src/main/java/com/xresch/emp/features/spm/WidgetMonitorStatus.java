@@ -54,15 +54,47 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 	private static final String FIELDNAME_THRESHOLD_PERCENT = "THRESHOLD_PERCENT";
 	
 	private static Logger logger = CFWLog.getLogger(WidgetMonitorStatus.class.getName());
+	
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_spmmonitorstatus";}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.ALWAYS;
 	}
-		
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureSPM.WIDGET_CATEGORY_SPM;
+	}
 
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Monitor Status"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureSPM.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+		
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		return createMonitorSelectionFields()
@@ -73,6 +105,9 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public CFWObject createMonitorSelectionFields() {
 		return new CFWObject()
 				.addField(SPMSettingsFactory.createEnvironmentSelectorField())
@@ -80,7 +115,10 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 				.addField(SPMSettingsFactory.createMeasureSelectField())
 		;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
 		
@@ -98,6 +136,9 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 						
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@SuppressWarnings("unchecked")
 	public JsonArray loadDataFromSPM(CFWObject widgetSettings){
 		//---------------------------------
@@ -220,6 +261,9 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		return resultArray;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public JsonArray createSampleData() { 
 
 		JsonArray resultArray = new JsonArray();
@@ -251,6 +295,9 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
@@ -258,12 +305,18 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE,  "emp_widget_spmmonitorstatus.js") );
 		return array;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return null;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
@@ -271,11 +324,17 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		return map;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM);
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public boolean supportsTask() {
 		return true;
 	}

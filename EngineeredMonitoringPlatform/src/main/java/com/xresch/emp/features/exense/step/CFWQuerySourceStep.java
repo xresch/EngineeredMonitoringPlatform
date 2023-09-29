@@ -81,7 +81,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionRequiredPermission() {
-		return FeatureExenseStep.PERMISSION_STEP;
+		return FeatureExenseStepMongoDB.PERMISSION_STEP;
 	}
 
 	/******************************************************************
@@ -89,7 +89,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureExenseStep.PERMISSION_STEP);
+		return user.hasPermission(FeatureExenseStepMongoDB.PERMISSION_STEP);
 	}
 	
 	/******************************************************************
@@ -105,7 +105,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_RESOURCE, "z_manual_source_step.html")
+		return CFW.Files.readPackageResource(FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "z_manual_source_step.html")
 				.replaceAll("\\{sourcename\\}", this.uniqueName());
 	}
 	

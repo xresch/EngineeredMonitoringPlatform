@@ -50,12 +50,41 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 	private static final String FIELDNAME_ALERT_THRESHOLD = "ALERT_THRESHOLD";
 	
 	private static Logger logger = CFWLog.getLogger(WidgetInstantThreshold.class.getName());
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_prometheus_instant_threshold";}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeaturePrometheus.WIDGET_CATEGORY_PROMETHEUS;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Instant Threshold"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeaturePrometheus.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
 	}
 		
 	/*********************************************************************
@@ -70,6 +99,9 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 		;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public CFWObject createInstantAndThresholdFields() {
 		return new CFWObject()
 				.addField(PrometheusSettingsFactory.createEnvironmentSelectorField())

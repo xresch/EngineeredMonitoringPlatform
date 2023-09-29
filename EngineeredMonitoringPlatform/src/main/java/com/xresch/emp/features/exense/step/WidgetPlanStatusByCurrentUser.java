@@ -31,37 +31,77 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState;
 
 public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
-		
-	@Override
-	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_planstatuscurrentuser";}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String getWidgetType() {return FeatureExenseStepMongoDB.WIDGET_PREFIX+"_planstatuscurrentuser";}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureExenseStepMongoDB.WIDGET_CATEGORY_EXENSESTEP_MONGODB;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Plan Status By Current User"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureExenseStepMongoDB.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatuscurrentuser.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planstatuscurrentuser.js") );
 		return array;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new LinkedHashMap<>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "lang_en_emp_step.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "lang_en_emp_step.properties"));
 		return map;
 	}
 	
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureExenseStep.PERMISSION_STEP);
+		return user.hasPermission(FeatureExenseStepMongoDB.PERMISSION_STEP);
 	}
 	
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		
@@ -74,6 +114,9 @@ public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
 		;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
 				.addField(StepSettingsFactory.createEnvironmentSelectorField())						
@@ -132,7 +175,7 @@ public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
 		
 		//-----------------------------
 		// Create Aggregate Document
-		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatususers_query.bson");
+		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planstatususers_query.bson");
 		aggregateDocString = CFW.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
 		
 
@@ -156,7 +199,7 @@ public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
 		JsonArray resultArray = new JsonArray();
 		if(result != null) {
 			for (Document currentDoc : result) {
-				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
+				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStepMongoDB.writterSettings));
 				resultArray.add(object);
 			}
 		}

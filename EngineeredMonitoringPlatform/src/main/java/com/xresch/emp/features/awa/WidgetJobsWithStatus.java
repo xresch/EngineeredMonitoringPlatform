@@ -35,15 +35,46 @@ import com.xresch.emp.features.common.FeatureEMPCommon;
 public class WidgetJobsWithStatus extends WidgetDefinition {
 
 	private static Logger logger = CFWLog.getLogger(WidgetJobsWithStatus.class.getName());
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_awajobswithstatus";}
 
-
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.ALWAYS;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureAWA.WIDGET_CATEGORY_AWA;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Jobs With Status"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureAWA.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
@@ -76,7 +107,10 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}
-		
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
 		
@@ -205,6 +239,9 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 		
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public void createSampleData(JSONResponse response) { 
 		
 		long currentTime = new Date().getTime();
@@ -230,7 +267,10 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 			+"]");
 
 	}
-		
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
@@ -238,12 +278,18 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureAWA.PACKAGE_RESOURCE, "emp_widget_awajobswithstatus.js") );
 		return array;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return null;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
@@ -251,6 +297,9 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 		return map;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureAWA.PERMISSION_WIDGETS_AWA);

@@ -38,14 +38,46 @@ import com.xresch.emp.features.common.FeatureEMPCommon;
 public class WidgetTimersForMonitor extends WidgetDefinition {
 
 	private static Logger logger = CFWLog.getLogger(WidgetTimersForMonitor.class.getName());
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_spmtimersformonitorstatus";}
-		
+	
+	/************************************************************
+	 * 
+	 ************************************************************/	
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.ALWAYS;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureSPM.WIDGET_CATEGORY_SPM;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Timers for Monitor Status"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureSPM.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
@@ -87,7 +119,10 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 	
 		;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
 		
@@ -238,6 +273,9 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 		
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public void createSampleData(JSONResponse response) { 
 
 		JsonArray resultArray = new JsonArray();
@@ -268,6 +306,9 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 		
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
@@ -275,12 +316,18 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_RESOURCE,  "emp_widget_spmtimersformonitor.js") );
 		return array;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return null;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
@@ -288,6 +335,9 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 		return map;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureSPM.PERMISSION_WIDGETS_SPM);

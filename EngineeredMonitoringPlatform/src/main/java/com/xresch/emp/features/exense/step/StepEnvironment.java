@@ -44,7 +44,7 @@ public class StepEnvironment extends MongoDBEnvironment {
 		int count = new DashboardWidget()
 			.selectCount()
 			.whereLike(DashboardWidgetFields.JSON_SETTINGS, "%\"environment\":"+id+"%")
-			.and().like(DashboardWidgetFields.TYPE, FeatureExenseStep.WIDGET_PREFIX+"%")
+			.and().like(DashboardWidgetFields.TYPE, FeatureExenseStepMongoDB.WIDGET_PREFIX+"%")
 			.executeCount();
 		
 		if(count == 0) {

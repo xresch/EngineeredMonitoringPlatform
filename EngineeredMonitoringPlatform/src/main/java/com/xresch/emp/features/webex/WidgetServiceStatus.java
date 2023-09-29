@@ -30,14 +30,46 @@ import com.xresch.emp.features.spm.FeatureSPM;
 public class WidgetServiceStatus extends WidgetDefinition {
 
 	private static Logger logger = CFWLog.getLogger(WidgetServiceStatus.class.getName());
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_webexservicestatus";}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureEMPCommon.WIDGET_CATEGORY_MONITORING;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Webex Service Status"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureWebex.PACKAGE_RESOURCE, "widget_"+getWidgetType()+".html");
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.ALWAYS;
 	}	
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
@@ -62,7 +94,10 @@ public class WidgetServiceStatus extends WidgetDefinition {
 	
 		;
 	}
-		
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
 		//---------------------------------
@@ -103,12 +138,18 @@ public class WidgetServiceStatus extends WidgetDefinition {
 		
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public void createSampleData(JSONResponse response) { 
 		
 		response.getContent().append(CFW.Files.readPackageResource(FeatureWebex.PACKAGE_RESOURCE, "emp_widget_webexservicestatus_sample.json"));
 
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
@@ -116,12 +157,18 @@ public class WidgetServiceStatus extends WidgetDefinition {
 		array.add(js);
 		return array;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return null;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
@@ -129,6 +176,9 @@ public class WidgetServiceStatus extends WidgetDefinition {
 		return map;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureWebex.PERMISSION_WIDGETS_WEBEX);

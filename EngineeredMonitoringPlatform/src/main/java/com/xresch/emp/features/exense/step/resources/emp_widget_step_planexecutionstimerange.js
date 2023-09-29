@@ -6,7 +6,7 @@
 	var widgetDefinition = createStepStatusWidgetBase(widgetMenuLabel, widgetDescription);
 		
 	CFW.dashboard.registerWidget(
-			"emp_step_planexecutionstimerange", 
+			"emp_stepmongodb_planexecutionstimerange", 
 			widgetDefinition
 		);
 	

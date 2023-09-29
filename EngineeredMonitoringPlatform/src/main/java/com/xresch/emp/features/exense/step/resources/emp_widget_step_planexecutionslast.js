@@ -6,7 +6,7 @@
 	var widgetDefinition = createStepStatusWidgetBase(widgetMenuLabel, widgetDescription);
 		
 	CFW.dashboard.registerWidget(
-			"emp_step_planexecutionslast", 
+			"emp_stepmongodb_planexecutionslast", 
 			widgetDefinition
 		);
 	

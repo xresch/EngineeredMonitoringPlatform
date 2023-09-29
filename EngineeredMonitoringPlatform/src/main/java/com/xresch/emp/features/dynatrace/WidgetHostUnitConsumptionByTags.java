@@ -29,14 +29,47 @@ import com.xresch.emp.features.common.FeatureEMPCommon;
 public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 
 	private static Logger logger = CFWLog.getLogger(WidgetHostUnitConsumptionByTags.class.getName());
-	@Override
-	public String getWidgetType() {return "emp_dynatrace_hostunitconsumptionbytags";}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String getWidgetType() {return FeatureDynatrace.WIDGET_PREFIX + "_hostunitconsumptionbytags";}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
 	}
-			
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureDynatrace.WIDGET_CATEGORY_DYNATRACE;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Host Unit Consumption By Tags"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureDynatrace.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+	
+	
+	/************************************************************
+	 * 
+	 ************************************************************/		
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject()
@@ -51,7 +84,10 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 				.addField(WidgetSettingsFactory.createSampleDataField())
 		;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
 		
@@ -89,12 +125,18 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 		response.getContent().append(CFW.JSON.toJSON(array));	
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public void createSampleData(JSONResponse response) { 
 
 		response.getContent().append(CFW.Files.readPackageResource(FeatureDynatrace.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostunitconsumptionbytags_sample.json") );
 		
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
@@ -102,12 +144,18 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureDynatrace.PACKAGE_RESOURCE, "emp_widget_dynatrace_hostunitconsumptionbytags.js") );
 		return array;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return new ArrayList<FileDefinition>();
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
@@ -116,6 +164,9 @@ public class WidgetHostUnitConsumptionByTags extends WidgetDefinition {
 	}
 	
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureDynatrace.PERMISSION_WIDGETS_DYNATRACE);

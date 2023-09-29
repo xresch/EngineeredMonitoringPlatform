@@ -3,6 +3,7 @@ package com.xresch.emp.features.influxdb;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.extensions.databases.FeatureDBExtensions;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
@@ -21,6 +22,7 @@ public class FeatureInfluxDB extends CFWAppFeature {
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.influxdb.resources";
 	
 	public static final String PERMISSION_WIDGETS_INFLUXDB = "Database: InfluxDB";
+	public static final String WIDGET_CATEGORY_INFFLUXDB = FeatureDBExtensions.WIDGET_CATEGORY_DATABASE + " | InfluxDB"; 
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.

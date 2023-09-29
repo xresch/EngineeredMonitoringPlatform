@@ -39,6 +39,7 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState;
 import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
+import com.xresch.emp.features.prometheus.FeaturePrometheus;
 
 public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	
@@ -56,14 +57,45 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	
 	private static Logger logger = CFWLog.getLogger(WidgetMongoDBQueryStatus.class.getName());
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_mongodb_querystatus";}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
 	}
-		
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureDBExtensions.WIDGET_CATEGORY_DATABASE;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "MongoDB Query Status"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureMongoDB.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
@@ -72,6 +104,9 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		return array;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new LinkedHashMap<>();
@@ -80,12 +115,18 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	}
 	
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
 		return user.hasPermission(FeatureMongoDB.PERMISSION_MONGODB);
 	}
 	
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		
@@ -98,6 +139,9 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
 				.addField(MongoDBSettingsFactory.createEnvironmentSelectorField())

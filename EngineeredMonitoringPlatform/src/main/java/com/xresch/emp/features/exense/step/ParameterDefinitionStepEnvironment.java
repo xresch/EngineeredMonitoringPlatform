@@ -58,7 +58,7 @@ public class ParameterDefinitionStepEnvironment extends ParameterDefinition {
 	public boolean isAvailable(HashSet<String> widgetTypesArray) {
 		
 		for(String type : widgetTypesArray) {
-			if(type.contains(FeatureExenseStep.WIDGET_PREFIX)) {
+			if(type.contains(FeatureExenseStepMongoDB.WIDGET_PREFIX)) {
 				return true;
 			}
 			

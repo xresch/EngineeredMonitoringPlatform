@@ -20,6 +20,8 @@ public class FeatureEMPCommon extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE 	= "com.xresch.emp.features.common.resources";
 	public static final String PACKAGE_MANUAL 		= "com.xresch.emp.features.common.manual";
+	
+	public static final String WIDGET_CATEGORY_MONITORING	= "Monitoring";
 		
 	public static final ManualPage TOP_PAGE = CFW.Registry.Manual.addManualPage(null, new ManualPage("Engineered Monitoring Platform(EMP)").faicon("fa fa-desktop"));
 	
@@ -32,10 +34,6 @@ public class FeatureEMPCommon extends CFWAppFeature {
 		// Register Package
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
 		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
-		
-		//----------------------------------
-		// Register Widgets
-		CFW.Registry.Widgets.add(new WidgetCustomThresholdLegend());
 		
 		//----------------------------------
 		// Register Locales

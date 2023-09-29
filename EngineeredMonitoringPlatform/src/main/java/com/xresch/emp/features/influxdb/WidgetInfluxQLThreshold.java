@@ -23,6 +23,7 @@ import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
+import com.xresch.cfw.extensions.databases.FeatureDBExtensions;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
@@ -38,6 +39,7 @@ import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 import com.xresch.cfw.validation.NumberRangeValidator;
+import com.xresch.emp.features.mongodb.FeatureMongoDB;
 
 public class WidgetInfluxQLThreshold extends WidgetDefinition {
 
@@ -48,12 +50,42 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 	private static final String FIELDNAME_ALERT_TIMESPAN_MINUTES = "TIMESPAN_MINUTES";
 	
 	private static Logger logger = CFWLog.getLogger(WidgetInfluxQLThreshold.class.getName());
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_influxdb_influxql_threshold";}
 	
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureInfluxDB.WIDGET_CATEGORY_INFFLUXDB;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "InfluxQL Threshold"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
 	}
 			
 	/*********************************************************************
@@ -68,6 +100,9 @@ public class WidgetInfluxQLThreshold extends WidgetDefinition {
 		;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public CFWObject createInstantAndThresholdFields() {
 		return new CFWObject()
 				

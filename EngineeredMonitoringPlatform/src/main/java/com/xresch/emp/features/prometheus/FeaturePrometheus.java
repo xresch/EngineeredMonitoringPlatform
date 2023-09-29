@@ -23,6 +23,8 @@ public class FeaturePrometheus extends CFWAppFeature {
 	
 	public static final String PERMISSION_PROMETHEUS = "Prometheus";
 	
+	public static final String WIDGET_CATEGORY_PROMETHEUS = "Prometheus";
+	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
 	 ************************************************************************************/

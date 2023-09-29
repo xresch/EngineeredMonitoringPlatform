@@ -15,7 +15,7 @@
 		);
 		
 	CFW.dashboard.registerWidget(
-			"emp_step_plandurationchart", 
+			"emp_stepmongodb_plandurationchart", 
 			widgetDefinition
 		);
 	

@@ -17,18 +17,21 @@ import com.xresch.cfw.spi.CFWAppFeature;
  * @author Reto Scheiwiller, (c) Copyright 2022
  * @license MIT-License
  **************************************************************************************************************/
-public class FeatureExenseStep extends CFWAppFeature {
+public class FeatureExenseStepMongoDB extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.exense.step.resources";
+	public static final String PACKAGE_MANUAL = "com.xresch.emp.features.exense.step.manual";
 	
 	public static final String PERMISSION_STEP = "Exense Step Extensions";
-	public static final String WIDGET_PREFIX = "emp_step";
+	public static final String WIDGET_PREFIX = "emp_stepmongodb";
 	
 	static final JsonWriterSettings writterSettings = 
 		JsonWriterSettings
 		.builder()
 		.outputMode(JsonMode.RELAXED)
 		.build();
+
+	public static final String WIDGET_CATEGORY_EXENSESTEP_MONGODB = "Exense Step(MongoDB)";
 
 	public enum StepExecutionResult {
 		PASSED, FAILED, TECHNICAL_ERROR, RUNNING
@@ -39,7 +42,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getNameForFeatureManagement() {
-		return "EMP Exense Step";
+		return "EMP Exense Step MongoDB";
 	};
 	
 	/************************************************************************************
@@ -47,7 +50,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getDescriptionForFeatureManagement() {
-		return "Exense Step extensions.(Widgets, Source, Tasks ...)";
+		return "(Deprecated)Exense Step extensions that fetch data directly from the MongoDB.(Widgets, Source, Tasks ...)";
 	};
 	
 	/************************************************************************************

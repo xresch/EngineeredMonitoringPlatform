@@ -17,6 +17,12 @@ public class WidgetJobStatusCurrentGrouped extends WidgetJobStatusCurrent {
 	@Override
 	public String getWidgetType() {return "emp_awajobstatusgrouped";}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Job Status Grouped"; }
+	
 	/************************************************************************************
 	 * 
 	 ************************************************************************************/

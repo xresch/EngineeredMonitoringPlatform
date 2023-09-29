@@ -17,33 +17,74 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCache
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.emp.features.common.FeatureEMPCommon;
+import com.xresch.emp.features.influxdb.FeatureInfluxDB;
 
 public class WidgetStepStatusLegend extends WidgetDefinition {
-
-	@Override
-	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_statuslegend";}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String getWidgetType() {return FeatureExenseStepMongoDB.WIDGET_PREFIX+"_statuslegend";}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.OFF;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureExenseStepMongoDB.WIDGET_CATEGORY_EXENSESTEP_MONGODB;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "Status Legend"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureExenseStepMongoDB.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		return new CFWObject();
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { /* do nothing */ }
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE,  "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE,  "emp_widget_step_statuslegend.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE,  "emp_widget_step_common.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE,  "emp_widget_step_statuslegend.js") );
 		return array;
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() { 
 		
@@ -51,16 +92,22 @@ public class WidgetStepStatusLegend extends WidgetDefinition {
 		return array; 
 		
 	}
-
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
 		return map;
 	}
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureExenseStep.PERMISSION_STEP);
+		return user.hasPermission(FeatureExenseStepMongoDB.PERMISSION_STEP);
 	}
 
 }

@@ -27,6 +27,7 @@ public class FeatureAWA extends CFWAppFeature {
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.awa.resources";
 	
 	public static final String PERMISSION_WIDGETS_AWA = "Widgets: AWA";
+	public static final String WIDGET_CATEGORY_AWA = "AWA";
 	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.

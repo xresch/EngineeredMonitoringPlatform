@@ -3,7 +3,7 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_step_statuslegend",
+	CFW.dashboard.registerWidget("emp_stepmongodb_statuslegend",
 		{
 			category: CATEGORY_EXENSE,
 			menuicon: "fas fa-info-circle",

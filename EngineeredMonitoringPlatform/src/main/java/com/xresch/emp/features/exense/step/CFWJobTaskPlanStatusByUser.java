@@ -54,7 +54,7 @@ public class CFWJobTaskPlanStatusByUser extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeatureExenseStep.PERMISSION_STEP) ) {
+		&& user.hasPermission(FeatureExenseStepMongoDB.PERMISSION_STEP) ) {
 			return true;
 		}
 		

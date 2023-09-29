@@ -22,6 +22,9 @@ public class FeatureDynatrace extends CFWAppFeature {
 	
 	public static final String PERMISSION_WIDGETS_DYNATRACE = "Widgets: Dynatrace";
 	
+	public static final String WIDGET_PREFIX = "emp_dynatrace";
+	public static final String WIDGET_CATEGORY_DYNATRACE = "Dynatrace";
+	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
 	 ************************************************************************************/

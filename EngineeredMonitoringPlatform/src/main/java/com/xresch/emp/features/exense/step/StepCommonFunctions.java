@@ -15,7 +15,7 @@ import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState.CFWStateOption;
-import com.xresch.emp.features.exense.step.FeatureExenseStep.StepExecutionResult;
+import com.xresch.emp.features.exense.step.FeatureExenseStepMongoDB.StepExecutionResult;
 
 public class StepCommonFunctions {
 

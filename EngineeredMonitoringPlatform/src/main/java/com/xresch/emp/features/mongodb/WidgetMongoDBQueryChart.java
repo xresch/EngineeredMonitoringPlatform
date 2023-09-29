@@ -46,15 +46,44 @@ public class WidgetMongoDBQueryChart extends WidgetDefinition {
 	
 	private static Logger logger = CFWLog.getLogger(WidgetMongoDBQueryChart.class.getName());
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public String getWidgetType() {return "emp_mongodb_querychart";}
-	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
 	}
-		
 	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetCategory() {
+		return FeatureDBExtensions.WIDGET_CATEGORY_DATABASE;
+	}
+
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String widgetName() { return "MongoDB Query Chart"; }
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureMongoDB.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+	}
+		
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public CFWObject getSettings() {
 		
@@ -64,7 +93,9 @@ public class WidgetMongoDBQueryChart extends WidgetDefinition {
 									
 		;
 	}
-	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public CFWObject createQueryFields() {
 		return new CFWObject()
 				.addField(MongoDBSettingsFactory.createEnvironmentSelectorField())
@@ -201,17 +232,25 @@ public class WidgetMongoDBQueryChart extends WidgetDefinition {
 		
 	}
 	
+	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	public JsonArray createSampleData( long earliest, long latest) { 	
 		return CFW.Random.randomJSONArrayOfSeriesData(5,24, earliest, latest);
 	}
 	
 
-
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getCSSFiles() {
 		return null;
 	}
-	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
@@ -219,7 +258,9 @@ public class WidgetMongoDBQueryChart extends WidgetDefinition {
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureMongoDB.PACKAGE_RESOURCE, "emp_widget_mongodb_querychart.js") );
 		return array;
 	}
-	
+	/************************************************************
+	 * 
+	 ************************************************************/
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new LinkedHashMap<>();
