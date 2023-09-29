@@ -80,14 +80,6 @@ public class FeatureAWA extends CFWAppFeature {
 		// Register Job Task
 		CFW.Registry.Jobs.registerTask(new CFWJobTaskAWAJobIssueAlert());
 		
-		//----------------------------------
-		// Register Manual Page
-		CFW.Registry.Manual.addManualPage(null,
-				new ManualPage("Automic Workload Automation (AWA)")
-					.faicon("fas fa-desktop")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
-					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_AWA.html")
-			);
 	}
 
 	@Override

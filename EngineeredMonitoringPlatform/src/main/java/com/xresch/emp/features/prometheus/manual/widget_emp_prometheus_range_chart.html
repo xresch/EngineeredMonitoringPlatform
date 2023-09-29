@@ -1,5 +1,49 @@
 
 <p>
-This documentation has yet to be written by the lazy developer.
+The Range Chart widget is used to execute one or multiple queries and display its results as a chart.
+The widget fetches the data for the time chosen with the time frame picker.
+The legend in the chart will use the metric labels for the title of the series.
 </p>
+
+Here some useful tricks when working with this widget:
+</p>
+<div class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Key</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Add Labels</td>
+				<td>Use PromQL label_replace() function to add additional labels. Can be useful to distinct multiple query results. 
+				Following fetches the Old Gen Bytes used and committed and adds a an additional label name.
+				
+<pre><code>label_replace((jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "used", "pool", ".*")
+label_replace((jvm_memory_pool_bytes_committed{pool="PS Old Gen", instance="localhost:8888"} / 1000000), "name", "committed", "pool", ".*")
+</code></pre>
+			</tr>
+			
+			<tr>
+				<td>Remove Labels</td>
+				<td>
+Use PromQL aggregation operators like sum() to remove existing labels. Can be useful to shorten series titles. 
+Following is an example that removes all labels except pool and sums the leftovers, which in this case is only one result.
+<pre><code>(sum by(pool)(jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"}) / 1000000)
+</code></pre>
+Here a more advanced example using the previous result:				
+<pre><code>label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_used{pool="PS Old Gen", instance="localhost:8888"}) / 1000000), "name", "used", "pool", ".*")
+label_replace( (sum by(instance, pool)(jvm_memory_pool_bytes_committed{pool="PS Old Gen",  instance="localhost:8888"}) / 1000000), "name", "committed", "pool", ".*")
+</code></pre>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<p>
+Find more details and Prometheus query examples in the <a href="#" onclick="cfw_manual_loadPage('Prometheus');">Prometheus</a> section of this manual
+</p>
+
 

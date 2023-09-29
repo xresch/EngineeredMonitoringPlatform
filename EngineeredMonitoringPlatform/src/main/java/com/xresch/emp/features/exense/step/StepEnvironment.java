@@ -21,7 +21,7 @@ import com.xresch.emp.features.mongodb.MongoDBEnvironment;
  **************************************************************************************************************/
 public class StepEnvironment extends MongoDBEnvironment {
 	
-	public static final String SETTINGS_TYPE = "Step Environment";
+	public static final String SETTINGS_TYPE = "Exense Step(MongoDB) Environment";
 	
 	public enum StepEnvironmentFields {
 		URL

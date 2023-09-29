@@ -24,7 +24,7 @@ public class WidgetStatusLegend extends WidgetDefinition {
 	 * 
 	 ************************************************************/
 	@Override
-	public String getWidgetType() {return "emp_smplegend";}
+	public String getWidgetType() {return "emp_smplegend";} // type, do not change to not cause errors
 	
 	/************************************************************
 	 * 

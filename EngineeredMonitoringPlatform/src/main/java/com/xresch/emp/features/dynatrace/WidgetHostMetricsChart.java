@@ -61,7 +61,10 @@ public class WidgetHostMetricsChart extends WidgetDefinition {
 	 ************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureDynatrace.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+		return 
+				  CFW.Files.readPackageResource(FeatureDynatrace.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html")
+				+ CFW.Files.readPackageResource(FeatureDynatrace.PACKAGE_MANUAL, "widget_emp_dynatrace_hostmetrics_table.html")
+				;
 	}
 	
 	/************************************************************

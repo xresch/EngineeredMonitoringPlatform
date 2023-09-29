@@ -17,7 +17,7 @@ import com.xresch.cfw.spi.CFWAppFeature;
 public class FeatureMongoDB extends CFWAppFeature {
 	
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.mongodb.resources";
-	public static final String PACKAGE_MANUAL = "com.xresch.emp.features.mongodb.manual";
+	public static final String PACKAGE_MANUAL =   "com.xresch.emp.features.mongodb.manual";
 	
 	public static final String PERMISSION_MONGODB = "Database: MongoDB";
 
@@ -59,6 +59,7 @@ public class FeatureMongoDB extends CFWAppFeature {
 		//----------------------------------
 		// Register Settings
 		CFW.Files.addAllowedPackage(PACKAGE_RESOURCE);
+		CFW.Files.addAllowedPackage(PACKAGE_MANUAL);
 		
 		//----------------------------------
 		// Register Context Settings

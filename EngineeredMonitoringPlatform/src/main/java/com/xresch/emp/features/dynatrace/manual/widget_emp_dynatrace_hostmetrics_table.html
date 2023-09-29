@@ -1,0 +1,117 @@
+
+<div class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Key</th>
+				<th>Metrics</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>CPU Usage</td>
+				<td>
+<pre><code>builtin:host.cpu.usage   //CPU usage %, Unit: Percent
+builtin:host.cpu.system   //CPU system, Unit: Percent
+builtin:host.cpu.user   //CPU user, Unit: Percent
+builtin:host.cpu.idle   //CPU idle, Unit: Percent
+builtin:host.cpu.iowait   //CPU I/O wait, Unit: Percent
+builtin:host.cpu.load   //System load, Unit: Ratio
+builtin:host.cpu.load15m   //System load15m, Unit: Ratio
+builtin:host.cpu.load5m   //System load5m, Unit: Ratio
+builtin:host.cpu.other   //CPU other, Unit: Percent
+builtin:host.cpu.physc   //AIX Physical consumed, Unit: Ratio
+builtin:host.cpu.steal   //CPU steal, Unit: Percent
+builtin:host.cpu.msu.avg   //MSU average, Unit: Cores
+builtin:host.cpu.msu.capacity   //MSU capacity, Unit: Cores
+builtin:host.cpu.ziip.eligible   //zIIP eligible, Unit: Cores
+builtin:host.cpu.ziip.usage   //zIIP usage, Unit: Cores
+builtin:host.cpu.entConfig   //AIX Entitlement configured, Unit: Ratio
+builtin:host.cpu.entc   //AIX Entitlement used, Unit: Percent
+</code></pre></td>
+			</tr>
+			
+			
+			<tr>
+				<td>Disk Usage</td>
+				<td>
+<pre><code>builtin:host.disk.avail   //Disk available, Unit: Byte
+builtin:host.disk.free   //Disk available %, Unit: Percent
+builtin:host.disk.throughput.read   //Disk throughput read, Unit: BitPerSecond
+builtin:host.disk.throughput.write   //Disk throughput write, Unit: BitPerSecond
+builtin:host.disk.bytesRead   //Disk read bytes per second, Unit: BytePerSecond
+builtin:host.disk.bytesWritten   //Disk write bytes per second, Unit: BytePerSecond
+builtin:host.disk.inodesAvail   //Inodes available %, Unit: Percent
+builtin:host.disk.inodesTotal   //Inodes total, Unit: Count
+builtin:host.disk.queueLength   //Disk average queue length , Unit: Count
+builtin:host.disk.readOps   //Disk read operations per second, Unit: PerSecond
+builtin:host.disk.readTime   //Disk read time , Unit: MilliSecond
+builtin:host.disk.used   //Disk used, Unit: Byte
+builtin:host.disk.usedPct   //Disk used %, Unit: Percent
+builtin:host.disk.utilTime   //Disk utilization time , Unit: Percent
+builtin:host.disk.writeOps   //Disk write operations per second, Unit: PerSecond
+builtin:host.disk.writeTime   //Disk write time , Unit: MilliSecond
+</code></pre></td>
+			</tr>
+			
+			
+			<tr>
+				<td>Memory Usage</td>
+				<td>
+<pre><code>builtin:host.mem.usage   //Memory used %, Unit: Percent
+builtin:host.mem.used   //Memory used, Unit: Byte	
+builtin:host.mem.avail.bytes   //Memory available, Unit: Byte
+builtin:host.mem.avail.pct   //Memory available %, Unit: Percent
+builtin:host.mem.avail.pfps   //Page faults per second, Unit: PerSecond
+builtin:host.mem.swap.avail   //Swap available, Unit: Byte
+builtin:host.mem.swap.used   //Swap used, Unit: Byte
+builtin:host.mem.kernel   //Kernel memory, Unit: Byte
+builtin:host.mem.recl   //Memory reclaimable, Unit: Byte
+</code></pre></td>
+			</tr>	
+			
+			
+			<tr>
+				<td>Network Statistics</td>
+				<td>
+<pre><code>builtin:host.net.nic.packets.droppedRx   //Network interface received packets dropped on host, Unit: PerSecond
+builtin:host.net.nic.packets.droppedTx   //Network interface sent packets dropped on host, Unit: PerSecond
+builtin:host.net.nic.packets.errorsRx   //Network interface received packet errors on host, Unit: PerSecond
+builtin:host.net.nic.packets.errorsTx   //Network interface sent packet errors on host, Unit: PerSecond
+builtin:host.net.nic.packets.rx   //Network interface packets received on host, Unit: PerSecond
+builtin:host.net.nic.packets.tx   //Network interface packets sent on host, Unit: PerSecond
+builtin:host.net.nic.bytesRx   //Network interface bytes received on host, Unit: BytePerSecond
+builtin:host.net.nic.bytesTx   //Network interface bytes sent on host, Unit: BytePerSecond
+builtin:host.net.nic.linkUtilRx   //Network interface receive link utilization on host, Unit: Percent
+builtin:host.net.nic.linkUtilTx   //Network interface transmit link utilization on host, Unit: Percent
+builtin:host.net.nic.trafficIn   //Traffic in, Unit: BitPerSecond
+builtin:host.net.nic.trafficOut   //Traffic out, Unit: BitPerSecond
+builtin:host.net.packets.rxBaseReceived   //Host aggregated process retransmission base received per second, Unit: PerSecond
+builtin:host.net.packets.rxBaseSent   //Host aggregated process retransmission base sent per second, Unit: PerSecond
+builtin:host.net.packets.rxReceived   //Host aggregated process retransmitted packets received per second, Unit: PerSecond
+builtin:host.net.packets.rxSent   //Host aggregated process retransmitted packets sent per second, Unit: PerSecond
+builtin:host.net.sessions.local.errRst   //Host aggregated session reset received per second on localhost, Unit: PerSecond
+builtin:host.net.sessions.local.errTmout   //Host aggregated session timeout received per second on localhost, Unit: PerSecond
+builtin:host.net.sessions.local.new   //Host aggregated new session received per second on localhost, Unit: PerSecond
+builtin:host.net.sessions.errRst   //Host aggregated process session reset received per second, Unit: PerSecond
+builtin:host.net.sessions.errTmout   //Host aggregated process session timeout received per second, Unit: PerSecond
+builtin:host.net.sessions.new   //Host aggregated process new session received per second, Unit: PerSecond
+builtin:host.net.bytesRx   //Host aggregated process bytes received per second, Unit: BytePerSecond
+builtin:host.net.bytesTx   //Host aggregated process bytes sent per second, Unit: BytePerSecond
+</code></pre></td>
+			</tr>		
+			
+	
+			<tr>
+				<td>DNS Statistics</td>
+				<td>
+<pre><code>builtin:host.dns.errorCount   //Number of DNS errors by type, Unit: Count
+builtin:host.dns.orphanCount   //Number of orphaned DNS responses, Unit: Count
+builtin:host.dns.queryCount   //Number of DNS queries, Unit: Count
+builtin:host.dns.queryTime   //DNS query time, Unit: MilliSecond
+</code></pre></td>
+			</tr>						
+					
+		</tbody>
+	</table>
+</div>

@@ -1,5 +1,8 @@
 
-<p>With this source you can fetch data from a database by using an SQL query of your choice.</p>
+<p>
+The Prometheus feature adds the prometheus source to the query engine. You can fetch data from Prometheus using the source and further process it with the query engine.
+Here is a sample query that executes two queries on two different Prometheus environments. You can use Ctrl+Space to get content assist for the environment.
+</p>
 
 <pre><code class="language-cfwquery">| source prometheus 
 	environment={"id":737,"name":"DEV"} 
@@ -12,3 +15,7 @@
 	value=['decimals', 2]
 	value=['threshold', 0, 20, 40, 60, 80, "bg"]
 </code></pre>
+
+<p>
+Find more details and Prometheus query examples in the <a href="#" onclick="cfw_manual_loadPage('Prometheus');">Prometheus</a> section of this manual
+</p>

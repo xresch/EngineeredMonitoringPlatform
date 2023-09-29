@@ -1,5 +1,134 @@
 
 <p>
-This documentation has yet to be written by the lazy developer.
+This widget will display a chart for the selected metrics during the selected timeframe. The autocomplete will search through over 1500 available metrics and will as well show metrics that are not available for process entities.
+Following a list of some useful process metrics to get you started:
 </p>
+
+<div class="table-responsive">
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Key</th>
+				<th>Metrics</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>CPU Usage</td>
+				<td>
+<pre><code>builtin:tech.generic.cpu.usage   //Process CPU usage, Unit: Percent
+builtin:tech.generic.cpu.suspensionTime   //Process total cpu time during GC suspensions, Unit: MicroSecond
+builtin:tech.generic.cpu.totalTime   //Process total CPU time, Unit: MicroSecond
+builtin:tech.generic.cpu.groupSuspensionTime   //Process group total CPU time during GC suspensions, Unit: MicroSecond
+builtin:tech.generic.cpu.groupTotalTime   //Process group total CPU time, Unit: MicroSecond
+
+</code></pre></td>
+			</tr>
+			
+			
+			<tr>
+				<td>Process I/O</td>
+				<td>
+<pre><code>builtin:tech.generic.io.bytesRead   //Process I/O read bytes, Unit: BytePerSecond
+builtin:tech.generic.io.bytesWritten   //Process I/O write bytes, Unit: BytePerSecond
+builtin:tech.generic.io.reqBytesRead   //Process I/O requested read bytes, Unit: BytePerSecond
+builtin:tech.generic.io.reqBytesWrite   //Process I/O requested write bytes, Unit: BytePerSecond
+</code></pre></td>
+			</tr>
+			
+			
+			<tr>
+				<td>Memory Usage</td>
+				<td>
+<pre><code>builtin:tech.generic.mem.usage   //Process memory usage, Unit: Percent
+builtin:tech.generic.mem.exhaustedMem   //Process resource exhausted memory counter, Unit: Count
+builtin:tech.generic.mem.pageFaults   //Process page faults counter, Unit: PerSecond
+builtin:tech.generic.mem.workingSetSize   //Process memory, Unit: Byte
+</code></pre></td>
+			</tr>	
+			
+			
+			<tr>
+				<td>Network Statistics</td>
+				<td>
+<pre><code>
+builtin:tech.generic.network.packets.baseReRxAggr   //Retransmission base received per second, Unit: PerSecond
+builtin:tech.generic.network.packets.baseReTxAggr   //Retransmission base sent per second, Unit: PerSecond
+builtin:tech.generic.network.packets.reRxAggr   //Retransmitted packets received per second, Unit: PerSecond
+builtin:tech.generic.network.packets.reTxAggr   //Retransmitted packets sent per second, Unit: PerSecond
+builtin:tech.generic.network.packets.rx   //Packets received per second, Unit: PerSecond
+builtin:tech.generic.network.packets.tx   //Packets sent per second, Unit: PerSecond
+builtin:tech.generic.network.sessions.newAggr   //New session received per second, Unit: PerSecond
+builtin:tech.generic.network.sessions.newLocal   //New session received per second on localhost, Unit: PerSecond
+builtin:tech.generic.network.sessions.resetAggr   //Session reset received per second, Unit: PerSecond
+builtin:tech.generic.network.sessions.resetLocal   //Session reset received per second on localhost, Unit: PerSecond
+builtin:tech.generic.network.sessions.timeoutAggr   //Session timeout received per second, Unit: PerSecond
+builtin:tech.generic.network.traffic.trafficIn   //Traffic in, Unit: BitPerSecond
+builtin:tech.generic.network.traffic.trafficOut   //Traffic out, Unit: BitPerSecond
+builtin:tech.generic.network.bytesRx   //Bytes received per second, Unit: BytePerSecond
+builtin:tech.generic.network.bytesTx   //Bytes sent per second, Unit: BytePerSecond
+builtin:tech.generic.network.latency   //Ack-round-trip-time, Unit: MilliSecond
+builtin:tech.generic.network.load   //Requests per second, Unit: PerSecond
+builtin:tech.generic.network.responsiveness   //Server responsiveness, Unit: MicroSecond
+builtin:tech.generic.network.roundTrip   //Round-trip-time, Unit: MilliSecond
+builtin:tech.generic.network.throughput   //Throughput, Unit: BytePerSecond
+
+</code></pre></td>
+			</tr>		
+			
+	
+			<tr>
+				<td>Threads</td>
+				<td>
+<pre><code>builtin:tech.generic.processCount // Worker processes
+</code></pre></td>
+			</tr>						
+
+			<tr>
+				<td>Jetty</td>
+				<td>
+<pre><code>builtin:tech.jetty.busyThreads   //Jetty busy threads, Unit: Count
+builtin:tech.jetty.connections   //Jetty total connections, Unit: PerSecond
+builtin:tech.jetty.connectionsOpen   //Jetty open connections, Unit: Count
+builtin:tech.jetty.idleThreads   //Jetty idle threads, Unit: Count
+builtin:tech.jetty.queueSize   //Jetty request queue size, Unit: Count
+builtin:tech.jetty.requestCount   //Jetty request count, Unit: PerSecond
+builtin:tech.jetty.responsesBytesTotal   //Jetty total response bytes, Unit: BytePerSecond
+</code></pre></td>
+			</tr>	
+
+			<tr>
+				<td>JVM</td>
+				<td>
+<pre><code>builtin:tech.jvm.classes.loaded   //JVM loaded classes, Unit: Count
+builtin:tech.jvm.classes.total   //JVM total number of loaded classes, Unit: Count
+builtin:tech.jvm.classes.unloaded   //JVM unloaded classes, Unit: Count
+builtin:tech.jvm.memory.gc.activationCount   //Garbage collection total activation count, Unit: Count
+builtin:tech.jvm.memory.gc.collectionTime   //Garbage collection total collection time, Unit: MilliSecond
+builtin:tech.jvm.memory.gc.suspensionTime   //Garbage collection suspension time, Unit: Percent
+builtin:tech.jvm.memory.pool.collectionCount   //Garbage collection count, Unit: Count
+builtin:tech.jvm.memory.pool.collectionTime   //Garbage collection time, Unit: MilliSecond
+builtin:tech.jvm.memory.pool.committed   //JVM heap memory pool committed bytes, Unit: Byte
+builtin:tech.jvm.memory.pool.max   //JVM heap memory max bytes, Unit: Byte
+builtin:tech.jvm.memory.pool.used   //JVM heap memory pool used bytes, Unit: Byte
+builtin:tech.jvm.memory.runtime.free   //JVM runtime free memory, Unit: Byte
+builtin:tech.jvm.memory.runtime.max   //JVM runtime max memory, Unit: Byte
+builtin:tech.jvm.memory.runtime.total   //JVM runtime total memory, Unit: Byte
+builtin:tech.jvm.memory.memAllocationBytes   //Process memory allocation bytes, Unit: Byte
+builtin:tech.jvm.memory.memAllocationCount   //Process memory allocation objects count, Unit: Count
+builtin:tech.jvm.memory.memSurvivorsBytes   //Process memory survived objects bytes, Unit: Byte
+builtin:tech.jvm.memory.memSurvivorsCount   //Process memory survived objects count, Unit: Count
+builtin:tech.jvm.threads.avgActiveThreadCount   //JVM average number of active threads, Unit: Count
+builtin:tech.jvm.threads.avgInactiveThreadCount   //JVM average number of inactive threads, Unit: Count
+builtin:tech.jvm.threads.count   //JVM thread count, Unit: Count
+builtin:tech.jvm.threads.totalCpuTime   //JVM total CPU time, Unit: MilliSecond
+
+</code></pre></td>
+			</tr>	
+
+
+			
+		</tbody>
+	</table>
+</div>
 
