@@ -11,7 +11,7 @@ import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
-import com.xresch.cfw.features.dashboard.parameters.ParameterDefinition;
+import com.xresch.cfw.features.parameter.ParameterDefinition;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
 public class ParameterDefinitionPrometheusFilter extends ParameterDefinition {

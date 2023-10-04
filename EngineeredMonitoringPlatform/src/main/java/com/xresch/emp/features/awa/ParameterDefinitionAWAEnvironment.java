@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWTimeframe;
-import com.xresch.cfw.features.dashboard.parameters.ParameterDefinition;
+import com.xresch.cfw.features.parameter.ParameterDefinition;
 
 public class ParameterDefinitionAWAEnvironment extends ParameterDefinition {
 
