@@ -35,7 +35,7 @@
 							metadata: 'Executables'
 						},
 						customizers:{
-							metadata: function(record, value) {  return JSON.stringify(value.executables); },
+							metadata: function(record, value) {  return (value.executables != null) ? JSON.stringify(value.executables) : "&nbsp;"; },
 							firstSeenTimestamp: function(record, value) {  return CFW.format.epochToTimestamp(value); },
 							lastSeenTimestamp: function(record, value) {  return CFW.format.epochToTimestamp(value); },
 						},
