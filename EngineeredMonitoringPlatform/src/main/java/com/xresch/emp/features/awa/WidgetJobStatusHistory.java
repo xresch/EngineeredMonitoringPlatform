@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -226,8 +227,14 @@ public class WidgetJobStatusHistory extends WidgetDefinition {
 						if(joblabels != null && i < joblabels.length) {
 							object.addProperty("LABEL", joblabels[i]);
 						}else {
-							object.addProperty("LABEL", currentJobname);
+							String title =  result.getString("TITLE");
+							if(!Strings.isNullOrEmpty(title)) {
+								object.addProperty("LABEL", title);
+							}else {
+								object.addProperty("LABEL", currentJobname);
+							}
 						}
+						
 						OffsetDateTime startTime = result.getObject("START_TIME", OffsetDateTime.class);
 						OffsetDateTime endTime = result.getObject("END_TIME", OffsetDateTime.class);
 	

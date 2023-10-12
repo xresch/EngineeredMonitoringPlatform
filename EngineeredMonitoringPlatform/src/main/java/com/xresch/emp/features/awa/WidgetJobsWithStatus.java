@@ -212,6 +212,7 @@ public class WidgetJobsWithStatus extends WidgetDefinition {
 					String URL = environment.getJobWorkflowURL(currentJobname, type, runID);
 					
 					object.addProperty("JOBNAME", currentJobname);
+					object.addProperty("TITLE", result.getString("TITLE"));
 					object.addProperty("STATUS", result.getString("STATUS"));
 					object.addProperty("CLIENT_ID", result.getString("CLIENT_ID"));
 					object.addProperty("TYPE", result.getString("TYPE"));

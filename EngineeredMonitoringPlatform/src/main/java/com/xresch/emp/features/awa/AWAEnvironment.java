@@ -507,6 +507,17 @@ public class AWAEnvironment extends AbstractContextSettings {
 					String type = result.getString("TYPE");
 					String URL = this.getJobWorkflowURL(currentJobname, type, runID);
 					
+					//---------------------------------------
+					// Use title if Label not set manually
+					if(joblabels == null 
+					|| i >= joblabels.length 
+					|| Strings.isNullOrEmpty(joblabels[i]) ) {
+						String title =  result.getString("TITLE");
+						if(!Strings.isNullOrEmpty(title)) {
+							object.addProperty("LABEL", title);
+						}
+					}
+					
 					object.addProperty("STATUS", result.getString("STATUS"));
 					object.addProperty("CLIENT_ID", result.getString("CLIENT_ID"));
 					object.addProperty("TYPE", type);
