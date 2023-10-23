@@ -126,13 +126,13 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		// Example Data
 		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
 		if(isSampleData != null && isSampleData) {
-			response.setPayLoad(createSampleData());
+			response.setPayload(createSampleData());
 			return;
 		}
 		
 		//---------------------------------
 		// Real Data		
-		response.setPayLoad(loadDataFromSPM(settings));
+		response.setPayload(loadDataFromSPM(settings));
 						
 	}
 	

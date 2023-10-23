@@ -108,7 +108,7 @@ public class ServletTheusinator extends HttpServlet
 			
 				switch(method.toLowerCase()) {
 					case "geturl": 				JSONResponse jsonResponse = new JSONResponse();
-												jsonResponse.setPayLoad(spm.url());
+												jsonResponse.setPayload(spm.url());
 												break;
 	  										
 					default: 					CFW.Messages.itemNotSupported(method);
@@ -172,7 +172,7 @@ public class ServletTheusinator extends HttpServlet
 		
 		switch(method.toLowerCase()) {
 			case "geturl": 					JSONResponse jsonResponse = new JSONResponse();
-											jsonResponse.setPayLoad("https://www.sampleurl.test");
+											jsonResponse.setPayload("https://www.sampleurl.test");
 											break;
 											
 			case "getprojectsforuser": 		plaintext.append(CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "theusinator_sample_getProjectsForUser.xml"));			

@@ -139,7 +139,7 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
 		if(isSampleData != null && isSampleData) {
 			response.addCustomAttribute("url", "http://sampleurl.yourserver.io");
-			response.setPayLoad(createSampleData());
+			response.setPayload(createSampleData());
 			return;
 		}
 		
@@ -156,7 +156,7 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 		}
 		
 		response.addCustomAttribute("url", environment.url());
-		response.setPayLoad(loadDataFromStepDB(settings, earliest, latest));
+		response.setPayload(loadDataFromStepDB(settings, earliest, latest));
 	}
 
 	/*********************************************************************

@@ -143,7 +143,7 @@ public class WidgetPlanExecutionsTimerange extends WidgetDefinition  {
 		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
 		if(isSampleData != null && isSampleData) {
 			response.addCustomAttribute("url", "http://sampleurl.yourserver.io");
-			response.setPayLoad(createSampleData(earliest, latest));
+			response.setPayload(createSampleData(earliest, latest));
 			return;
 		}
 		
@@ -160,7 +160,7 @@ public class WidgetPlanExecutionsTimerange extends WidgetDefinition  {
 		}
 		
 		response.addCustomAttribute("url", environment.url());
-		response.setPayLoad(loadDataFromStepDB(settings, earliest, latest));
+		response.setPayload(loadDataFromStepDB(settings, earliest, latest));
 	}
 
 	/*********************************************************************
