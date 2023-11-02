@@ -6,6 +6,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.features.dashboard.FeatureDashboard;
 import com.xresch.cfw.features.jobs.FeatureJobs;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
@@ -39,6 +40,8 @@ public class FeatureEMPCommon extends CFWAppFeature {
 		// Register Locales
 		FileDefinition english = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_common.properties");
 		CFW.Localization.registerLocaleFile(Locale.ENGLISH, FeatureJobs.getJobsURI(), english);
+		CFW.Localization.registerLocaleFile(Locale.ENGLISH, FeatureDashboard.URI_DASHBOARD_VIEW, english);
+		CFW.Localization.registerLocaleFile(Locale.ENGLISH, FeatureDashboard.URI_DASHBOARD_VIEW_PUBLIC, english);
 		CFW.Localization.registerLocaleFile(Locale.ENGLISH, FeatureManual.URI_MANUAL, english);
 		
 		//----------------------------------
