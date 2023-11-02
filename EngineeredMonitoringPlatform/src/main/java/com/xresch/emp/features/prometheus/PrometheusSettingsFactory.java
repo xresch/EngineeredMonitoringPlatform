@@ -18,7 +18,7 @@ public class PrometheusSettingsFactory {
 		// use string to allow parameter substitution
 		return CFWField.newString(FormFieldType.SELECT, FIELDNAME_ENVIRONMENT)
 				.setLabel("{!emp_common_environment!}")
-				.setDescription("{!emp_common_environment!}")
+				.setDescription("{!emp_common_environment_desc!}")
 				.setOptions(CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE))
 				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 				;

@@ -37,11 +37,9 @@ public class FeatureEMPCommon extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Locales
-		CFW.Localization.registerLocaleFile(
-				Locale.ENGLISH, 
-				FeatureJobs.getJobsURI(), 
-				new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_common.properties")
-		);
+		FileDefinition english = new FileDefinition(HandlingType.JAR_RESOURCE, FeatureEMPCommon.PACKAGE_RESOURCE, "lang_en_emp_common.properties");
+		CFW.Localization.registerLocaleFile(Locale.ENGLISH, FeatureJobs.getJobsURI(), english);
+		CFW.Localization.registerLocaleFile(Locale.ENGLISH, FeatureManual.URI_MANUAL, english);
 		
 		//----------------------------------
 		// Register Manuals	
