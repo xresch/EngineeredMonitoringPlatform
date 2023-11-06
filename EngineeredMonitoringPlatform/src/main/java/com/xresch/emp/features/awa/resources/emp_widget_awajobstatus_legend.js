@@ -9,9 +9,11 @@
 			menuicon: "fas fa-info-circle",
 			menulabel: CFWL('emp_widget_awajobstatuslegend', "AWA Job Status Legend"),
 			description: CFWL('emp_widget_awajobstatuslegend_desc', "Displays a legend for the colors used by the AWA job status widget."),
-			defaulttitle: "",
-			defaultwidth: 32,
-			defaultheight: 4,
+			defaultsettings: {
+				TITLE: "",
+				WIDTH: 32,
+				HEIGHT: 4,
+			},
 			createWidgetInstance: function (widgetObject, params, callback) {		
 				var html = 
 					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-green">&nbsp;</div>Ended OK</div>'

@@ -195,7 +195,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 	 ************************************************************************************/
 	public JsonObject queryRange(String prometheusQuery, long earliestMillis, long latestMillis) {
 		
-		String interval = CFW.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100);
+		String interval = CFW.Time.calculateDatapointInterval(earliestMillis, latestMillis, 100, "");
 		
 		prometheusQuery = prometheusQuery.replace("[interval]", "["+( (interval.endsWith("s")) ? "1m" : interval )+"]");
 		

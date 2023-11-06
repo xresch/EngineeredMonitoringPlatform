@@ -14,9 +14,11 @@
 			menuicon: "fas fa-info-circle",
 			menulabel: CFWL('emp_widget_webexservicestatuslegend', "Webex Service Status Legend"),
 			description: CFWL('emp_widget_webexservicestatuslegend_desc', "Displays a legend for the colors used by the Webex Service Status widget."),
-			defaulttitle: "",
-			defaultwidth: 32,
-			defaultheight: 4,
+			defaultsettings: {
+				TITLE: "",
+				WIDTH: 16,
+				HEIGHT: 4,
+			},
 			createWidgetInstance: function (widgetObject, params, callback) {		
 				var html = 
 					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-green">&nbsp;</div>Operational</div>'

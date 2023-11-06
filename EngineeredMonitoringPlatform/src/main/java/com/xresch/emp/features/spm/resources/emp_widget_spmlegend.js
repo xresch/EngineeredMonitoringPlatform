@@ -10,9 +10,11 @@
 			menuicon: "fas fa-info-circle",
 			menulabel: CFWL('emp_widget_smplegend', "SPM Legend"),
 			description: CFWL('emp_widget_smplegend_desc', "Displays a legend for the colors used by the SPM monitors."),
-			defaulttitle: "",
-			defaultwidth: 10,
-			defaultheight: 1,
+			defaultsettings: {
+				TITLE: "",
+				WIDTH: 32,
+				HEIGHT: 4,
+			},
 			createWidgetInstance: function (widgetObject, params, callback) {		
 				var html = 
 					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-green">&nbsp;</div> 100% </div>'
