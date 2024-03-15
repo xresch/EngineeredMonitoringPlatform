@@ -1,7 +1,7 @@
 /******************************************************************
  * 
  ******************************************************************/
-CATEGORY_EXENSE = "Exense Step";
+CATEGORY_EXENSE = "Exense Step(MongoDB)";
 	
 CFW.dashboard.registerCategory("fas fa-desktop", CATEGORY_EXENSE);
 	

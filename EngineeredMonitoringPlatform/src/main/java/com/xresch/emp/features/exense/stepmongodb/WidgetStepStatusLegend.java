@@ -1,4 +1,4 @@
-package com.xresch.emp.features.exense.step;
+package com.xresch.emp.features.exense.stepmongodb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public class WidgetStepStatusLegend extends WidgetDefinition {
 	 * 
 	 ************************************************************/
 	@Override
-	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_statuslegend";}
+	public String getWidgetType() {return FeatureExenseStepMongoDB.WIDGET_PREFIX+"_statuslegend";}
 	
 	/************************************************************
 	 * 
@@ -40,7 +40,7 @@ public class WidgetStepStatusLegend extends WidgetDefinition {
 	 ************************************************************/
 	@Override
 	public String widgetCategory() {
-		return FeatureExenseStep.WIDGET_CATEGORY_EXENSESTEP_MONGODB;
+		return FeatureExenseStepMongoDB.WIDGET_CATEGORY_EXENSESTEP_MONGODB;
 	}
 
 	/************************************************************
@@ -54,7 +54,7 @@ public class WidgetStepStatusLegend extends WidgetDefinition {
 	 ************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+		return CFW.Files.readPackageResource(FeatureExenseStepMongoDB.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
 	}
 	
 	/************************************************************
@@ -77,8 +77,8 @@ public class WidgetStepStatusLegend extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE,  "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE,  "emp_widget_step_statuslegend.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE,  "emp_widget_step_common.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE,  "emp_widget_step_statuslegend.js") );
 		return array;
 	}
 	
@@ -107,7 +107,7 @@ public class WidgetStepStatusLegend extends WidgetDefinition {
 	 ************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureExenseStep.PERMISSION_STEP);
+		return user.hasPermission(FeatureExenseStepMongoDB.PERMISSION_STEP);
 	}
 
 }

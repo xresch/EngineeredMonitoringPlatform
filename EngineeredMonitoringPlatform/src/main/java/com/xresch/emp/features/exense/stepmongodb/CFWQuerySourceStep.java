@@ -1,4 +1,4 @@
-package com.xresch.emp.features.exense.step;
+package com.xresch.emp.features.exense.stepmongodb;
 
 import java.rmi.AccessException;
 import java.text.ParseException;
@@ -73,7 +73,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionShort() {
-		return "Fetches data from a Step API.";
+		return "Fetches data from a Step database.";
 	}
 		
 	/******************************************************************
@@ -81,7 +81,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionRequiredPermission() {
-		return FeatureExenseStep.PERMISSION_STEP;
+		return FeatureExenseStepMongoDB.PERMISSION_STEP;
 	}
 
 	/******************************************************************
@@ -89,7 +89,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureExenseStep.PERMISSION_STEP);
+		return user.hasPermission(FeatureExenseStepMongoDB.PERMISSION_STEP);
 	}
 	
 	/******************************************************************
@@ -97,7 +97,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionTime() {
-		return "Use the functions earliest() and latest() to insert epoch time in milliseconds into your STEP filter.";
+		return "Use placeholders $earliest$ and $latest$ to insert epoch time in milliseconds into your MongoDB document.";
 	}
 
 	/******************************************************************
@@ -105,7 +105,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_RESOURCE, "z_manual_source_step.html")
+		return CFW.Files.readPackageResource(FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "z_manual_source_step.html")
 				.replaceAll("\\{sourcename\\}", this.uniqueName());
 	}
 	

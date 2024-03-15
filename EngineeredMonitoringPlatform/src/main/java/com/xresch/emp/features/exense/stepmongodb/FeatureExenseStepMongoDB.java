@@ -1,4 +1,4 @@
-package com.xresch.emp.features.exense.step;
+package com.xresch.emp.features.exense.stepmongodb;
 
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
@@ -19,10 +19,10 @@ import com.xresch.cfw.spi.CFWAppFeature;
  **************************************************************************************************************/
 public class FeatureExenseStepMongoDB extends CFWAppFeature {
 	
-	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.exense.step.resources";
-	public static final String PACKAGE_MANUAL = "com.xresch.emp.features.exense.step.manual";
+	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.exense.stepmongodb.resources";
+	public static final String PACKAGE_MANUAL = "com.xresch.emp.features.exense.stepmongodb.manual";
 	
-	public static final String PERMISSION_STEP = "Exense Step Extensions";
+	public static final String PERMISSION_STEP = "Exense Step Extensions(MongoDB)";
 	public static final String WIDGET_PREFIX = "emp_stepmongodb";
 	
 	static final JsonWriterSettings writterSettings = 

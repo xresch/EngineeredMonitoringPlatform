@@ -15,13 +15,13 @@ import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.jobs.FeatureJobs;
 import com.xresch.cfw.features.usermgmt.User;
 
-public class CFWJobTaskPlanStatusByProject extends CFWJobTask {
+public class CFWJobTaskSchedulerStatusByProject extends CFWJobTask {
 	
-	private WidgetPlanStatusByProject widget = new WidgetPlanStatusByProject();
+	private WidgetSchedulerStatusByProject widget = new WidgetSchedulerStatusByProject();
 
 	@Override
 	public String uniqueName() {
-		return "Alerting: Step Plan Status by Project";
+		return "Alerting: Step Scheduler Status by Project";
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class CFWJobTaskPlanStatusByProject extends CFWJobTask {
 	public boolean hasPermission(User user) {
 		
 		if(user.hasPermission(FeatureJobs.PERMISSION_JOBS_USER) 
-		&& user.hasPermission(FeatureExenseStepMongoDB.PERMISSION_STEP) ) {
+		&& user.hasPermission(FeatureExenseStep.PERMISSION_STEP) ) {
 			return true;
 		}
 		

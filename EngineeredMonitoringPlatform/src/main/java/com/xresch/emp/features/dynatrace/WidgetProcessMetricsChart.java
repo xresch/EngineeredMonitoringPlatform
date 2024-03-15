@@ -23,7 +23,7 @@ import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.dynatrace.DynatraceEnvironment.EntityType;
-import com.xresch.emp.features.exense.step.FeatureExenseStepMongoDB;
+import com.xresch.emp.features.exense.step.FeatureExenseStep;
 
 public class WidgetProcessMetricsChart extends WidgetDefinition {
 

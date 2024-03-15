@@ -1,0 +1,519 @@
+
+###################################################################
+# Fetch All Scheduler IDs
+###################################################################
+
+curl -X 'GET' \
+  'https://step.perfeng.sehlat.io/rest/scheduler/task' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjODA1MmUyNS05YWJjLTRlOGEtYjAwMC00YzUzNGQwNzAxYTUiLCJpc3MiOiJodHRwczovL3N0ZXAucGVyZmVuZy5zZWhsYXQuaW8iLCJhdWQiOiJodHRwczovL3N0ZXAucGVyZmVuZy5zZWhsYXQuaW8iLCJzdWIiOiJyZXRvLnNjaGVpd2lsbGVyQGp1bGl1c2JhZXIuY29tIiwibmJmIjoxNzEwNDk2MTY5LCJpYXQiOjE3MTA0OTYxNjksImV4cCI6NDg2NDA5NjE2OSwiaXNMb2NhbFRva2VuIjp0cnVlfQ.wZtQgxRIDy1zECPv-aj_6523h6c3ReryfyuMoVvff5Y'
+
+=============== EXAMPLE RESPONSE ========================
+[
+	{
+        "customFields": null,
+        "attributes": {
+            "name": "K6_Check_google.com",
+            "project": "65f41ae4a68ef02f12cecfab"
+        },
+        "name": null,
+        "executionsParameters": {
+            "customFields": null,
+            "attributes": {
+                "project": "65f41ae4a68ef02f12cecfab"
+            },
+            "customParameters": {},
+            "userID": null,
+            "artefactFilter": null,
+            "mode": "RUN",
+            "plan": null,
+            "repositoryObject": {
+                "repositoryID": "local",
+                "repositoryParameters": {
+                    "planid": "65f41bdda68ef02f12cedea4"
+                }
+            },
+            "isolatedExecution": false,
+            "exports": null,
+            "description": "K6_Check_google.com",
+            "id": "65f41c46a68ef02f12ceeb64"
+        },
+        "assertionPlan": null,
+        "cronExpression": "0 0/5 * * * ?",
+        "cronExclusions": null,
+        "active": true,
+        "id": "65f41c46a68ef02f12ceeb63"
+    },
+	{
+        "customFields": null,
+        "attributes": {
+            "name": "Playwright JB Home Task",
+            "project": "64e3540028b9b8193323b95b"
+        },
+        "name": null,
+        "executionsParameters": {
+            "customFields": null,
+            "attributes": {
+                "project": "64e3540028b9b8193323b95b"
+            },
+            "customParameters": {
+                "env": "TEST"
+            },
+            "userID": "patrick.neubauer@juliusbaer.com",
+            "artefactFilter": null,
+            "mode": "RUN",
+            "plan": null,
+            "repositoryObject": {
+                "repositoryID": "local",
+                "repositoryParameters": {
+                    "planid": "650aa49eae7d3f7d205fbf87"
+                }
+            },
+            "isolatedExecution": false,
+            "exports": null,
+            "description": "Playwright JB Home",
+            "id": "64e3582d28b9b8193323c4ea"
+        },
+        "assertionPlan": null,
+        "cronExpression": "0 0/5 * * * ?",
+        "cronExclusions": null,
+        "active": false,
+        "id": "64e3582d28b9b8193323c4e9"
+    }
+]
+
+###################################################################
+# Fetch All Projects
+###################################################################
+curl -X 'GET' \
+  'https://step.perfeng.sehlat.io/rest/tenants/projects' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjODA1MmUyNS05YWJjLTRlOGEtYjAwMC00YzUzNGQwNzAxYTUiLCJpc3MiOiJodHRwczovL3N0ZXAucGVyZmVuZy5zZWhsYXQuaW8iLCJhdWQiOiJodHRwczovL3N0ZXAucGVyZmVuZy5zZWhsYXQuaW8iLCJzdWIiOiJyZXRvLnNjaGVpd2lsbGVyQGp1bGl1c2JhZXIuY29tIiwibmJmIjoxNzEwNDk2MTY5LCJpYXQiOjE3MTA0OTYxNjksImV4cCI6NDg2NDA5NjE2OSwiaXNMb2NhbFRva2VuIjp0cnVlfQ.wZtQgxRIDy1zECPv-aj_6523h6c3ReryfyuMoVvff5Y'
+
+
+=============== EXAMPLE RESPONSE ========================
+[
+  {
+    "customFields": null,
+    "attributes": {
+      "name": "Examples",
+      "owner": "admin"
+    },
+    "global": false,
+    "members": null,
+    "id": "6554c13e62cdec3786cda908"
+  },
+  {
+    "customFields": null,
+    "attributes": {
+      "name": "CLM",
+      "owner": "devon.bowen@juliusbaer.com"
+    },
+    "global": false,
+    "members": null,
+    "id": "65e58aa71632d3503397fd6a"
+  },
+  ...
+]
+
+###################################################################
+# Fetch All Plans >> SUPER SLOW AND HUMONGOUS RESPONSE
+###################################################################
+curl -X 'POST' \
+  'https://step.perfeng.sehlat.io/rest/plans/find' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{}'
+  
+=============== EXAMPLE RESPONSE ======================== 
+[
+  {
+    "_class": "step.core.plans.Plan",
+    "customFields": {
+      "versionId": "652e93c293243a124ed978f6"
+    },
+    "attributes": {
+      "name": "step-playwright-0.3.2-SNAPSHOT.jar",
+      "project": "64e3540028b9b8193323b95b"
+    },
+    "root": {
+      "_class": "TestSet",
+      "customFields": null,
+      "attributes": {
+        "name": "step-playwright-0.3.2-SNAPSHOT.jar"
+      },
+      "dynamicName": {
+        "dynamic": false,
+        "value": "",
+        "expression": "",
+        "expressionType": null
+      },
+      "useDynamicName": false,
+      "description": null,
+      "children": [],
+      "customAttributes": null,
+      "attachments": null,
+      "skipNode": {
+        "dynamic": false,
+        "value": false,
+        "expression": null,
+        "expressionType": null
+      },
+      "instrumentNode": {
+        "dynamic": false,
+        "value": false,
+        "expression": null,
+        "expressionType": null
+      },
+      "continueParentNodeExecutionOnError": {
+        "dynamic": false,
+        "value": false,
+        "expression": null,
+        "expressionType": null
+      },
+      "threads": {
+        "dynamic": false,
+        "value": 0,
+        "expression": null,
+        "expressionType": null
+      },
+      "id": "652e93c293243a124ed978ec"
+    },
+    "functions": [
+      {
+        "type": "step.plugins.java.GeneralScriptFunction",
+        "customFields": null,
+        "attributes": {
+          "name": "Playwright JB Home"
+        },
+        "callTimeout": {
+          "dynamic": false,
+          "value": 180000,
+          "expression": null,
+          "expressionType": null
+        },
+        "schema": {},
+        "executeLocally": false,
+        "tokenSelectionCriteria": null,
+        "managed": false,
+        "useCustomTemplate": false,
+        "htmlTemplate": "",
+        "description": "",
+        "scriptFile": {
+          "dynamic": false,
+          "value": "/home/controller/bin/../data/resources/temp/652e93c193243a124ed9781f/652e93c193243a124ed97820/step-playwright-0.3.2-SNAPSHOT.jar",
+          "expression": null,
+          "expressionType": null
+        },
+        "scriptLanguage": {
+          "dynamic": false,
+          "value": "java",
+          "expression": null,
+          "expressionType": null
+        },
+        "librariesFile": {
+          "dynamic": false,
+          "value": "/home/controller/bin/../data/resources/functions/652e46c893243a124ed5bd99/652e46c893243a124ed5bd9a/step-common-0.3.2.jar",
+          "expression": null,
+          "expressionType": null
+        },
+        "errorHandlerFile": {
+          "dynamic": false,
+          "value": "",
+          "expression": null,
+          "expressionType": null
+        },
+        "id": "652e93c293243a124ed978e9"
+      },
+      {
+        "type": "step.plugins.java.GeneralScriptFunction",
+        "customFields": null,
+        "attributes": {
+          "name": "Playwright JB Grafana UAT"
+        },
+        "callTimeout": {
+          "dynamic": false,
+          "value": 180000,
+          "expression": null,
+          "expressionType": null
+        },
+        "schema": {},
+        "executeLocally": false,
+        "tokenSelectionCriteria": null,
+        "managed": false,
+        "useCustomTemplate": false,
+        "htmlTemplate": "",
+        "description": "",
+        "scriptFile": {
+          "dynamic": false,
+          "value": "/home/controller/bin/../data/resources/temp/652e93c193243a124ed9781f/652e93c193243a124ed97820/step-playwright-0.3.2-SNAPSHOT.jar",
+          "expression": null,
+          "expressionType": null
+        },
+        "scriptLanguage": {
+          "dynamic": false,
+          "value": "java",
+          "expression": null,
+          "expressionType": null
+        },
+        "librariesFile": {
+          "dynamic": false,
+          "value": "/home/controller/bin/../data/resources/functions/652e46c893243a124ed5bd99/652e46c893243a124ed5bd9a/step-common-0.3.2.jar",
+          "expression": null,
+          "expressionType": null
+        },
+        "errorHandlerFile": {
+          "dynamic": false,
+          "value": "",
+          "expression": null,
+          "expressionType": null
+        },
+        "id": "652e93c293243a124ed978ea"
+      },
+      {
+        "type": "step.plugins.java.GeneralScriptFunction",
+        "customFields": null,
+        "attributes": {
+          "name": "Buy MacBook in OpenCart"
+        },
+        "callTimeout": {
+          "dynamic": false,
+          "value": 180000,
+          "expression": null,
+          "expressionType": null
+        },
+        "schema": {},
+        "executeLocally": false,
+        "tokenSelectionCriteria": null,
+        "managed": false,
+        "useCustomTemplate": false,
+        "htmlTemplate": "",
+        "description": "",
+        "scriptFile": {
+          "dynamic": false,
+          "value": "/home/controller/bin/../data/resources/temp/652e93c193243a124ed9781f/652e93c193243a124ed97820/step-playwright-0.3.2-SNAPSHOT.jar",
+          "expression": null,
+          "expressionType": null
+        },
+        "scriptLanguage": {
+          "dynamic": false,
+          "value": "java",
+          "expression": null,
+          "expressionType": null
+        },
+        "librariesFile": {
+          "dynamic": false,
+          "value": "/home/controller/bin/../data/resources/functions/652e46c893243a124ed5bd99/652e46c893243a124ed5bd9a/step-common-0.3.2.jar",
+          "expression": null,
+          "expressionType": null
+        },
+        "errorHandlerFile": {
+          "dynamic": false,
+          "value": "",
+          "expression": null,
+          "expressionType": null
+        },
+        "id": "652e93c293243a124ed978eb"
+      }
+    ],
+    "subPlans": null,
+    "visible": false,
+    "id": "652e93c293243a124ed978f5"
+  },
+  ...
+]
+ 
+###################################################################
+# Fetch Last Value
+###################################################################
+curl -X 'POST' \
+  'https://step.perfeng.sehlat.io/rest/table/executions' \
+  -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjODA1MmUyNS05YWJjLTRlOGEtYjAwMC00YzUzNGQwNzAxYTUiLCJpc3MiOiJodHRwczovL3N0ZXAucGVyZmVuZy5zZWhsYXQuaW8iLCJhdWQiOiJodHRwczovL3N0ZXAucGVyZmVuZy5zZWhsYXQuaW8iLCJzdWIiOiJyZXRvLnNjaGVpd2lsbGVyQGp1bGl1c2JhZXIuY29tIiwibmJmIjoxNzEwNDk2MTY5LCJpYXQiOjE3MTA0OTYxNjksImV4cCI6NDg2NDA5NjE2OSwiaXNMb2NhbFRva2VuIjp0cnVlfQ.wZtQgxRIDy1zECPv-aj_6523h6c3ReryfyuMoVvff5Y' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "filters": [
+    {"collectionFilter":{"type":"And","children":[{"type":"Equals","field":"executionTaskID","65f41c46a68ef02f12ceeb64": "65f30ad53b6f9f00788febf8"},{"type":"Gte","field":"startTime","value":1610426840010},{"type":"Lte","field":"endTime","value":1910426850625}]}}
+  ],
+  "skip": 0,
+  "limit": 1,
+  "sort": {
+    "field": "string",
+    "direction": "DESCENDING"
+  }
+}'
+
+=============== EXAMPLE RESPONSE ========================
+
+{
+    "recordsTotal": 88,
+    "recordsFiltered": 3,
+    "data": [{
+            "customFields": {
+                "hasTimeSeries": true
+            },
+            "attributes": {
+                "project": "65f41ae4a68ef02f12cecfab"
+            },
+            "startTime": 1710496764744,
+            "endTime": 1710496766548,
+            "description": "K6_Check_google.com",
+            "executionType": null,
+            "status": "ENDED",
+            "result": "FAILED",
+            "planId": "65f41bdda68ef02f12cedea4",
+            "importResult": {
+                "successful": true,
+                "planId": "65f41bdda68ef02f12cedea4",
+                "errors": null
+            },
+            "reportExports": [{
+                    "status": "SUCCESSFUL",
+                    "error": null,
+                    "url": null
+                }
+            ],
+            "executionTaskID": null,
+            "parameters": [{
+                    "key": "Environment",
+                    "value": "Public"
+                }, {
+                    "key": "ADPass",
+                    "value": ""
+                }, {
+                    "key": "ADDomain",
+                    "value": ""
+                }, {
+                    "key": "ADUser",
+                    "value": ""
+                }
+            ],
+            "executionParameters": {
+                "customFields": null,
+                "attributes": {
+                    "project": "65f41ae4a68ef02f12cecfab"
+                },
+                "customParameters": {
+                    "env": "TEST"
+                },
+                "userID": "reto.scheiwiller@juliusbaer.com",
+                "artefactFilter": null,
+                "mode": "RUN",
+                "plan": null,
+                "repositoryObject": {
+                    "repositoryID": "local",
+                    "repositoryParameters": {
+                        "planid": "65f41bdda68ef02f12cedea4"
+                    }
+                },
+                "isolatedExecution": false,
+                "exports": [],
+                "description": "K6_Check_google.com",
+                "id": "65f41bfca68ef02f12cee0a3"
+            },
+            "executiontTaskParameters": null,
+            "rootReportNode": {
+                "_class": "step.artefacts.reports.TestCaseReportNode",
+                "customFields": null,
+                "parentID": "65f41bfca68ef02f12cee0a6",
+                "name": "K6_Check_google.com",
+                "executionID": "65f41bfca68ef02f12cee0a6",
+                "artefactID": "65f41bdda68ef02f12cedea3",
+                "executionTime": 1710496764849,
+                "duration": 1661,
+                "attachments": [],
+                "status": "FAILED",
+                "error": null,
+                "customAttributes": null,
+                "resolvedArtefact": {
+                    "_class": "TestCase",
+                    "customFields": null,
+                    "attributes": {
+                        "name": "K6_Check_google.com"
+                    },
+                    "dynamicName": {
+                        "dynamic": false,
+                        "value": "",
+                        "expression": "",
+                        "expressionType": null
+                    },
+                    "useDynamicName": false,
+                    "description": null,
+                    "children": null,
+                    "customAttributes": null,
+                    "attachments": null,
+                    "skipNode": {
+                        "dynamic": false,
+                        "value": false,
+                        "expression": null,
+                        "expressionType": null
+                    },
+                    "instrumentNode": {
+                        "dynamic": false,
+                        "value": false,
+                        "expression": null,
+                        "expressionType": null
+                    },
+                    "continueParentNodeExecutionOnError": {
+                        "dynamic": false,
+                        "value": false,
+                        "expression": null,
+                        "expressionType": null
+                    },
+                    "id": "65f41bdda68ef02f12cedea3"
+                },
+                "orphan": false,
+                "contributingError": null,
+                "id": "65f41bfca68ef02f12cee145"
+            },
+            "executionSummary": {
+                "customFields": null,
+                "viewId": "statusDistributionForFunctionCalls",
+                "executionId": "65f41bfca68ef02f12cee0a6",
+                "distribution": {
+                    "NORUN": {
+                        "status": "NORUN",
+                        "count": 0
+                    },
+                    "FAILED": {
+                        "status": "FAILED",
+                        "count": 1
+                    },
+                    "PASSED": {
+                        "status": "PASSED",
+                        "count": 0
+                    },
+                    "VETOED": {
+                        "status": "VETOED",
+                        "count": 0
+                    },
+                    "RUNNING": {
+                        "status": "RUNNING",
+                        "count": 0
+                    },
+                    "SKIPPED": {
+                        "status": "SKIPPED",
+                        "count": 0
+                    },
+                    "INTERRUPTED": {
+                        "status": "INTERRUPTED",
+                        "count": 0
+                    },
+                    "IMPORT_ERROR": {
+                        "status": "IMPORT_ERROR",
+                        "count": 0
+                    },
+                    "TECHNICAL_ERROR": {
+                        "status": "TECHNICAL_ERROR",
+                        "count": 0
+                    }
+                },
+                "countForecast": 1,
+                "count": 1,
+                "label": "Keyword calls: ",
+                "id": "65f41bfca68ef02f12cee137"
+            },
+            "id": "65f41bfca68ef02f12cee0a6"
+        }
+    ]
+}

@@ -1,9 +1,13 @@
-package com.xresch.emp.features.exense.step;
+package com.xresch.emp.features.exense.stepmongodb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
+import com.google.common.base.Strings;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoDatabase;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
@@ -15,18 +19,12 @@ public class StepEnvironmentManagement {
 	private static boolean isInitialized = false;
 	
 	// Contains ContextSettings id and the associated database interface
-	private static HashMap<Integer, StepEnvironment> environments = new HashMap<Integer, StepEnvironment>();
+	private static HashMap<Integer, StepEnvironment> environmentsWithDB = new HashMap<Integer, StepEnvironment>();
 	
-	/*****************************************************************
-	 * 
-	 *****************************************************************/
+
 	private StepEnvironmentManagement() {
 		//hide public constructor
 	}
-	
-	/*****************************************************************
-	 * 
-	 *****************************************************************/
 	public static void initialize() {
 		
 		ContextSettingsChangeListener listener = 
@@ -40,7 +38,7 @@ public class StepEnvironmentManagement {
 
 			@Override
 			public void onDelete(AbstractContextSettings typeSettings) {
-				environments.remove(typeSettings.getDefaultObject().id());
+				environmentsWithDB.remove(typeSettings.getDefaultObject().id());
 			}
 		};
 		
@@ -50,12 +48,9 @@ public class StepEnvironmentManagement {
 		isInitialized = true;
 	}
 	
-	/*****************************************************************
-	 * 
-	 *****************************************************************/
 	private static void createEnvironments() {
 		// Clear environments
-		environments = new HashMap<Integer, StepEnvironment>();
+		environmentsWithDB = new HashMap<Integer, StepEnvironment>();
 		
 		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(StepEnvironment.SETTINGS_TYPE);
 
@@ -66,28 +61,45 @@ public class StepEnvironmentManagement {
 		}
 	}
 	
-	/*****************************************************************
-	 * 
-	 *****************************************************************/
 	private static void createEnvironment(StepEnvironment environment) {
 		
 		Integer id = environment.getDefaultObject().id();
 		
-		environments.remove(id);
+		environmentsWithDB.remove(id);
 		
-		if(environment.isProperlyDefined()) {
-			environments.put(id, environment);
+		if(environment.isDBDefined()) {
+			
+			//---------------------------------------------------
+			// Create URI
+			String connectionString = "mongodb://";
+			
+			if( !Strings.isNullOrEmpty(environment.dbUser()) ) {
+				connectionString += environment.dbUser();
+				
+				if( !Strings.isNullOrEmpty(environment.dbPassword()) ) {
+					connectionString += ":"+environment.dbPassword();
+				}
+				connectionString += "@";
+			}
+			
+			connectionString += environment.dbHost()+":"+environment.dbPort();
+			
+			//---------------------------------------------------
+			// Create Connection
+			MongoClient mongoClient = new MongoClient(new MongoClientURI(connectionString));
+			MongoDatabase mongoDB = mongoClient.getDatabase(environment.dbName());
+			environment.setMongoDB(mongoDB);
+			environmentsWithDB.put(id, environment);
+			
 		}else {
-			CFW.Messages.addInfoMessage("Configuration incomplete, at least URL and API token have to be defined.");
+			CFW.Messages.addInfoMessage("Configuration incomplete, at least host, port and database name is needed to create a connection.");
 		}
 	}
 	
-	/*****************************************************************
-	 * 
-	 *****************************************************************/
+	
 	public static StepEnvironment getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
-		return environments.get(id);
+		return environmentsWithDB.get(id);
 	}
 	
 }

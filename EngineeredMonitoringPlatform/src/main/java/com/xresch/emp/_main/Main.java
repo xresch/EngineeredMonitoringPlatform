@@ -9,7 +9,8 @@ import com.xresch.cfw.spi.CFWAppInterface;
 import com.xresch.emp.features.awa.FeatureAWA;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.dynatrace.FeatureDynatrace;
-import com.xresch.emp.features.exense.step.FeatureExenseStepMongoDB;
+import com.xresch.emp.features.exense.step.FeatureExenseStep;
+import com.xresch.emp.features.exense.stepmongodb.FeatureExenseStepMongoDB;
 import com.xresch.emp.features.influxdb.FeatureInfluxDB;
 import com.xresch.emp.features.mongodb.FeatureMongoDB;
 import com.xresch.emp.features.prometheus.FeaturePrometheus;
@@ -48,6 +49,7 @@ public class Main implements CFWAppInterface {
 		CFW.Registry.Features.addFeature(FeatureMongoDB.class);
 		
 		CFW.Registry.Features.addFeature(FeatureDynatrace.class);
+		CFW.Registry.Features.addFeature(FeatureExenseStep.class);
 		CFW.Registry.Features.addFeature(FeatureExenseStepMongoDB.class);
 		CFW.Registry.Features.addFeature(FeatureInfluxDB.class);
     	CFW.Registry.Features.addFeature(FeaturePrometheus.class);

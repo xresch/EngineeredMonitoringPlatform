@@ -1,4 +1,4 @@
-package com.xresch.emp.features.exense.step;
+package com.xresch.emp.features.exense.stepmongodb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,13 +30,13 @@ import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState;
 
-public class WidgetPlanStatusAll extends WidgetDefinition  {
+public class WidgetPlanStatus extends WidgetDefinition  {
 	
 	/************************************************************
 	 * 
 	 ************************************************************/	
 	@Override
-	public String getWidgetType() {return FeatureExenseStepMongoDB.WIDGET_PREFIX+"_planstatusall";}
+	public String getWidgetType() {return FeatureExenseStepMongoDB.WIDGET_PREFIX+"_planstatus";}
 	
 	/************************************************************
 	 * 
@@ -45,6 +45,7 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
 	}
+	
 	
 	/************************************************************
 	 * 
@@ -58,7 +59,7 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String widgetName() { return "Plan Status All"; }
+	public String widgetName() { return "Plan Status"; }
 	
 	/************************************************************
 	 * 
@@ -75,7 +76,7 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planstatusall.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planstatus.js") );
 		return array;
 	}
 	
@@ -119,7 +120,8 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 	 ************************************************************/
 	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
-				.addField(StepSettingsFactory.createEnvironmentSelectorField())							
+				.addField(StepSettingsFactory.createEnvironmentSelectorField())
+				.addField(StepSettingsFactory.createPlansSelectorField())							
 				.addAllFields(CFWState.createThresholdFields());
 	}
 	
@@ -151,7 +153,7 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isDBDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status All: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
@@ -170,14 +172,31 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status All: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
+			return null;
+		}
+		
+		//-----------------------------
+		// Resolve Projects Param
+		LinkedHashMap<String,String> projects = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECT).getValue();
+		
+		if(projects.size() == 0) {
 			return null;
 		}
 		
 		//-----------------------------
 		// Create Aggregate Document
-		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planstatusall_query.bson");
+		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planstatus_query.bson");
 		aggregateDocString = CFW.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
+		
+		// Example Project Filter >> $or: [ {'_id': ObjectId('62443ecfee10d74e1b132860')},{'_id': ObjectId('62444fadee10d74e1b1395af')} ]
+		StringBuilder projectsFilter = new StringBuilder("$or: [");
+		for(Entry<String, String> entry : projects.entrySet()) {
+			projectsFilter.append("{'planid': '"+entry.getKey()+"'},");
+		}
+		projectsFilter.append("]");
+		
+		aggregateDocString = aggregateDocString.replace("$$plansFilter$$", projectsFilter.toString());
 		
 		//-----------------------------
 		// Fetch Data
@@ -205,7 +224,7 @@ public class WidgetPlanStatusAll extends WidgetDefinition  {
 	 *********************************************************************/
 	public JsonArray createSampleData() { 	
 				
-		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData(120);
+		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData(24);
 		return array;
 	}
 

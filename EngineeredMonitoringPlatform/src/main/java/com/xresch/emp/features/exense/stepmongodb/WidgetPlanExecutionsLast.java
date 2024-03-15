@@ -1,4 +1,4 @@
-package com.xresch.emp.features.exense.step;
+package com.xresch.emp.features.exense.stepmongodb;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +18,10 @@ import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
+import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
@@ -29,14 +31,17 @@ import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState;
+import com.xresch.cfw.validation.NumberRangeValidator;
 
-public class WidgetPlanStatus extends WidgetDefinition  {
+public class WidgetPlanExecutionsLast extends WidgetDefinition  {
+		
+	private static final String FIELDNAME_EXECUTION_COUNT = "EXECUTION_COUNT";
 	
 	/************************************************************
 	 * 
-	 ************************************************************/	
+	 ************************************************************/
 	@Override
-	public String getWidgetType() {return FeatureExenseStepMongoDB.WIDGET_PREFIX+"_planstatus";}
+	public String getWidgetType() {return FeatureExenseStepMongoDB.WIDGET_PREFIX+"_planexecutionslast";}
 	
 	/************************************************************
 	 * 
@@ -45,7 +50,6 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 	public WidgetDataCachePolicy getCachePolicy() {
 		return WidgetDataCachePolicy.TIME_BASED;
 	}
-	
 	
 	/************************************************************
 	 * 
@@ -59,7 +63,7 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String widgetName() { return "Plan Status"; }
+	public String widgetName() { return "Plan Executions Last"; }
 	
 	/************************************************************
 	 * 
@@ -76,7 +80,7 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planstatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planexecutionslast.js") );
 		return array;
 	}
 	
@@ -121,7 +125,14 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
 				.addField(StepSettingsFactory.createEnvironmentSelectorField())
-				.addField(StepSettingsFactory.createPlansSelectorField())							
+				.addField(StepSettingsFactory.createPlansSelectorField())	
+				.addField(
+					CFWField.newInteger(FormFieldType.NUMBER, FIELDNAME_EXECUTION_COUNT)
+						.setDescription("Define the number of executions to display.")
+						.setValue(12)
+						.addValidator(new NumberRangeValidator(1, -1))
+				)
+				
 				.addAllFields(CFWState.createThresholdFields());
 	}
 	
@@ -131,7 +142,7 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 	 *********************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
-		
+
 		long earliest = timeframe.getEarliest();
 		long latest = timeframe.getLatest();
 		
@@ -153,7 +164,7 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isDBDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Executions: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
@@ -172,7 +183,7 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Executions: The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		
@@ -185,8 +196,17 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 		}
 		
 		//-----------------------------
+		// Resolve Count
+		Integer count = (Integer)widgetSettings.getField(FIELDNAME_EXECUTION_COUNT).getValue();
+		
+		if(count == null) {
+			return null;
+		}
+		
+		
+		//-----------------------------
 		// Create Aggregate Document
-		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planstatus_query.bson");
+		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStepMongoDB.PACKAGE_RESOURCE, "emp_widget_step_planexecutionslast_query.bson");
 		aggregateDocString = CFW.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
 		
 		// Example Project Filter >> $or: [ {'_id': ObjectId('62443ecfee10d74e1b132860')},{'_id': ObjectId('62444fadee10d74e1b1395af')} ]
@@ -197,6 +217,7 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 		projectsFilter.append("]");
 		
 		aggregateDocString = aggregateDocString.replace("$$plansFilter$$", projectsFilter.toString());
+		aggregateDocString = aggregateDocString.replace("$$lastXExecs$$", ""+count);
 		
 		//-----------------------------
 		// Fetch Data
@@ -226,65 +247,6 @@ public class WidgetPlanStatus extends WidgetDefinition  {
 				
 		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData(24);
 		return array;
-	}
-
-	/*********************************************************************
-	 * 
-	 *********************************************************************/
-	public boolean supportsTask() {
-		return true;
-	}
-	
-	/************************************************************
-	 * Override this method to return a description of what the
-	 * task of this widget does.
-	 ************************************************************/
-	public String getTaskDescription() {
-		return "Checks if any of the plans exceeds the selected threshold, either by status or by result.";
-	}
-	
-	/************************************************************
-	 * Override this method and return a CFWObject containing 
-	 * fields for the task parameters. The settings will be passed 
-	 * to the 
-	 * Always return a new instance, do not reuse a CFWObject.
-	 * @return CFWObject
-	 ************************************************************/
-	public CFWObject getTasksParameters() {
-		
-		return new CFWJobsAlertObject()
-				.addField(CFW.Conditions.createThresholdTriggerSelectorField());
-	}
-	
-	/*************************************************************************
-	 * Implement the actions your task should execute.
-	 * See {@link com.xresch.cfw.features.jobs.CFWJobTask#executeTask CFWJobTask.executeTask()} to get
-	 * more details on how to implement this method.
-	 *************************************************************************/
-	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings, CFWTimeframe offset) throws JobExecutionException {
-				
-		//----------------------------------------
-		// Fetch Data
-		JsonArray resultArray;
-		Boolean isSampleData = (Boolean)settings.getField(WidgetSettingsFactory.FIELDNAME_SAMPLEDATA).getValue();
-		if(isSampleData != null && isSampleData) {
-			resultArray = createSampleData();
-		}else {
-			
-			long earliest = offset.getEarliest();
-			long latest = offset.getLatest();
-			
-			resultArray = loadDataFromStepDB(settings, earliest, latest);
-		}
-		
-		if(resultArray == null || resultArray.size() == 0) {
-			return;
-		}
-		
-		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(settings);
-		String stepURL = environment.url();
-		String widgetType = this.getWidgetType();
-		StepCommonFunctions.defaultStatusAlerting(context, taskParams, widget, widgetType, settings, stepURL, resultArray);
 	}
 		
 }
