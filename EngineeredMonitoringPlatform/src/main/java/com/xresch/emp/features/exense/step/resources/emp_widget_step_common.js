@@ -50,8 +50,12 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 					var duration = current["duration"];
 					if(current["duration"] == null && current.result != "RUNNING"){ 
 						current.alertstyle = "cfw-gray";
-					}else if(current.result == "PASSED"){
-						current.alertstyle =  CFW.colors.getThresholdStyle(duration
+					}
+					
+					switch(current.result){
+						
+						case "PASSED":
+							current.alertstyle =  CFW.colors.getThresholdStyle(duration
 								,excellentVal
 								,goodVal
 								,warningVal
@@ -59,17 +63,36 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 								,dangerVal
 								,isDisabled);
 						
-						// if threshold is undefined do green
-						if(current.alertstyle == "cfw-none" || isDisabled){
-							current.alertstyle = "cfw-green"; 
-						}
+							// if threshold is undefined do green
+							if(current.alertstyle == "cfw-none" || isDisabled){
+								current.alertstyle = "cfw-green"; 
+							}
+						break;
 						
-					}else if(current.result == "FAILED"){
-						current.alertstyle = "cfw-red";
-					}else if(current.result == "TECHNICAL_ERROR"){
-						current.alertstyle = "cfw-black";
-					}else if(current.result == "RUNNING"){
-						current.alertstyle = "cfw-blue";
+						case "VETOED":	
+						case "SKIPPED":		
+						case "INTERRUPTED":		
+							current.alertstyle = "cfw-orange";
+						break;
+						
+						case "FAILED":			
+							current.alertstyle = "cfw-red";	
+						break;
+						
+						case "IMPORT_ERROR":		
+						case "TECHNICAL_ERROR":		
+							current.alertstyle = "cfw-black";
+						break;
+
+						
+						case "RUNNING":		
+							current.alertstyle = "cfw-blue";
+						break;
+						
+						default:
+							current.alertstyle = "cfw-gray";
+						
+
 					}
 					
 					if(current.alertstyle != "cfw-none"){

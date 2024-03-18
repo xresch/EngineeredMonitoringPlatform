@@ -194,7 +194,8 @@ public class StepCommonFunctions {
 				String alphas = ("["+CFW.Random.randomStringAlphaNumerical(3)+"] ").toUpperCase();
 				String randomProject = CFW.Random.randomFromArray(new String[] {"Project Omega", "Project Alpha", "Project Epsilon"});
 				String randomPlan = CFW.Random.randomFromArray(new String[] {"Test Plan", "Ricks Plan Rolls", "Plan Ahead", "Plan of a Lifetime", "No Plan", "Plan Tage", "Plan E", "Plan ET"});
-				String randomResult = CFW.Random.randomFromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "FAILED", "TECHNICAL_ERROR", "RUNNING"});
+				String randomResult = CFW.Random.randomFromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "PASSED",
+																				"FAILED", "VETOED", "TECHNICAL_ERROR", "IMPORT_ERROR", "SKIPPED", "INTERRUPTED", "NORUN", "RUNNING"});
 				
 				int offsetMinutes = -1 * CFW.Random.randomIntegerInRange(15, 120);
 				int offsetMultiplier = CFW.Random.randomIntegerInRange(2, 5);

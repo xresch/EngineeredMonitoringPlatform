@@ -466,7 +466,7 @@ System.out.println("responseArray: "+responseArray);
     	StepSchedulerDetails scheduler = this.getSchedulerByID(schedulerID);
     	
     	if(scheduler == null) {
-    		return new StepSchedulerDetails().toJson("UNKNOWN SCHEDULER", "UNKONW", null, null);
+    		return new StepSchedulerDetails().toJson("UNKNOWN SCHEDULER", "UNKNOWN SCHEDULER", null, null);
     	}
     	
     	//----------------------------
@@ -489,7 +489,7 @@ System.out.println("responseArray: "+responseArray);
 					  "skip": 0,
 					  "limit": 1,
 					  "sort": {
-					    "field": "string",
+					    "field": "endTime",
 					    "direction": "DESCENDING"
 					  }
 					}
@@ -516,14 +516,14 @@ System.out.println("responseArray: "+responseArray);
 			//					"result": "PASSED",
 			//					[...]
 			
-			if(responseObject == null) { return scheduler.toJson("UNKNOWN (Error Fetching API)", "UNKONW", null, null); }
+			if(responseObject == null) { return scheduler.toJson("UNKNOWN (Error Fetching API)", "UNKOWN", null, null); }
 			
 			JsonElement data = responseObject.get("data");
 			if(data != null && data.isJsonArray()) {
 				JsonArray dataArray = data.getAsJsonArray();
 				
 				if(dataArray.isEmpty()) {
-					return scheduler.toJson("NO DATA", "UNKONW", null, null);
+					return scheduler.toJson("NO DATA", "NO DATA", null, null);
 				}
 				
 				JsonElement lastExecutionResults = dataArray.get(0);
@@ -543,7 +543,7 @@ System.out.println("responseArray: "+responseArray);
 		}
     				
 
-    	return scheduler.toJson("UNKNOWN", "UNKONW", null, null);
+    	return scheduler.toJson("UNKNOWN", "UNKOWN", null, null);
     	
     }
     
@@ -717,8 +717,12 @@ System.out.println("responseArray: "+responseArray);
 		}
 		
 		
-    	
-    	return new AutocompleteResult(list);
+		AutocompleteResult autocomplete = new AutocompleteResult(list);
+		autocomplete.setHTMLDescription(
+				"<b>Note: &nbsp;</b> This list is refreshed all 5 minutes, newly created schedulers will popup after a while."
+			);
+		 
+    	return autocomplete ;
     }
 	
     /*********************************************************************

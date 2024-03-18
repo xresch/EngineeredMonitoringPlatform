@@ -3,7 +3,7 @@
 	/******************************************************************
 	 * 
 	 ******************************************************************/
-	CFW.dashboard.registerWidget("emp_stepmongodb_statuslegend",
+	CFW.dashboard.registerWidget("emp_step_statuslegend",
 		{
 			category: CATEGORY_EXENSE,
 			menuicon: "fas fa-info-circle",
@@ -19,11 +19,11 @@
 					 '<div class="legend-box">  <div class="cfw-color-box bg-cfw-green">&nbsp;</div> Excellent/Passed </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-limegreen">&nbsp;</div> Good </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-yellow">&nbsp;</div> Warning </div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-orange">&nbsp;</div> Emergency </div>'
+					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-orange">&nbsp;</div> Emergency/Skipped </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-red">&nbsp;</div> Danger/Failed </div>'
 					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-blue">&nbsp;</div> Running</div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-gray">&nbsp;</div> Unknown/No Data </div>'
-					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-black">&nbsp;</div> Technical Error </div>'
+					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-gray">&nbsp;</div> No Data </div>'
+					+'<div class="legend-box">  <div class="cfw-color-box bg-cfw-black">&nbsp;</div>Error </div>'
 					;
 				callback(widgetObject, html);
 			},
