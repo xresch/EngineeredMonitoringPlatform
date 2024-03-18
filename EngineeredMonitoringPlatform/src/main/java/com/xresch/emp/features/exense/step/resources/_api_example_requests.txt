@@ -363,7 +363,7 @@ curl -X 'POST' \
   -H 'Content-Type: application/json' \
   -d '{
   "filters": [
-    {"collectionFilter":{"type":"And","children":[{"type":"Equals","field":"executionTaskID","65f41c46a68ef02f12ceeb64": "65f30ad53b6f9f00788febf8"},{"type":"Gte","field":"startTime","value":1610426840010},{"type":"Lte","field":"endTime","value":1910426850625}]}}
+    {"collectionFilter":{"type":"And","children":[{"type":"Equals","field":"executionTaskID","expectedValue": "65f30ad53b6f9f00788febf8"},{"type":"Gte","field":"startTime","value":1610426840010},{"type":"Lte","field":"endTime","value":1910426850625}]}}
   ],
   "skip": 0,
   "limit": 1,

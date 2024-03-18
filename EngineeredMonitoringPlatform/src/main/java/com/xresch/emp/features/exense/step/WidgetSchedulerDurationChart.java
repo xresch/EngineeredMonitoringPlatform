@@ -121,7 +121,7 @@ public class WidgetSchedulerDurationChart extends WidgetDefinition  {
 	public CFWObject createQueryFields() {
 		return new CFWObject()
 				.addField(StepSettingsFactory.createEnvironmentSelectorField())
-				.addField(StepSettingsFactory.createPlansSelectorField());	
+				.addField(StepSettingsFactory.createSchedulerSelectorField());	
 	}
 	
 	
@@ -151,7 +151,7 @@ public class WidgetSchedulerDurationChart extends WidgetDefinition  {
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(settings);
 		if(environment == null) { return; }
 		
-		if(!environment.isDBDefined()) {
+		if(!environment.isProperlyDefined()) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Executions Time Range: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
@@ -202,20 +202,20 @@ public class WidgetSchedulerDurationChart extends WidgetDefinition  {
 		MongoIterable<Document> result;
 		
 		//start from projects to get projects data as well
-		result = environment.aggregate("projects", aggregateDocString);
+		// result = environment.aggregate("projects", aggregateDocString);
 		
 		//-----------------------------
 		// Push to Queue
-		JsonArray resultArray = new JsonArray();
-		if(result != null) {
-			for (Document currentDoc : result) {
-				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-				resultArray.add(object);
-			}
-		}
-		
-		return resultArray;
-		
+//		JsonArray resultArray = new JsonArray();
+//		if(result != null) {
+//			for (Document currentDoc : result) {
+//				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
+//				resultArray.add(object);
+//			}
+//		}
+//		
+//		return resultArray;
+		return new JsonArray();
 	}
 	
 	/*********************************************************************

@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
+import com.xresch.cfw.datahandling.CFWFieldChangeHandler;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.core.AutocompleteList;
@@ -23,14 +24,11 @@ import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.utils.CFWHttp;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpRequestBuilder;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 
 /**************************************************************************************************************
- * 
- * @author Reto Scheiwiller, (c) Copyright 2024
- * @license MIT-License
- * 
  * 
  * Plan Object Structure Example:
 	{
@@ -154,6 +152,9 @@ import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 	}
  
  *
+ * @author Reto Scheiwiller, (c) Copyright 2024
+ * @license MIT-License
+ * 
  **************************************************************************************************************/
 public class StepEnvironment extends AbstractContextSettings {
 	
@@ -170,7 +171,8 @@ public class StepEnvironment extends AbstractContextSettings {
 	
 	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, StepEnvironmentFields.URL)
 			.setDescription("The URL of the step instance(including http/https, domain and port). Will be used to access the API and create links.")
-			.setValue("https://yourstepinstance:8080");
+			.setValue("https://yourstepinstance:8080")
+			;
 
 	protected CFWField<String> apiToken = CFWField.newString(FormFieldType.PASSWORD, StepEnvironmentFields.API_TOKEN)
 			.setDescription("The token used to access the STEP API.")
@@ -178,24 +180,15 @@ public class StepEnvironment extends AbstractContextSettings {
 			.enableEncryption("exense_step_DB_Password_Salt_withoutPepper")
 			;
 	
+	
+	// will contain the trimmed url that definitely ends with "/"
+	private String finalURL = null;
+	
 	// SchedulerID and Object
-	private static final Cache<String, StepSchedulerDetails> schedulerCache = CFW.Caching.addCache("Step Schedulers", 
-			CacheBuilder.newBuilder()
-				.initialCapacity(10)
-				.maximumSize(10000)
-				.refreshAfterWrite(1,TimeUnit.HOURS) 
-				// Do not expire, as this will also be used for autocomplete  
-		);
+	private Cache<String, StepSchedulerDetails> schedulerCache;
 
 	// PlanID and Object
-	private static final Cache<String, JsonObject> planCache = CFW.Caching.addCache("Step Plans", 
-			CacheBuilder.newBuilder()
-				.initialCapacity(10)
-				.maximumSize(10000)
-				.refreshAfterWrite(1,TimeUnit.HOURS) 
-				// Do not expire, as this will also be used for autocomplete 
-		);
-	
+	private Cache<String, JsonObject> planCache;
 	
 	// PlanID and Object, Object Example
 	//	{
@@ -208,20 +201,65 @@ public class StepEnvironment extends AbstractContextSettings {
 	//		  "members": null,
 	//		  "id": "65f41ae4a68ef02f12cecfab"
 	//		}
-	private static final Cache<String, JsonObject> projectCache = CFW.Caching.addCache("Step Projects", 
-			CacheBuilder.newBuilder()
-			.initialCapacity(10)
-			.maximumSize(10000)
-			.refreshAfterWrite(1,TimeUnit.HOURS) 
-			// Do not expire, as this will also be used for autocomplete  
-			);
+	private Cache<String, JsonObject> projectCache;
+	
+	
+	
 	/*********************************************************************
 	 * 
 	 *********************************************************************/
 	public StepEnvironment() {
 		THIS_ENV = this;
 		this.addFields(url, apiToken);
-	}		
+	}	
+	
+	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public void initializeCaches() {
+		
+		removeCaches();
+		
+		String id = "["+this.getDefaultObject().name()+"]";
+		schedulerCache = CFW.Caching.addCache("Step Schedulers"+id, 
+				CacheBuilder.newBuilder()
+					.initialCapacity(10)
+					.maximumSize(10000)
+					//.refreshAfterWrite(1,TimeUnit.HOURS) 
+					// Do not expire, as this will also be used for autocomplete  
+				);
+		
+		planCache = CFW.Caching.addCache("Step Plans"+id, 
+				CacheBuilder.newBuilder()
+					.initialCapacity(10)
+					.maximumSize(10000)
+					//.refreshAfterWrite(1,TimeUnit.HOURS) 
+					// Do not expire, as this will also be used for autocomplete 
+				);
+		
+		projectCache = CFW.Caching.addCache("Step Projects"+id, 
+				CacheBuilder.newBuilder()
+				.initialCapacity(10)
+				.maximumSize(10000)
+				//.refreshAfterWrite(1,TimeUnit.HOURS) 
+				// Do not expire, as this will also be used for autocomplete  
+				);
+		
+	}
+	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public void removeCaches() {
+		
+		String id = "["+this.getDefaultObject().name()+"]";
+		
+		CFW.Caching.removeCache("Step Schedulers"+id);
+		CFW.Caching.removeCache("Step Plans"+id);
+		CFW.Caching.removeCache("Step Projects"+id);
+		
+	}
 	
 	/*********************************************************************
 	 * 
@@ -294,11 +332,19 @@ public class StepEnvironment extends AbstractContextSettings {
 	 *********************************************************************/
 	private CFWHttpRequestBuilder createAPIRequestBuilder(String apiEndpoint) {
 		
+		if(finalURL != null) {
+			finalURL = this.url().trim();
+			
+			if(finalURL != null && !finalURL.endsWith("/")) {
+				finalURL += "/";
+			}
+		}
+		
 		if(apiEndpoint == null) {	apiEndpoint = "/"; }
 		if(!apiEndpoint.startsWith("/")) {	apiEndpoint = "/"+apiEndpoint; }
 		
 		
-		return CFW.HTTP.newRequestBuilder(this.url()+"/rest"+apiEndpoint)
+		return CFW.HTTP.newRequestBuilder(this.url()+"rest"+apiEndpoint)
 				.header("Accept", "application/json")
 				.header("Authorization", "Bearer "+this.apiToken())
 			;
@@ -347,10 +393,13 @@ public class StepEnvironment extends AbstractContextSettings {
     	
     	schedulerCache.invalidateAll();
     	
-    	JsonArray responseArray = this.createAPIRequestBuilder("/scheduler/task")
+    	CFWHttpResponse response = this.createAPIRequestBuilder("/scheduler/task")
+    							.GET()
     							.send()
-    							.getResponseBodyAsJsonArray();
-    	
+    							;
+    	    	
+    	JsonArray responseArray = response.getResponseBodyAsJsonArray();
+System.out.println("responseArray: "+responseArray);
     	for(JsonElement element : responseArray) {
     		
     		JsonObject schedulerObject = element.getAsJsonObject();
@@ -403,6 +452,103 @@ public class StepEnvironment extends AbstractContextSettings {
     	return null;
     	
     }
+    
+    /*********************************************************************
+     * Returns a JsonObject containing the last Status for the given scheduler.
+     * @return JsonObject or null if nothing found
+     *********************************************************************/
+    public JsonObject getSchedulerLastExecutionStatus(String schedulerID, long earliest, long latest) {
+    	
+    	//----------------------------
+    	// Retrieve Scheduler
+    	if(schedulerID == null) { return null; }
+    	
+    	StepSchedulerDetails scheduler = this.getSchedulerByID(schedulerID);
+    	
+    	if(scheduler == null) {
+    		return new StepSchedulerDetails().toJson("UNKNOWN SCHEDULER", "UNKONW", null, null);
+    	}
+    	
+    	//----------------------------
+    	// Call API
+		CFWHttpResponse response = createAPIRequestBuilder("/table/executions")
+				.POST()
+				.body("application/json",
+					"""
+					{
+					  "filters": [
+					    {"collectionFilter":
+						    {"type":"And","children":[
+								    {"type":"Equals","field":"executionTaskID","expectedValue": "%s"}
+								    ,{"type":"Gte","field":"startTime","value": %s }
+								    ,{"type":"Lte","field":"endTime","value": %s }
+								    ]
+							}
+						}
+					  ],
+					  "skip": 0,
+					  "limit": 1,
+					  "sort": {
+					    "field": "string",
+					    "direction": "DESCENDING"
+					  }
+					}
+					""".formatted(schedulerID, earliest, latest)
+				)
+				.send()
+				;
+		
+
+    	//----------------------------
+    	// Read API Response
+		if(response.getStatus() == 200
+		&& response.getResponseBody().startsWith("{")) {
+			JsonObject responseObject = response.getResponseBodyAsJsonObject();
+			// Example structure of relevant fields, if nothing found "data" is an empty array			
+			//		{
+			//			"recordsTotal": 961,
+			//			"recordsFiltered": 916,
+			//			"data": [
+			//				{
+			//					"startTime": 1710507000012,
+			//					"endTime": 1710507002047,
+			//					"status": "ENDED",
+			//					"result": "PASSED",
+			//					[...]
+			
+			if(responseObject == null) { return scheduler.toJson("UNKNOWN (Error Fetching API)", "UNKONW", null, null); }
+			
+			JsonElement data = responseObject.get("data");
+			if(data != null && data.isJsonArray()) {
+				JsonArray dataArray = data.getAsJsonArray();
+				
+				if(dataArray.isEmpty()) {
+					return scheduler.toJson("NO DATA", "UNKONW", null, null);
+				}
+				
+				JsonElement lastExecutionResults = dataArray.get(0);
+				if(lastExecutionResults.isJsonObject()) {
+					JsonObject theMightyResults = lastExecutionResults.getAsJsonObject();
+					
+					return scheduler.toJson(theMightyResults);
+					
+				}
+			}
+			
+			//return new StepSchedulerDetails(THIS_ENV, schedulerObject);
+			
+		}else {
+			String message = "STEP: Unexpected response when fetching data from API: Status: "+response.getStatus();
+			new CFWLog(logger).severe(message, new Exception(message+", Body: "+response.getResponseBody()));
+		}
+    				
+
+    	return scheduler.toJson("UNKNOWN", "UNKONW", null, null);
+    	
+    }
+    
+    
+    
     
 	/*********************************************************************
 	 * 
@@ -541,22 +687,59 @@ public class StepEnvironment extends AbstractContextSettings {
 	/*********************************************************************
 	 * Create autocomplete for projects.
 	 *********************************************************************/
-    public AutocompleteResult autocompleteProjects(String searchValue, int maxResults) {
+    public AutocompleteResult autocompleteSchedulers(String searchValue, int maxResults) {
 
+    	String lowerSearch = searchValue.toLowerCase();
+    	
+		//-----------------------------
+		// Iterate results
+		AutocompleteList list = new AutocompleteList();
+		
+		for(StepSchedulerDetails details : schedulerCache.asMap().values()) {
+			
+			String id = details.getSchedulerID();
+			String name = details.getSchedulerName();
+			String projectName = details.getProjectName();
+			String planName = details.getPlanName();
+			
+			if(
+				(name != null && name.toLowerCase().contains(lowerSearch))
+				|| (projectName != null && projectName.toLowerCase().contains(lowerSearch))
+				|| (planName != null && planName.toLowerCase().contains(lowerSearch))
+			) {
+				list.addItem(id, name, "Project: "+projectName+" / Plan: "+planName);
+			}
+			
+			
+			if(list.size() >= maxResults) {
+				break;
+			}
+		}
+		
+		
+    	
+    	return new AutocompleteResult(list);
+    }
+	
+    /*********************************************************************
+     * Create autocomplete for projects.
+     *********************************************************************/
+    public AutocompleteResult autocompleteProjects(String searchValue, int maxResults) {
+    	
     	String findDoc = "{'attributes.name': {'$regex': '"+searchValue+"', '$options': 'i'}}";
     	String sortDoc = "{'attributes.name': 1}";
     	
     	System.out.println(findDoc);
     	//-----------------------------
-		// Fetch Data
-		MongoIterable<Document> result;
-
-		result = null; //TODO this.find("projects", findDoc, sortDoc, 0);
-
-		//-----------------------------
-		// Iterate results
-		AutocompleteList list = new AutocompleteList();
-		
+    	// Fetch Data
+    	MongoIterable<Document> result;
+    	
+    	result = null; //TODO this.find("projects", findDoc, sortDoc, 0);
+    	
+    	//-----------------------------
+    	// Iterate results
+    	AutocompleteList list = new AutocompleteList();
+    	
 //		if(result != null) {
 //			for (Document currentDoc : result) {
 //				String id = currentDoc.get("_id").toString();
@@ -573,7 +756,8 @@ public class StepEnvironment extends AbstractContextSettings {
     	
     	return new AutocompleteResult(list);
     }
-	
+    
+    
     /*********************************************************************
      * Create autocomplete for plans.
      *********************************************************************/

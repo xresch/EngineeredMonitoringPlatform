@@ -1,5 +1,7 @@
 package com.xresch.emp.features.exense.step;
 
+import java.util.concurrent.ScheduledFuture;
+
 import org.bson.json.JsonMode;
 import org.bson.json.JsonWriterSettings;
 
@@ -8,9 +10,11 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
+import com.xresch.cfw.features.query.database.TaskQueryHistoryLimitEntries;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
+import com.xresch.cfw.utils.CFWTime.CFWTimeUnit;
 
 /**************************************************************************************************************
  * 
@@ -24,6 +28,8 @@ public class FeatureExenseStep extends CFWAppFeature {
 	
 	public static final String PERMISSION_STEP = "Exense Step Extensions";
 	public static final String WIDGET_PREFIX = "emp_step";
+	
+	private static ScheduledFuture<?> taskReloadSchedulerCache;
 	
 	static final JsonWriterSettings writterSettings = 
 		JsonWriterSettings
@@ -130,7 +136,16 @@ public class FeatureExenseStep extends CFWAppFeature {
 
 	@Override
 	public void startTasks() {
-		/* do nothing */
+		//----------------------------------------
+		// Task: Store to Database
+		if(taskReloadSchedulerCache != null) {
+			taskReloadSchedulerCache.cancel(false);
+		}
+		
+		// use an odd number to reduce number of clashes
+		int millis = (int)CFWTimeUnit.m.toMillis(5);
+		taskReloadSchedulerCache = CFW.Schedule.runPeriodicallyMillis(0, millis, new TaskStepReloadSchedulerCache());
+				
 	}
 
 	@Override

@@ -123,7 +123,7 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
 				.addField(StepSettingsFactory.createEnvironmentSelectorField())
-				.addField(StepSettingsFactory.createPlansSelectorField())	
+				.addField(StepSettingsFactory.createSchedulerSelectorField())	
 				.addAllFields(CFWState.createThresholdFields());
 	}
 	
@@ -154,7 +154,7 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(settings);
 		if(environment == null) { return; }
 		
-		if(!environment.isDBDefined()) {
+		if(!environment.isProperlyDefined()) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Executions Time Range: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
@@ -202,22 +202,22 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 
 		//-----------------------------
 		// Fetch Data
-		MongoIterable<Document> result;
+//		MongoIterable<Document> result;
+//		
+//		//start from projects to get projects data as well
+//		result = environment.aggregate("projects", aggregateDocString);
+//		
+//		//-----------------------------
+//		// Push to Queue
+//		JsonArray resultArray = new JsonArray();
+//		if(result != null) {
+//			for (Document currentDoc : result) {
+//				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
+//				resultArray.add(object);
+//			}
+//		}
 		
-		//start from projects to get projects data as well
-		result = environment.aggregate("projects", aggregateDocString);
-		
-		//-----------------------------
-		// Push to Queue
-		JsonArray resultArray = new JsonArray();
-		if(result != null) {
-			for (Document currentDoc : result) {
-				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-				resultArray.add(object);
-			}
-		}
-		
-		return resultArray;
+		return new JsonArray();
 		
 	}
 	

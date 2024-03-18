@@ -15,6 +15,8 @@ public class StepSettingsFactory {
 	public static final String FIELDNAME_ENVIRONMENT = "environment";
 	public static final String FIELDNAME_STEP_PROJECT = "JSON_STEP_PROJECT";
 	
+	public static final String FIELDNAME_STEP_SCHEDULERS = "JSON_STEP_SCHEDULERS";
+	
 	/************************************************************************************
 	 * Returns the  environment selector field.
 	 * 
@@ -67,10 +69,10 @@ public class StepSettingsFactory {
 	/************************************************************************************
 	 *
 	 ************************************************************************************/
-	public static CFWField<?> createPlansSelectorField() {
-		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECT)
-				.setLabel("{!emp_widget_step_plans!}")
-				.setDescription("{!emp_widget_step_plans_desc!}")
+	public static CFWField<?> createSchedulerSelectorField() {
+		return CFWField.newTagsSelector(FIELDNAME_STEP_SCHEDULERS)
+				.setLabel("{!emp_widget_step_schedulers!}")
+				.setDescription("{!emp_widget_step_schedulers_desc!}")
 				.addAttribute("maxTags", "128")
 				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
@@ -94,7 +96,7 @@ public class StepSettingsFactory {
 						}
 						//-------------------------
 						// Do Autocomplete
-						return env.autocompletePlans(searchValue, this.getMaxResults());
+						return env.autocompleteSchedulers(searchValue, this.getMaxResults());
 					}
 				});
 	}

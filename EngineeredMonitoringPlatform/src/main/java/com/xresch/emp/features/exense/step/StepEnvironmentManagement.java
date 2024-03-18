@@ -34,13 +34,22 @@ public class StepEnvironmentManagement {
 			
 			@Override
 			public void onChange(AbstractContextSettings setting, boolean isNew) {
-				StepEnvironment env = (StepEnvironment)setting;
-				StepEnvironmentManagement.createEnvironment(env);
+				
+				StepEnvironment oldSettings = environments.get(setting.getDefaultObject().id());
+				if(oldSettings != null) {
+					oldSettings.removeCaches();
+				}
+				
+				StepEnvironment newSettings = (StepEnvironment)setting;
+				StepEnvironmentManagement.createEnvironment(newSettings);
 			}
 
 			@Override
 			public void onDelete(AbstractContextSettings typeSettings) {
-				environments.remove(typeSettings.getDefaultObject().id());
+				StepEnvironment oldSettings = environments.remove(typeSettings.getDefaultObject().id());
+				if(oldSettings != null) {
+					oldSettings.removeCaches();
+				}
 			}
 		};
 		
@@ -76,6 +85,7 @@ public class StepEnvironmentManagement {
 		environments.remove(id);
 		
 		if(environment.isProperlyDefined()) {
+			environment.initializeCaches();
 			environments.put(id, environment);
 		}else {
 			CFW.Messages.addInfoMessage("Configuration incomplete, at least URL and API token have to be defined.");
@@ -88,6 +98,18 @@ public class StepEnvironmentManagement {
 	public static StepEnvironment getEnvironment(int id) {
 		if(!isInitialized) { initialize(); }
 		return environments.get(id);
+	}
+	
+	/*****************************************************************
+	 * 
+	 *****************************************************************/
+	public static HashMap<Integer, StepEnvironment> getEnvironmentsAll() {
+		if(!isInitialized) { initialize(); }
+		
+		HashMap<Integer, StepEnvironment> clone = new HashMap<>();
+		clone.putAll(environments);
+		
+		return  clone;
 	}
 	
 }

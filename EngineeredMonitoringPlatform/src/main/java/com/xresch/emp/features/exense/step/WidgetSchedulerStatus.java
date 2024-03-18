@@ -36,7 +36,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 	 * 
 	 ************************************************************/	
 	@Override
-	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_planstatus";}
+	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_schedulerstatus";}
 	
 	/************************************************************
 	 * 
@@ -59,7 +59,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String widgetName() { return "Plan Status"; }
+	public String widgetName() { return "Scheduler Status"; }
 	
 	/************************************************************
 	 * 
@@ -76,7 +76,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatus.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_schedulerstatus.js") );
 		return array;
 	}
 	
@@ -121,7 +121,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
 				.addField(StepSettingsFactory.createEnvironmentSelectorField())
-				.addField(StepSettingsFactory.createPlansSelectorField())							
+				.addField(StepSettingsFactory.createSchedulerSelectorField())							
 				.addAllFields(CFWState.createThresholdFields());
 	}
 	
@@ -152,7 +152,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(settings);
 		if(environment == null) { return; }
 		
-		if(!environment.isDBDefined()) {
+		if(!environment.isProperlyDefined()) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
@@ -172,50 +172,28 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, this.widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		
 		//-----------------------------
-		// Resolve Projects Param
-		LinkedHashMap<String,String> projects = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECT).getValue();
+		// Resolve Scheduler Param
+		LinkedHashMap<String,String> schedulers = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_SCHEDULERS).getValue();
 		
-		if(projects.size() == 0) {
+		if(schedulers.size() == 0) {
 			return null;
 		}
 		
 		//-----------------------------
 		// Create Aggregate Document
-		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatus_query.bson");
-		aggregateDocString = CFW.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
+		JsonArray results = new JsonArray();
 		
-		// Example Project Filter >> $or: [ {'_id': ObjectId('62443ecfee10d74e1b132860')},{'_id': ObjectId('62444fadee10d74e1b1395af')} ]
-		StringBuilder projectsFilter = new StringBuilder("$or: [");
-		for(Entry<String, String> entry : projects.entrySet()) {
-			projectsFilter.append("{'planid': '"+entry.getKey()+"'},");
-		}
-		projectsFilter.append("]");
-		
-		aggregateDocString = aggregateDocString.replace("$$plansFilter$$", projectsFilter.toString());
-		
-		//-----------------------------
-		// Fetch Data
-		MongoIterable<Document> result;
-		
-		//start from projects to get projects data as well
-		result = environment.aggregate("projects", aggregateDocString);
-		
-		//-----------------------------
-		// Push to Queue
-		JsonArray resultArray = new JsonArray();
-		if(result != null) {
-			for (Document currentDoc : result) {
-				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-				resultArray.add(object);
-			}
+		for(String schedulerID : schedulers.keySet()) {
+			JsonObject object = environment.getSchedulerLastExecutionStatus(schedulerID, earliest, latest);
+			results.add(object);
 		}
 		
-		return resultArray;
+		return results;
 		
 	}
 	

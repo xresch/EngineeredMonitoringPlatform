@@ -151,7 +151,7 @@ public class WidgetSchedulerStatusByUser extends WidgetDefinition  {
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(settings);
 		if(environment == null) { return; }
 		
-		if(!environment.isDBDefined()) {
+		if(!environment.isProperlyDefined()) {
 			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by User: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
@@ -201,19 +201,19 @@ public class WidgetSchedulerStatusByUser extends WidgetDefinition  {
 		// Fetch Data
 		MongoIterable<Document> result;
 
-		result = environment.aggregate("users", aggregateDocString);
+//		result = environment.aggregate("users", aggregateDocString);
+//		
+//		//-----------------------------
+//		// Push to Queue
+//		JsonArray resultArray = new JsonArray();
+//		if(result != null) {
+//			for (Document currentDoc : result) {
+//				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
+//				resultArray.add(object);
+//			}
+//		}
 		
-		//-----------------------------
-		// Push to Queue
-		JsonArray resultArray = new JsonArray();
-		if(result != null) {
-			for (Document currentDoc : result) {
-				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-				resultArray.add(object);
-			}
-		}
-		
-		return resultArray;
+		return new JsonArray();
 		
 	}
 	

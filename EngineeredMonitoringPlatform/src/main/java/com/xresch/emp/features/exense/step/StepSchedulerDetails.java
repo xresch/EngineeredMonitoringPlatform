@@ -2,6 +2,7 @@ package com.xresch.emp.features.exense.step;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.xresch.cfw._main.CFW;
 
 /*********************************************************************
  * The class that holds details for the scheduler
@@ -17,6 +18,12 @@ public class StepSchedulerDetails {
 	private String planID;
 	private String planName;
 	
+	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public StepSchedulerDetails() {
+	}
 	/*********************************************************************
 	 * This constructor expects a JsonObject structure like:
 	     {
@@ -120,6 +127,93 @@ public class StepSchedulerDetails {
 		//---------------------
 		// Project Name
 		this.setProjectName( env.getProjectName(this.projectID) );
+	}
+
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public JsonObject toJson() {
+		
+		JsonObject object = new JsonObject();
+		object.addProperty("projectid", this.projectID);
+		object.addProperty("projectname", this.projectName);
+		object.addProperty("planid", this.planID);
+		object.addProperty("planname",  this.planName);
+		object.addProperty("schedulerid", this.schedulerID);
+		object.addProperty("schedulername", this.schedulerName);
+		return object;
+		
+		
+	}
+	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public JsonObject toJson(String status, String result, Long starttime, Long endtime) {
+		
+		JsonObject object = this.toJson();
+		long duration = 0l;
+		if(starttime != null && endtime != null) {
+			duration = endtime - starttime;
+		}
+		object.addProperty("status", status);
+		object.addProperty("result", result);
+		object.addProperty("duration",  duration);
+		object.addProperty("starttime", starttime);
+		object.addProperty("endtime",  endtime);
+		
+		return object;
+		
+	}
+	
+	/*********************************************************************
+	 * @param executionData object containing at least the following fields:
+		{
+			"startTime": 1710507000012,
+			"endTime": 1710507002047,
+			"status": "ENDED",
+			"result": "PASSED",
+			[...]
+		}
+	 *********************************************************************/
+	public JsonObject toJson(JsonObject executionData) {
+		
+		//-----------------------------------
+		// Start Time
+		JsonElement starttimeElement = executionData.get("startTime");
+		Long starttime = null;
+		if(starttimeElement != null 
+		&& starttimeElement.isJsonPrimitive()) {
+			starttime = starttimeElement.getAsLong();
+		}
+		
+		//-----------------------------------
+		// End Time
+		JsonElement endtimeElement = executionData.get("endTime");
+		Long endtime = null;
+		if(endtimeElement != null 
+		&& endtimeElement.isJsonPrimitive()) {
+			endtime = endtimeElement.getAsLong();
+		}
+		
+		//-----------------------------------
+		// Duration
+		long duration = 0;
+		if(starttime != null && endtime != null) {
+			duration = endtime - starttime;
+		}
+		
+		//-----------------------------------
+		// Create Object
+		JsonObject object = this.toJson();
+		object.add("status", executionData.get("status"));
+		object.add("result", executionData.get("result"));
+		object.addProperty("duration",  duration);
+		object.addProperty("starttime",  starttime);
+		object.addProperty("endtime",  endtime);
+
+		return object;
+		
 	}
 	
 	

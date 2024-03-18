@@ -98,7 +98,7 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 					data: data.payload,
 					bgstylefield: 'alertstyle',
 					textstylefield: 'textstyle',
-					titlefields: ["planname"], 
+					titlefields: ["schedulername"], 
 					visiblefields: ["result"],
 					titleformat: null, 
 					
@@ -110,9 +110,9 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 							return (settings.suffix == null) ? value : value+" "+settings.suffix;
 						},
 						
-						starttime: function(record, value) { return (value != null) ? new  moment(value).format("YYYY-MM-DD HH:mm") : '';},
+						starttime: function(record, value) { return (value != null) ? CFW.format.epochToTimestamp(value) : '';},
 						
-						endtime: function(record, value) { return (value != null) ? new  moment(value).format("YYYY-MM-DD HH:mm") : '';},
+						endtime: function(record, value) { return (value != null) ? CFW.format.epochToTimestamp(value) : '';},
 						
 						duration: function(record, value) { return (value != null) ? CFW.format.millisToDuration(value) : '';},
 						
@@ -129,9 +129,10 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 						},
 						
 						schedulername:  function(record, value) { 
-							if(CFW.utils.isNullOrEmpty(stepURL)) return value;
-							var schedulerid = record['schedulerid'];
-							return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/dashboards/__pp__RTMDashboard?__filter1__=text,taskId,'+schedulerid+'">Scheduler Statistics</a>)</span>';
+							 return value;
+						},
+						schedulerid:  function(record, value) { 
+							return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/dashboards/__pp__RTMDashboard?__filter1__=text,taskId,'+value+'">Scheduler Statistics</a>)</span>';
 						},
 					},
 					rendererSettings: CFW.dashboard.createStatusWidgetRendererSettings(settings) 
@@ -204,6 +205,7 @@ function createStepChartWidgetBase(
 					labels: {
 						"projectname": "Project"
 						, "planname": "Plan"
+						, "schedulername": "Scheduler"
 					},
 					customizers: {},
 					rendererSettings:{

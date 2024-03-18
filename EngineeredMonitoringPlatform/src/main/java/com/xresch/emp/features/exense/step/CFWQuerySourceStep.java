@@ -52,18 +52,6 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	/******************************************************************
 	 *
 	 ******************************************************************/
-	public String getTimezone(int environmentID) {
-		StepEnvironment environment =
-				StepEnvironmentManagement.getEnvironment(environmentID);
-		
-		if(environment == null) { return null; }
-		
-		return environment.timezone();
-	}
-
-	/******************************************************************
-	 *
-	 ******************************************************************/
 	public String uniqueName() {
 		return "step";
 	}
@@ -253,19 +241,8 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 		
 		//-----------------------------
 		// Resolve Timezone Offsets
-		TimeZone timezone;
-		String timezoneParam = (String)parameters.getField(FIELDNAME_TIMEZONE).getValue();
-		if(!Strings.isNullOrEmpty(timezoneParam)) {
-			timezone = TimeZone.getTimeZone(timezoneParam);
-			
-		}else {
-			timezone = TimeZone.getTimeZone(
-					Strings.nullToEmpty(this.getTimezone(environmentID))
-				);
-		}
-		
-		earliestMillis +=  timezone.getOffset(earliestMillis);
-		latestMillis +=  timezone.getOffset(latestMillis);
+//		earliestMillis +=  timezone.getOffset(earliestMillis);
+//		latestMillis +=  timezone.getOffset(latestMillis);
 		
 		//-----------------------------
 		// Resolve Collection Param
@@ -310,21 +287,21 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 		//-----------------------------
 		// Fetch Data
 		MongoIterable<Document> result;
-		if(Strings.isNullOrEmpty(aggregateDocString)) {
-			result = environment.find(collectionName, findDocString, sortDocString, limit);
-		}else {
-			result = environment.aggregate(collectionName, aggregateDocString);
-		}
+//		if(Strings.isNullOrEmpty(aggregateDocString)) {
+//			result = environment.find(collectionName, findDocString, sortDocString, limit);
+//		}else {
+//			result = environment.aggregate(collectionName, aggregateDocString);
+//		}
 		
 		//-----------------------------
 		// Push to Queue
-		if(result != null) {
-			for (Document currentDoc : result) {
-				//TODO
-				JsonObject object = new JsonObject(); //CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-				outQueue.add(new EnhancedJsonObject(object));
-			}
-		}
+//		if(result != null) {
+//			for (Document currentDoc : result) {
+//				//TODO
+//				JsonObject object = new JsonObject(); //CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
+//				outQueue.add(new EnhancedJsonObject(object));
+//			}
+//		}
 		
 	}
 
