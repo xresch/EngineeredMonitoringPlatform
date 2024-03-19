@@ -9,13 +9,14 @@ import org.bson.Document;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWFieldChangeHandler;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.core.AutocompleteList;
@@ -24,7 +25,6 @@ import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.cfw.utils.CFWHttp;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpRequestBuilder;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 
@@ -188,7 +188,7 @@ public class StepEnvironment extends AbstractContextSettings {
 	private Cache<String, StepSchedulerDetails> schedulerCache;
 
 	// PlanID and Object
-	private Cache<String, JsonObject> planCache;
+	private LoadingCache<String, JsonObject> planCache;
 	
 	// PlanID and Object, Object Example
 	//	{
@@ -201,7 +201,7 @@ public class StepEnvironment extends AbstractContextSettings {
 	//		  "members": null,
 	//		  "id": "65f41ae4a68ef02f12cecfab"
 	//		}
-	private Cache<String, JsonObject> projectCache;
+	private LoadingCache<String, JsonObject> projectCache;
 	
 	
 	
@@ -221,8 +221,8 @@ public class StepEnvironment extends AbstractContextSettings {
 		
 		removeCaches();
 		
-		String id = "["+this.getDefaultObject().name()+"]";
-		schedulerCache = CFW.Caching.addCache("Step Schedulers"+id, 
+		String cacheID = "["+this.getDefaultObject().name()+"]";
+		schedulerCache = CFW.Caching.addCache("Step Schedulers"+cacheID, 
 				CacheBuilder.newBuilder()
 					.initialCapacity(10)
 					.maximumSize(10000)
@@ -230,21 +230,33 @@ public class StepEnvironment extends AbstractContextSettings {
 					// Do not expire, as this will also be used for autocomplete  
 				);
 		
-		planCache = CFW.Caching.addCache("Step Plans"+id, 
+		planCache = CFW.Caching.addLoadingCache("Step Plans"+cacheID, 
 				CacheBuilder.newBuilder()
 					.initialCapacity(10)
 					.maximumSize(10000)
-					//.refreshAfterWrite(1,TimeUnit.HOURS) 
-					// Do not expire, as this will also be used for autocomplete 
+					.refreshAfterWrite(1,TimeUnit.MINUTES) 
+					, 
+					new CacheLoader<String, JsonObject>() {
+					    @Override
+					    public JsonObject load(final String planID) throws Exception {
+					    	return fetchPlanByID(planID);
+					    }
+					}
 				);
 		
-		projectCache = CFW.Caching.addCache("Step Projects"+id, 
+		projectCache = CFW.Caching.addLoadingCache("Step Projects"+cacheID, 
 				CacheBuilder.newBuilder()
 				.initialCapacity(10)
 				.maximumSize(10000)
-				//.refreshAfterWrite(1,TimeUnit.HOURS) 
-				// Do not expire, as this will also be used for autocomplete  
-				);
+				.refreshAfterWrite(1,TimeUnit.MINUTES) 
+				,
+				new CacheLoader<String, JsonObject>() {
+				    @Override
+				    public JsonObject load(final String projectID) throws Exception {
+				    	return fetchProjectByID(projectID);
+				    }
+				}
+			);
 		
 	}
 	
@@ -583,39 +595,75 @@ public class StepEnvironment extends AbstractContextSettings {
     }
     
     /*********************************************************************
-     * Returns the plan name for a plan id
+     * 
      *********************************************************************/
     public JsonObject getPlanByID(String planID) {
-    	
-    	if(planID == null) { return null; }
-    	
     	try {
-    		return planCache.get(planID, new Callable<JsonObject>() {
-    			
-    			@Override
-    			public JsonObject call() throws Exception {
-    				
-    				CFWHttpResponse response = createAPIRequestBuilder("/plans/"+planID)
-    						.send()
-    						;
-    				
-    				if(response.getStatus() == 200
-    						&& response.getResponseBody().startsWith("{")) {
-    					return response.getResponseBodyAsJsonObject();
-    				}else {
-    					throw new Exception("Unexpected response when fetching plan: "+response.getResponseBody());
-    				}
-    				
-    			}
-    			
-    		});
-    	} catch (ExecutionException e) {
-    		new CFWLog(logger).severe("Error occured while caching response: "+e.getMessage(), e );
-    	}
+			return planCache.get(planID);
+		} catch (ExecutionException e) {
+			new CFWLog(logger).severe("STEP: Error occured while loading plan from cache: "+e.getMessage(), e );
+		}
     	
+    	return null;
+    }
+    
+    /*********************************************************************
+     * Uncached method
+     *********************************************************************/
+    private JsonObject fetchPlanByID(String planID) {
+    	
+    	//---------------------------------
+    	// Handle Null
+    	if(planID == null) { 
+    		return createMissingObject(
+				planID  
+				, "The plan id was null."
+				, "null"
+			); }
+    	
+    	//---------------------------------
+    	// Call API
+		CFWHttpResponse response = createAPIRequestBuilder("/plans/"+planID)
+				.send()
+				;
+
+    	//---------------------------------
+    	// Handle Plan does not Exist
+		if(response.getStatus() == 204) { // No Content
+			return createMissingObject(
+					planID  
+					, "A plan with this ID does not exist."
+					, "deleted"
+				);
+		}
+		
+    	//---------------------------------
+    	// Handle Regular Response
+		if(response.getStatus() < 300
+		&& response.getResponseBody().startsWith("{")) {
+			return response.getResponseBodyAsJsonObject();
+		}else {
+			new CFWLog(logger).severe("STEP: Unexpected response while fetching plan: HTTP Status "+response.getStatus());
+		}
+
     	return null;
     	
     }
+
+	/*********************************************************************
+	 * Makes a object for plans or projects.
+	 *********************************************************************/
+	private JsonObject createMissingObject(String planID, String name, String empfetchstatus) {
+		JsonObject object = new JsonObject();
+		object.addProperty("id", planID);
+		object.addProperty("empfetchstatus", empfetchstatus);
+		
+		JsonObject attributes = new JsonObject();
+		attributes.addProperty("name", name);
+		object.add("attributes", attributes);
+		
+		return object;
+	}
 
 	/*********************************************************************
 	 * 
@@ -625,7 +673,7 @@ public class StepEnvironment extends AbstractContextSettings {
     	
     	if(projectID == null) { return null; }
     	
-    	JsonObject plan = this.getProjectByID( projectID);
+    	JsonObject plan = this.getProjectByID(projectID);
     	
     	if(plan == null) {	return null; }
 		
@@ -650,36 +698,38 @@ public class StepEnvironment extends AbstractContextSettings {
     }
     
     /*********************************************************************
-     * Returns the plan name for a plan id.
+     * 
      *********************************************************************/
     public JsonObject getProjectByID(String projectID) {
+    	try {
+			return projectCache.get(projectID);
+		} catch (ExecutionException e) {
+			new CFWLog(logger).severe("STEP: Error occured while loading project from cache: "+e.getMessage(), e );
+			e.printStackTrace();
+		}
+    	
+    	return null;
+    }
+    
+    /*********************************************************************
+     *
+     *********************************************************************/
+    private JsonObject fetchProjectByID(String projectID) {
     	
     	if(projectID == null) { return null; }
     	
-    	try {
-    		return projectCache.get(projectID, new Callable<JsonObject>() {
-    			
-    			@Override
-    			public JsonObject call() throws Exception {
-    				
-    				CFWHttpResponse response = createAPIRequestBuilder("/tenants/project/"+projectID)
-    						.send()
-    						;
-    				
-    				if(response.getStatus() == 200
-    						&& response.getResponseBody().startsWith("{")) {
-    					return response.getResponseBodyAsJsonObject();
-    				}else {
-    					throw new Exception("STEP: Unexpected response when fetching project: "+response.getResponseBody());
-    				}
-    				
-    			}
-    			
-    		});
-    	} catch (ExecutionException e) {
-    		new CFWLog(logger).severe("Error occured while caching response: "+e.getMessage(), e );
-    	}
-    	
+
+		CFWHttpResponse response = createAPIRequestBuilder("/tenants/project/"+projectID)
+				.send()
+				;
+		
+		if(response.getStatus() == 200
+				&& response.getResponseBody().startsWith("{")) {
+			return response.getResponseBodyAsJsonObject();
+		}else {
+			new CFWLog(logger).severe("STEP: Unexpected response while fetching project: "+response.getResponseBody());
+		}
+		
     	return null;
     	
     }
