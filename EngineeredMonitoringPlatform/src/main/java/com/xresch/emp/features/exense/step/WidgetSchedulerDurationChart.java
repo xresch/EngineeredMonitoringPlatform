@@ -177,7 +177,7 @@ public class WidgetSchedulerDurationChart extends WidgetDefinition  {
 		
 		//-----------------------------
 		// Resolve Projects Param
-		LinkedHashMap<String,String> projects = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECT).getValue();
+		LinkedHashMap<String,String> projects = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECTS).getValue();
 		
 		if(projects.size() == 0) {
 			return null;

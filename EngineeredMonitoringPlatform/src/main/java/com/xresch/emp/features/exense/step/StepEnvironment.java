@@ -1,5 +1,6 @@
 package com.xresch.emp.features.exense.step;
 
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -426,6 +427,22 @@ public class StepEnvironment extends AbstractContextSettings {
     /*********************************************************************
      * Returns the scheduler details or null
      *********************************************************************/
+    public ArrayList<StepSchedulerDetails> getSchedulersForProject(String projectID) {
+    	
+    	ArrayList<StepSchedulerDetails> result = new ArrayList<>();
+    	
+    	for(StepSchedulerDetails details : schedulerCache.asMap().values()) {
+    		if(details.getProjectID().equals(projectID)) {
+    			result.add(details);
+    		}
+    	}
+    	
+    	return result;
+    }
+    
+    /*********************************************************************
+     * Returns the scheduler details or null
+     *********************************************************************/
     public StepSchedulerDetails getSchedulerByID(String scheduleID) {
     	
     	if(scheduleID == null) { return null; }
@@ -780,34 +797,49 @@ public class StepEnvironment extends AbstractContextSettings {
      *********************************************************************/
     public AutocompleteResult autocompleteProjects(String searchValue, int maxResults) {
     	
-    	String findDoc = "{'attributes.name': {'$regex': '"+searchValue+"', '$options': 'i'}}";
-    	String sortDoc = "{'attributes.name': 1}";
-    	
-    	System.out.println(findDoc);
-    	//-----------------------------
-    	// Fetch Data
-    	MongoIterable<Document> result;
-    	
-    	result = null; //TODO this.find("projects", findDoc, sortDoc, 0);
-    	
+    	String lowerSearch = searchValue.toLowerCase();
+    		
     	//-----------------------------
     	// Iterate results
     	AutocompleteList list = new AutocompleteList();
     	
-//		if(result != null) {
-//			for (Document currentDoc : result) {
-//				String id = currentDoc.get("_id").toString();
-//				String name = ((Document)currentDoc.get("attributes")).get("name").toString();
-//				System.out.println("id:"+id);
-//				System.out.println("name:"+name);
-//				list.addItem(id, name);
-//				
-//				if(list.size() >= maxResults) {
-//					break;
-//				}
-//			}
-//		}
-    	
+    	for(JsonObject project : projectCache.asMap().values()) {
+			
+    		//----------------------------
+    		// Get ProjectID
+			JsonElement idElement = project.get("id");
+			String projectID;
+			if(idElement != null && idElement.isJsonPrimitive()) {
+				projectID = idElement.getAsString();
+			}else {
+				continue;
+			}
+
+    		//----------------------------
+    		// Get Project Name
+			JsonElement attributesElement = project.get("attributes");
+			String projectName = null;
+			if(attributesElement != null && attributesElement.isJsonObject()) {
+				JsonObject attributesObject = attributesElement.getAsJsonObject();
+				JsonElement nameElement = attributesObject.get("name");
+				if(nameElement != null && nameElement.isJsonPrimitive()) {
+					projectName = nameElement.getAsString();
+				}
+			}
+
+			//----------------------------
+    		// Search in Project Name
+			if(projectName != null 
+			&& projectName.toLowerCase().contains(lowerSearch)
+			){
+				list.addItem(projectID, projectName);
+			}
+			
+			if(list.size() >= maxResults) {
+				break;
+			}
+		}
+
     	return new AutocompleteResult(list);
     }
     

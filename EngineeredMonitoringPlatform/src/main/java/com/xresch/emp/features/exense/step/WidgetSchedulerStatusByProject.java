@@ -4,26 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.bson.Document;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
-import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
@@ -36,7 +33,7 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_planstatusprojects";}
+	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_schedulerstatusprojects";}
 	
 	/************************************************************
 	 * 
@@ -58,7 +55,7 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String widgetName() { return "Plan Status By Project"; }
+	public String widgetName() { return "Scheduler Status By Projects"; }
 	
 	/************************************************************
 	 * 
@@ -75,7 +72,7 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatusprojects.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_schedulerstatusprojects.js") );
 		return array;
 	}
 	
@@ -152,12 +149,12 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isProperlyDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
 		response.addCustomAttribute("url", environment.url());
-		response.setPayload(loadDataFromStepDB(settings, earliest, latest));
+		response.setPayload(loadDataFromStep(settings, earliest, latest));
 	}
 
 	/*********************************************************************
@@ -165,55 +162,45 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 	 * @param latest time in millis of which to fetch the data.
 	 *********************************************************************/
 	@SuppressWarnings("unchecked")
-	public JsonArray loadDataFromStepDB(CFWObject widgetSettings, long earliest, long latest){
+	public JsonArray loadDataFromStep(CFWObject widgetSettings, long earliest, long latest){
 		
 		//-----------------------------
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		
 		//-----------------------------
 		// Resolve Projects Param
-		LinkedHashMap<String,String> projects = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECT).getValue();
+		LinkedHashMap<String,String> projects = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECTS).getValue();
 		
 		if(projects.size() == 0) {
 			return null;
 		}
 		
-		//-----------------------------
-		// Create Aggregate Document
-		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatusprojects_query.bson");
-		aggregateDocString = CFW.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
-		
-		// Example Project Filter >> $or: [ {'_id': ObjectId('62443ecfee10d74e1b132860')},{'_id': ObjectId('62444fadee10d74e1b1395af')} ]
-		StringBuilder projectsFilter = new StringBuilder("$or: [");
-		for(Entry<String, String> entry : projects.entrySet()) {
-			projectsFilter.append("{'_id': ObjectId('"+entry.getKey()+"')},");
-		}
-		projectsFilter.append("]");
-		
-		aggregateDocString = aggregateDocString.replace("$$projectsFilter$$", projectsFilter.toString());
-		
-		//-----------------------------
-		// Fetch Data
-		MongoIterable<Document> result;
 
-//		result = environment.aggregate("projects", aggregateDocString);
-//		
-//		//-----------------------------
-//		// Push to Queue
-//		JsonArray resultArray = new JsonArray();
-//		if(result != null) {
-//			for (Document currentDoc : result) {
-//				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-//				resultArray.add(object);
-//			}
-//		}
-//		
-		return new JsonArray();
+		
+		
+		//-----------------------------
+		// Load Last Execution for every Scheduler
+		JsonArray results = new JsonArray();
+		
+		for(String projectID : projects.keySet()) { 
+			
+			for(StepSchedulerDetails details : environment.getSchedulersForProject(projectID)) {
+				JsonObject object = 
+						environment.getSchedulerLastExecutionStatus(
+								  details.getSchedulerID()
+								, earliest
+								, latest);
+				
+				results.add(object);
+			}
+		}
+		
+		return results;
 		
 	}
 	
@@ -272,7 +259,7 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 			long earliest = offset.getEarliest();
 			long latest = offset.getLatest();
 			
-			resultArray = loadDataFromStepDB(settings, earliest, latest);
+			resultArray = loadDataFromStep(settings, earliest, latest);
 		}
 		
 		if(resultArray == null || resultArray.size() == 0) {

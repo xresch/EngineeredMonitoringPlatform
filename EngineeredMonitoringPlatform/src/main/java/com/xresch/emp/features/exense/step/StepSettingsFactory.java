@@ -13,7 +13,7 @@ import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 public class StepSettingsFactory {
 	
 	public static final String FIELDNAME_ENVIRONMENT = "environment";
-	public static final String FIELDNAME_STEP_PROJECT = "JSON_STEP_PROJECT";
+	public static final String FIELDNAME_STEP_PROJECTS = "JSON_STEP_PROJECTS";
 	
 	public static final String FIELDNAME_STEP_SCHEDULERS = "JSON_STEP_SCHEDULERS";
 	
@@ -35,7 +35,7 @@ public class StepSettingsFactory {
 	 *
 	 ************************************************************************************/
 	public static CFWField<?> createProjectsSelectorField() {
-		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECT)
+		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECTS)
 				.setLabel("{!emp_widget_step_projects!}")
 				.setDescription("{!emp_widget_step_projects_desc!}")
 				.addAttribute("maxTags", "128")
@@ -105,7 +105,7 @@ public class StepSettingsFactory {
 	 *
 	 ************************************************************************************/
 	public static CFWField<?> createUsersSelectorField() {
-		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECT)
+		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECTS)
 				.setLabel("{!emp_widget_step_users!}")
 				.setDescription("{!emp_widget_step_users_desc!}")
 				.addAttribute("maxTags", "128")

@@ -155,7 +155,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 		}
 		
 		response.addCustomAttribute("url", environment.url());
-		response.setPayload(loadDataFromStepDB(settings, earliest, latest));
+		response.setPayload(loadDataFromStep(settings, earliest, latest));
 	}
 
 	/*********************************************************************
@@ -163,7 +163,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 	 * @param latest time in millis of which to fetch the data.
 	 *********************************************************************/
 	@SuppressWarnings("unchecked")
-	public JsonArray loadDataFromStepDB(CFWObject widgetSettings, long earliest, long latest){
+	public JsonArray loadDataFromStep(CFWObject widgetSettings, long earliest, long latest){
 		
 		//-----------------------------
 		// Get Environment
@@ -182,7 +182,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 		}
 		
 		//-----------------------------
-		// Create Aggregate Document
+		// Load Last Execution for every Scheduler
 		JsonArray results = new JsonArray();
 		
 		for(String schedulerID : schedulers.keySet()) {
@@ -249,7 +249,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 			long earliest = offset.getEarliest();
 			long latest = offset.getLatest();
 			
-			resultArray = loadDataFromStepDB(settings, earliest, latest);
+			resultArray = loadDataFromStep(settings, earliest, latest);
 		}
 		
 		if(resultArray == null || resultArray.size() == 0) {
