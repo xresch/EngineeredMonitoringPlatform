@@ -13,6 +13,7 @@ public class TaskStepReloadSchedulerCache extends CFWScheduledTask {
 
 	public void execute() {
 		
+		new CFWLog(logger).info("Reload Step Schedulers Caches");
 		for(StepEnvironment env : StepEnvironmentManagement.getEnvironmentsAll().values()) {
 			env.loadSchedulersCache();
 		}

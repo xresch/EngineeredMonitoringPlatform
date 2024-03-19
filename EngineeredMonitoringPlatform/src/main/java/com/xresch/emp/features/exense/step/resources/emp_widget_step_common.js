@@ -125,7 +125,16 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 					visiblefields: ["result"],
 					titleformat: null, 
 					
-					labels: {},
+					labels: {
+						 projectname: "Project"
+						,projectid: "Project ID"
+						,planname: "Plan"
+						,planID: "Plan ID"
+						,schedulername: "Scheduler"
+						,schedulerid: "Scheduler ID"
+				        ,starttime: "Start"
+				        ,endtime: "End"
+					},
 					customizers: {
 						
 						value: function(record, value) {
@@ -155,6 +164,8 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 							 return value;
 						},
 						schedulerid:  function(record, value) { 
+							//https://mystepinstance.io/#/root/analytics?taskId=65f41c46a68ef02f12ceeb63&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant=Test_Reto
+							return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/analytics?taskId='+value+'&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant='+encodeURIComponent(record.projectname)+'">Scheduler Statistics</a>)</span>';
 							return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/dashboards/__pp__RTMDashboard?__filter1__=text,taskId,'+value+'">Scheduler Statistics</a>)</span>';
 						},
 					},

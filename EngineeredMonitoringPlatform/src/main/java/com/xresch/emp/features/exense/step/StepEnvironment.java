@@ -399,7 +399,7 @@ public class StepEnvironment extends AbstractContextSettings {
     							;
     	    	
     	JsonArray responseArray = response.getResponseBodyAsJsonArray();
-System.out.println("responseArray: "+responseArray);
+
     	for(JsonElement element : responseArray) {
     		
     		JsonObject schedulerObject = element.getAsJsonObject();

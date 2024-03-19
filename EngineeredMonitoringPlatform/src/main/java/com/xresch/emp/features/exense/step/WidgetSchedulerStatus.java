@@ -153,7 +153,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isProperlyDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Query Status: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Status: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		

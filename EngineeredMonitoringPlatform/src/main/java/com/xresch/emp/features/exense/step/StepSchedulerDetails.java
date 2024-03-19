@@ -63,7 +63,7 @@ public class StepSchedulerDetails {
 	 * 
 	 *********************************************************************/
 	public StepSchedulerDetails(StepEnvironment env, JsonObject schedulerObject) {
-		
+
 		JsonElement id = schedulerObject.get("id");
 		
 		//---------------------
@@ -71,7 +71,6 @@ public class StepSchedulerDetails {
 		if(id != null && id.isJsonPrimitive()) {
 			this.setSchedulerID(id.getAsString());
 		}
-		
 		//---------------------
 		// Attributes
 		JsonElement attributes = schedulerObject.get("attributes");
@@ -94,25 +93,29 @@ public class StepSchedulerDetails {
 			}
 		}
 		
-		JsonElement execParams = schedulerObject.get("executionsParameters"); 		
+		JsonElement execParams = schedulerObject.get("executionsParameters"); 
+		
 		if(execParams != null && execParams.isJsonObject()) {
 				
     		//---------------------
 			// repositoryObject
 			JsonObject execParamsObject = execParams.getAsJsonObject();
 			JsonElement repository = execParamsObject.get("repositoryObject");
+			
 			if(repository != null && repository.isJsonObject()) {
 				JsonObject repositoryObject = repository.getAsJsonObject();
 				
 				//---------------------
 				// repositoryParameters
 				JsonElement repositoryParameters = repositoryObject.get("repositoryParameters");
+				
 				if(repositoryParameters != null && repositoryParameters.isJsonObject()) {
-    				JsonObject repoParamsObject = repository.getAsJsonObject();
+    				JsonObject repoParamsObject = repositoryParameters.getAsJsonObject();
     				
     				//---------------------
     				// Plan ID
     				JsonElement planid = repoParamsObject.get("planid");
+
     				if(planid != null && planid.isJsonPrimitive()) {	
     					this.setPlanID(planid.getAsString());
     				}
