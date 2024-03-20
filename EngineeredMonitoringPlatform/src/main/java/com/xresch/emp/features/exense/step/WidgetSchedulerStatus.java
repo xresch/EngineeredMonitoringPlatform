@@ -186,8 +186,8 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 		JsonArray results = new JsonArray();
 		
 		for(String schedulerID : schedulers.keySet()) {
-			JsonObject object = environment.getSchedulerLastExecutionStatus(schedulerID, earliest, latest);
-			results.add(object);
+			JsonArray lastExecutionArray = environment.getSchedulerLastNExecutions(schedulerID, 1, earliest, latest);
+			results.addAll(lastExecutionArray);
 		}
 		
 		return results;

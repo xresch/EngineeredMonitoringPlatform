@@ -190,13 +190,13 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 		for(String projectID : projects.keySet()) { 
 			
 			for(StepSchedulerDetails details : environment.getSchedulersForProject(projectID)) {
-				JsonObject object = 
-						environment.getSchedulerLastExecutionStatus(
+				JsonArray lastExecutionArray = 
+						environment.getSchedulerLastNExecutions(
 								  details.getSchedulerID()
-								, earliest
-								, latest);
+								, 1
+								, earliest, latest);
 				
-				results.add(object);
+				results.addAll(lastExecutionArray);
 			}
 		}
 		

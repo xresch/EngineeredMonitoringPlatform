@@ -547,3 +547,59 @@ curl -X 'POST' \
         }
     ]
 }
+
+
+###################################################################
+# Get All Projects for User
+###################################################################
+
+curl -X 'GET' \
+  'https://step.perfeng.sehlat.io/rest/tenants/user/{userID}' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer <apiToken>'
+  
+=============== EXAMPLE RESPONSE ========================
+
+[
+  {
+    "name": "[All]",
+    "global": true,
+    "projectId": null
+  },
+  {
+    "name": "[SV-APPLICATION_PERFORMANCE_MANAGEMENT] test1test1test1test1test1test1test1test1test1test1",
+    "global": false,
+    "projectId": "64f88330dedb006e48cbddea"
+  },
+  {
+    "name": "CLM",
+    "global": false,
+    "projectId": "65e58aa71632d3503397fd6a"
+  },
+  {
+    "name": "Common",
+    "global": false,
+    "projectId": "64e3540028b9b8193323b95b"
+  },
+  {
+    "name": "Examples",
+    "global": false,
+    "projectId": "6554c13e62cdec3786cda908"
+  },
+  {
+    "name": "Test Jérôme",
+    "global": false,
+    "projectId": "64f73917dedb006e48c8aef9"
+  },
+  {
+    "name": "Test KW Package upload",
+    "global": false,
+    "projectId": "64e3653f28b9b819332492db"
+  },
+  {
+    "name": "Test_Reto",
+    "global": false,
+    "projectId": "65f41ae4a68ef02f12cecfab"
+  }
+]
+  

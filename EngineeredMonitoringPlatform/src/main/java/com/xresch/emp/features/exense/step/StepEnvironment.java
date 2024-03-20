@@ -484,9 +484,12 @@ public class StepEnvironment extends AbstractContextSettings {
     
     /*********************************************************************
      * Returns a JsonObject containing the last Status for the given scheduler.
-     * @return JsonObject or null if nothing found
+     * @param executionCount TODO
+     * @return JsonArray with executions, empty array if nothing found
      *********************************************************************/
-    public JsonObject getSchedulerLastExecutionStatus(String schedulerID, long earliest, long latest) {
+    public JsonArray getSchedulerLastNExecutions(String schedulerID, int executionCount, long earliest, long latest) {
+    	
+    	JsonArray result = new JsonArray();
     	
     	//----------------------------
     	// Retrieve Scheduler
@@ -495,7 +498,10 @@ public class StepEnvironment extends AbstractContextSettings {
     	StepSchedulerDetails scheduler = this.getSchedulerByID(schedulerID);
     	
     	if(scheduler == null) {
-    		return new StepSchedulerDetails().toJson("UNKNOWN SCHEDULER", "UNKNOWN SCHEDULER", null, null);
+    		result.add(
+    				new StepSchedulerDetails().toJson("UNKNOWN SCHEDULER", "UNKNOWN SCHEDULER", null, null)
+    			);
+    		return result;
     	}
     	
     	//----------------------------
@@ -516,13 +522,13 @@ public class StepEnvironment extends AbstractContextSettings {
 						}
 					  ],
 					  "skip": 0,
-					  "limit": 1,
+					  "limit": %s,
 					  "sort": {
 					    "field": "endTime",
 					    "direction": "DESCENDING"
 					  }
 					}
-					""".formatted(schedulerID, earliest, latest)
+					""".formatted(schedulerID, earliest, latest, executionCount)
 				)
 				.send()
 				;
@@ -545,34 +551,43 @@ public class StepEnvironment extends AbstractContextSettings {
 			//					"result": "PASSED",
 			//					[...]
 			
-			if(responseObject == null) { return scheduler.toJson("UNKNOWN (Error Fetching API)", "UNKOWN", null, null); }
+			if(responseObject == null) { 
+	    		result.add( scheduler.toJson("UNKNOWN (Error Fetching API)", "UNKOWN", null, null) );
+				return result; 
+			}
 			
 			JsonElement data = responseObject.get("data");
 			if(data != null && data.isJsonArray()) {
 				JsonArray dataArray = data.getAsJsonArray();
 				
+				//-------------------------
+				// Empty Array
 				if(dataArray.isEmpty()) {
-					return scheduler.toJson("NO DATA", "NO DATA", null, null);
+					result.add( scheduler.toJson("NO DATA", "NO DATA", null, null) );
+					return result;
 				}
 				
-				JsonElement lastExecutionResults = dataArray.get(0);
-				if(lastExecutionResults.isJsonObject()) {
-					JsonObject theMightyResults = lastExecutionResults.getAsJsonObject();
-					
-					return scheduler.toJson(theMightyResults);
-					
+				//-------------------------
+				// Create Response with Last N Executions
+				for(JsonElement lastExecutionResults : dataArray) {
+					if(lastExecutionResults.isJsonObject()) {
+						JsonObject theMightyResults = lastExecutionResults.getAsJsonObject();
+						result.add( scheduler.toJson(theMightyResults) );
+					}
 				}
+				
+				return result;
 			}
-			
-			//return new StepSchedulerDetails(THIS_ENV, schedulerObject);
 			
 		}else {
 			String message = "STEP: Unexpected response when fetching data from API: Status: "+response.getStatus();
 			new CFWLog(logger).severe(message, new Exception(message+", Body: "+response.getResponseBody()));
 		}
-    				
-
-    	return scheduler.toJson("UNKNOWN", "UNKOWN", null, null);
+    		
+		//----------------------------------
+		// Any Other Case
+		result.add(scheduler.toJson("UNKNOWN", "UNKOWN", null, null) );
+    	return result;
     	
     }
     
