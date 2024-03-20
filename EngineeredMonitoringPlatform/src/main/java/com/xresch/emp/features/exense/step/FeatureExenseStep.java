@@ -85,7 +85,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		// Register Widgets
 		CFW.Registry.Widgets.add(new WidgetSchedulerStatus());
 		CFW.Registry.Widgets.add(new WidgetSchedulerStatusByProject());
-		CFW.Registry.Widgets.add(new WidgetSchedulerStatusByUser());
+		CFW.Registry.Widgets.add(new WidgetSchedulerStatusByUsers());
 		CFW.Registry.Widgets.add(new WidgetSchedulerStatusByCurrentUser());
 		CFW.Registry.Widgets.add(new WidgetSchedulerStatusAll());
 		CFW.Registry.Widgets.add(new WidgetSchedulerExecutionsLast());

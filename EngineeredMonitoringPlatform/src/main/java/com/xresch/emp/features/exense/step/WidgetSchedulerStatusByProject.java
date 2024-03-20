@@ -181,8 +181,6 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 		}
 		
 
-		
-		
 		//-----------------------------
 		// Load Last Execution for every Scheduler
 		JsonArray results = new JsonArray();

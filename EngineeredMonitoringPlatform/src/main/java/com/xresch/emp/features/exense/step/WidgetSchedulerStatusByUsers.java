@@ -3,40 +3,38 @@ package com.xresch.emp.features.exense.step;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Locale;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.bson.Document;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
-import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState;
 
-public class WidgetSchedulerStatusByUser extends WidgetDefinition  {
+public class WidgetSchedulerStatusByUsers extends WidgetDefinition  {
 	
 	/************************************************************
 	 * 
 	 ************************************************************/
 	@Override
-	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_planstatususers";}
+	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_schedulerstatususers";}
 	
 	/************************************************************
 	 * 
@@ -58,7 +56,7 @@ public class WidgetSchedulerStatusByUser extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String widgetName() { return "Plan Status By User"; }
+	public String widgetName() { return "Scheduler Status By Users"; }
 	
 	/************************************************************
 	 * 
@@ -75,7 +73,7 @@ public class WidgetSchedulerStatusByUser extends WidgetDefinition  {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatususers.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_schedulerstatususers.js") );
 		return array;
 	}
 	
@@ -152,7 +150,7 @@ public class WidgetSchedulerStatusByUser extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isProperlyDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by User: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
@@ -171,12 +169,12 @@ public class WidgetSchedulerStatusByUser extends WidgetDefinition  {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by User: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		
 		//-----------------------------
-		// Resolve Projects Param
+		// Resolve Users Param
 		LinkedHashMap<String,String> users = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECTS).getValue();
 		
 		if(users.size() == 0) {
@@ -184,36 +182,30 @@ public class WidgetSchedulerStatusByUser extends WidgetDefinition  {
 		}
 		
 		//-----------------------------
-		// Create Aggregate Document
-		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatususers_query.bson");
-		aggregateDocString = CFW.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
+		// Load Last Execution for Every Scheduler
+		JsonArray results = new JsonArray();
 		
-		// Example Project Filter >> $or: [ {'_id': ObjectId('62443ecfee10d74e1b132860')},{'_id': ObjectId('62444fadee10d74e1b1395af')} ]
-		StringBuilder usersFilter = new StringBuilder("$or: [");
-		for(Entry<String, String> entry : users.entrySet()) {
-			usersFilter.append("{'_id': ObjectId('"+entry.getKey()+"')},");
+    	//--------------------------
+    	// Merge Unique list of Schedulers
+    	LinkedHashSet<StepSchedulerDetails> uniqueSchedulers = new LinkedHashSet<>();
+    	
+		for(String userID : users.keySet()) { 
+			uniqueSchedulers.addAll( environment.getSchedulersForUser(userID) );
 		}
-		usersFilter.append("]");
-		
-		aggregateDocString = aggregateDocString.replace("$$usersFilter$$", usersFilter.toString());
-		
-		//-----------------------------
-		// Fetch Data
-		MongoIterable<Document> result;
-
-//		result = environment.aggregate("users", aggregateDocString);
-//		
-//		//-----------------------------
-//		// Push to Queue
-//		JsonArray resultArray = new JsonArray();
-//		if(result != null) {
-//			for (Document currentDoc : result) {
-//				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-//				resultArray.add(object);
-//			}
-//		}
-		
-		return new JsonArray();
+			
+    	//--------------------------
+    	// Fetch Status For Schedulers
+		for(StepSchedulerDetails details : uniqueSchedulers) {
+			JsonArray lastExecutionArray = 
+					environment.getSchedulerLastNExecutions(
+							  details.getSchedulerID()
+							, 1
+							, earliest, latest);
+			
+			results.addAll(lastExecutionArray);
+		}
+	
+		return results;
 		
 	}
 	
@@ -238,7 +230,7 @@ public class WidgetSchedulerStatusByUser extends WidgetDefinition  {
 	 * task of this widget does.
 	 ************************************************************/
 	public String getTaskDescription() {
-		return "Checks if any of the plans exceeds the selected threshold, either by status or by result.";
+		return "Checks if any of the schedulers exceeds the selected threshold, either by status or by result.";
 	}
 	
 	/************************************************************

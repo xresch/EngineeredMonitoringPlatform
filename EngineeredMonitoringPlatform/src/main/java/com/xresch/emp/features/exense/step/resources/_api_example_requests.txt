@@ -59,7 +59,7 @@ curl -X 'GET' \
             "customParameters": {
                 "env": "TEST"
             },
-            "userID": "patrick.neubauer@juliusbaer.com",
+            "userID": "patrick.neubauer@acme.com",
             "artefactFilter": null,
             "mode": "RUN",
             "plan": null,
@@ -107,7 +107,7 @@ curl -X 'GET' \
     "customFields": null,
     "attributes": {
       "name": "CLM",
-      "owner": "devon.bowen@juliusbaer.com"
+      "owner": "devon.bowen@acme.com"
     },
     "global": false,
     "members": null,
@@ -426,7 +426,7 @@ curl -X 'POST' \
                 "customParameters": {
                     "env": "TEST"
                 },
-                "userID": "reto.scheiwiller@juliusbaer.com",
+                "userID": "reto@acme.com",
                 "artefactFilter": null,
                 "mode": "RUN",
                 "plan": null,
@@ -548,13 +548,54 @@ curl -X 'POST' \
     ]
 }
 
+###################################################################
+# Get List of All Users
+###################################################################
+curl -X 'GET' \
+  'https://step.mycompany.com/rest/admin/users' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer <apiToken>'
+  
+=============== EXAMPLE RESPONSE ========================
+[
+  {
+    "customFields": {
+      "lastTenant": "[None]"
+    },
+    "username": "paul@acme.com",
+    "password": null,
+    "role": "admin",
+    "preferences": null,
+    "id": "65aa670405ed786803f30b45"
+  },
+  {
+    "customFields": {
+      "lastTenant": "Common"
+    },
+    "username": "aurora@acme.com",
+    "password": null,
+    "role": "admin",
+    "preferences": null,
+    "id": "652698b793243a124e914c30"
+  },
+  {
+    "customFields": {
+      "lastTenant": "[All]"
+    },
+    "username": "cupid@acme.com",
+    "password": null,
+    "role": "admin",
+    "preferences": null,
+    "id": "64e5cc8428b9b819332d7fce"
+  },
+}
 
 ###################################################################
 # Get All Projects for User
 ###################################################################
 
 curl -X 'GET' \
-  'https://step.perfeng.sehlat.io/rest/tenants/user/{userID}' \
+  'https://step.mycompany.com/rest/tenants/user/{userID}' \
   -H 'accept: application/json' \
   -H 'Authorization: Bearer <apiToken>'
   
@@ -567,12 +608,12 @@ curl -X 'GET' \
     "projectId": null
   },
   {
-    "name": "[SV-APPLICATION_PERFORMANCE_MANAGEMENT] test1test1test1test1test1test1test1test1test1test1",
+    "name": "Project A",
     "global": false,
     "projectId": "64f88330dedb006e48cbddea"
   },
   {
-    "name": "CLM",
+    "name": "Project B",
     "global": false,
     "projectId": "65e58aa71632d3503397fd6a"
   },
@@ -582,24 +623,9 @@ curl -X 'GET' \
     "projectId": "64e3540028b9b8193323b95b"
   },
   {
-    "name": "Examples",
-    "global": false,
-    "projectId": "6554c13e62cdec3786cda908"
-  },
-  {
-    "name": "Test Jérôme",
-    "global": false,
-    "projectId": "64f73917dedb006e48c8aef9"
-  },
-  {
-    "name": "Test KW Package upload",
-    "global": false,
-    "projectId": "64e3653f28b9b819332492db"
-  },
-  {
     "name": "Test_Reto",
     "global": false,
     "projectId": "65f41ae4a68ef02f12cecfab"
   }
 ]
-  
+

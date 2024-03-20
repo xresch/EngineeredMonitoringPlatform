@@ -17,7 +17,7 @@ import com.xresch.cfw.features.usermgmt.User;
 
 public class CFWJobTaskSchedulerStatusByUser extends CFWJobTask {
 	
-	private WidgetSchedulerStatusByUser widget = new WidgetSchedulerStatusByUser();
+	private WidgetSchedulerStatusByUsers widget = new WidgetSchedulerStatusByUsers();
 
 	@Override
 	public String uniqueName() {

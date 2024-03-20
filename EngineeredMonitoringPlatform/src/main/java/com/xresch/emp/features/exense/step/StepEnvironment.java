@@ -191,7 +191,7 @@ public class StepEnvironment extends AbstractContextSettings {
 	// PlanID and Object
 	private LoadingCache<String, JsonObject> planCache;
 	
-	// PlanID and Object, Object Example
+	// PlanID and Object: Object Example
 	//	{
 	//		  "customFields": null,
 	//		  "attributes": {
@@ -204,7 +204,8 @@ public class StepEnvironment extends AbstractContextSettings {
 	//		}
 	private LoadingCache<String, JsonObject> projectCache;
 	
-	
+	// UserID and Array of Users Projects
+	private LoadingCache<String, JsonArray> userProjectCache;
 	
 	/*********************************************************************
 	 * 
@@ -214,16 +215,26 @@ public class StepEnvironment extends AbstractContextSettings {
 		this.addFields(url, apiToken);
 	}	
 	
-	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	private String createCacheID(String type) {
+		return "Step:"+this.getDefaultObject().name()+"["+type+"]";
+	}
+
 	/*********************************************************************
 	 * 
 	 *********************************************************************/
 	public void initializeCaches() {
 		
+		//-----------------------------------
+		// Remove all existing Caches
 		removeCaches();
 		
-		String cacheID = "["+this.getDefaultObject().name()+"]";
-		schedulerCache = CFW.Caching.addCache("Step Schedulers"+cacheID, 
+		//-----------------------------------
+		// Schedulers
+
+		schedulerCache = CFW.Caching.addCache( createCacheID("Schedulers"), 
 				CacheBuilder.newBuilder()
 					.initialCapacity(10)
 					.maximumSize(10000)
@@ -231,11 +242,13 @@ public class StepEnvironment extends AbstractContextSettings {
 					// Do not expire, as this will also be used for autocomplete  
 				);
 		
-		planCache = CFW.Caching.addLoadingCache("Step Plans"+cacheID, 
+		//-----------------------------------
+		// Plans
+		planCache = CFW.Caching.addLoadingCache( createCacheID("Plans"), 
 				CacheBuilder.newBuilder()
 					.initialCapacity(10)
 					.maximumSize(10000)
-					.refreshAfterWrite(1,TimeUnit.MINUTES) 
+					.refreshAfterWrite(1,TimeUnit.HOURS) 
 					, 
 					new CacheLoader<String, JsonObject>() {
 					    @Override
@@ -245,16 +258,34 @@ public class StepEnvironment extends AbstractContextSettings {
 					}
 				);
 		
-		projectCache = CFW.Caching.addLoadingCache("Step Projects"+cacheID, 
+		//-----------------------------------
+		// Projects
+		projectCache = CFW.Caching.addLoadingCache( createCacheID("Projects"), 
 				CacheBuilder.newBuilder()
 				.initialCapacity(10)
 				.maximumSize(10000)
-				.refreshAfterWrite(1,TimeUnit.MINUTES) 
+				.refreshAfterWrite(1,TimeUnit.HOURS) 
 				,
 				new CacheLoader<String, JsonObject>() {
 				    @Override
 				    public JsonObject load(final String projectID) throws Exception {
 				    	return fetchProjectByID(projectID);
+				    }
+				}
+			);
+		
+		//-----------------------------------
+		// User Project List
+		userProjectCache = CFW.Caching.addLoadingCache( createCacheID("UserProjects"), 
+				CacheBuilder.newBuilder()
+				.initialCapacity(10)
+				.maximumSize(10000)
+				.refreshAfterWrite(1, TimeUnit.HOURS) 
+				,
+				new CacheLoader<String, JsonArray>() {
+				    @Override
+				    public JsonArray load(final String userID) throws Exception {
+				    	return fetchProjectsForUser(userID);
 				    }
 				}
 			);
@@ -268,9 +299,10 @@ public class StepEnvironment extends AbstractContextSettings {
 		
 		String id = "["+this.getDefaultObject().name()+"]";
 		
-		CFW.Caching.removeCache("Step Schedulers"+id);
-		CFW.Caching.removeCache("Step Plans"+id);
-		CFW.Caching.removeCache("Step Projects"+id);
+		CFW.Caching.removeCache( createCacheID("Schedulers") );
+		CFW.Caching.removeCache( createCacheID("Plans") );
+		CFW.Caching.removeCache( createCacheID("Projects") );
+		CFW.Caching.removeCache( createCacheID("UserProjects") );
 		
 	}
 	
@@ -422,6 +454,29 @@ public class StepEnvironment extends AbstractContextSettings {
     			getSchedulerByID(id.getAsString());
     		}
 		}
+    }
+    
+    /*********************************************************************
+     * Returns the scheduler details or null
+     *********************************************************************/
+    public ArrayList<StepSchedulerDetails> getSchedulersForUser(String userID) {
+    	ArrayList<StepSchedulerDetails> userSchedulerList = new ArrayList<>();
+    			
+    	JsonArray projectList = this.getProjectsForUser(userID);
+    	
+    	for(JsonElement projectElement : projectList) {
+    		if(projectElement.isJsonNull()) { continue; }
+    		
+    		JsonElement projectID = projectElement.getAsJsonObject().get("projectId");
+    		if(projectID != null 
+    		&& projectID.isJsonPrimitive()) {     			
+    			userSchedulerList.addAll( 
+    				getSchedulersForProject( projectID.getAsString() ) 
+    			);
+    		}
+    	}
+    	
+    	return userSchedulerList;
     }
     
     /*********************************************************************
@@ -742,7 +797,7 @@ public class StepEnvironment extends AbstractContextSettings {
     	
     	return null;
     }
-    
+        
     /*********************************************************************
      *
      *********************************************************************/
@@ -765,6 +820,62 @@ public class StepEnvironment extends AbstractContextSettings {
     	return null;
     	
     }
+    
+    /*********************************************************************
+     * 
+     *********************************************************************/
+    public JsonArray getProjectsForUser(String userID) {
+    	try {
+			return userProjectCache.get(userID);
+		} catch (ExecutionException e) {
+			new CFWLog(logger).severe("STEP: Error occured while loading projects for user from cache: "+e.getMessage(), e );
+			e.printStackTrace();
+		}
+    	
+    	return null;
+    }
+       
+   /*********************************************************************
+    *
+    *********************************************************************/
+    private JsonArray fetchProjectsForUser(String userID) {
+  	
+	  	if(userID == null) { return null; }
+	  
+		CFWHttpResponse response = createAPIRequestBuilder("/tenants/user/"+userID)
+		.send()
+		;
+
+		if(response.getStatus() == 200
+				&& response.getResponseBody().startsWith("[")) {
+			return response.getResponseBodyAsJsonArray();
+		}else {
+			new CFWLog(logger).severe("STEP: Unexpected response while fetching projects for user: "+response.getResponseBody());
+		}
+		
+		return null;
+    }
+  
+    /*********************************************************************
+     * 
+     *********************************************************************/
+    // !!! IMPORTANT !!! Do not make this method public, this API endpoint might return unencrypted passwords (untested)
+    private JsonArray fetchAllUsers() {
+ 	   	
+		CFWHttpResponse response = createAPIRequestBuilder("/admin/users")
+				.send()
+				;
+		
+		if(response.getStatus() == 200
+		&& response.getResponseBody().startsWith("[")) {
+			return response.getResponseBodyAsJsonArray();
+		}else {
+			new CFWLog(logger).severe("STEP: Unexpected response while fetching full user list: HTTP Status "+response.getStatus());
+		}
+		
+		return new JsonArray();
+    }
+    
 
 	/*********************************************************************
 	 * Create autocomplete for projects.
@@ -858,6 +969,64 @@ public class StepEnvironment extends AbstractContextSettings {
     	return new AutocompleteResult(list);
     }
     
+    /*********************************************************************
+     * Create autocomplete for projects.
+     *********************************************************************/
+    public AutocompleteResult autocompleteUsers(String searchValue, int maxResults) {
+    	
+    	String lowerSearch = searchValue.toLowerCase();
+    	
+    	//-----------------------------
+    	// Iterate results
+    	AutocompleteList list = new AutocompleteList();
+    	
+    	
+    	for(JsonElement userElement : fetchAllUsers()) {
+    		
+    		//----------------------------
+    		// Skip anything that is unexpected
+    		if(userElement == null 
+    		|| !userElement.isJsonObject()) {
+    			continue;
+    		}
+    		
+    		//----------------------------
+    		// Get ID
+    		JsonObject user = userElement.getAsJsonObject();
+    		JsonElement idElement = user.get("id");
+    		String userID;
+    		if(idElement != null && idElement.isJsonPrimitive()) {
+    			userID = idElement.getAsString();
+    		}else {
+    			continue;
+    		}
+    		
+    		//----------------------------
+    		// Get Username
+    		String userName = null;
+
+			JsonElement nameElement = user.get("username");
+			if(nameElement != null && nameElement.isJsonPrimitive()) {
+				userName = nameElement.getAsString();
+			}
+    		
+    		
+    		//----------------------------
+    		// Search in Project Name
+    		if(userName != null 
+    				&& userName.toLowerCase().contains(lowerSearch)
+    				){
+    			list.addItem(userID, userName);
+    		}
+    		
+    		if(list.size() >= maxResults) {
+    			break;
+    		}
+    	}
+    	
+    	return new AutocompleteResult(list);
+    }
+    
     
     /*********************************************************************
      * Create autocomplete for plans.
@@ -895,39 +1064,4 @@ public class StepEnvironment extends AbstractContextSettings {
     	return new AutocompleteResult(list);
     }
     
-    /*********************************************************************
-     * Create autocomplete for plans.
-     *********************************************************************/
-    public AutocompleteResult autocompleteUsers(String searchValue, int maxResults) {
-    	
-    	String findDoc = "{'username': {'$regex': '"+searchValue+"', '$options': 'i'}}";
-    	String sortDoc = "{'username': 1}";
-    	
-    	System.out.println(findDoc);
-    	//-----------------------------
-    	// Fetch Data
-    	MongoIterable<Document> result;
-    	
-    	result = null; //TODO this.find("users", findDoc, sortDoc, 0);
-    	
-    	//-----------------------------
-    	// Iterate results
-    	AutocompleteList list = new AutocompleteList();
-    	
-//    	if(result != null) {
-//    		for (Document currentDoc : result) {
-//    			String id = currentDoc.get("_id").toString();
-//    			String name = currentDoc.get("username").toString();
-//    			System.out.println("id:"+id);
-//    			System.out.println("name:"+name);
-//    			list.addItem(id, name);
-//    			
-//    			if(list.size() >= maxResults) {
-//    				break;
-//    			}
-//    		}
-//    	}
-    	
-    	return new AutocompleteResult(list);
-    }
 }
