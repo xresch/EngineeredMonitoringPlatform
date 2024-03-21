@@ -175,7 +175,7 @@ public class WidgetSchedulerStatusByUsers extends WidgetDefinition  {
 		
 		//-----------------------------
 		// Resolve Users Param
-		LinkedHashMap<String,String> users = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECTS).getValue();
+		LinkedHashMap<String,String> users = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_USERS).getValue();
 		
 		if(users.size() == 0) {
 			return null;

@@ -13,9 +13,11 @@ import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 public class StepSettingsFactory {
 	
 	public static final String FIELDNAME_ENVIRONMENT = "environment";
-	public static final String FIELDNAME_STEP_PROJECTS = "JSON_STEP_PROJECTS";
-	
 	public static final String FIELDNAME_STEP_SCHEDULERS = "JSON_STEP_SCHEDULERS";
+	public static final String FIELDNAME_STEP_PROJECTS = "JSON_STEP_PROJECTS";
+	public static final String FIELDNAME_STEP_USERS = "JSON_STEP_USERS";
+	public static final String FIELDNAME_STEP_METRICS = "JSON_STEP_METRICS";
+	
 	
 	/************************************************************************************
 	 * Returns the  environment selector field.
@@ -105,7 +107,7 @@ public class StepSettingsFactory {
 	 *
 	 ************************************************************************************/
 	public static CFWField<?> createUsersSelectorField() {
-		return CFWField.newTagsSelector(FIELDNAME_STEP_PROJECTS)
+		return CFWField.newTagsSelector(FIELDNAME_STEP_USERS)
 				.setLabel("{!emp_widget_step_users!}")
 				.setDescription("{!emp_widget_step_users_desc!}")
 				.addAttribute("maxTags", "128")
@@ -132,6 +134,41 @@ public class StepSettingsFactory {
 						//-------------------------
 						// Do Autocomplete
 						return env.autocompleteUsers(searchValue, this.getMaxResults());
+					}
+				});
+	}
+	
+	/************************************************************************************
+	 *
+	 ************************************************************************************/
+	public static CFWField<?> createMetricsSelectorField() {
+		return CFWField.newTagsSelector(FIELDNAME_STEP_METRICS)
+				.setLabel("{!emp_widget_step_metrics!}")
+				.setDescription("{!emp_widget_step_metrics_desc!}")
+				.addAttribute("maxTags", "128")
+				.addFlag(CFWFieldFlag.SERVER_SIDE_ONLY)
+				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
+					
+					@Override
+					public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
+						
+						//-------------------------
+						// Get ID
+						String environmentID = request.getParameter(FIELDNAME_ENVIRONMENT);
+						
+						if(Strings.isNullOrEmpty(environmentID)) {
+							CFW.Messages.addInfoMessage("Please select an environment first.");
+						}
+						
+						//-------------------------
+						// Get mongoDB
+						StepEnvironment env = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
+						if(env == null) {
+							CFW.Messages.addWarningMessage("The chosen environment seems configured incorrectly or is unavailable.");
+						}
+						//-------------------------
+						// Do Autocomplete
+						return env.autocompleteMetrics(searchValue, this.getMaxResults());
 					}
 				});
 	}

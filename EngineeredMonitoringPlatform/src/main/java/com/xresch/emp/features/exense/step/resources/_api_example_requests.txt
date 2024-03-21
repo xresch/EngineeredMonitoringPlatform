@@ -629,3 +629,253 @@ curl -X 'GET' \
   }
 ]
 
+
+###################################################################
+# Get Metrics for Time Series 
+###################################################################
+curl -X 'GET' \
+  'https://step.perfeng.sehlat.io/rest/time-series/metric-types' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer
+ 
+=============== EXAMPLE RESPONSE ========================
+[
+  {
+    "customFields": null,
+    "name": "executions/failure-percentage",
+    "displayName": "Execution failure percentage",
+    "description": null,
+    "attributes": [
+      {
+        "name": "taskId",
+        "displayName": "Task",
+        "type": "TEXT",
+        "metadata": {
+          "entity": "task"
+        }
+      },
+      {
+        "name": "eId",
+        "displayName": "Execution",
+        "type": "TEXT",
+        "metadata": {
+          "entity": "execution"
+        }
+      },
+      {
+        "name": "planId",
+        "displayName": "Plan",
+        "type": "TEXT",
+        "metadata": {
+          "entity": "plan"
+        }
+      }
+    ],
+    "unit": "%",
+    "defaultAggregation": "AVG",
+    "defaultGroupingAttributes": [],
+    "renderingSettings": {
+      "seriesColors": null
+    },
+    "id": "65549ac662cdec3786cd5432"
+  },
+  {
+    "customFields": null,
+    "name": "executions/failure-count",
+    "displayName": "Execution failure count",
+    "description": null,
+    "attributes": [
+      {
+        "name": "taskId",
+        "displayName": "Task",
+        "type": "TEXT",
+        "metadata": {
+          "entity": "task"
+        }
+      },
+      {
+        "name": "eId",
+        "displayName": "Execution",
+        "type": "TEXT",
+        "metadata": {
+          "entity": "execution"
+        }
+      },
+      {
+        "name": "planId",
+        "displayName": "Plan",
+        "type": "TEXT",
+        "metadata": {
+          "entity": "plan"
+        }
+      }
+    ],
+    "unit": "1",
+    "defaultAggregation": "SUM",
+    "defaultGroupingAttributes": [],
+    "renderingSettings": {
+      "seriesColors": null
+    },
+    "id": "65549ac662cdec3786cd5433"
+  }
+]
+ 
+###################################################################
+# Get Time Series 
+###################################################################
+curl -X 'POST' \
+  'https://step.mycompany.com/rest/time-series/measurements' \
+  -H 'accept: application/json' \
+  -H 'Authorization: Bearer <apiToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "start": 1711005181904,
+    "end": 1711008781904,
+    "oqlFilter": "(attributes.metricType = response-time) and (attributes.taskId = 65f41c46a68ef02f12ceeb63)",
+    "numberOfBuckets": 100,
+    "collectAttributesValuesLimit": 10
+	}'
+
+=============== EXAMPLE RESPONSE ========================
+
+{
+  "start": 1711005180000,
+  "interval": 180000,
+  "end": 1711008960000,
+  "matrixKeys": [
+    {}
+  ],
+  "matrix": [
+    [
+      {
+        "begin": 1711005180000,
+        "attributes": {},
+        "count": 9,
+        "sum": 1761,
+        "min": 0,
+        "max": 1579,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      null,
+      {
+        "begin": 1711005540000,
+        "attributes": {},
+        "count": 9,
+        "sum": 2042,
+        "min": 0,
+        "max": 1841,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      null,
+      {
+        "begin": 1711005900000,
+        "attributes": {},
+        "count": 9,
+        "sum": 2079,
+        "min": 0,
+        "max": 1870,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      {
+        "begin": 1711006080000,
+        "attributes": {},
+        "count": 9,
+        "sum": 2139,
+        "min": 0,
+        "max": 1677,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      null,
+      {
+        "begin": 1711006440000,
+        "attributes": {},
+        "count": 9,
+        "sum": 1793,
+        "min": 0,
+        "max": 1594,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      null,
+      {
+        "begin": 1711006800000,
+        "attributes": {},
+        "count": 9,
+        "sum": 2956,
+        "min": 0,
+        "max": 1885,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      {
+        "begin": 1711006980000,
+        "attributes": {},
+        "count": 9,
+        "sum": 2019,
+        "min": 0,
+        "max": 1813,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      null,
+      {
+        "begin": 1711007340000,
+        "attributes": {},
+        "count": 9,
+        "sum": 1834,
+        "min": 0,
+        "max": 1650,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      null,
+      {
+        "begin": 1711007700000,
+        "attributes": {},
+        "count": 9,
+        "sum": 2083,
+        "min": 0,
+        "max": 1884,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      {
+        "begin": 1711007880000,
+        "attributes": {},
+        "count": 9,
+        "sum": 1848,
+        "min": 0,
+        "max": 1655,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      null,
+      {
+        "begin": 1711008240000,
+        "attributes": {},
+        "count": 9,
+        "sum": 1803,
+        "min": 0,
+        "max": 1594,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      null,
+      {
+        "begin": 1711008600000,
+        "attributes": {},
+        "count": 9,
+        "sum": 1821,
+        "min": 0,
+        "max": 1606,
+        "pclValues": {},
+        "throughputPerHour": 180
+      },
+      null
+    ]
+  ]
+}

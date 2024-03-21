@@ -1,6 +1,9 @@
 package com.xresch.emp.features.exense.step;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -35,116 +38,116 @@ import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 	{
 	  "_class": "step.core.plans.Plan",
 	  "customFields": {
-	    "versionId": "65f41c33a68ef02f12cee834"
+		"versionId": "65f41c33a68ef02f12cee834"
 	  },
 	  "attributes": {
-	    "name": "K6_Check_google.com",
-	    "project": "65f41ae4a68ef02f12cecfab"
+		"name": "K6_Check_google.com",
+		"project": "65f41ae4a68ef02f12cecfab"
 	  },
 	  "root": {
-	    "_class": "TestCase",
-	    "customFields": null,
-	    "attributes": {
-	      "name": "K6_Check_google.com"
-	    },
-	    "dynamicName": {
-	      "dynamic": false,
-	      "value": "",
-	      "expression": "",
-	      "expressionType": null
-	    },
-	    "useDynamicName": false,
-	    "description": null,
-	    "children": [
-	      {
-	        "_class": "CallKeyword",
-	        "customFields": null,
-	        "attributes": {
-	          "name": "K6_ResponseChecker"
-	        },
-	        "dynamicName": {
-	          "dynamic": false,
-	          "value": "",
-	          "expression": "",
-	          "expressionType": null
-	        },
-	        "useDynamicName": false,
-	        "description": null,
-	        "children": [],
-	        "customAttributes": null,
-	        "attachments": null,
-	        "skipNode": {
-	          "dynamic": false,
-	          "value": false,
-	          "expression": null,
-	          "expressionType": null
-	        },
-	        "instrumentNode": {
-	          "dynamic": false,
-	          "value": false,
-	          "expression": null,
-	          "expressionType": null
-	        },
-	        "continueParentNodeExecutionOnError": {
-	          "dynamic": false,
-	          "value": false,
-	          "expression": null,
-	          "expressionType": null
-	        },
-	        "remote": {
-	          "dynamic": false,
-	          "value": true,
-	          "expression": null,
-	          "expressionType": null
-	        },
-	        "token": {
-	          "dynamic": false,
-	          "value": "{}",
-	          "expression": null,
-	          "expressionType": null
-	        },
-	        "function": {
-	          "dynamic": false,
-	          "value": "{\"name\":{\"value\":\"K6_ResponseChecker\",\"dynamic\":false}}",
-	          "expression": null,
-	          "expressionType": null
-	        },
-	        "argument": {
-	          "dynamic": false,
-	          "value": "{\"url\":{\"dynamic\":false,\"value\":\"http://www.google.com\"},\"httpStatus\":{\"value\":200,\"dynamic\":false}}",
-	          "expression": "",
-	          "expressionType": null
-	        },
-	        "resultMap": {
-	          "dynamic": false,
-	          "value": null,
-	          "expression": null,
-	          "expressionType": null
-	        },
-	        "id": "65f41be9a68ef02f12cedfb1"
-	      }
-	    ],
-	    "customAttributes": null,
-	    "attachments": null,
-	    "skipNode": {
-	      "dynamic": false,
-	      "value": false,
-	      "expression": null,
-	      "expressionType": null
-	    },
-	    "instrumentNode": {
-	      "dynamic": false,
-	      "value": false,
-	      "expression": null,
-	      "expressionType": null
-	    },
-	    "continueParentNodeExecutionOnError": {
-	      "dynamic": false,
-	      "value": false,
-	      "expression": null,
-	      "expressionType": null
-	    },
-	    "id": "65f41bdda68ef02f12cedea3"
+		"_class": "TestCase",
+		"customFields": null,
+		"attributes": {
+		  "name": "K6_Check_google.com"
+		},
+		"dynamicName": {
+		  "dynamic": false,
+		  "value": "",
+		  "expression": "",
+		  "expressionType": null
+		},
+		"useDynamicName": false,
+		"description": null,
+		"children": [
+		  {
+			"_class": "CallKeyword",
+			"customFields": null,
+			"attributes": {
+			  "name": "K6_ResponseChecker"
+			},
+			"dynamicName": {
+			  "dynamic": false,
+			  "value": "",
+			  "expression": "",
+			  "expressionType": null
+			},
+			"useDynamicName": false,
+			"description": null,
+			"children": [],
+			"customAttributes": null,
+			"attachments": null,
+			"skipNode": {
+			  "dynamic": false,
+			  "value": false,
+			  "expression": null,
+			  "expressionType": null
+			},
+			"instrumentNode": {
+			  "dynamic": false,
+			  "value": false,
+			  "expression": null,
+			  "expressionType": null
+			},
+			"continueParentNodeExecutionOnError": {
+			  "dynamic": false,
+			  "value": false,
+			  "expression": null,
+			  "expressionType": null
+			},
+			"remote": {
+			  "dynamic": false,
+			  "value": true,
+			  "expression": null,
+			  "expressionType": null
+			},
+			"token": {
+			  "dynamic": false,
+			  "value": "{}",
+			  "expression": null,
+			  "expressionType": null
+			},
+			"function": {
+			  "dynamic": false,
+			  "value": "{\"name\":{\"value\":\"K6_ResponseChecker\",\"dynamic\":false}}",
+			  "expression": null,
+			  "expressionType": null
+			},
+			"argument": {
+			  "dynamic": false,
+			  "value": "{\"url\":{\"dynamic\":false,\"value\":\"http://www.google.com\"},\"httpStatus\":{\"value\":200,\"dynamic\":false}}",
+			  "expression": "",
+			  "expressionType": null
+			},
+			"resultMap": {
+			  "dynamic": false,
+			  "value": null,
+			  "expression": null,
+			  "expressionType": null
+			},
+			"id": "65f41be9a68ef02f12cedfb1"
+		  }
+		],
+		"customAttributes": null,
+		"attachments": null,
+		"skipNode": {
+		  "dynamic": false,
+		  "value": false,
+		  "expression": null,
+		  "expressionType": null
+		},
+		"instrumentNode": {
+		  "dynamic": false,
+		  "value": false,
+		  "expression": null,
+		  "expressionType": null
+		},
+		"continueParentNodeExecutionOnError": {
+		  "dynamic": false,
+		  "value": false,
+		  "expression": null,
+		  "expressionType": null
+		},
+		"id": "65f41bdda68ef02f12cedea3"
 	  },
 	  "functions": null,
 	  "subPlans": null,
@@ -195,8 +198,8 @@ public class StepEnvironment extends AbstractContextSettings {
 	//	{
 	//		  "customFields": null,
 	//		  "attributes": {
-	//		    "name": "Test_Reto",
-	//		    "owner": ""
+	//			"name": "Test_Reto",
+	//			"owner": ""
 	//		  },
 	//		  "global": false,
 	//		  "members": null,
@@ -206,6 +209,9 @@ public class StepEnvironment extends AbstractContextSettings {
 	
 	// UserID and Array of Users Projects
 	private LoadingCache<String, JsonArray> userProjectCache;
+	
+	// metric name and metric label, will only be loaded once
+	private LinkedHashMap<String, String> metricTypes = null;
 	
 	/*********************************************************************
 	 * 
@@ -251,10 +257,10 @@ public class StepEnvironment extends AbstractContextSettings {
 					.refreshAfterWrite(1,TimeUnit.HOURS) 
 					, 
 					new CacheLoader<String, JsonObject>() {
-					    @Override
-					    public JsonObject load(final String planID) throws Exception {
-					    	return fetchPlanByID(planID);
-					    }
+						@Override
+						public JsonObject load(final String planID) throws Exception {
+							return fetchPlanByID(planID);
+						}
 					}
 				);
 		
@@ -267,10 +273,10 @@ public class StepEnvironment extends AbstractContextSettings {
 				.refreshAfterWrite(1,TimeUnit.HOURS) 
 				,
 				new CacheLoader<String, JsonObject>() {
-				    @Override
-				    public JsonObject load(final String projectID) throws Exception {
-				    	return fetchProjectByID(projectID);
-				    }
+					@Override
+					public JsonObject load(final String projectID) throws Exception {
+						return fetchProjectByID(projectID);
+					}
 				}
 			);
 		
@@ -283,10 +289,10 @@ public class StepEnvironment extends AbstractContextSettings {
 				.refreshAfterWrite(1, TimeUnit.HOURS) 
 				,
 				new CacheLoader<String, JsonArray>() {
-				    @Override
-				    public JsonArray load(final String userID) throws Exception {
-				    	return fetchProjectsForUser(userID);
-				    }
+					@Override
+					public JsonArray load(final String userID) throws Exception {
+						return fetchProjectsForUser(userID);
+					}
 				}
 			);
 		
@@ -398,119 +404,119 @@ public class StepEnvironment extends AbstractContextSettings {
 	/*********************************************************************
 	 * Loads all the schedulers from the STEP API.
 	 * The response from the API is an array containing objects like:
-	     {
-            "customFields": null,
-            "attributes": {
-                "name": "K6_Check_google.com",
-                "project": "65f41ae4a68ef02f12cecfab"
-            },
-            "name": null,
-            "executionsParameters": {
-                "customFields": null,
-                "attributes": {
-                    "project": "65f41ae4a68ef02f12cecfab"
-                },
-                "customParameters": {},
-                "userID": null,
-                "artefactFilter": null,
-                "mode": "RUN",
-                "plan": null,
-                "repositoryObject": {
-                    "repositoryID": "local",
-                    "repositoryParameters": {
-                        "planid": "65f41bdda68ef02f12cedea4"
-                    }
-                },
-                "isolatedExecution": false,
-                "exports": null,
-                "description": "K6_Check_google.com",
-                "id": "65f41c46a68ef02f12ceeb64"
-            },
-            "assertionPlan": null,
-            "cronExpression": "0 0/5 * * * ?",
-            "cronExclusions": null,
-            "active": true,
-            "id": "65f41c46a68ef02f12ceeb63"
-        }
+		 {
+			"customFields": null,
+			"attributes": {
+				"name": "K6_Check_google.com",
+				"project": "65f41ae4a68ef02f12cecfab"
+			},
+			"name": null,
+			"executionsParameters": {
+				"customFields": null,
+				"attributes": {
+					"project": "65f41ae4a68ef02f12cecfab"
+				},
+				"customParameters": {},
+				"userID": null,
+				"artefactFilter": null,
+				"mode": "RUN",
+				"plan": null,
+				"repositoryObject": {
+					"repositoryID": "local",
+					"repositoryParameters": {
+						"planid": "65f41bdda68ef02f12cedea4"
+					}
+				},
+				"isolatedExecution": false,
+				"exports": null,
+				"description": "K6_Check_google.com",
+				"id": "65f41c46a68ef02f12ceeb64"
+			},
+			"assertionPlan": null,
+			"cronExpression": "0 0/5 * * * ?",
+			"cronExclusions": null,
+			"active": true,
+			"id": "65f41c46a68ef02f12ceeb63"
+		}
 	 * 
 	 *********************************************************************/
-    public void loadSchedulersCache() {
-    	
-    	schedulerCache.invalidateAll();
-    	
-    	CFWHttpResponse response = this.createAPIRequestBuilder("/scheduler/task")
-    							.GET()
-    							.send()
-    							;
-    	    	
-    	JsonArray responseArray = response.getResponseBodyAsJsonArray();
+	public void loadSchedulersCache() {
+		
+		schedulerCache.invalidateAll();
+		
+		CFWHttpResponse response = this.createAPIRequestBuilder("/scheduler/task")
+								.GET()
+								.send()
+								;
+				
+		JsonArray responseArray = response.getResponseBodyAsJsonArray();
 
-    	for(JsonElement element : responseArray) {
-    		
-    		JsonObject schedulerObject = element.getAsJsonObject();
-    		JsonElement id = schedulerObject.get("id");
-    		
-    		if(id != null && !id.isJsonNull()) {
-    			getSchedulerByID(id.getAsString());
-    		}
+		for(JsonElement element : responseArray) {
+			
+			JsonObject schedulerObject = element.getAsJsonObject();
+			JsonElement id = schedulerObject.get("id");
+			
+			if(id != null && !id.isJsonNull()) {
+				getSchedulerByID(id.getAsString());
+			}
 		}
-    }
-    
-    /*********************************************************************
-     * Returns the scheduler details or null
-     *********************************************************************/
-    public ArrayList<StepSchedulerDetails> getSchedulersForUser(String userID) {
-    	ArrayList<StepSchedulerDetails> userSchedulerList = new ArrayList<>();
-    			
-    	JsonArray projectList = this.getProjectsForUser(userID);
-    	
-    	for(JsonElement projectElement : projectList) {
-    		if(projectElement.isJsonNull()) { continue; }
-    		
-    		JsonElement projectID = projectElement.getAsJsonObject().get("projectId");
-    		if(projectID != null 
-    		&& projectID.isJsonPrimitive()) {     			
-    			userSchedulerList.addAll( 
-    				getSchedulersForProject( projectID.getAsString() ) 
-    			);
-    		}
-    	}
-    	
-    	return userSchedulerList;
-    }
-    
-    /*********************************************************************
-     * Returns the scheduler details or null
-     *********************************************************************/
-    public ArrayList<StepSchedulerDetails> getSchedulersForProject(String projectID) {
-    	
-    	ArrayList<StepSchedulerDetails> result = new ArrayList<>();
-    	
-    	for(StepSchedulerDetails details : schedulerCache.asMap().values()) {
-    		if(details.getProjectID().equals(projectID)) {
-    			result.add(details);
-    		}
-    	}
-    	
-    	return result;
-    }
-    
-    /*********************************************************************
-     * Returns the scheduler details or null
-     *********************************************************************/
-    public StepSchedulerDetails getSchedulerByID(String scheduleID) {
-    	
-    	if(scheduleID == null) { return null; }
-    	
-    	try {
+	}
+	
+	/*********************************************************************
+	 * Returns the scheduler details or null
+	 *********************************************************************/
+	public ArrayList<StepSchedulerDetails> getSchedulersForUser(String userID) {
+		ArrayList<StepSchedulerDetails> userSchedulerList = new ArrayList<>();
+				
+		JsonArray projectList = this.getProjectsForUser(userID);
+		
+		for(JsonElement projectElement : projectList) {
+			if(projectElement.isJsonNull()) { continue; }
+			
+			JsonElement projectID = projectElement.getAsJsonObject().get("projectId");
+			if(projectID != null 
+			&& projectID.isJsonPrimitive()) {	 			
+				userSchedulerList.addAll( 
+					getSchedulersForProject( projectID.getAsString() ) 
+				);
+			}
+		}
+		
+		return userSchedulerList;
+	}
+	
+	/*********************************************************************
+	 * Returns the scheduler details or null
+	 *********************************************************************/
+	public ArrayList<StepSchedulerDetails> getSchedulersForProject(String projectID) {
+		
+		ArrayList<StepSchedulerDetails> result = new ArrayList<>();
+		
+		for(StepSchedulerDetails details : schedulerCache.asMap().values()) {
+			if(details.getProjectID().equals(projectID)) {
+				result.add(details);
+			}
+		}
+		
+		return result;
+	}
+	
+	/*********************************************************************
+	 * Returns the scheduler details or null
+	 *********************************************************************/
+	public StepSchedulerDetails getSchedulerByID(String scheduleID) {
+		
+		if(scheduleID == null) { return null; }
+		
+		try {
 			return schedulerCache.get(scheduleID, new Callable<StepSchedulerDetails>() {
 
 				@Override
 				public StepSchedulerDetails call() throws Exception {
 
 					CFWHttpResponse response = createAPIRequestBuilder("/scheduler/task/"+scheduleID)
-			    			.send()
-			    			;
+							.send()
+							;
 					
 					if(response.getStatus() == 200
 					&& response.getResponseBody().startsWith("{")) {
@@ -520,8 +526,8 @@ public class StepEnvironment extends AbstractContextSettings {
 							return null;
 						}
 						
-				    	return new StepSchedulerDetails(THIS_ENV, schedulerObject);
-				    	
+						return new StepSchedulerDetails(THIS_ENV, schedulerObject);
+						
 					}else {
 						throw new Exception("Unexpected response when fetching scheduler: "+response.getResponseBody());
 					}
@@ -532,55 +538,55 @@ public class StepEnvironment extends AbstractContextSettings {
 		} catch (ExecutionException e) {
 			new CFWLog(logger).severe("Error occured while caching response: "+e.getMessage(), e );
 		}
-    	
-    	return null;
-    	
-    }
-    
-    /*********************************************************************
-     * Returns a JsonObject containing the last Status for the given scheduler.
-     * @param executionCount TODO
-     * @return JsonArray with executions, empty array if nothing found
-     *********************************************************************/
-    public JsonArray getSchedulerLastNExecutions(String schedulerID, int executionCount, long earliest, long latest) {
-    	
-    	JsonArray result = new JsonArray();
-    	
-    	//----------------------------
-    	// Retrieve Scheduler
-    	if(schedulerID == null) { return null; }
-    	
-    	StepSchedulerDetails scheduler = this.getSchedulerByID(schedulerID);
-    	
-    	if(scheduler == null) {
-    		result.add(
-    				new StepSchedulerDetails().toJson("UNKNOWN SCHEDULER", "UNKNOWN SCHEDULER", null, null)
-    			);
-    		return result;
-    	}
-    	
-    	//----------------------------
-    	// Call API
+		
+		return null;
+		
+	}
+	
+	/*********************************************************************
+	 * Returns a JsonObject containing the last Status for the given scheduler.
+	 * @param executionCount TODO
+	 * @return JsonArray with executions, empty array if nothing found
+	 *********************************************************************/
+	public JsonArray getSchedulerLastNExecutions(String schedulerID, int executionCount, long earliest, long latest) {
+		
+		JsonArray result = new JsonArray();
+		
+		//----------------------------
+		// Retrieve Scheduler
+		if(schedulerID == null) { return null; }
+		
+		StepSchedulerDetails scheduler = this.getSchedulerByID(schedulerID);
+		
+		if(scheduler == null) {
+			result.add(
+					new StepSchedulerDetails().toJson("UNKNOWN SCHEDULER", "UNKNOWN SCHEDULER", null, null)
+				);
+			return result;
+		}
+		
+		//----------------------------
+		// Call API
 		CFWHttpResponse response = createAPIRequestBuilder("/table/executions")
 				.POST()
 				.body("application/json",
 					"""
 					{
 					  "filters": [
-					    {"collectionFilter":
-						    {"type":"And","children":[
-								    {"type":"Equals","field":"executionTaskID","expectedValue": "%s"}
-								    ,{"type":"Gte","field":"startTime","value": %s }
-								    ,{"type":"Lte","field":"endTime","value": %s }
-								    ]
+						{"collectionFilter":
+							{"type":"And","children":[
+									{"type":"Equals","field":"executionTaskID","expectedValue": "%s"}
+									,{"type":"Gte","field":"startTime","value": %s }
+									,{"type":"Lte","field":"endTime","value": %s }
+									]
 							}
 						}
 					  ],
 					  "skip": 0,
 					  "limit": %s,
 					  "sort": {
-					    "field": "endTime",
-					    "direction": "DESCENDING"
+						"field": "endTime",
+						"direction": "DESCENDING"
 					  }
 					}
 					""".formatted(schedulerID, earliest, latest, executionCount)
@@ -589,8 +595,8 @@ public class StepEnvironment extends AbstractContextSettings {
 				;
 		
 
-    	//----------------------------
-    	// Read API Response
+		//----------------------------
+		// Read API Response
 		if(response.getStatus() == 200
 		&& response.getResponseBody().startsWith("{")) {
 			JsonObject responseObject = response.getResponseBodyAsJsonObject();
@@ -607,7 +613,7 @@ public class StepEnvironment extends AbstractContextSettings {
 			//					[...]
 			
 			if(responseObject == null) { 
-	    		result.add( scheduler.toJson("UNKNOWN (Error Fetching API)", "UNKOWN", null, null) );
+				result.add( scheduler.toJson("UNKNOWN (Error Fetching API)", "UNKOWN", null, null) );
 				return result; 
 			}
 			
@@ -638,30 +644,30 @@ public class StepEnvironment extends AbstractContextSettings {
 			String message = "STEP: Unexpected response when fetching data from API: Status: "+response.getStatus();
 			new CFWLog(logger).severe(message, new Exception(message+", Body: "+response.getResponseBody()));
 		}
-    		
+			
 		//----------------------------------
 		// Any Other Case
 		result.add(scheduler.toJson("UNKNOWN", "UNKOWN", null, null) );
-    	return result;
-    	
-    }
-    
-    
-    
-    
+		return result;
+		
+	}
+	
+	
+	
+	
 	/*********************************************************************
 	 * 
 	 * @return the plan for a plan id, or null if not found
 	 *********************************************************************/
-    public String getPlanName(String planID) {
-    	
-    	if(planID == null) { return null; }
-    	
-    	JsonObject plan = this.getPlanByID( planID);
-    	
-    	if(plan == null) {	return null; }
+	public String getPlanName(String planID) {
 		
-    	//---------------------
+		if(planID == null) { return null; }
+		
+		JsonObject plan = this.getPlanByID( planID);
+		
+		if(plan == null) {	return null; }
+		
+		//---------------------
 		// Attributes
 		JsonElement attributes = plan.get("attributes");
 		if(attributes != null && attributes.isJsonObject()) {
@@ -678,44 +684,44 @@ public class StepEnvironment extends AbstractContextSettings {
 		}
 		
 		return null;
-    	
-    }
-    
-    /*********************************************************************
-     * 
-     *********************************************************************/
-    public JsonObject getPlanByID(String planID) {
-    	try {
+		
+	}
+	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public JsonObject getPlanByID(String planID) {
+		try {
 			return planCache.get(planID);
 		} catch (ExecutionException e) {
 			new CFWLog(logger).severe("STEP: Error occured while loading plan from cache: "+e.getMessage(), e );
 		}
-    	
-    	return null;
-    }
-    
-    /*********************************************************************
-     * Uncached method
-     *********************************************************************/
-    private JsonObject fetchPlanByID(String planID) {
-    	
-    	//---------------------------------
-    	// Handle Null
-    	if(planID == null) { 
-    		return createMissingObject(
+		
+		return null;
+	}
+	
+	/*********************************************************************
+	 * Uncached method
+	 *********************************************************************/
+	private JsonObject fetchPlanByID(String planID) {
+		
+		//---------------------------------
+		// Handle Null
+		if(planID == null) { 
+			return createMissingObject(
 				planID  
 				, "The plan id was null."
 				, "null"
 			); }
-    	
-    	//---------------------------------
-    	// Call API
+		
+		//---------------------------------
+		// Call API
 		CFWHttpResponse response = createAPIRequestBuilder("/plans/"+planID)
 				.send()
 				;
 
-    	//---------------------------------
-    	// Handle Plan does not Exist
+		//---------------------------------
+		// Handle Plan does not Exist
 		if(response.getStatus() == 204) { // No Content
 			return createMissingObject(
 					planID  
@@ -724,8 +730,8 @@ public class StepEnvironment extends AbstractContextSettings {
 				);
 		}
 		
-    	//---------------------------------
-    	// Handle Regular Response
+		//---------------------------------
+		// Handle Regular Response
 		if(response.getStatus() < 300
 		&& response.getResponseBody().startsWith("{")) {
 			return response.getResponseBodyAsJsonObject();
@@ -733,9 +739,9 @@ public class StepEnvironment extends AbstractContextSettings {
 			new CFWLog(logger).severe("STEP: Unexpected response while fetching plan: HTTP Status "+response.getStatus());
 		}
 
-    	return null;
-    	
-    }
+		return null;
+		
+	}
 
 	/*********************************************************************
 	 * Makes a object for plans or projects.
@@ -756,15 +762,15 @@ public class StepEnvironment extends AbstractContextSettings {
 	 * 
 	 * @return the plan for a plan id, or null if not found
 	 *********************************************************************/
-    public String getProjectName(String projectID) {
-    	
-    	if(projectID == null) { return null; }
-    	
-    	JsonObject plan = this.getProjectByID(projectID);
-    	
-    	if(plan == null) {	return null; }
+	public String getProjectName(String projectID) {
 		
-    	//---------------------
+		if(projectID == null) { return null; }
+		
+		JsonObject plan = this.getProjectByID(projectID);
+		
+		if(plan == null) {	return null; }
+		
+		//---------------------
 		// Attributes
 		JsonElement attributes = plan.get("attributes");
 		if(attributes != null && attributes.isJsonObject()) {
@@ -781,30 +787,30 @@ public class StepEnvironment extends AbstractContextSettings {
 		}
 		
 		return null;
-    	
-    }
-    
-    /*********************************************************************
-     * 
-     *********************************************************************/
-    public JsonObject getProjectByID(String projectID) {
-    	try {
+		
+	}
+	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public JsonObject getProjectByID(String projectID) {
+		try {
 			return projectCache.get(projectID);
 		} catch (ExecutionException e) {
 			new CFWLog(logger).severe("STEP: Error occured while loading project from cache: "+e.getMessage(), e );
 			e.printStackTrace();
 		}
-    	
-    	return null;
-    }
-        
-    /*********************************************************************
-     *
-     *********************************************************************/
-    private JsonObject fetchProjectByID(String projectID) {
-    	
-    	if(projectID == null) { return null; }
-    	
+		
+		return null;
+	}
+		
+	/*********************************************************************
+	 *
+	 *********************************************************************/
+	private JsonObject fetchProjectByID(String projectID) {
+		
+		if(projectID == null) { return null; }
+		
 
 		CFWHttpResponse response = createAPIRequestBuilder("/tenants/project/"+projectID)
 				.send()
@@ -817,31 +823,31 @@ public class StepEnvironment extends AbstractContextSettings {
 			new CFWLog(logger).severe("STEP: Unexpected response while fetching project: "+response.getResponseBody());
 		}
 		
-    	return null;
-    	
-    }
-    
-    /*********************************************************************
-     * 
-     *********************************************************************/
-    public JsonArray getProjectsForUser(String userID) {
-    	try {
+		return null;
+		
+	}
+	
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	public JsonArray getProjectsForUser(String userID) {
+		try {
 			return userProjectCache.get(userID);
 		} catch (ExecutionException e) {
 			new CFWLog(logger).severe("STEP: Error occured while loading projects for user from cache: "+e.getMessage(), e );
 			e.printStackTrace();
 		}
-    	
-    	return null;
-    }
-       
-   /*********************************************************************
-    *
-    *********************************************************************/
-    private JsonArray fetchProjectsForUser(String userID) {
+		
+		return null;
+	}
+		
+	/*********************************************************************
+	*
+	*********************************************************************/
+	private JsonArray fetchProjectsForUser(String userID) {
   	
-	  	if(userID == null) { return null; }
-	  
+		if(userID == null) { return null; }
+	
 		CFWHttpResponse response = createAPIRequestBuilder("/tenants/user/"+userID)
 		.send()
 		;
@@ -854,14 +860,14 @@ public class StepEnvironment extends AbstractContextSettings {
 		}
 		
 		return null;
-    }
-  
-    /*********************************************************************
-     * 
-     *********************************************************************/
-    // !!! IMPORTANT !!! Do not make this method public, this API endpoint might return unencrypted passwords (untested)
-    private JsonArray fetchAllUsers() {
- 	   	
+	}
+	  
+	/*********************************************************************
+	 * 
+	 *********************************************************************/
+	// !!! IMPORTANT !!! Do not make this method public, this API endpoint might return unencrypted passwords (untested)
+	private JsonArray fetchAllUsers() {
+ 			
 		CFWHttpResponse response = createAPIRequestBuilder("/admin/users")
 				.send()
 				;
@@ -874,16 +880,210 @@ public class StepEnvironment extends AbstractContextSettings {
 		}
 		
 		return new JsonArray();
-    }
-    
+	}
+	
+	 /*********************************************************************
+	 *
+	 *********************************************************************/
+	public LinkedHashMap<String, String> fetchMetricTypes() {
+		
+		//------------------------------
+		// Load if not already loaded
+		if(metricTypes == null) {
+			
+			CFWHttpResponse response = createAPIRequestBuilder("/time-series/metric-types")
+					.send()
+					;
+			
+			if(response.getStatus() == 200
+			&& response.getResponseBody().startsWith("[")) {
+				
+				JsonArray metricsArray = response.getResponseBodyAsJsonArray();
+			
+				metricTypes = new LinkedHashMap<>();
+				for(JsonElement metric : metricsArray) {
+					if(metric != null && metric.isJsonObject()) {
+						JsonObject metricObject = metric.getAsJsonObject();
+						
+						String name = metricObject.get("name").getAsString();
+						String label = metricObject.get("displayName").getAsString();
+						metricTypes.put(name, label);
+					}
+				}
+				
+				if(metricTypes.isEmpty()) {
+					metricTypes = null;
+				}
+			}else {
+				new CFWLog(logger).severe("STEP: Unexpected response while fetching projects for user: "+response.getResponseBody());
+			}
+		}
+	
+		return metricTypes;
+	}
+	
+	
+	 /*********************************************************************
+	 * Returns an array of time series.
+	 * 
+	 * @param schedulerIDs array of Step schedulerIDs
+	 * @param metricNames names of metrics to fetch
+	 * @param earliest time to fetch
+	 * @param latest time to fetch
+	 *********************************************************************/
+	public JsonArray fetchTimeSeriesMultiple(Set<String> schedulerIDs, Set<String> metricNames, long earliest, long latest) {
+		
+		JsonArray result = new JsonArray();
+		
+		//------------------------------
+		// Check Inputs
+		if(schedulerIDs == null || schedulerIDs.isEmpty()
+		|| metricNames == null  || metricNames.isEmpty()) { 
+			return  result; 
+		}
+		
+		
+		//------------------------------
+		// Load if not already loaded
+		for(String schedulerID : schedulerIDs) {
+			
+			for(String metricName : metricNames) {
+				JsonArray partialResult = fetchTimeSeries(schedulerID, metricName, earliest, latest);
+				result.addAll(partialResult);
+			}
+		}
+		
+	
+		return result;
+	}
+	
+	 /*********************************************************************
+	 * Returns an array of time series.
+	 * 
+	 * @param schedulerIDs array of Step schedulerIDs
+	 * @param metricNames names of metrics to fetch
+	 * @param earliest time to fetch
+	 * @param latest time to fetch
+	 * 
+	 * @return JsonArray empty if nothing found
+	 *********************************************************************/
+	public JsonArray fetchTimeSeries(String schedulerID, String metricName, long earliest, long latest) {
+		
+		JsonArray result = new JsonArray();
+		
+		//------------------------------
+		// Check Inputs
+		if(schedulerID == null || metricName == null  ) { 
+			return  result; 
+		}
+		
+		//------------------------------
+		// Get Scheduler
+		StepSchedulerDetails scheduler = this.getSchedulerByID(schedulerID);
+		
+		if(scheduler == null) {
+			return result;
+		}
+		
+		//------------------------------
+		// Fetch Data
+			
+		CFWHttpResponse response = createAPIRequestBuilder("/time-series/measurements")
+				.body("application/json", 
+					""" 
+					{
+					    "start": %s,
+					    "end": %s,
+					    "oqlFilter": "(attributes.metricType = '%s') and (attributes.taskId = '%s')",
+					    "numberOfBuckets": 100,
+					    "collectAttributesValuesLimit": 10
+					}
+					""".formatted(earliest, latest, metricName, schedulerID)
+				)
+				.send()
+				
+				;
+		
+//		{
+//			  "start": 1711005180000,
+//			  "interval": 180000,
+//			  "end": 1711008960000,
+//			  "matrixKeys": [
+//			    {}
+//			  ],
+//			  "matrix": [
+//			    [
+//			      {
+//			        "begin": 1711005180000,
+//			        "attributes": {},
+//			        "count": 9,
+//			        "sum": 1761,
+//			        "min": 0,
+//			        "max": 1579,
+//			        "pclValues": {},
+//			        "throughputPerHour": 180
+//			      },
+//			      null,
+		
+		if(response.getStatus() == 200
+		&& response.getResponseBody().startsWith("{")) {
+			
+			JsonObject timeseries = response.getResponseBodyAsJsonObject();
+			
+			//---------------------
+			// Matrix
+			JsonElement matrix = timeseries.get("matrix");
+			if(matrix != null && matrix.isJsonArray()) {
+				JsonArray matrixArray = matrix.getAsJsonArray();
+				for(JsonElement datapoints : matrixArray ) {
+					
+					//---------------------
+					// Datapoints
+					if(datapoints != null && datapoints.isJsonArray()) {
+						JsonArray datapointsArray = datapoints.getAsJsonArray();
+						for(JsonElement datapoint : datapointsArray) {
+							if(datapoint != null && datapoint.isJsonObject()) {
+								System.out.println("datapoint");
+								JsonObject datapointObject = datapoint.getAsJsonObject();
+								JsonObject resultObject = scheduler.toJson();
+								
+								int count = datapointObject.get("count").getAsInt();
+								int sum = datapointObject.get("sum").getAsInt();
+								float avg = (float)sum / count;
+								resultObject.addProperty("metric", metricName);
+								resultObject.add("time", datapointObject.get("begin"));
+								
+								resultObject.addProperty("count", count);
+								resultObject.add("min", datapointObject.get("min"));
+								resultObject.addProperty("avg", avg);
+								resultObject.add("max", datapointObject.get("max"));
+								resultObject.addProperty("sum", sum);
+								resultObject.add("throughput_per_hour", datapointObject.get("throughputPerHour"));
+								
+								result.add(resultObject);
+							}
+						}
+					}
+				}
+			}
+
+			
+		}else {
+			new CFWLog(logger).severe("STEP: Unexpected response while fetching time series for scheduler: "+response.getResponseBody());
+		}
+		
+		
+		return result;
+	}
+	
 
 	/*********************************************************************
 	 * Create autocomplete for projects.
 	 *********************************************************************/
-    public AutocompleteResult autocompleteSchedulers(String searchValue, int maxResults) {
+	public AutocompleteResult autocompleteSchedulers(String searchValue, int maxResults) {
 
-    	String lowerSearch = searchValue.toLowerCase();
-    	
+		String lowerSearch = searchValue.toLowerCase();
+		
 		//-----------------------------
 		// Iterate results
 		AutocompleteList list = new AutocompleteList();
@@ -915,24 +1115,24 @@ public class StepEnvironment extends AbstractContextSettings {
 				"<b>Note: &nbsp;</b> This list is refreshed all 5 minutes, newly created schedulers will popup after a while."
 			);
 		 
-    	return autocomplete ;
-    }
+		return autocomplete ;
+	}
 	
-    /*********************************************************************
-     * Create autocomplete for projects.
-     *********************************************************************/
-    public AutocompleteResult autocompleteProjects(String searchValue, int maxResults) {
-    	
-    	String lowerSearch = searchValue.toLowerCase();
-    		
-    	//-----------------------------
-    	// Iterate results
-    	AutocompleteList list = new AutocompleteList();
-    	
-    	for(JsonObject project : projectCache.asMap().values()) {
+	/*********************************************************************
+	 * Create autocomplete for projects.
+	 *********************************************************************/
+	public AutocompleteResult autocompleteProjects(String searchValue, int maxResults) {
+		
+		String lowerSearch = searchValue.toLowerCase();
 			
-    		//----------------------------
-    		// Get ProjectID
+		//-----------------------------
+		// Iterate results
+		AutocompleteList list = new AutocompleteList();
+		
+		for(JsonObject project : projectCache.asMap().values()) {
+			
+			//----------------------------
+			// Get ProjectID
 			JsonElement idElement = project.get("id");
 			String projectID;
 			if(idElement != null && idElement.isJsonPrimitive()) {
@@ -941,8 +1141,8 @@ public class StepEnvironment extends AbstractContextSettings {
 				continue;
 			}
 
-    		//----------------------------
-    		// Get Project Name
+			//----------------------------
+			// Get Project Name
 			JsonElement attributesElement = project.get("attributes");
 			String projectName = null;
 			if(attributesElement != null && attributesElement.isJsonObject()) {
@@ -954,7 +1154,7 @@ public class StepEnvironment extends AbstractContextSettings {
 			}
 
 			//----------------------------
-    		// Search in Project Name
+			// Search in Project Name
 			if(projectName != null 
 			&& projectName.toLowerCase().contains(lowerSearch)
 			){
@@ -966,102 +1166,117 @@ public class StepEnvironment extends AbstractContextSettings {
 			}
 		}
 
-    	return new AutocompleteResult(list);
-    }
-    
-    /*********************************************************************
-     * Create autocomplete for projects.
-     *********************************************************************/
-    public AutocompleteResult autocompleteUsers(String searchValue, int maxResults) {
-    	
-    	String lowerSearch = searchValue.toLowerCase();
-    	
-    	//-----------------------------
-    	// Iterate results
-    	AutocompleteList list = new AutocompleteList();
-    	
-    	
-    	for(JsonElement userElement : fetchAllUsers()) {
-    		
-    		//----------------------------
-    		// Skip anything that is unexpected
-    		if(userElement == null 
-    		|| !userElement.isJsonObject()) {
-    			continue;
-    		}
-    		
-    		//----------------------------
-    		// Get ID
-    		JsonObject user = userElement.getAsJsonObject();
-    		JsonElement idElement = user.get("id");
-    		String userID;
-    		if(idElement != null && idElement.isJsonPrimitive()) {
-    			userID = idElement.getAsString();
-    		}else {
-    			continue;
-    		}
-    		
-    		//----------------------------
-    		// Get Username
-    		String userName = null;
+		return new AutocompleteResult(list);
+	}
+	
+	/*********************************************************************
+	 * Create autocomplete for projects.
+	 *********************************************************************/
+	public AutocompleteResult autocompleteUsers(String searchValue, int maxResults) {
+		
+		String lowerSearch = searchValue.toLowerCase();
+		
+		//-----------------------------
+		// Iterate results
+		AutocompleteList list = new AutocompleteList();
+		
+		
+		for(JsonElement userElement : fetchAllUsers()) {
+			
+			//----------------------------
+			// Skip anything that is unexpected
+			if(userElement == null 
+			|| !userElement.isJsonObject()) {
+				continue;
+			}
+			
+			//----------------------------
+			// Get ID
+			JsonObject user = userElement.getAsJsonObject();
+			JsonElement idElement = user.get("id");
+			String userID;
+			if(idElement != null && idElement.isJsonPrimitive()) {
+				userID = idElement.getAsString();
+			}else {
+				continue;
+			}
+			
+			//----------------------------
+			// Get Username
+			String userName = null;
 
 			JsonElement nameElement = user.get("username");
 			if(nameElement != null && nameElement.isJsonPrimitive()) {
 				userName = nameElement.getAsString();
 			}
-    		
-    		
-    		//----------------------------
-    		// Search in Project Name
-    		if(userName != null 
-    				&& userName.toLowerCase().contains(lowerSearch)
-    				){
-    			list.addItem(userID, userName);
-    		}
-    		
-    		if(list.size() >= maxResults) {
-    			break;
-    		}
-    	}
-    	
-    	return new AutocompleteResult(list);
-    }
-    
-    
-    /*********************************************************************
-     * Create autocomplete for plans.
-     *********************************************************************/
-    public AutocompleteResult autocompletePlans(String searchValue, int maxResults) {
-    	
-    	String findDoc = "{'attributes.name': {'$regex': '"+searchValue+"', '$options': 'i'}}";
-    	String sortDoc = "{'attributes.name': 1}";
-    	
-    	System.out.println(findDoc);
-    	//-----------------------------
-    	// Fetch Data
-    	MongoIterable<Document> result;
-    	
-    	result = null; //TODO this.find("plans", findDoc, sortDoc, 0);
-    	
-    	//-----------------------------
-    	// Iterate results
-    	AutocompleteList list = new AutocompleteList();
-    	
-//    	if(result != null) {
-//    		for (Document currentDoc : result) {
-//    			String id = currentDoc.get("_id").toString();
-//    			String name = ((Document)currentDoc.get("attributes")).get("name").toString();
-//    			System.out.println("id:"+id);
-//    			System.out.println("name:"+name);
-//    			list.addItem(id, name);
-//    			
-//    			if(list.size() >= maxResults) {
-//    				break;
-//    			}
-//    		}
-//    	}
-    	
-    	return new AutocompleteResult(list);
-    }
-    
+			
+			
+			//----------------------------
+			// Search in Project Name
+			if(userName != null 
+					&& userName.toLowerCase().contains(lowerSearch)
+					){
+				list.addItem(userID, userName);
+			}
+			
+			if(list.size() >= maxResults) {
+				break;
+			}
+		}
+		
+		return new AutocompleteResult(list);
+	}
+	
+	/*********************************************************************
+	 * Create autocomplete for projects.
+	 *********************************************************************/
+	public AutocompleteResult autocompleteMetrics(String searchValue, int maxResults) {
+		
+		AutocompleteList list = new AutocompleteList();
+		list.addItem("response-time", "Response Time");
+		
+//		for(Entry<String, String> entry : this.fetchMetricTypes().entrySet()) {
+//			list.addItem(entry.getKey(), entry.getValue());
+//		}
+		
+		return new AutocompleteResult(list);
+	}
+	
+	
+	/*********************************************************************
+	 * Create autocomplete for plans.
+	 *********************************************************************/
+	public AutocompleteResult autocompletePlans(String searchValue, int maxResults) {
+		
+		String findDoc = "{'attributes.name': {'$regex': '"+searchValue+"', '$options': 'i'}}";
+		String sortDoc = "{'attributes.name': 1}";
+		
+		System.out.println(findDoc);
+		//-----------------------------
+		// Fetch Data
+		MongoIterable<Document> result;
+		
+		result = null; //TODO this.find("plans", findDoc, sortDoc, 0);
+		
+		//-----------------------------
+		// Iterate results
+		AutocompleteList list = new AutocompleteList();
+		
+//		if(result != null) {
+//			for (Document currentDoc : result) {
+//				String id = currentDoc.get("_id").toString();
+//				String name = ((Document)currentDoc.get("attributes")).get("name").toString();
+//				System.out.println("id:"+id);
+//				System.out.println("name:"+name);
+//				list.addItem(id, name);
+//				
+//				if(list.size() >= maxResults) {
+//					break;
+//				}
+//			}
+//		}
+		
+		return new AutocompleteResult(list);
+	}
+	
 }
