@@ -731,7 +731,8 @@ curl -X 'POST' \
   -d '{
     "start": 1711005181904,
     "end": 1711008781904,
-    "oqlFilter": "(attributes.metricType = response-time) and (attributes.taskId = 65f41c46a68ef02f12ceeb63)",
+    "oqlFilter": "(attributes.metricType = \"response-time\") and (attributes.taskId = 65f41c46a68ef02f12ceeb63)",
+    "groupDimensions": ["name"],
     "numberOfBuckets": 100,
     "collectAttributesValuesLimit": 10
 	}'
@@ -743,7 +744,12 @@ curl -X 'POST' \
   "interval": 180000,
   "end": 1711008960000,
   "matrixKeys": [
-    {}
+    {
+      "name": "http_req_waiting"
+    },
+    {
+      "name": "http_req_connecting"
+    },
   ],
   "matrix": [
     [

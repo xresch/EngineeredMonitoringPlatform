@@ -188,7 +188,7 @@ public class WidgetSchedulerStatusHistory extends WidgetDefinition {
 	@Override
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<FileDefinition>();
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_awa_commonFunctions.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_step_commonFunctions.js") );
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_schedulerstatushistory.js") );
 		return array;
 	}
@@ -207,7 +207,7 @@ public class WidgetSchedulerStatusHistory extends WidgetDefinition {
 	@Override
 	public HashMap<Locale, FileDefinition> getLocalizationFiles() {
 		HashMap<Locale, FileDefinition> map = new HashMap<Locale, FileDefinition>();
-		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "lang_en_emp_awa.properties"));
+		map.put(Locale.ENGLISH, new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "lang_en_emp_step.properties"));
 		return map;
 	}
 	

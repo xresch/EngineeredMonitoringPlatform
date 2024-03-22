@@ -994,7 +994,8 @@ public class StepEnvironment extends AbstractContextSettings {
 					{
 					    "start": %s,
 					    "end": %s,
-					    "oqlFilter": "(attributes.metricType = '%s') and (attributes.taskId = '%s')",
+					    "oqlFilter": "(attributes.metricType = \\"%s\\") and (attributes.taskId = '%s')",
+					    "groupDimensions": ["name"],
 					    "numberOfBuckets": 100,
 					    "collectAttributesValuesLimit": 10
 					}
@@ -1233,11 +1234,11 @@ public class StepEnvironment extends AbstractContextSettings {
 	public AutocompleteResult autocompleteMetrics(String searchValue, int maxResults) {
 		
 		AutocompleteList list = new AutocompleteList();
-		list.addItem("response-time", "Response Time");
+		//list.addItem("response-time", "Response Time");
 		
-//		for(Entry<String, String> entry : this.fetchMetricTypes().entrySet()) {
-//			list.addItem(entry.getKey(), entry.getValue());
-//		}
+		for(Entry<String, String> entry : this.fetchMetricTypes().entrySet()) {
+			list.addItem(entry.getKey(), entry.getValue());
+		}
 		
 		return new AutocompleteResult(list);
 	}
