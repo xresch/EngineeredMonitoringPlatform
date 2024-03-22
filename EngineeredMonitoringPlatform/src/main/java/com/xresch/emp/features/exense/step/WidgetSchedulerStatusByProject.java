@@ -48,7 +48,7 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 	 ************************************************************/
 	@Override
 	public String widgetCategory() {
-		return FeatureExenseStep.WIDGET_CATEGORY_EXENSESTEP_MONGODB;
+		return FeatureExenseStep.WIDGET_CATEGORY_EXENSESTEP;
 	}
 
 	/************************************************************

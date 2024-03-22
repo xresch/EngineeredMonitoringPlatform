@@ -37,7 +37,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		.outputMode(JsonMode.RELAXED)
 		.build();
 
-	public static final String WIDGET_CATEGORY_EXENSESTEP_MONGODB = "Exense Step";
+	public static final String WIDGET_CATEGORY_EXENSESTEP = "Exense Step";
 
 	public enum StepExecutionResult {
 		PASSED, FAILED, TECHNICAL_ERROR, RUNNING
@@ -86,6 +86,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		CFW.Registry.Widgets.add(new WidgetSchedulerStatus());
 		CFW.Registry.Widgets.add(new WidgetSchedulerStatusByProject());
 		CFW.Registry.Widgets.add(new WidgetSchedulerStatusByUsers());
+		CFW.Registry.Widgets.add(new WidgetSchedulerStatusHistory());
 		CFW.Registry.Widgets.add(new WidgetSchedulerStatusByCurrentUser());
 		CFW.Registry.Widgets.add(new WidgetSchedulerExecutionsLast());
 		CFW.Registry.Widgets.add(new WidgetSchedulerExecutionsTimerange());

@@ -49,7 +49,7 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 	 ************************************************************/
 	@Override
 	public String widgetCategory() {
-		return FeatureExenseStep.WIDGET_CATEGORY_EXENSESTEP_MONGODB;
+		return FeatureExenseStep.WIDGET_CATEGORY_EXENSESTEP;
 	}
 
 	/************************************************************
@@ -106,7 +106,6 @@ public class WidgetSchedulerStatus extends WidgetDefinition  {
 		return createQueryAndThresholdFields()						
 				.addField(WidgetSettingsFactory.createDefaultDisplayAsField())				
 				.addAllFields(WidgetSettingsFactory.createTilesSettingsFields())
-				//.addField(WidgetSettingsFactory.createDisableBoolean())
 				.addField(WidgetSettingsFactory.createSampleDataField())
 									
 		;
