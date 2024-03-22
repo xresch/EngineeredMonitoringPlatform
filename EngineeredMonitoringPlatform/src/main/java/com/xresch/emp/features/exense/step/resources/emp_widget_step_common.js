@@ -31,12 +31,7 @@ var EMP_STEP_LABELS  = {
  ******************************************************************/
 function emp_step_createDefaultCustomizers(stepURL){
 	var customizers = {
-						
-		value: function(record, value) {
-			if(value == null) return '';
-			return (settings.suffix == null) ? value : value+" "+settings.suffix;
-		},
-		
+								
 		starttime: function(record, value) { return (value != null) ? CFW.format.epochToTimestamp(value) : '';},
 		
 		endtime: function(record, value) { return (value != null) ? CFW.format.epochToTimestamp(value) : '';},
@@ -311,6 +306,7 @@ function emp_step_groupByScheduler(statusArray){
 					, sum: 0
 					, min: 999999999
 					, max: 0
+					, chart: null // empty field to create column for sparkline
 					, result: []
 					, performance: []
 				}

@@ -61,7 +61,7 @@
 						titlefields: ['schedulername'], 
 						titleformat: '{0}', 
 						visiblefields: EMP_STEP_VISIBILEFIELDS, 
-						labels: EMP_STEP_VISIBILEFIELDS,
+						labels: EMP_STEP_LABELS,
 						customizers: emp_step_createDefaultCustomizers(stepURL),
 						rendererSettings: {
 							statusbar: {	
@@ -69,6 +69,9 @@
 								height: "100%",
 								// min height for the statusbar
 								minheight: "20px",
+							},
+							table: {
+								filterable: false
 							}
 						}
 					};
@@ -80,6 +83,7 @@
 						titlefields: ['projectname', 'schedulername'], 
 						visiblefields: ['projectname', 'schedulername'], 
 						titleformat: '{0} - {1}', 
+						labels: EMP_STEP_LABELS,
 						rendererSettings:{
 							chart: {
 								responsive: true,
@@ -89,17 +93,17 @@
 								ymin: 0,
 								ymax: null,
 								pointradius: 1,
-								padding: 0
+								//padding: 0
 							}
 					}};
 					
 					//---------------------------------
 					// Table Renderer Settings
-					let visibileFields = ['projectname','schedulername'];
-					if (settings.showstatistics){ visibileFields.push('min', 'avg', 'max'); }
-					if (settings.showsparkline){ visibileFields.push('sum'); /* Use sum field to display graph */ }
-					visibileFields.push('result');
-					visibileFields.push('performance');
+					let visibileFields = ['result','performance'];
+					if (settings.showsparkline){ visibileFields.push('chart'); }
+					visibileFields.push('schedulername');
+					if (settings.showstatistics){ visibileFields.push('count', 'min', 'avg', 'max'); }
+					
 					
 					var tableRendererSettings = {
 						data: groupedJobStats,
@@ -108,9 +112,7 @@
 						titlefields: ['schedulername'], 
 						titleformat: '{0}', 
 						visiblefields: visibileFields, 
-						labels: {
-							sum: "Sparkline",
-						},
+						labels: EMP_STEP_LABELS,
 						customizers: {
 							min: function(record, value) { return CFW.format.millisToDuration(value);},
 							avg: function(record, value) { return CFW.format.millisToDuration(value);},
@@ -120,20 +122,20 @@
 								clone.data = value;
 								clone.bgstylefield = 'statusstyle';
 								var renderer = CFW.render.getRenderer('statusbar');
-								return $('<div class="h-100" style="height: 10px; min-width: 10vw;">').append(renderer.render(clone));
+								return $('<div class="h-100" style="height: 10px; min-width: 5vw;  max-width: 10vw;">').append(renderer.render(clone));
 							},
 							performance: function(record, value) {
 								var clone = _.cloneDeep(statusbarRendererSettings);
 								clone.data = value;
 								clone.bgstylefield = 'performancestyle';
 								var renderer = CFW.render.getRenderer('statusbar');
-								return $('<div class="h-100" style="height: 10px; min-width: 1	0vw;">').append(renderer.render(clone));
+								return $('<div class="h-100" style="height: 10px; min-width: 5vw;  max-width: 10vw;">').append(renderer.render(clone));
 							},
-							sum: function(record, value) {
+							chart: function(record, value) {
 								chartRendererSettings.data = record.result;
 								var chartRenderer = CFW.render.getRenderer('chart');
 
-								return $('<div class="w-100" style="height: 25px; max-width: 200px">').append(chartRenderer.render(chartRendererSettings));
+								return $('<div class="w-100" style="height: 25px; min-width: 5vw; max-width: 10vw;">').append(chartRenderer.render(chartRendererSettings));
 								//return chartRenderer.render(chartRendererSettings);
 							},
 
@@ -142,8 +144,8 @@
 							table: {
 								narrow: 	true,
 								striped: 	true,
-								hover: 		false,
-								filterable: true
+								hover: 		true,
+								filterable: false
 							}
 					}};
 										
@@ -154,6 +156,7 @@
 					}else{						
 						var tableRenderer = CFW.render.getRenderer('table');
 						callback(widgetObject, tableRenderer.render(tableRendererSettings));
+						
 					}
 					
 				});
