@@ -56,7 +56,8 @@ function emp_step_createDefaultCustomizers(stepURL){
 		schedulerid:  function(record, value) { 
 			//https://mystepinstance.io/#/root/analytics?taskId=65f41c46a68ef02f12ceeb63&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant=Test_Reto
 			return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/analytics?taskId='+value+'&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant='+encodeURIComponent(record.projectname)+'">Scheduler Statistics</a>)</span>';
-		}
+		},
+		
 	};
 	;
 	return customizers
@@ -245,6 +246,13 @@ function createStepChartWidgetBase(
 					callback(widgetObject, '');
 					return;
 				}
+				
+				//---------------------------------
+				// URL
+				var stepURL = data.url;
+				if(!CFW.utils.isNullOrEmpty(stepURL) && !stepURL.endsWith("/")){
+					stepURL += "/";
+				}
 								
 				//---------------------------
 				// Render Settings
@@ -258,12 +266,8 @@ function createStepChartWidgetBase(
 					data: data.payload,
 					titlefields: arrayTitleFields, 
 					titleformat: null, 
-					labels: {
-						"projectname": "Project"
-						, "planname": "Plan"
-						, "schedulername": "Scheduler"
-					},
-					customizers: {},
+					labels: EMP_STEP_LABELS,
+					customizers: emp_step_createDefaultCustomizers(stepURL),
 					rendererSettings:{
 						chart: chartsettings 
 					}
@@ -318,8 +322,8 @@ function emp_step_groupByScheduler(statusArray){
 		if(!isNaN(duration) && currentStatus.endtime != null){
 			groupedResults[groupID].count += 1;
 			groupedResults[groupID].sum += duration;
-			groupedResults[groupID].min = (groupedResults[groupID].MIN <= duration) ? groupedResults[groupID].MIN : duration;
-			groupedResults[groupID].max = (groupedResults[groupID].MAX >= duration) ? groupedResults[groupID].MAX : duration;
+			groupedResults[groupID].min = (groupedResults[groupID].min <= duration) ? groupedResults[groupID].min : duration;
+			groupedResults[groupID].max = (groupedResults[groupID].max >= duration) ? groupedResults[groupID].max : duration;
 		}
 		
 		

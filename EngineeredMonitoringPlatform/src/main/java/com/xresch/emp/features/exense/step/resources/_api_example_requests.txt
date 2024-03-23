@@ -724,7 +724,7 @@ curl -X 'GET' \
 # Get Time Series 
 ###################################################################
 curl -X 'POST' \
-  'https://step.mycompany.com/rest/time-series/measurements' \
+  'https://step.mycompany.com/rest/time-series' \
   -H 'accept: application/json' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \

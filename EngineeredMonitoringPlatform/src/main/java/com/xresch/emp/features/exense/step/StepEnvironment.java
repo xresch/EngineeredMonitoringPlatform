@@ -1035,9 +1035,17 @@ public class StepEnvironment extends AbstractContextSettings {
 			// Matrix
 			JsonElement matrix = timeseries.get("matrix");
 			if(matrix != null && matrix.isJsonArray()) {
+				JsonArray matrixKeys = timeseries.get("matrixKeys").getAsJsonArray();
+				
 				JsonArray matrixArray = matrix.getAsJsonArray();
+				int i = 0;
 				for(JsonElement datapoints : matrixArray ) {
-					
+					JsonObject groupObject = matrixKeys.get(i).getAsJsonObject();
+					String groupName = "";
+					for(String memberName : groupObject.keySet()) {
+						groupName += memberName +"="+ groupObject.get(memberName).getAsString();
+					}
+					i++;
 					//---------------------
 					// Datapoints
 					if(datapoints != null && datapoints.isJsonArray()) {
@@ -1051,6 +1059,7 @@ public class StepEnvironment extends AbstractContextSettings {
 								int count = datapointObject.get("count").getAsInt();
 								int sum = datapointObject.get("sum").getAsInt();
 								float avg = (float)sum / count;
+								resultObject.addProperty("group", groupName);
 								resultObject.addProperty("metric", metricName);
 								resultObject.add("time", datapointObject.get("begin"));
 								

@@ -2,7 +2,7 @@
 	
 	var widgetMenuLabel = CFWL('emp_widget_step_schedulermetricschart', "Scheduler Metric Chart")
 	var widgetDescription = CFWL('emp_widget_step_schedulermetricschart_desc', "Shows a chart for the selected schedulers and metrics.");
-	var arrayTitleFields = ["projectname", "schedulername"];
+	var arrayTitleFields = ["metric", "group"];
 	var timeField = "time";
 	var valueField = "avg";
 	
