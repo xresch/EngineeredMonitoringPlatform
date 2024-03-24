@@ -64,7 +64,6 @@ public class StepSchedulerDetails {
 	 *********************************************************************/
 	public StepSchedulerDetails(StepEnvironment env, JsonObject schedulerObject) {
 
-		System.out.println("StepSchedulerDetails()-schedulerObject: "+CFW.JSON.toJSON(schedulerObject));
 		JsonElement id = schedulerObject.get("id");
 		
 		//---------------------

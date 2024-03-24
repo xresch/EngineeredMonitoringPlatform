@@ -4,7 +4,7 @@
 	var widgetDescription = CFWL('emp_widget_step_schedulermetricschart_desc', "Shows a chart for the selected schedulers and metrics.");
 	var arrayTitleFields = ["metric", "group"];
 	var timeField = "time";
-	var valueField = "avg";
+	var valueField = "val";
 	
 	var widgetDefinition = createStepChartWidgetBase(
 			  widgetMenuLabel

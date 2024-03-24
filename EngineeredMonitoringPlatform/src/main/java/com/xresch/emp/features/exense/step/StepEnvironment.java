@@ -210,8 +210,8 @@ public class StepEnvironment extends AbstractContextSettings {
 	// UserID and Array of Users Projects
 	private LoadingCache<String, JsonArray> userProjectCache;
 	
-	// metric name and metric label, will only be loaded once
-	private LinkedHashMap<String, String> metricTypes = null;
+	// metric name and metric, will only be loaded once
+	private LinkedHashMap<String, StepMetricType> metricTypes = null;
 	
 	/*********************************************************************
 	 * 
@@ -885,7 +885,7 @@ public class StepEnvironment extends AbstractContextSettings {
 	 /*********************************************************************
 	 *
 	 *********************************************************************/
-	public LinkedHashMap<String, String> fetchMetricTypes() {
+	public LinkedHashMap<String, StepMetricType> fetchMetricTypes() {
 		
 		//------------------------------
 		// Load if not already loaded
@@ -906,13 +906,14 @@ public class StepEnvironment extends AbstractContextSettings {
 						JsonObject metricObject = metric.getAsJsonObject();
 						
 						String name = metricObject.get("name").getAsString();
-						String label = metricObject.get("displayName").getAsString();
-						metricTypes.put(name, label);
+						StepMetricType metricType = new StepMetricType(metricObject);
+						metricTypes.put(name, metricType);
 					}
 				}
 				
 				if(metricTypes.isEmpty()) {
-					metricTypes = null;
+					metricTypes = null; // try reloading next time again
+					return new LinkedHashMap<>();
 				}
 			}else {
 				new CFWLog(logger).severe("STEP: Unexpected response while fetching projects for user: "+response.getResponseBody());
@@ -921,6 +922,8 @@ public class StepEnvironment extends AbstractContextSettings {
 	
 		return metricTypes;
 	}
+	
+
 	
 	
 	 /*********************************************************************
@@ -985,10 +988,20 @@ public class StepEnvironment extends AbstractContextSettings {
 			return result;
 		}
 		
+		
+		//------------------------------
+		// Determine Chart Value
+		String chartvalue = "sum";
+		StepMetricType metricType = fetchMetricTypes().get(metricName);
+		
+		if(metricType != null) {
+			chartvalue = metricType.getAggregation();
+		}
+		
 		//------------------------------
 		// Fetch Data
 			
-		CFWHttpResponse response = createAPIRequestBuilder("/time-series/measurements")
+		CFWHttpResponse response = createAPIRequestBuilder("/time-series")
 				.body("application/json", 
 					""" 
 					{
@@ -1052,7 +1065,6 @@ public class StepEnvironment extends AbstractContextSettings {
 						JsonArray datapointsArray = datapoints.getAsJsonArray();
 						for(JsonElement datapoint : datapointsArray) {
 							if(datapoint != null && datapoint.isJsonObject()) {
-								System.out.println("datapoint");
 								JsonObject datapointObject = datapoint.getAsJsonObject();
 								JsonObject resultObject = scheduler.toJson();
 								
@@ -1069,6 +1081,8 @@ public class StepEnvironment extends AbstractContextSettings {
 								resultObject.add("max", datapointObject.get("max"));
 								resultObject.addProperty("sum", sum);
 								resultObject.add("throughput_per_hour", datapointObject.get("throughputPerHour"));
+								
+								resultObject.add("val", resultObject.get(chartvalue));
 								
 								result.add(resultObject);
 							}
@@ -1245,8 +1259,8 @@ public class StepEnvironment extends AbstractContextSettings {
 		AutocompleteList list = new AutocompleteList();
 		//list.addItem("response-time", "Response Time");
 		
-		for(Entry<String, String> entry : this.fetchMetricTypes().entrySet()) {
-			list.addItem(entry.getKey(), entry.getValue());
+		for(StepMetricType type : this.fetchMetricTypes().values()) {
+			list.addItem(type.getName(), type.getLabel(), "Aggregation: "+type.getAggregation());
 		}
 		
 		return new AutocompleteResult(list);
@@ -1261,7 +1275,6 @@ public class StepEnvironment extends AbstractContextSettings {
 		String findDoc = "{'attributes.name': {'$regex': '"+searchValue+"', '$options': 'i'}}";
 		String sortDoc = "{'attributes.name': 1}";
 		
-		System.out.println(findDoc);
 		//-----------------------------
 		// Fetch Data
 		MongoIterable<Document> result;
@@ -1276,8 +1289,6 @@ public class StepEnvironment extends AbstractContextSettings {
 //			for (Document currentDoc : result) {
 //				String id = currentDoc.get("_id").toString();
 //				String name = ((Document)currentDoc.get("attributes")).get("name").toString();
-//				System.out.println("id:"+id);
-//				System.out.println("name:"+name);
 //				list.addItem(id, name);
 //				
 //				if(list.size() >= maxResults) {
