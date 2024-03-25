@@ -31,6 +31,10 @@ var EMP_STEP_LABELS  = {
  * 
  ******************************************************************/
 function emp_step_createDefaultCustomizers(stepURL, rendererName){
+	var textClass = " ";
+	if(rendererName == "table"){
+		textClass = " text-reset ";
+	}
 	var customizers = {
 								
 		starttime: function(record, value) { return (value != null) ? CFW.format.epochToTimestamp(value) : '';},
@@ -43,29 +47,29 @@ function emp_step_createDefaultCustomizers(stepURL, rendererName){
 			if(CFW.utils.isNullOrEmpty(stepURL)) return value;
 			var tenant = record['projectname'];
 			//http://localhost:8080/#/root/plans/editor/62694473ee10d74e1b26d76e?tenant=AnotherTestProject
-			return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/plans/editor/'+value+'?tenant='+tenant+'">Edit Plan</a>)</span>';
+			return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/plans/editor/'+value+'?tenant='+tenant+'">Edit</a>)</span>';
 		},
 		
 		projectname:  function(record, value) { 
 			if(CFW.utils.isNullOrEmpty(stepURL)) return value;
-			return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/plans/list?tenant='+value+'">Show Project</a>)</span>';
+			return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/plans/list?tenant='+value+'">Open</a>)</span>';
 		},
 		
 		schedulername:  function(record, value) { 
 			if(rendererName == "table"){
-				return '<span>'+value+'&nbsp;(<a class="text-reset" target="_blank"  href="'+stepURL+'#/root/analytics?taskId='+record.schedulerid+'&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant='+encodeURIComponent(record.projectname)+'"><u>Stats</u></a>)</span>'
+				return '<span><a class="'+textClass+'" target="_blank"  href="'+stepURL+'#/root/analytics?taskId='+record.schedulerid+'&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant='+encodeURIComponent(record.projectname)+'">'+value+'</a></span>'
 			}else{
 				return value;
 			}
 		},
 		schedulerid:  function(record, value) { 
 			//https://mystepinstance.io/#/root/analytics?taskId=65f41c46a68ef02f12ceeb63&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant=Test_Reto
-			return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/analytics?taskId='+value+'&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant='+encodeURIComponent(record.projectname)+'">Scheduler Statistics</a>)</span>';
+			return '<span>'+value+'&nbsp;(<a target="_blank" href="'+stepURL+'#/root/analytics?taskId='+value+'&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant='+encodeURIComponent(record.projectname)+'">Stats</a>)</span>';
 		},
 		
 	};
 	;
-	return customizers
+	return customizers;
 }
 	
 /******************************************************************
@@ -214,7 +218,8 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 				
 				if(renderType == "table"){
 					delete dataToRender.customizers.projectname;
-					delete dataToRender.customizers.planname;
+					var visis = dataToRender.visiblefields;
+					dataToRender.visiblefields = visis.filter(item => item !== 'planname');
 					
 				}
 				

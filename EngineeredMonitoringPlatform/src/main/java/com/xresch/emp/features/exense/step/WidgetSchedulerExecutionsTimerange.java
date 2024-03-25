@@ -39,7 +39,7 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_planexecutionstimerange";}
+	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_schedulerexecutionstimerange";}
 	
 	/************************************************************
 	 * 
@@ -61,7 +61,7 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String widgetName() { return "Plan Executions Timerange"; }
+	public String widgetName() { return "Scheduler Executions Timerange"; }
 	
 	/************************************************************
 	 * 
@@ -78,7 +78,7 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planexecutionstimerange.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_schedulerexecutionstimerange.js") );
 		return array;
 	}
 	
@@ -155,7 +155,7 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isProperlyDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Executions Time Range: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
@@ -174,50 +174,28 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Executions Time Range: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		
 		//-----------------------------
-		// Resolve Projects Param
-		LinkedHashMap<String,String> projects = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_PROJECTS).getValue();
+		// Resolve Scheduler  Param
+		LinkedHashMap<String,String> schedulers = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_SCHEDULERS).getValue();
 		
-		if(projects.size() == 0) {
+		if(schedulers.size() == 0) {
 			return null;
-		}		
-		
+		}	
+				
 		//-----------------------------
-		// Create Aggregate Document
-		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planexecutionstimerange_query.bson");
-		aggregateDocString = CFW.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
+		// Load Last Execution for every Scheduler
+		JsonArray results = new JsonArray();
 		
-		// Example Project Filter >> $or: [ {'_id': ObjectId('62443ecfee10d74e1b132860')},{'_id': ObjectId('62444fadee10d74e1b1395af')} ]
-		StringBuilder plansFilter = new StringBuilder("$or: [");
-		for(Entry<String, String> entry : projects.entrySet()) {
-			plansFilter.append("{'planid': '"+entry.getKey()+"'},");
+		for(String schedulerID : schedulers.keySet()) {
+			JsonArray lastExecutionArray = environment.getSchedulerLastNExecutions(schedulerID, Integer.MAX_VALUE, earliest, latest);
+			results.addAll(lastExecutionArray);
 		}
-		plansFilter.append("]");
 		
-		aggregateDocString = aggregateDocString.replace("$$plansFilter$$", plansFilter.toString());
-
-		//-----------------------------
-		// Fetch Data
-//		MongoIterable<Document> result;
-//		
-//		//start from projects to get projects data as well
-//		result = environment.aggregate("projects", aggregateDocString);
-//		
-//		//-----------------------------
-//		// Push to Queue
-//		JsonArray resultArray = new JsonArray();
-//		if(result != null) {
-//			for (Document currentDoc : result) {
-//				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-//				resultArray.add(object);
-//			}
-//		}
-		
-		return new JsonArray();
+		return results;
 		
 	}
 	

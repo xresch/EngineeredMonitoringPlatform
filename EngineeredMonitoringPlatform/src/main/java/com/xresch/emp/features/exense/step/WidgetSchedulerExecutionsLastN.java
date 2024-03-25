@@ -63,7 +63,7 @@ public class WidgetSchedulerExecutionsLastN extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String widgetName() { return "Scheduler Execution Last N"; }
+	public String widgetName() { return "Scheduler Executions Last N"; }
 	
 	/************************************************************
 	 * 
