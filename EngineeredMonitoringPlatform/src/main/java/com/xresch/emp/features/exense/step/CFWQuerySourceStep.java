@@ -93,7 +93,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_RESOURCE, "z_manual_source_step.html")
+		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "z_manual_source_step.html")
 				.replaceAll("\\{sourcename\\}", this.uniqueName());
 	}
 	

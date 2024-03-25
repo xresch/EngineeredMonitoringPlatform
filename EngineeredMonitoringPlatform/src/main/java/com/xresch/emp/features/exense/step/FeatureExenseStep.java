@@ -113,7 +113,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 				new ManualPage("Exense Step")
 					.faicon("fas fa-desktop")
 					.addPermission(FeatureManual.PERMISSION_MANUAL)
-					.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCE, "z_manual_step.html")
+					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_step.html")
 			);
 		
 	}

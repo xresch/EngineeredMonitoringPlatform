@@ -4,29 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.bson.Document;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField;
+import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
-import com.xresch.cfw.datahandling.CFWField.FormFieldType;
-import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
-import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
-import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
@@ -70,7 +62,10 @@ public class WidgetSchedulerExecutionsLastN extends WidgetDefinition  {
 	 ************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+		return 
+			  CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html")
+			+ CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "widget_common_content_thresholds.html")
+			;
 	}
 	
 	/************************************************************

@@ -62,7 +62,10 @@ public class WidgetSchedulerStatusByProject extends WidgetDefinition  {
 	 ************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html");
+		return 
+			  CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "widget_"+getWidgetType()+".html")
+			+ CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "widget_common_content_thresholds.html")
+			;
 	}
 	
 	/************************************************************

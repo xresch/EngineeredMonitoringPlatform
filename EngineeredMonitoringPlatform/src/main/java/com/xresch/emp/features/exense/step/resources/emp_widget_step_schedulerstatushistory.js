@@ -62,7 +62,7 @@
 						titleformat: '{0}', 
 						visiblefields: EMP_STEP_VISIBILEFIELDS, 
 						labels: EMP_STEP_LABELS,
-						customizers: emp_step_createDefaultCustomizers(stepURL),
+						customizers: emp_step_createDefaultCustomizers(stepURL, "statusbar"),
 						rendererSettings: {
 							statusbar: {	
 								//height for the status bar
@@ -117,6 +117,10 @@
 							min: function(record, value) { return CFW.format.millisToDuration(value);},
 							avg: function(record, value) { return CFW.format.millisToDuration(value);},
 							max: function(record, value) { return CFW.format.millisToDuration(value);},
+							schedulername:  function(record, value) { 
+								return '<span><a class="text-reset" target="_blank"  href="'+stepURL+'#/root/analytics?taskId='+record.schedulerid+'&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant='+encodeURIComponent(record.projectname)+'">'+value+'</a></span>'
+							},
+							
 							result: function(record, value) {
 								var clone = _.cloneDeep(statusbarRendererSettings);
 								clone.data = value;
@@ -138,6 +142,7 @@
 								return $('<div class="w-100" style="height: 25px; min-width: 5vw; max-width: 10vw;">').append(chartRenderer.render(chartRendererSettings));
 								//return chartRenderer.render(chartRendererSettings);
 							},
+							
 
 						},
 						rendererSettings:{
