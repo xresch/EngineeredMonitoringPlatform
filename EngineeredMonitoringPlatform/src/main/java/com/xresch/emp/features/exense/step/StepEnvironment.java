@@ -296,6 +296,9 @@ public class StepEnvironment extends AbstractContextSettings {
 				}
 			);
 		
+		//-----------------------------------
+		// Load Scheduler Cache
+		loadSchedulersCache();
 	}
 	
 	/*********************************************************************
@@ -350,7 +353,16 @@ public class StepEnvironment extends AbstractContextSettings {
 	 * 
 	 *********************************************************************/		
 	public String url() {
-		return url.getValue();
+		
+		if(finalURL == null) {
+			finalURL = url.getValue().trim();
+			
+			if(finalURL != null && !finalURL.endsWith("/")) {
+				finalURL += "/";
+			}
+		}
+		
+		return finalURL;
 	}
 	
 	/*********************************************************************
@@ -358,6 +370,7 @@ public class StepEnvironment extends AbstractContextSettings {
 	 *********************************************************************/
 	public StepEnvironment url(String value) {
 		this.url.setValue(value);
+		this.finalURL = null;
 		return this;
 	}
 	
@@ -382,15 +395,7 @@ public class StepEnvironment extends AbstractContextSettings {
 	 * Create request builder with URL and token
 	 *********************************************************************/
 	private CFWHttpRequestBuilder createAPIRequestBuilder(String apiEndpoint) {
-		
-		if(finalURL != null) {
-			finalURL = this.url().trim();
-			
-			if(finalURL != null && !finalURL.endsWith("/")) {
-				finalURL += "/";
-			}
-		}
-		
+				
 		if(apiEndpoint == null) {	apiEndpoint = "/"; }
 		if(!apiEndpoint.startsWith("/")) {	apiEndpoint = "/"+apiEndpoint; }
 		

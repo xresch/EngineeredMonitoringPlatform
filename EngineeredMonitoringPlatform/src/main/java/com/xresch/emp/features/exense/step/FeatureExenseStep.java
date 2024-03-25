@@ -142,9 +142,9 @@ public class FeatureExenseStep extends CFWAppFeature {
 			taskReloadSchedulerCache.cancel(false);
 		}
 		
-		// use an odd number to reduce number of clashes
+		// 
 		int millis = (int)CFWTimeUnit.m.toMillis(5);
-		taskReloadSchedulerCache = CFW.Schedule.runPeriodicallyMillis(0, millis, new TaskStepReloadSchedulerCache());
+		taskReloadSchedulerCache = CFW.Schedule.runPeriodicallyMillis(millis, millis, new TaskStepReloadSchedulerCache());
 				
 	}
 
