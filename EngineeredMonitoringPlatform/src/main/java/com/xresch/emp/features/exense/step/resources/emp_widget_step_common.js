@@ -15,6 +15,7 @@ var EMP_STEP_VISIBILEFIELDS =
         ,'starttime'
         ,'endtime'
     ];
+    
 var EMP_STEP_LABELS  = {
 		 projectname: "Project"
 		,projectid: "Project ID"
@@ -29,7 +30,7 @@ var EMP_STEP_LABELS  = {
 /******************************************************************
  * 
  ******************************************************************/
-function emp_step_createDefaultCustomizers(stepURL){
+function emp_step_createDefaultCustomizers(stepURL, rendererName){
 	var customizers = {
 								
 		starttime: function(record, value) { return (value != null) ? CFW.format.epochToTimestamp(value) : '';},
@@ -51,7 +52,11 @@ function emp_step_createDefaultCustomizers(stepURL){
 		},
 		
 		schedulername:  function(record, value) { 
-			 return value;
+			if(rendererName == "table"){
+				return '<span>'+value+'&nbsp;(<a class="text-reset" target="_blank"  href="'+stepURL+'#/root/analytics?taskId='+record.schedulerid+'&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant='+encodeURIComponent(record.projectname)+'"><u>Stats</u></a>)</span>'
+			}else{
+				return value;
+			}
 		},
 		schedulerid:  function(record, value) { 
 			//https://mystepinstance.io/#/root/analytics?taskId=65f41c46a68ef02f12ceeb63&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant=Test_Reto
@@ -181,6 +186,7 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 					if(current.alertstyle != "cfw-none"){
 						current.textstyle = "white"; 
 					}
+					
 				}
 				
 
@@ -194,7 +200,7 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 					visiblefields: ["result"],
 					titleformat: null, 
 					labels: EMP_STEP_LABELS,
-					customizers: emp_step_createDefaultCustomizers(stepURL),
+					customizers: emp_step_createDefaultCustomizers(stepURL, renderType),
 					rendererSettings: CFW.dashboard.createStatusWidgetRendererSettings(settings) 
 				};
 				
@@ -208,9 +214,12 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 				
 				if(renderType == "table"){
 					delete dataToRender.customizers.projectname;
-					delete dataToRender.customizers.schedulername;
+					delete dataToRender.customizers.planname;
+					
 				}
+				
 				callback(widgetObject, renderer.render(dataToRender));
+				
 			});
 		},
 		
@@ -267,7 +276,7 @@ function createStepChartWidgetBase(
 					titlefields: arrayTitleFields, 
 					titleformat: null, 
 					labels: EMP_STEP_LABELS,
-					customizers: emp_step_createDefaultCustomizers(stepURL),
+					customizers: emp_step_createDefaultCustomizers(stepURL, "chart"),
 					rendererSettings:{
 						chart: chartsettings 
 					}

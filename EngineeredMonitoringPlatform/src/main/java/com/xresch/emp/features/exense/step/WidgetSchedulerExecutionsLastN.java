@@ -18,8 +18,10 @@ import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
+import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
@@ -29,14 +31,17 @@ import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState;
+import com.xresch.cfw.validation.NumberRangeValidator;
 
-public class WidgetSchedulerStatusByCurrentUser extends WidgetDefinition  {
+public class WidgetSchedulerExecutionsLastN extends WidgetDefinition  {
+		
+	private static final String FIELDNAME_EXECUTION_COUNT = "EXECUTION_COUNT";
 	
 	/************************************************************
 	 * 
 	 ************************************************************/
 	@Override
-	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_planstatuscurrentuser";}
+	public String getWidgetType() {return FeatureExenseStep.WIDGET_PREFIX+"_schedulerexecutionslastn";}
 	
 	/************************************************************
 	 * 
@@ -58,7 +63,7 @@ public class WidgetSchedulerStatusByCurrentUser extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String widgetName() { return "Plan Status By Current User"; }
+	public String widgetName() { return "Scheduler Execution Last N"; }
 	
 	/************************************************************
 	 * 
@@ -75,7 +80,7 @@ public class WidgetSchedulerStatusByCurrentUser extends WidgetDefinition  {
 	public ArrayList<FileDefinition> getJavascriptFiles() {
 		ArrayList<FileDefinition> array = new ArrayList<>();
 		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_common.js") );
-		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatuscurrentuser.js") );
+		array.add( new FileDefinition(HandlingType.JAR_RESOURCE, FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_schedulerexecutionslastn.js") );
 		return array;
 	}
 	
@@ -119,7 +124,15 @@ public class WidgetSchedulerStatusByCurrentUser extends WidgetDefinition  {
 	 ************************************************************/
 	public CFWObject createQueryAndThresholdFields() {
 		return new CFWObject()
-				.addField(StepSettingsFactory.createEnvironmentSelectorField())						
+				.addField(StepSettingsFactory.createEnvironmentSelectorField())
+				.addField(StepSettingsFactory.createSchedulerSelectorField())	
+				.addField(
+					CFWField.newInteger(FormFieldType.NUMBER, FIELDNAME_EXECUTION_COUNT)
+						.setDescription("Define the maximum number of executions to display.")
+						.setValue(12)
+						.addValidator(new NumberRangeValidator(1, -1))
+				)
+				
 				.addAllFields(CFWState.createThresholdFields());
 	}
 	
@@ -129,7 +142,7 @@ public class WidgetSchedulerStatusByCurrentUser extends WidgetDefinition  {
 	 *********************************************************************/
 	@Override
 	public void fetchData(HttpServletRequest request, JSONResponse response, CFWObject settings, JsonObject jsonSettings, CFWTimeframe timeframe) { 
-		
+
 		long earliest = timeframe.getEarliest();
 		long latest = timeframe.getLatest();
 		
@@ -151,60 +164,55 @@ public class WidgetSchedulerStatusByCurrentUser extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isProperlyDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by Current User: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
 		response.addCustomAttribute("url", environment.url());
-		response.setPayload(loadDataFromStepDB(settings, earliest, latest));
+		response.setPayload(loadDataFromStep(settings, earliest, latest));
 	}
 
 	/*********************************************************************
 	 * 
 	 * @param latest time in millis of which to fetch the data.
 	 *********************************************************************/
-	public JsonArray loadDataFromStepDB(CFWObject widgetSettings, long earliest, long latest){
+	@SuppressWarnings("unchecked")
+	public JsonArray loadDataFromStep(CFWObject widgetSettings, long earliest, long latest){
 		
 		//-----------------------------
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by Current User: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		
 		//-----------------------------
-		// Create Aggregate Document
-		String aggregateDocString = CFW.Files.readPackageResource( FeatureExenseStep.PACKAGE_RESOURCE, "emp_widget_step_planstatususers_query.bson");
-		aggregateDocString = CFW.Time.replaceTimeframePlaceholders(aggregateDocString, earliest, latest, 0);
+		// Resolve Scheduler  Param
+		LinkedHashMap<String,String> schedulers = (LinkedHashMap<String,String>)widgetSettings.getField(StepSettingsFactory.FIELDNAME_STEP_SCHEDULERS).getValue();
 		
-
-		User currentUser = CFW.Context.Request.getUser();
-		if(currentUser == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by Current User: No logged in user found.");
+		if(schedulers.size() == 0) {
 			return null;
 		}
-		String currentUserFilter = "'username': '"+currentUser.username()+"'";
-		
-		aggregateDocString = aggregateDocString.replace("$$usersFilter$$", currentUserFilter);
 		
 		//-----------------------------
-		// Fetch Data
-		MongoIterable<Document> result;
-
-//		result = environment.aggregate("users", aggregateDocString);
-//		
-//		//-----------------------------
-//		// Push to Queue
-//		JsonArray resultArray = new JsonArray();
-//		if(result != null) {
-//			for (Document currentDoc : result) {
-//				JsonObject object = CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-//				resultArray.add(object);
-//			}
-//		}
+		// Resolve Count
+		Integer count = (Integer)widgetSettings.getField(FIELDNAME_EXECUTION_COUNT).getValue();
 		
-		return new JsonArray();
+		if(count == null || count <= 0) {
+			return null;
+		}
+		
+		//-----------------------------
+		// Load Last Execution for every Scheduler
+		JsonArray results = new JsonArray();
+		
+		for(String schedulerID : schedulers.keySet()) {
+			JsonArray lastExecutionArray = environment.getSchedulerLastNExecutions(schedulerID, count, earliest, latest);
+			results.addAll(lastExecutionArray);
+		}
+		
+		return results;
 		
 	}
 	
@@ -215,13 +223,6 @@ public class WidgetSchedulerStatusByCurrentUser extends WidgetDefinition  {
 				
 		JsonArray array = StepCommonFunctions.defaultStepStatusExampleData(24);
 		return array;
-	}
-
-	/*********************************************************************
-	 * 
-	 *********************************************************************/
-	public boolean supportsTask() {
-		return false;
 	}
 		
 }
