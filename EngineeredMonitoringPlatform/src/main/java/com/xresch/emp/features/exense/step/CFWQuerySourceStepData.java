@@ -30,21 +30,17 @@ import com.xresch.cfw.validation.NotNullOrEmptyValidator;
  * @author Reto Scheiwiller, (c) Copyright 2022
  * @license MIT-License
  **************************************************************************************************************/
-public class CFWQuerySourceStep extends CFWQuerySource {
+public class CFWQuerySourceStepData extends CFWQuerySource {
 
 	private String contextSettingsType = StepEnvironment.SETTINGS_TYPE;
 	
 	private static final String FIELDNAME_ENVIRONMENT = "environment";
-	private static final String FIELDNAME_COLLECTION = "collection";
-	private static final String FIELDNAME_FIND = "find";
-	private static final String FIELDNAME_AGGREGATE = "aggregate";
-	private static final String FIELDNAME_SORT = "sort";
-	private static final String FIELDNAME_TIMEZONE = "timezone";
+	private static final String FIELDNAME_TYPE = "type";
 	
 	/******************************************************************
 	 *
 	 ******************************************************************/
-	public CFWQuerySourceStep(CFWQuery parent) {
+	public CFWQuerySourceStepData(CFWQuery parent) {
 		super(parent);
 	}
 	
@@ -53,7 +49,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 *
 	 ******************************************************************/
 	public String uniqueName() {
-		return "step";
+		return "stepdata";
 	}
 
 	/******************************************************************
@@ -61,7 +57,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionShort() {
-		return "Fetches data from a Step API.";
+		return "Get specific data related to STEP.";
 	}
 		
 	/******************************************************************
@@ -85,7 +81,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionTime() {
-		return "Use the functions earliest() and latest() to insert epoch time in milliseconds into your STEP filter.";
+		return "Time is ignored.";
 	}
 
 	/******************************************************************
@@ -93,7 +89,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "z_manual_source_step.html")
+		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "manual_source_stepdata.html")
 				.replaceAll("\\{sourcename\\}", this.uniqueName());
 	}
 	
@@ -153,29 +149,11 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 							.setDescription("The step environment to fetch the data from. Use Ctrl+Space in the query editor for content assist.")	
 					)
 				.addField(
-				CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_COLLECTION)
-						.setDescription("Choose the MongoDB collection.")
+				CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_TYPE)
+						.setDescription("Choose the type of data to fetch: projects | schedulers | plans.")
 						.disableSanitization() //do not mess up the gorgeous queries
 						.addValidator(new NotNullOrEmptyValidator())
 				)	
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_FIND)
-						.setDescription("Specify the MongoDB document for the find method.")
-						.disableSanitization() //do not mess up the gorgeous queries
-				)
-				.addField(CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_SORT)
-						.setDescription("Specify the MongoDB document for that specifies the sort conditions.")
-						.disableSanitization() //do not mess up the gorgeous queries
-						)
-				.addField(
-						CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_AGGREGATE)
-						.setDescription("Specify the MongoDB pipeline array for the aggregate method.")
-						.disableSanitization() //do not mess up the gorgeous queries
-				)
-				.addField(
-						CFWField.newString(FormFieldType.TEXT, FIELDNAME_TIMEZONE)
-							.setDescription("Parameter can be used to adjust time zone differences between epoch time and the database. See manual for list of available zones.")	
-					)
-				
 			;
 	}
 	
@@ -232,77 +210,43 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 		//-----------------------------
 		// Get Environment
 		StepEnvironment environment;
-		if(environmentString != null) {
-			 environment = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
-		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "step: The chosen environment seems configured incorrectly or is unavailable.");
+		environment = StepEnvironmentManagement.getEnvironment(environmentID);
+		if(environment == null) {
 			return;
 		}
 		
 		//-----------------------------
-		// Resolve Timezone Offsets
-//		earliestMillis +=  timezone.getOffset(earliestMillis);
-//		latestMillis +=  timezone.getOffset(latestMillis);
+		// Resolve Type
+		String type = (String)parameters.getField(FIELDNAME_TYPE).getValue();
 		
-		//-----------------------------
-		// Resolve Collection Param
-		String collectionName = (String)parameters.getField(FIELDNAME_COLLECTION).getValue();
-		
-		if(Strings.isNullOrEmpty(collectionName)) {
+		if(Strings.isNullOrEmpty(type)) {
 			return;
 		}
 		
-		//-----------------------------
-		// Resolve Find Param
-		String findDocString = (String)parameters.getField(FIELDNAME_FIND).getValue();
-		if(findDocString != null) {
-			findDocString = findDocString.replace("$earliest$", ""+earliestMillis)
-				 .replace("$latest$", ""+latestMillis)
-				 ;
-		}
+		type = type.trim().toLowerCase();
 		
 		//-----------------------------
-		// Resolve Aggregate Param
-		String aggregateDocString = (String)parameters.getField(FIELDNAME_AGGREGATE).getValue();
-		if(aggregateDocString != null) {
-			aggregateDocString = aggregateDocString.replace("$earliest$", ""+earliestMillis)
-				 .replace("$latest$", ""+latestMillis)
-				 ;
-		}
-		
-		//-----------------------------
-		// Resolve Sort Param
-		String sortDocString = (String)parameters.getField(FIELDNAME_SORT).getValue();
-				
-		//-----------------------------
-		// Check Permissions
-		if(this.parent.getContext().checkPermissions()) {
-			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(contextSettingsType);
-			
-			if( !environmentMap.containsKey(environmentID) ) {
-				throw new AccessException("Missing permission to fetch from the specified Step environment with ID "+environmentID);
+		// fetchData
+
+		if(type.startsWith("scheduler")) {
+			for(StepSchedulerDetails scheduler : environment.getSchedulersAll() ) { 
+				EnhancedJsonObject object = new EnhancedJsonObject( scheduler.toJson() );
+				outQueue.put(object);
+			}
+			return;
+		}else if(type.startsWith("plan")) {
+			for(JsonObject object : environment.getPlansAll() ) { 
+				EnhancedJsonObject enhanced = new EnhancedJsonObject( object );
+				outQueue.put(enhanced);
+			}
+		}else if(type.startsWith("project")) {
+			for(JsonObject object : environment.getProjectsAll() ) { 
+				EnhancedJsonObject enhanced = new EnhancedJsonObject( object );
+				outQueue.put(enhanced);
 			}
 		}
+		
 
-		//-----------------------------
-		// Fetch Data
-		MongoIterable<Document> result;
-//		if(Strings.isNullOrEmpty(aggregateDocString)) {
-//			result = environment.find(collectionName, findDocString, sortDocString, limit);
-//		}else {
-//			result = environment.aggregate(collectionName, aggregateDocString);
-//		}
-		
-		//-----------------------------
-		// Push to Queue
-//		if(result != null) {
-//			for (Document currentDoc : result) {
-//				//TODO
-//				JsonObject object = new JsonObject(); //CFW.JSON.stringToJsonObject(currentDoc.toJson(FeatureExenseStep.writterSettings));
-//				outQueue.add(new EnhancedJsonObject(object));
-//			}
-//		}
-		
 	}
 
 }

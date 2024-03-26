@@ -1,8 +1,8 @@
 package com.xresch.emp.features.exense.step;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -470,6 +470,13 @@ public class StepEnvironment extends AbstractContextSettings {
 	/*********************************************************************
 	 * Returns the scheduler details or null
 	 *********************************************************************/
+	public Collection<StepSchedulerDetails> getSchedulersAll() {
+		return this.schedulerCache.asMap().values();
+	}
+	
+	/*********************************************************************
+	 * Returns the scheduler details or null
+	 *********************************************************************/
 	public ArrayList<StepSchedulerDetails> getSchedulersForUser(String userID) {
 		ArrayList<StepSchedulerDetails> userSchedulerList = new ArrayList<>();
 				
@@ -506,6 +513,7 @@ public class StepEnvironment extends AbstractContextSettings {
 		return result;
 	}
 	
+
 	/*********************************************************************
 	 * Returns the scheduler details or null
 	 *********************************************************************/
@@ -547,6 +555,7 @@ public class StepEnvironment extends AbstractContextSettings {
 		return null;
 		
 	}
+	
 	
 	/*********************************************************************
 	 * Returns a JsonObject containing the last Status for the given scheduler.
@@ -658,7 +667,12 @@ public class StepEnvironment extends AbstractContextSettings {
 	}
 	
 	
-	
+	/*********************************************************************
+	 * Returns all cached plans
+	 *********************************************************************/
+	public Collection<JsonObject> getPlansAll() {
+		return this.planCache.asMap().values();
+	}
 	
 	/*********************************************************************
 	 * 
@@ -763,6 +777,13 @@ public class StepEnvironment extends AbstractContextSettings {
 		return object;
 	}
 
+	/*********************************************************************
+	 * Returns all cached projects
+	 *********************************************************************/
+	public Collection<JsonObject> getProjectsAll() {
+		return this.projectCache.asMap().values();
+	}
+	
 	/*********************************************************************
 	 * 
 	 * @return the plan for a plan id, or null if not found

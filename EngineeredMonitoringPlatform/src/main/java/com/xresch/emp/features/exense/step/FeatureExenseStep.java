@@ -99,7 +99,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Query Source
-		//to be implemented: CFW.Registry.Query.registerSource(new CFWQuerySourceStep(null));
+		CFW.Registry.Query.registerSource(new CFWQuerySourceStepData(null));
 		
 		//----------------------------------
 		// Register Job Task
@@ -142,7 +142,6 @@ public class FeatureExenseStep extends CFWAppFeature {
 			taskReloadSchedulerCache.cancel(false);
 		}
 		
-		// 
 		int millis = (int)CFWTimeUnit.m.toMillis(5);
 		taskReloadSchedulerCache = CFW.Schedule.runPeriodicallyMillis(millis, millis, new TaskStepReloadSchedulerCache());
 				
