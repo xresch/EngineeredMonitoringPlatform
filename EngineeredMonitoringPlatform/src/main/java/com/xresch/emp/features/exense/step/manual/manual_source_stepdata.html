@@ -8,11 +8,10 @@
 	
 </code></pre>
 
-<p>Following returns a list of cached schedulers: </p>
-<pre><code class="language-cfwquery">
-| source {sourcename}  
+<p>Following returns a list of cached plans: </p>
+<pre><code class="language-cfwquery">| source {sourcename} 
 	environment={"id":1,"name":"DEV (sehlat.io)"} 
-	type="plans"
-| unbox root 
-| remove root
+	type="plans" 
+| unbox customFields, attributes 
+| remove customFields, attributes 
 </code></pre>

@@ -236,12 +236,12 @@ public class CFWQuerySourceStepData extends CFWQuerySource {
 			return;
 		}else if(type.startsWith("plan")) {
 			for(JsonObject object : environment.getPlansAll() ) { 
-				EnhancedJsonObject enhanced = new EnhancedJsonObject( object );
+				EnhancedJsonObject enhanced = new EnhancedJsonObject( object.deepCopy() );
 				outQueue.put(enhanced);
 			}
 		}else if(type.startsWith("project")) {
 			for(JsonObject object : environment.getProjectsAll() ) { 
-				EnhancedJsonObject enhanced = new EnhancedJsonObject( object );
+				EnhancedJsonObject enhanced = new EnhancedJsonObject( object.deepCopy() );
 				outQueue.put(enhanced);
 			}
 		}
