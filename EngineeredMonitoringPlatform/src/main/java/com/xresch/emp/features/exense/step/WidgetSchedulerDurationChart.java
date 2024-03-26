@@ -49,7 +49,7 @@ public class WidgetSchedulerDurationChart extends WidgetDefinition  {
 	 * 
 	 ************************************************************/
 	@Override
-	public String widgetName() { return "Scheduler Metrics Chart"; }
+	public String widgetName() { return "Scheduler Duration Chart"; }
 	
 	/************************************************************
 	 * 
