@@ -2,16 +2,27 @@
 <p>With this source you can get step data which is cached in EMP. Means you will only get the data which is actually somehow related to a scheduler. </p>
 
 <p>Following returns a list of cached schedulers: </p>
-<pre><code class="language-cfwquery">| source {sourcename} 
+<pre><code class="language-cfwquery">| source stepdata 
 	environment={"id":1234,"name":"STEP Test"} 
 	type="schedulers"
 	
 </code></pre>
 
 <p>Following returns a list of cached plans: </p>
-<pre><code class="language-cfwquery">| source {sourcename} 
-	environment={"id":1,"name":"DEV (sehlat.io)"} 
+<pre><code class="language-cfwquery">| source stepdata
+	environment={"id":1234,"name":"STEP Test"} 
 	type="plans" 
 | unbox customFields, attributes 
 | remove customFields, attributes 
 </code></pre>
+
+<p>Following returns a list of cached projects: </p>
+<pre><code class="language-cfwquery">| source stepdata 
+	environment={"id":1234,"name":"STEP Test"} 
+	type="projects" 
+| unbox attributes 
+| remove attributes
+</code></pre>
+
+
+

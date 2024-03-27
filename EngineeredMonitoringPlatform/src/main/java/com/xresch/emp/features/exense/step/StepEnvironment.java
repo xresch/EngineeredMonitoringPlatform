@@ -666,6 +666,59 @@ public class StepEnvironment extends AbstractContextSettings {
 		
 	}
 	
+	/*********************************************************************
+	 * Returns a JsonArray with the fetched data.
+	 * This method will not create logs on errors, it will only create
+	 * messages for the end user.
+	 * 
+	 * @param tableName the name of the STEP table to fetch data from
+	 * @param  filterQuery the STEP filter query
+	 * @return JsonArray results, never null but might be empty
+	 *********************************************************************/
+	public JsonArray getDataFromTableAPIEndpoint(String tableName, String filterQuery) {
+
+		JsonArray result = new JsonArray();
+		
+		//----------------------------
+		// Call API
+		CFWHttpResponse response = createAPIRequestBuilder("/table/"+tableName)
+				.POST()
+				.body("application/json", filterQuery)
+				.send()
+				;
+
+		//----------------------------
+		// Read API Response
+		if(response.getStatus() == 200
+		&& response.getResponseBody().startsWith("{")) {
+			JsonObject responseObject = response.getResponseBodyAsJsonObject();
+			
+			if(responseObject == null) { 
+				return result; 
+			}
+			
+			JsonElement data = responseObject.get("data");
+
+			if(data != null && data.isJsonArray()) {
+				JsonArray dataArray = data.getAsJsonArray();
+								
+				return dataArray;
+			}
+			
+		}else {
+			String message = "STEP: Unexpected response when fetching data from API: "
+							+"Status: "+ response.getStatus()
+							+" / Body: "+ response.getResponseBody()
+							;
+			CFW.Messages.addErrorMessage(message);
+		}
+
+		//----------------------------------
+		// Any Other Case
+		return result;
+		
+	}
+	
 	
 	/*********************************************************************
 	 * Returns all cached plans

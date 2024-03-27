@@ -368,7 +368,7 @@ curl -X 'POST' \
   "skip": 0,
   "limit": 1,
   "sort": {
-    "field": "string",
+    "field": "endTime",
     "direction": "DESCENDING"
   }
 }'

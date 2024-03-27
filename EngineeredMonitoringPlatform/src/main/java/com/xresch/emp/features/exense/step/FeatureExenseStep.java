@@ -26,7 +26,8 @@ public class FeatureExenseStep extends CFWAppFeature {
 	public static final String PACKAGE_RESOURCE = "com.xresch.emp.features.exense.step.resources";
 	public static final String PACKAGE_MANUAL = "com.xresch.emp.features.exense.step.manual";
 	
-	public static final String PERMISSION_STEP = "Exense Step Extensions";
+	public static final String PERMISSION_STEP = "Exense Step: Extensions";
+	public static final String PERMISSION_STEP_SOURCE_STEPAPI = "Exense Step: Source stepapi";
 	public static final String WIDGET_PREFIX = "emp_step";
 	
 	private static ScheduledFuture<?> taskReloadSchedulerCache;
@@ -100,6 +101,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		//----------------------------------
 		// Register Query Source
 		CFW.Registry.Query.registerSource(new CFWQuerySourceStepData(null));
+		CFW.Registry.Query.registerSource(new CFWQuerySourceStepAPI(null));
 		
 		//----------------------------------
 		// Register Job Task
@@ -127,6 +129,12 @@ public class FeatureExenseStep extends CFWAppFeature {
 					.description("Use the Step Extensions(Widgets, Sources, JobTasks, etc...)."),
 				true,
 				true);
+		
+		CFW.DB.Permissions.oneTimeCreate(
+				new Permission(PERMISSION_STEP_SOURCE_STEPAPI, FeatureUserManagement.CATEGORY_USER)
+				.description("Allows the user to use the query source stepapi."),
+				true,
+				false);
 	}
 
 	@Override
