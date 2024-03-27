@@ -1,16 +1,13 @@
-package com.xresch.emp.features.exense.step;
+package com.xresch.emp.features.exense.step.query;
 
-import java.rmi.AccessException;
 import java.text.ParseException;
 import java.util.HashMap;
-import java.util.TimeZone;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.bson.Document;
-
 import com.google.common.base.Strings;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
@@ -22,25 +19,28 @@ import com.xresch.cfw.features.query.CFWQueryAutocompleteHelper;
 import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
 import com.xresch.cfw.features.usermgmt.User;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
+import com.xresch.emp.features.exense.step.FeatureExenseStep;
+import com.xresch.emp.features.exense.step.StepEnvironment;
+import com.xresch.emp.features.exense.step.StepEnvironmentManagement;
 	
 /**************************************************************************************************************
  * 
  * @author Reto Scheiwiller, (c) Copyright 2022
  * @license MIT-License
  **************************************************************************************************************/
-public class CFWQuerySourceStepData extends CFWQuerySource {
+public class CFWQuerySourceStepAPI extends CFWQuerySource {
 
 	private String contextSettingsType = StepEnvironment.SETTINGS_TYPE;
 	
 	private static final String FIELDNAME_ENVIRONMENT = "environment";
-	private static final String FIELDNAME_TYPE = "type";
+	private static final String FIELDNAME_TABLE = "table";
+	private static final String FIELDNAME_QUERY = "query";
 	
 	/******************************************************************
 	 *
 	 ******************************************************************/
-	public CFWQuerySourceStepData(CFWQuery parent) {
+	public CFWQuerySourceStepAPI(CFWQuery parent) {
 		super(parent);
 	}
 	
@@ -49,7 +49,7 @@ public class CFWQuerySourceStepData extends CFWQuerySource {
 	 *
 	 ******************************************************************/
 	public String uniqueName() {
-		return "stepdata";
+		return "stepapi";
 	}
 
 	/******************************************************************
@@ -57,7 +57,7 @@ public class CFWQuerySourceStepData extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionShort() {
-		return "Get specific data related to STEP.";
+		return "Fetch data from the STEP's /table/{tablename} API endpoint.";
 	}
 		
 	/******************************************************************
@@ -65,7 +65,7 @@ public class CFWQuerySourceStepData extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionRequiredPermission() {
-		return FeatureExenseStep.PERMISSION_STEP;
+		return FeatureExenseStep.PERMISSION_STEP_SOURCE_STEPAPI;
 	}
 
 	/******************************************************************
@@ -73,7 +73,7 @@ public class CFWQuerySourceStepData extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public boolean hasPermission(User user) {
-		return user.hasPermission(FeatureExenseStep.PERMISSION_STEP);
+		return user.hasPermission(FeatureExenseStep.PERMISSION_STEP_SOURCE_STEPAPI);
 	}
 	
 	/******************************************************************
@@ -81,7 +81,7 @@ public class CFWQuerySourceStepData extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionTime() {
-		return "Time is ignored.";
+		return "Use earliest() and latest() function to insert time into your filter.";
 	}
 
 	/******************************************************************
@@ -89,8 +89,7 @@ public class CFWQuerySourceStepData extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "manual_source_stepdata.html")
-				.replaceAll("\\{sourcename\\}", this.uniqueName());
+		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "manual_source_stepapi.html");
 	}
 	
 	
@@ -149,10 +148,16 @@ public class CFWQuerySourceStepData extends CFWQuerySource {
 							.setDescription("The step environment to fetch the data from. Use Ctrl+Space in the query editor for content assist.")	
 					)
 				.addField(
-						CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_TYPE)
-						.setDescription("Choose the type of data to fetch: projects | schedulers | plans.")
-						.disableSanitization() //do not mess up the gorgeous queries
-						.addValidator(new NotNullOrEmptyValidator())
+						CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_TABLE)
+							.setDescription("Specify the STEP table you want to fetch data from.")
+							.disableSanitization() //do not mess up the gorgeous queries
+							.addValidator(new NotNullOrEmptyValidator())
+				)	
+				.addField(
+						CFWField.newString(FormFieldType.TEXTAREA, FIELDNAME_QUERY)
+							.setDescription("Specify the STEP filter query.")
+							.disableSanitization() //do not mess up the gorgeous queries
+							.addValidator(new NotNullOrEmptyValidator())
 				)	
 			;
 	}
@@ -216,36 +221,35 @@ public class CFWQuerySourceStepData extends CFWQuerySource {
 		}
 		
 		//-----------------------------
-		// Resolve Type
-		String type = (String)parameters.getField(FIELDNAME_TYPE).getValue();
+		// Resolve table
+		String table = (String)parameters.getField(FIELDNAME_TABLE).getValue();
 		
-		if(Strings.isNullOrEmpty(type)) {
+		if(Strings.isNullOrEmpty(table)) {
 			return;
 		}
 		
-		type = type.trim().toLowerCase();
+		table = table.trim();
+		
+		//-----------------------------
+		// Resolve query
+		String query = (String)parameters.getField(FIELDNAME_QUERY).getValue();
+		
+		if(Strings.isNullOrEmpty(query)) {
+			return;
+		}
+		
+		query = query.trim();
 		
 		//-----------------------------
 		// fetchData
 
-		if(type.startsWith("scheduler")) {
-			for(StepSchedulerDetails scheduler : environment.getSchedulersAll() ) { 
-				EnhancedJsonObject object = new EnhancedJsonObject( scheduler.toJson() );
-				outQueue.put(object);
-			}
-			return;
-		}else if(type.startsWith("plan")) {
-			for(JsonObject object : environment.getPlansAll() ) { 
-				EnhancedJsonObject enhanced = new EnhancedJsonObject( object.deepCopy() );
-				outQueue.put(enhanced);
-			}
-		}else if(type.startsWith("project")) {
-			for(JsonObject object : environment.getProjectsAll() ) { 
-				EnhancedJsonObject enhanced = new EnhancedJsonObject( object.deepCopy() );
-				outQueue.put(enhanced);
-			}
+		JsonArray array = environment.getDataFromTableAPIEndpoint(table, query);
+		for(JsonElement element : array ) { 
+			
+			EnhancedJsonObject object = new EnhancedJsonObject( element.getAsJsonObject() );
+			outQueue.put(object);
 		}
-		
+		return;
 
 	}
 

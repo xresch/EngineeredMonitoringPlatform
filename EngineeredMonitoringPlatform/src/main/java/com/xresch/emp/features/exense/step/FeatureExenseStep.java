@@ -15,6 +15,10 @@ import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.cfw.utils.CFWTime.CFWTimeUnit;
+import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepProjectName;
+import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepSetEnv;
+import com.xresch.emp.features.exense.step.query.CFWQuerySourceStepAPI;
+import com.xresch.emp.features.exense.step.query.CFWQuerySourceStepData;
 
 /**************************************************************************************************************
  * 
@@ -29,6 +33,8 @@ public class FeatureExenseStep extends CFWAppFeature {
 	public static final String PERMISSION_STEP = "Exense Step: Extensions";
 	public static final String PERMISSION_STEP_SOURCE_STEPAPI = "Exense Step: Source stepapi";
 	public static final String WIDGET_PREFIX = "emp_step";
+	
+	public static final String QUERY_FUNCTION_TAG = "Exense Step";
 	
 	private static ScheduledFuture<?> taskReloadSchedulerCache;
 	
@@ -102,6 +108,11 @@ public class FeatureExenseStep extends CFWAppFeature {
 		// Register Query Source
 		CFW.Registry.Query.registerSource(new CFWQuerySourceStepData(null));
 		CFW.Registry.Query.registerSource(new CFWQuerySourceStepAPI(null));
+		
+		//----------------------------------
+		// Register Query Function
+		CFW.Registry.Query.registerFunction(new CFWQueryFunctionStepSetEnv(null));
+		CFW.Registry.Query.registerFunction(new CFWQueryFunctionStepProjectName(null));
 		
 		//----------------------------------
 		// Register Job Task
