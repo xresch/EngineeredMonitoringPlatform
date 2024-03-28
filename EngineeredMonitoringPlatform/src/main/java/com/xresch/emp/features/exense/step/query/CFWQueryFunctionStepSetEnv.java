@@ -75,7 +75,7 @@ public class CFWQueryFunctionStepSetEnv extends CFWQueryFunction {
 	 ***********************************************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureQuery.PACKAGE_MANUAL+".functions", "manual_function_"+FUNCTION_NAME+".html");
+		return CFW.Files.readPackageResource(FeatureExenseStep.PACKAGE_MANUAL, "manual_function_"+FUNCTION_NAME+".html");
 	}
 
 

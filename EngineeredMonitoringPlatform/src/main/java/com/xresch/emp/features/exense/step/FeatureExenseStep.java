@@ -10,12 +10,13 @@ import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
-import com.xresch.cfw.features.query.database.TaskQueryHistoryLimitEntries;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.cfw.utils.CFWTime.CFWTimeUnit;
+import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepPlanName;
 import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepProjectName;
+import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepSchedulerName;
 import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepSetEnv;
 import com.xresch.emp.features.exense.step.query.CFWQuerySourceStepAPI;
 import com.xresch.emp.features.exense.step.query.CFWQuerySourceStepData;
@@ -112,7 +113,9 @@ public class FeatureExenseStep extends CFWAppFeature {
 		//----------------------------------
 		// Register Query Function
 		CFW.Registry.Query.registerFunction(new CFWQueryFunctionStepSetEnv(null));
+		CFW.Registry.Query.registerFunction(new CFWQueryFunctionStepPlanName(null));
 		CFW.Registry.Query.registerFunction(new CFWQueryFunctionStepProjectName(null));
+		CFW.Registry.Query.registerFunction(new CFWQueryFunctionStepSchedulerName(null));
 		
 		//----------------------------------
 		// Register Job Task

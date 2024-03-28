@@ -513,6 +513,18 @@ public class StepEnvironment extends AbstractContextSettings {
 		return result;
 	}
 	
+	/*********************************************************************
+	 * 
+	 * @return the plan for a plan id, or null if not found
+	 *********************************************************************/
+	public String getSchedulerName(String schedulerID) {
+		
+		StepSchedulerDetails scheduler = this.getSchedulerByID(schedulerID);
+		
+		if(scheduler == null) {	return null; }
+		
+		return scheduler.getSchedulerName();
+	}
 
 	/*********************************************************************
 	 * Returns the scheduler details or null
@@ -733,9 +745,7 @@ public class StepEnvironment extends AbstractContextSettings {
 	 *********************************************************************/
 	public String getPlanName(String planID) {
 		
-		if(planID == null) { return null; }
-		
-		JsonObject plan = this.getPlanByID( planID);
+		JsonObject plan = this.getPlanByID(planID);
 		
 		if(plan == null) {	return null; }
 		
@@ -763,6 +773,9 @@ public class StepEnvironment extends AbstractContextSettings {
 	 * 
 	 *********************************************************************/
 	public JsonObject getPlanByID(String planID) {
+		
+		if(planID == null) { return null; }
+		
 		try {
 			return planCache.get(planID);
 		} catch (ExecutionException e) {
@@ -845,13 +858,13 @@ public class StepEnvironment extends AbstractContextSettings {
 		
 		if(projectID == null) { return null; }
 		
-		JsonObject plan = this.getProjectByID(projectID);
+		JsonObject project = this.getProjectByID(projectID);
 		
-		if(plan == null) {	return null; }
+		if(project == null) {	return null; }
 		
 		//---------------------
 		// Attributes
-		JsonElement attributes = plan.get("attributes");
+		JsonElement attributes = project.get("attributes");
 		if(attributes != null && attributes.isJsonObject()) {
 				
 			JsonObject attributesObject = attributes.getAsJsonObject();

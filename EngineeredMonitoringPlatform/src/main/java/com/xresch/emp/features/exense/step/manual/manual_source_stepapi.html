@@ -55,8 +55,32 @@ Following a list of tables extracted from STEP version 3.24.3:
 	query=`{}` # do not filter, get full list of tasks</code></pre>
 
 
+<p>There are several functions named 'step*()' which assist you to fetch human readable values for IDs: </p>
+<pre><code class="language-cfwquery">| defaultparams 
+	envID={"id":1,"name":"STEP Test"} 
+| execute stepsetenv( param(envID) )
+| source stepapi 
+	environment=param(envID)
+	table="tasks"
+	query=`{}` # do not filter, get full list of tasks
+| unbox 
+	id
+	attributes.name
+	attributes.project
+	executionsParameters.repositoryObject.repositoryParameters.planid
+	replace = true
+| set 
+	id=stepSchedulerName(id) # just as an example, not needed in this case as we have attributes.name
+	project=stepProjectName(project)
+	planid=stepPlanName(planid)
+| rename 
+	project="ProjectName"
+	id="SchedulerNameFromFunction"
+	name="SchedulerNameUnboxed"
+	planid="PlanName"</code></pre>
 
-<p>Above query could be enhanced further to give a concise table giving selected information: </p>
+
+<p>You can also use subqueries to get values for specific IDs: </p>
 <pre><code class="language-cfwquery">| defaultparams 
 	limit=100
 	envID={"id":1,"name":"STEP Test"} 
@@ -93,7 +117,6 @@ Following a list of tables extracted from STEP version 3.24.3:
 	`)
 | rename name=scheduler id=schedulerID
 | keep schedulerID, project, scheduler,assertionPlan, cronExpression, cronExclusions, active, userID, isolatedExecution</code></pre>
-
 
 
 <p>The following query gives you a list of the last 100 executions, with userID and CRON settings: </p>

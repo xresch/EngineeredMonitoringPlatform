@@ -19,11 +19,12 @@ import com.xresch.emp.features.exense.step.StepEnvironmentManagement;
  * @author Reto Scheiwiller, (c) Copyright 2023 
  * @license MIT-License
  ************************************************************************************************************/
-public class CFWQueryFunctionStepProjectName extends CFWQueryFunction {
+public class CFWQueryFunctionStepPlanName extends CFWQueryFunction {
 
-	public static final String FUNCTION_NAME = "stepprojectname";
+	public static final String FUNCTION_NAME = "stepplanname";
 	
-	public CFWQueryFunctionStepProjectName(CFWQueryContext context) {
+	
+	public CFWQueryFunctionStepPlanName(CFWQueryContext context) {
 		super(context);
 	}
 
@@ -50,14 +51,14 @@ public class CFWQueryFunctionStepProjectName extends CFWQueryFunction {
 	 ***********************************************************************************************/
 	@Override
 	public String descriptionSyntax() {
-		return uniqueName()+"(projectID)";
+		return uniqueName()+"(planID)";
 	}
 	/***********************************************************************************************
 	 * 
 	 ***********************************************************************************************/
 	@Override
 	public String descriptionShort() {
-		return "Returns the name for the given ProjectID.";
+		return "Returns the name for the given PlanID.";
 	}
 	
 	/***********************************************************************************************
@@ -65,7 +66,7 @@ public class CFWQueryFunctionStepProjectName extends CFWQueryFunction {
 	 ***********************************************************************************************/
 	@Override
 	public String descriptionSyntaxDetailsHTML() {
-		return "<p><b>projectID:&nbsp;</b>The id of the project.</p>"
+		return "<p><b>planID:&nbsp;</b>The id of the plan.</p>"
 			;
 	}
 
@@ -122,7 +123,7 @@ public class CFWQueryFunctionStepProjectName extends CFWQueryFunction {
 		if(env == null) {
 			return result;
 		}else {
-			result = QueryPartValue.newString( env.getProjectName(id) );
+			result = QueryPartValue.newString( env.getPlanName(id) );
 			
 		}
 		
