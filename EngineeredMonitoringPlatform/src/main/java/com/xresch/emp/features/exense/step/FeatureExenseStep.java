@@ -14,6 +14,7 @@ import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.cfw.utils.CFWTime.CFWTimeUnit;
+import com.xresch.emp.features.exense.step.api.STEPAPI_Factory;
 import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepPlanName;
 import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepProjectName;
 import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepSchedulerName;
@@ -116,7 +117,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		CFW.Registry.Query.registerFunction(new CFWQueryFunctionStepPlanName(null));
 		CFW.Registry.Query.registerFunction(new CFWQueryFunctionStepProjectName(null));
 		CFW.Registry.Query.registerFunction(new CFWQueryFunctionStepSchedulerName(null));
-		
+				
 		//----------------------------------
 		// Register Job Task
 //		CFW.Registry.Jobs.registerTask(new CFWJobTaskSchedulerStatus());
@@ -136,6 +137,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
+				
 		//----------------------------------
 		// Permissions
 		CFW.DB.Permissions.oneTimeCreate(
@@ -153,7 +155,14 @@ public class FeatureExenseStep extends CFWAppFeature {
 
 	@Override
 	public void addFeature(CFWApplicationExecutor app) {	
+		
+		//---------------------------------------------------------
+		// Load Environments
 		StepEnvironmentManagement.initialize();
+		
+		//---------------------------------------------------------
+		//Register here as it won't work before DB is initialized.
+		CFW.Registry.API.addAll(STEPAPI_Factory.getAPIDefinitions());
 	}
 
 	@Override

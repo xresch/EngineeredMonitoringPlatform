@@ -9,7 +9,7 @@ import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.api.APIDefinition;
 import com.xresch.cfw.features.api.APIDefinitionSQL;
-import com.xresch.cfw.features.api.APISQLExecutor;
+import com.xresch.cfw.features.api.APIExecutorSQL;
 
 public class API_Factory {
 	
@@ -127,7 +127,7 @@ public class API_Factory {
 			, RETURN_STATUS
 		);
 		
-		APISQLExecutor executor = new APISQLExecutor() {
+		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
 				API_Input_EnvTimeframeProject inputs = (API_Input_EnvTimeframeProject)object;
@@ -174,7 +174,7 @@ public class API_Factory {
 				, RETURN_STATUS
 			);
 		
-		APISQLExecutor executor = new APISQLExecutor() {
+		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
 				API_Input_GetExecutionLogsForMonitor inputs = (API_Input_GetExecutionLogsForMonitor)object;
@@ -239,7 +239,7 @@ public class API_Factory {
 				, availability
 			);
 		
-		APISQLExecutor executor = new APISQLExecutor() {
+		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
 				API_Input_EnvTimeframeProject inputs = (API_Input_EnvTimeframeProject)object;
@@ -304,7 +304,7 @@ public class API_Factory {
 				, duration_seconds
 			);
 		
-		APISQLExecutor executor = new APISQLExecutor() {
+		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
 				API_Input_EnvTimeframeProject inputs = (API_Input_EnvTimeframeProject)object;
@@ -356,7 +356,7 @@ public class API_Factory {
 				, RETURN_RK
 			);
 		
-		APISQLExecutor executor = new APISQLExecutor() {
+		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
 				API_Input_GetStatusForMonitor inputs = (API_Input_GetStatusForMonitor)object;
@@ -435,7 +435,7 @@ public class API_Factory {
 				, BoundCount2
 			);
 		
-		APISQLExecutor executor = new APISQLExecutor() {
+		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
 				API_Input_GetStatusForProject inputs = (API_Input_GetStatusForProject)object;
@@ -487,7 +487,7 @@ public class API_Factory {
 				, RETURN_RK
 			);
 		
-		APISQLExecutor executor = new APISQLExecutor() {
+		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
 			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
 				API_Input_GetStatusForProject inputs = (API_Input_GetStatusForProject)object;
