@@ -49,7 +49,15 @@ public class FeatureExenseStep extends CFWAppFeature {
 	public static final String WIDGET_CATEGORY_EXENSESTEP = "Exense Step";
 
 	public enum StepExecutionResult {
-		PASSED, FAILED, TECHNICAL_ERROR, RUNNING
+		  PASSED
+		, FAILED
+		, TECHNICAL_ERROR
+		, IMPORT_ERROR
+		, VETOED
+		, SKIPPED
+		, INTERRUPTED
+		, RUNNING
+		, NORUN
 	}
 	
 	/************************************************************************************

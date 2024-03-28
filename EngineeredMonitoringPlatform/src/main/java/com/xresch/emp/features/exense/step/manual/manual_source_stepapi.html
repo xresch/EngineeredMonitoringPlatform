@@ -52,7 +52,9 @@ Following a list of tables extracted from STEP version 3.24.3:
 | source stepapi
 	environment=param(envID)
 	table="tasks"
-	query=`{}` # do not filter, get full list of tasks</code></pre>
+	query=`{}` # do not filter, get full list of tasks
+| formatfield # use the list format to make objects easier to read
+	[attributes, executionsParameters] = ['list', "bullets", "10px", false]</code></pre>
 
 
 <p>There are several functions named 'step*()' which assist you to fetch human readable values for IDs: </p>

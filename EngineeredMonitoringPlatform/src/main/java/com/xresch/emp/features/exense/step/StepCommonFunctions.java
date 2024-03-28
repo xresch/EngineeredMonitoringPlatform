@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.quartz.JobExecutionContext;
 
+import com.google.common.base.Enums;
 import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -45,7 +46,7 @@ public class StepCommonFunctions {
 		//----------------------------------------
 		// Check Condition
 		boolean conditionMatched = false;
-		ArrayList<JsonObject> instantExceedingThreshold = new ArrayList<>();
+		ArrayList<JsonObject> recordsExceedingThreshold = new ArrayList<>();
 		
 		for(JsonElement element : resultArray) {
 			
@@ -53,21 +54,49 @@ public class StepCommonFunctions {
 			Float duration = current.get("duration").getAsFloat();
 			String result = current.get("result").getAsString();
 			
+			//--------------------------------------
+			// Ignore any unknown status
+			if(!Enums.getIfPresent(StepExecutionResult.class, result).isPresent()) {
+				continue;
+			}
+			
+			
+			//--------------------------------------
+			// Get condition for step result
 			StepExecutionResult execResult = StepExecutionResult.valueOf(result);
 			
-			if(execResult == null || execResult.equals(StepExecutionResult.PASSED)) {
-				//check duration if passed
-				CFWStateOption condition = CFW.Conditions.getConditionForValue(duration, settings);
-				if(condition != null 
-				&& CFW.Conditions.compareIsEqualsOrMoreDangerous(alertThreshholdCondition, condition)) {
-					conditionMatched = true;
-					instantExceedingThreshold.add(current);
-				}
-			}else if(!execResult.equals(StepExecutionResult.RUNNING)) {
-				//if failed or error
-				conditionMatched = true;
-				instantExceedingThreshold.add(current);
+			CFWStateOption condition = CFWStateOption.NONE;
+			switch(execResult) {
+				case PASSED: 			condition = CFW.Conditions.getConditionForValue(duration, settings);
+										break;
+				
+				case FAILED:
+				case IMPORT_ERROR:
+				case TECHNICAL_ERROR:	condition = CFWStateOption.RED;
+										break;
+					
+					
+				case SKIPPED:
+				case VETOED:
+				case INTERRUPTED:		condition = CFWStateOption.ORANGE;
+					break;
+
+					
+				case NORUN:
+				case RUNNING:
+				default:				condition = CFWStateOption.NONE;
+										break;
+			
 			}
+			
+			//--------------------------------------
+			// Evaluate condition
+			if(condition != null 
+			&& CFW.Conditions.compareIsEqualsOrMoreDangerous(alertThreshholdCondition, condition)) {
+				conditionMatched = true;
+				recordsExceedingThreshold.add(current);
+			}
+
 		}
 				
 		//----------------------------------------
@@ -92,13 +121,31 @@ public class StepCommonFunctions {
 			if(type.equals(AlertType.RAISE)) {
 				
 				//----------------------------------------
+				// Create Table Header
+				String tableHeader = """ 
+						<tr> \
+						<td>Project</td>\
+						<td>Plan</td>\
+						<td>Scheduler</td>\
+						<td>Status</td>\
+						<td>Result</td>\
+						<td>Duration</td>\
+						</tr>""";
+
+				//----------------------------------------
 				// Create Job List 
 				String metricListText = "";
-				String metricListHTML = "<ul>";
-				for(JsonObject current : instantExceedingThreshold) {
+				String metricTableHTML = "<table class=\"table table-sm table-striped\" border=1 cellspacing=0 cellpadding=5>"+tableHeader;
+				
+				for(JsonObject current : recordsExceedingThreshold) {
 					
 					String projectname = current.get("projectname").getAsString();
 					String planname = current.get("planname").getAsString();
+					String planid = current.get("planid").getAsString();
+					String schedulerid = current.get("schedulerid").getAsString();
+					String schedulername = current.get("schedulername").getAsString();
+					String status = current.get("status").getAsString();
+					String result = current.get("result").getAsString();
 					long duration = current.get("duration").getAsLong();
 					//-----------------------------
 					// Create Label String
@@ -114,45 +161,67 @@ public class StepCommonFunctions {
 					
 					//---------------------------------
 					// Add Label as String and Link
-					if(!Strings.isNullOrEmpty(stepURL)) {
-						
-						String planid = current.get("planid").getAsString();
-						String schedulerid = current.get("schedulerid").getAsString();
-						
-						metricListHTML += "<li>"+labelString+"&nbsp;("
-								+"<a target=\"_blank\" href=\""+stepURL+"#/root/plans/editor/"+planid+"?tenant="+projectname+"\">Plan</a>";
-						
-						if(!Strings.isNullOrEmpty(projectname)) {
-							metricListHTML += ", <a target=\"_blank\" href=\""+stepURL+"#/root/plans/list?tenant="+projectname+"\">Project</a>";
-						}
-						
-						if(!Strings.isNullOrEmpty(schedulerid)) {
-							metricListHTML += ", <a target=\"_blank\" href=\""+stepURL+"#/root/dashboards/__pp__RTMDashboard?__filter1__=text,taskId,"+projectname+"\">Stats</a>";
-						}
-						
-						metricListHTML += ")</li>";
-						
-					}else {
-						metricListHTML += "<li>"+labelString+"</li>";
+					String projectCell = "&nbsp;";
+					if(!Strings.isNullOrEmpty(projectname)) {
+						projectCell = "<a target=\"_blank\" href=\""
+											+stepURL+"#/root/plans/list?tenant="
+											+CFW.HTTP.encode(projectname)
+											+"\">"+projectname+"</a>";
 					}
-			
+					
+					String planCell = "&nbsp;";
+					if(!Strings.isNullOrEmpty(projectname)) {
+						planCell = "<a target=\"_blank\" href=\""
+										+stepURL+"#/root/plans/editor/"+planid
+										+"?tenant="+CFW.HTTP.encode(projectname)
+										+"\">"+planname+"</a>";
+					}
+					
+					String schedulerCell = "&nbsp;";
+					if(!Strings.isNullOrEmpty(projectname)) {
+						schedulerCell = "<a target=\"_blank\" href=\""
+											+stepURL+"#/root/analytics?taskId="
+											+schedulerid+"&refresh=1&relativeRange=86400000&tsParams=taskId,refresh,relativeRange&tenant="
+											+CFW.HTTP.encode(projectname)
+											+"\">"+schedulername+"</a>";
+					}
+					
+					
+					String row = """
+							<tr>
+							<td>%s</td>\
+							<td>%s</td>\
+							<td>%s</td>\
+							<td>%s</td>\
+							<td>%s</td>\
+							<td>%s ms</td>\
+							</tr>""".formatted(projectCell
+										, planCell
+										, schedulerCell
+										, status
+										, result
+										, duration
+									)
+						;
+					metricTableHTML += row;
 				}
 				
 				metricListText = metricListText.substring(0, metricListText.length()-3);
-				metricListHTML+="</ul>";
+				metricTableHTML+="</table>";
 				
 				//----------------------------------------
 				// Create Message
 				String baseMessage = "The following record(s) have reached the threshold "+alertThreshholdString+":";
 				String messagePlaintext = baseMessage+" "+metricListText;
 				String messageHTML = "<p>"+baseMessage+"</p>";
-				messageHTML += metricListHTML;
+				messageHTML += metricTableHTML;
 				messageHTML += widgetLinkHTML;
-				messageHTML += "<h3>CSV Data</h3>"+CFW.JSON.formatJsonArrayToCSV(resultArray, ";");
-				
+
 				CFW.Messages.addErrorMessage(messagePlaintext);
 				
-				alertObject.doSendAlert(context, MessageType.ERROR, "EMP: Alert - Step plan(s) reached threshold", messagePlaintext, messageHTML);
+				alertObject.addTextData("data", "csv", CFW.JSON.toCSV(resultArray, ";") );
+				alertObject.addTextData("data", "json", CFW.JSON.toJSONPretty(resultArray) );
+				alertObject.doSendAlert(context, MessageType.ERROR, "EMP: Alert - Step scheduler(s) reached threshold", messagePlaintext, messageHTML);
 				
 			}
 			
@@ -163,7 +232,7 @@ public class StepCommonFunctions {
 				String messageHTML = "<p>"+message+"</p>"+widgetLinkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
-				alertObject.doSendAlert(context, MessageType.SUCCESS, "EMP: Resolved - Step plan(s) below threshold", message, messageHTML);
+				alertObject.doSendAlert(context, MessageType.SUCCESS, "EMP: Resolved - Step scheduler(s) below threshold", message, messageHTML);
 			}
 		}
 	}
