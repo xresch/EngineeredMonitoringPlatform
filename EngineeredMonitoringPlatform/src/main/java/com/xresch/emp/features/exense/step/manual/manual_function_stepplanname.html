@@ -1,0 +1,32 @@
+
+<p>
+This function returns the STEP plan name for a plan ID.
+You need to specify the environment in the query context using the function 'stepsetenv' before using this function.
+</p>
+
+<p>Following an example on how to use this and other STEP related functions: </p>
+<pre><code class="language-cfwquery">| defaultparams 
+	envID={"id":1,"name":"STEP Test"} 
+| execute stepsetenv( param(envID) )
+| source stepapi 
+	environment=param(envID)
+	table="tasks"
+	query=`{}` # do not filter, get full list of tasks
+| unbox 
+	id
+	attributes.name
+	attributes.project
+	executionsParameters.repositoryObject.repositoryParameters.planid
+	replace = true
+| set 
+	id=stepSchedulerName(id) # just as an example, not needed in this case as we have attributes.name
+	project=stepProjectName(project)
+	planid=stepPlanName(planid)
+| rename 
+	project="ProjectName"
+	id="SchedulerNameFromFunction"
+	name="SchedulerNameUnboxed"
+	planid="PlanName"</code></pre>
+
+
+
