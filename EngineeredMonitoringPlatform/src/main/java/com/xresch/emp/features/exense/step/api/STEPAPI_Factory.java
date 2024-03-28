@@ -108,7 +108,10 @@ public class STEPAPI_Factory {
 							}
 				);
 				
-		apiDef.setDescription("Returns the current status for the selected monitor.");
+		apiDef.setDescription(
+				"Returns the last N executions for the scheduler in the selected time frame."
+			  +" The example input field 'SchedulerID' has an autocomplete function. Type at least 2 characters to get suggestions. "
+				);
 			
 		apiDef.addOutputFields(
 				  RETURN_PROJECT_ID
