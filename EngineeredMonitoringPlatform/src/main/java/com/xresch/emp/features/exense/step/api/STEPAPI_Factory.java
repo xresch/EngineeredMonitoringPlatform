@@ -23,74 +23,55 @@ public class STEPAPI_Factory {
 	public static final String INPUT_TIMEFRAME = "JSON_TIMEFRAME";
 	public static final String INPUT_SCHEDULER_ID = "SCHEDULERID";
 
+
 	//-------------------------------------------------
 	// General Return Fields
 	//-------------------------------------------------
-	private static final CFWField<Long> RETURN_TIMESTAMP =
-			CFWField.newLong(FormFieldType.NONE, "Timestamp" )
-				.setDescription("The time of the execution log (unix timestamp, milliseconds since 01.01.1970).");
+	private static final CFWField<Long> RETURN_STARTTIME =
+			CFWField.newLong(FormFieldType.NONE, "starttime" )
+				.setDescription("The start time of the execution (unix timestamp, milliseconds since 01.01.1970).");
 	
-	private static final CFWField<Long> RETURN_SERIESTIME =
-			CFWField.newLong(FormFieldType.NONE, "SeriesTime" )
-				.setDescription("The time when the measure was taken(unix timestamp, milliseconds since 01.01.1970).");
+	private static final CFWField<Long> RETURN_ENDTIME =
+			CFWField.newLong(FormFieldType.NONE, "endtime" )
+			.setDescription("The end time of the execution (unix timestamp, milliseconds since 01.01.1970).");
 	
-	private static final CFWField<Integer> RETURN_AGGREGATION =
-			CFWField.newInteger(FormFieldType.NONE, "Aggregation" )
-				.setDescription("The aggregation interval in minutes represented by this value. 0 if there was no aggregation.");
+	private static final CFWField<Long> RETURN_DURATION =
+			CFWField.newLong(FormFieldType.NONE, "duration" )
+				.setDescription("The duration in milliseconds.");
+		
+	private static final CFWField<String> RETURN_SCHEDULER_ID =
+			CFWField.newString(FormFieldType.NONE, "schedulerid" )
+				.setDescription("The id of the STEP scheduler.");
 	
-	private static final CFWField<Integer> RETURN_RK =
-			CFWField.newInteger(FormFieldType.NONE, "rk" )
-				.setDescription("Ranking value(used internally only).");
+	private static final CFWField<String> RETURN_SCHEDULER_NAME =
+			CFWField.newString(FormFieldType.NONE, "schedulername" )
+				.setDescription("The name of the STEP scheduler.");
 	
-	private static final CFWField<Float> RETURN_VALUE =
-			CFWField.newFloat(FormFieldType.NONE, "Value" )
-				.setDescription("The average measure value in percentage ranging from 0.0(worst) to 100.0(best).");
+	private static final CFWField<Integer> RETURN_PLAN_ID =
+			CFWField.newInteger(FormFieldType.NONE, "panid" )
+				.setDescription("The id of the STEP plan.");
 	
-	private static final CFWField<Integer> RETURN_MONITOR_ID =
-			CFWField.newInteger(FormFieldType.NONE, "MonitorID" )
-				.setDescription("The id of the monitor.");
-	
-	private static final CFWField<String> RETURN_MONITOR_NAME =
-			CFWField.newString(FormFieldType.NONE, "MonitorName" )
-				.setDescription("The name of the monitor.");
+	private static final CFWField<String> RETURN_PLAN_NAME =
+			CFWField.newString(FormFieldType.NONE, "planname" )
+				.setDescription("The name of the STEP plan.");
 	
 	private static final CFWField<Integer> RETURN_PROJECT_ID =
-			CFWField.newInteger(FormFieldType.NONE, "ProjectID" )
-				.setDescription("The id of the project.");
+			CFWField.newInteger(FormFieldType.NONE, "projectid" )
+				.setDescription("The id of the STEP project.");
 	
 	private static final CFWField<String> RETURN_PROJECT_NAME =
-			CFWField.newString(FormFieldType.NONE, "ProjectName" )
-				.setDescription("The name of the project.");
+			CFWField.newString(FormFieldType.NONE, "projectname" )
+				.setDescription("The name of the STEP project.");
 		
-	private static final CFWField<Integer> RETURN_LOCATION_ID =
-			CFWField.newInteger(FormFieldType.NONE, "LocationID" )
-				.setDescription("The id of the location.");
-	
-	private static final CFWField<String> RETURN_LOCATION_NAME =
-			CFWField.newString(FormFieldType.NONE, "LocationName" )
-				.setDescription("The name of the location defined in SPM.");
-	
-	private static final CFWField<String> RETURN_MEASURE_NAME =
-			CFWField.newString(FormFieldType.NONE, "MeasureName" )
-				.setDescription("The name of the measure.");
-	//-------------------------------------------------
-	// Execution Log Return Fields
-	//-------------------------------------------------
-	private static final CFWField<String> RETURN_LOG_MESSAGE =
-			CFWField.newString(FormFieldType.NONE, "LogMessage" )
-				.setDescription("The message of the execution log.");
+	private static final CFWField<String> RETURN_RESULT =
+			CFWField.newString(FormFieldType.NONE, "result" )
+				.setDescription("The result of the STEP execution.");
 	
 	private static final CFWField<String> RETURN_STATUS =
-			CFWField.newString(FormFieldType.NONE, "Status" )
-				.setDescription("The status of the execution. Tells if the script was executed successfully. Does not give a status if the monitored application is working.");
+			CFWField.newString(FormFieldType.NONE, "status" )
+				.setDescription("The status of the STEP execution.");
 	
-	//-------------------------------------------------
-	// Service Target Return Fields
-	//-------------------------------------------------
-	private static final CFWField<String> RETURN_RULE =
-			CFWField.newString(FormFieldType.NONE, "Rule" )
-				.setDescription("The name of the rule.");	
-	
+
 	private STEPAPI_Factory() {
 		/*hide public constructor */
 	}
@@ -130,21 +111,20 @@ public class STEPAPI_Factory {
 		apiDef.setDescription("Returns the current status for the selected monitor.");
 			
 		apiDef.addOutputFields(
-				RETURN_PROJECT_ID
+				  RETURN_PROJECT_ID
 				, RETURN_PROJECT_NAME
-				, RETURN_MONITOR_ID
-				, RETURN_MONITOR_NAME
-				, RETURN_LOCATION_ID
-				, RETURN_LOCATION_NAME
-				, RETURN_MEASURE_NAME
-				, RETURN_SERIESTIME
-				, RETURN_AGGREGATION
-				, RETURN_VALUE
-				, RETURN_RK
+				, RETURN_SCHEDULER_NAME
+				, RETURN_SCHEDULER_ID
+				, RETURN_PLAN_ID
+				, RETURN_PLAN_NAME
+				, RETURN_STATUS
+				, RETURN_RESULT
+				, RETURN_DURATION
+				, RETURN_STARTTIME
+				, RETURN_ENDTIME
 			);
 		
 		APIExecutorJsonArray executor = new APIExecutorJsonArray() {
-			
 			@Override
 			public JsonArray execute(APIDefinitionJsonArray definition, CFWObject instance) {
 				

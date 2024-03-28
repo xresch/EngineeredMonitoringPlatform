@@ -38,7 +38,7 @@ public class STEPAPI_Input_GetLastExecutionsForScheduler extends STEPAPI_Input_E
 	private CFWField<CFWTimeframe> timeframe = 
 			CFWField.newTimeframe(STEPAPI_Factory.INPUT_TIMEFRAME)
 			.setLabel("Timeframe")
-			.setDescription("The timeframe that should be fetched.")
+			.setDescription("The timeframe that should be fetched. If you set an offset, earliest and latest is ignored. The value clientTimezoneOffset is ignored.")
 			.setValue(
 				new CFWTimeframe()
 					.setOffset(1, CFWTimeUnit.h)
