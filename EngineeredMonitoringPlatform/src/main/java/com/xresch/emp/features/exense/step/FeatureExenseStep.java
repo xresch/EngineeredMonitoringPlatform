@@ -73,7 +73,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 	 ************************************************************************************/
 	@Override
 	public String getDescriptionForFeatureManagement() {
-		return "Exense Step extensions that fetch data directly from the STEP REST API.(Widgets, Source, Tasks ...)";
+		return "Exense Step extensions that fetch data directly from the STEP REST API.(Widgets, Sources, Tasks ...)";
 	};
 	
 	/************************************************************************************
@@ -128,9 +128,9 @@ public class FeatureExenseStep extends CFWAppFeature {
 				
 		//----------------------------------
 		// Register Job Task
-//		CFW.Registry.Jobs.registerTask(new CFWJobTaskSchedulerStatus());
-//		CFW.Registry.Jobs.registerTask(new CFWJobTaskSchedulerStatusByProject());
-//		CFW.Registry.Jobs.registerTask(new CFWJobTaskSchedulerStatusByUser());
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskSchedulerStatus());
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskSchedulerStatusByProject());
+		CFW.Registry.Jobs.registerTask(new CFWJobTaskSchedulerStatusByUser());
 
 		//----------------------------------
 		// Register Manual Page
