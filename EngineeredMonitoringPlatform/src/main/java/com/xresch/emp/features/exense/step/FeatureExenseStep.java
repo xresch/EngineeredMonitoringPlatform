@@ -8,6 +8,10 @@ import org.bson.json.JsonWriterSettings;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.datahandling.CFWField.FormFieldType;
+import com.xresch.cfw.features.config.ConfigChangeListener;
+import com.xresch.cfw.features.config.Configuration;
+import com.xresch.cfw.features.dashboard.FeatureDashboard;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
@@ -24,7 +28,7 @@ import com.xresch.emp.features.exense.step.query.CFWQuerySourceStepData;
 
 /**************************************************************************************************************
  * 
- * @author Reto Scheiwiller, (c) Copyright 2022
+ * @author Reto Scheiwiller, (c) Copyright 2024
  * @license MIT-License
  **************************************************************************************************************/
 public class FeatureExenseStep extends CFWAppFeature {
@@ -37,6 +41,9 @@ public class FeatureExenseStep extends CFWAppFeature {
 	public static final String WIDGET_PREFIX = "emp_step";
 	
 	public static final String QUERY_FUNCTION_TAG = "Exense Step";
+	
+	public static final String CONFIG_CATEGORY = "Exense Step";
+	public static final String CONFIG_CACHE_RELOAD_MINUTES = "Cache Reload Minutes";
 	
 	private static ScheduledFuture<?> taskReloadSchedulerCache;
 	
@@ -145,9 +152,10 @@ public class FeatureExenseStep extends CFWAppFeature {
 
 	@Override
 	public void initializeDB() {
-				
-		//----------------------------------
+					
+		//-----------------------------------------
 		// Permissions
+		//-----------------------------------------
 		CFW.DB.Permissions.oneTimeCreate(
 				new Permission(PERMISSION_STEP, FeatureUserManagement.CATEGORY_USER)
 					.description("Use the Step Extensions(Widgets, Sources, JobTasks, etc...)."),
@@ -159,6 +167,27 @@ public class FeatureExenseStep extends CFWAppFeature {
 				.description("Allows the user to use the query source stepapi."),
 				true,
 				false);
+		
+		//-----------------------------------------
+		// Configuration
+		//-----------------------------------------
+		CFW.DB.Config.oneTimeCreate(
+			new Configuration(CONFIG_CATEGORY, CONFIG_CACHE_RELOAD_MINUTES)
+				.description("The the interval in minutes for reloading the cache that holds static data. This influences autocomplete results.")
+				.type(FormFieldType.NUMBER)
+				.value("5")
+				);
+		
+		//-------------------------------
+		// Create Change Listener
+		ConfigChangeListener listener = new ConfigChangeListener(CONFIG_CACHE_RELOAD_MINUTES) {
+			
+			@Override
+			public void onChange() {
+				startTasks();
+			}
+		};
+		CFW.DB.Config.addChangeListener(listener);
 	}
 
 	@Override
@@ -180,8 +209,10 @@ public class FeatureExenseStep extends CFWAppFeature {
 		if(taskReloadSchedulerCache != null) {
 			taskReloadSchedulerCache.cancel(false);
 		}
+		System.out.println("start tasks");
+		int minutes = CFW.DB.Config.getConfigAsInt(CONFIG_CATEGORY, CONFIG_CACHE_RELOAD_MINUTES);
 		
-		int millis = (int)CFWTimeUnit.m.toMillis(5);
+		int millis = (int)CFWTimeUnit.m.toMillis(minutes);
 		taskReloadSchedulerCache = CFW.Schedule.runPeriodicallyMillis(millis, millis, new TaskStepReloadSchedulerCache());
 				
 	}

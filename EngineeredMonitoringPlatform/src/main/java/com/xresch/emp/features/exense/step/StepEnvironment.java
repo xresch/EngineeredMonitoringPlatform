@@ -1227,11 +1227,14 @@ public class StepEnvironment extends AbstractContextSettings {
 		
 		
 		AutocompleteResult autocomplete = new AutocompleteResult(list);
+
+		int minutes = CFW.DB.Config.getConfigAsInt(FeatureExenseStep.CONFIG_CATEGORY, FeatureExenseStep.CONFIG_CACHE_RELOAD_MINUTES);
 		autocomplete.setHTMLDescription(
-				"<b>Note: &nbsp;</b> This list is refreshed all 5 minutes, newly created schedulers will popup after a while."
+				"<b>Note: &nbsp;</b> This list is refreshed all "+minutes+" minutes, newly created schedulers will popup after a while."
 			);
+		
 		 
-		return autocomplete ;
+		return autocomplete;
 	}
 	
 	/*********************************************************************
