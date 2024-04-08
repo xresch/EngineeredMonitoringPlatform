@@ -1,6 +1,6 @@
 {"success": true,"messages": [],"payload": [
   {
-    "PK_ID": 1288,
+    "PK_ID": 20,
     "FK_ID_USER": 1,
     "NAME": "[EMP] Dashboard Statistics",
     "DESCRIPTION": null,
@@ -11,8 +11,8 @@
     "JSON_EDITORS": {},
     "JSON_EDITOR_GROUPS": {},
     "ALLOW_EDIT_SETTINGS": true,
-    "TIME_CREATED": 1699001071159,
-    "LAST_UPDATED": 1712388286495,
+    "TIME_CREATED": 1712388943222,
+    "LAST_UPDATED": 1712389387508,
     "IS_PUBLIC": false,
     "START_FULLSCREEN": false,
     "IS_DELETABLE": true,
@@ -23,8 +23,8 @@
     "username": "admin",
     "widgets": [
       {
-        "PK_ID": 21652,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 204,
+        "FK_ID_DASHBOARD": 20,
         "TYPE": "cfw_widget_queryresults",
         "X": 13,
         "Y": 0,
@@ -50,8 +50,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 21653,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 205,
+        "FK_ID_DASHBOARD": 20,
         "TYPE": "cfw_parameter",
         "X": 0,
         "Y": 0,
@@ -88,8 +88,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 21654,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 206,
+        "FK_ID_DASHBOARD": 20,
         "TYPE": "cfw_widget_queryresults",
         "X": 38,
         "Y": 17,
@@ -115,8 +115,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 21655,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 207,
+        "FK_ID_DASHBOARD": 20,
         "TYPE": "cfw_widget_queryresults",
         "X": 13,
         "Y": 17,
@@ -142,8 +142,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 21921,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 208,
+        "FK_ID_DASHBOARD": 20,
         "TYPE": "cfw_label",
         "X": 0,
         "Y": 20,
@@ -172,8 +172,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 21983,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 209,
+        "FK_ID_DASHBOARD": 20,
         "TYPE": "cfw_widget_queryresults",
         "X": 0,
         "Y": 55,
@@ -199,8 +199,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 23300,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 210,
+        "FK_ID_DASHBOARD": 20,
         "TYPE": "cfw_widget_queryresults",
         "X": 0,
         "Y": 23,
@@ -228,20 +228,20 @@
     ],
     "parameters": [
       {
-        "PK_ID": 458,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 47,
+        "FK_ID_DASHBOARD": 20,
         "WIDGET_TYPE": null,
         "LABEL": "Query Select",
         "PARAM_TYPE": "QUERY_EDITOR",
         "NAME": "dashboard",
-        "VALUE": "| source appdb\r\n\tquery\u003d`\r\n\tSELECT PK_ID, NAME FROM CFW_DASHBOARD \r\n\tWHERE IS_SHARED \u003d TRUE\r\n\t`\r\n| sort NAME",
+        "VALUE": "| source appdb\r\n\tquery\u003d`\r\n\tSELECT PK_ID, NAME FROM CFW_DASHBOARD \r\n\tWHERE IS_SHARED \u003d TRUE \r\n\t  AND IS_ARCHIVED \u003d FALSE\r\n\t  AND VERSION \u003d 0\r\n\t`\r\n| sort NAME",
         "MODE": "MODE_SUBSTITUTE",
         "IS_MODE_CHANGE_ALLOWED": false,
         "IS_DYNAMIC": true
       },
       {
-        "PK_ID": 459,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 48,
+        "FK_ID_DASHBOARD": 20,
         "WIDGET_TYPE": null,
         "LABEL": "Number",
         "PARAM_TYPE": "NUMBER",
@@ -252,8 +252,8 @@
         "IS_DYNAMIC": false
       },
       {
-        "PK_ID": 460,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 49,
+        "FK_ID_DASHBOARD": 20,
         "WIDGET_TYPE": null,
         "LABEL": "Select",
         "PARAM_TYPE": "VALUE_LABEL",
@@ -264,8 +264,8 @@
         "IS_DYNAMIC": false
       },
       {
-        "PK_ID": 461,
-        "FK_ID_DASHBOARD": 1288,
+        "PK_ID": 50,
+        "FK_ID_DASHBOARD": 20,
         "WIDGET_TYPE": null,
         "LABEL": "Select",
         "PARAM_TYPE": "VALUE_LABEL",
