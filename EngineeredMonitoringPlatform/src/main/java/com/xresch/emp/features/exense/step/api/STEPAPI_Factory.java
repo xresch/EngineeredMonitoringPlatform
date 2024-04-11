@@ -48,7 +48,7 @@ public class STEPAPI_Factory {
 				.setDescription("The name of the STEP scheduler.");
 	
 	private static final CFWField<Integer> RETURN_PLAN_ID =
-			CFWField.newInteger(FormFieldType.NONE, "panid" )
+			CFWField.newInteger(FormFieldType.NONE, "planid" )
 				.setDescription("The id of the STEP plan.");
 	
 	private static final CFWField<String> RETURN_PLAN_NAME =
