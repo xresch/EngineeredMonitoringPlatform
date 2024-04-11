@@ -209,9 +209,8 @@ public class FeatureExenseStep extends CFWAppFeature {
 		if(taskReloadSchedulerCache != null) {
 			taskReloadSchedulerCache.cancel(false);
 		}
-		System.out.println("start tasks");
-		int minutes = CFW.DB.Config.getConfigAsInt(CONFIG_CATEGORY, CONFIG_CACHE_RELOAD_MINUTES);
 		
+		int minutes = CFW.DB.Config.getConfigAsInt(CONFIG_CATEGORY, CONFIG_CACHE_RELOAD_MINUTES);
 		int millis = (int)CFWTimeUnit.m.toMillis(minutes);
 		taskReloadSchedulerCache = CFW.Schedule.runPeriodicallyMillis(millis, millis, new TaskStepReloadSchedulerCache());
 				
