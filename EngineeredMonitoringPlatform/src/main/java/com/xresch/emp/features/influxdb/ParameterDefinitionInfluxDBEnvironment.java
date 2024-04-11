@@ -4,9 +4,11 @@ import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.parameter.ParameterDefinition;
+import com.xresch.emp.features.awa.FeatureAWA;
 
 public class ParameterDefinitionInfluxDBEnvironment extends ParameterDefinition {
 
@@ -17,7 +19,23 @@ public class ParameterDefinitionInfluxDBEnvironment extends ParameterDefinition 
 	 ***************************************************************/
 	@Override
 	public String getParamUniqueName() { return LABEL; }
-
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	@Override
+	public String descriptionShort() {
+		return "Parameter that allows a user to select a InfluxDB environment he has access too.";
+	}
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureInfluxDB.PACKAGE_MANUAL, "parameter_"+LABEL.toLowerCase().replace(" ", "_")+".html");
+	}
+	
 	/***************************************************************
 	 * 
 	 ***************************************************************/

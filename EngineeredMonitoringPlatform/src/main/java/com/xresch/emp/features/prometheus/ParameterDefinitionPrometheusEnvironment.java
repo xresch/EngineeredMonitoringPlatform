@@ -13,6 +13,7 @@ import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.parameter.ParameterDefinition;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.emp.features.awa.FeatureAWA;
 
 public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinition {
 
@@ -23,7 +24,23 @@ public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinitio
 	 ***************************************************************/
 	@Override
 	public String getParamUniqueName() { return LABEL; }
-
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	@Override
+	public String descriptionShort() {
+		return "Parameter that allows a user to select a Prometheus environment he has access too.";
+	}
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeaturePrometheus.PACKAGE_MANUAL, "parameter_"+LABEL.toLowerCase().replace(" ", "_")+".html");
+	}
+	
 	/***************************************************************
 	 * 
 	 ***************************************************************/

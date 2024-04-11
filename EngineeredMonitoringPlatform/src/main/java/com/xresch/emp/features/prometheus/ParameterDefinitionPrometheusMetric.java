@@ -24,6 +24,24 @@ public class ParameterDefinitionPrometheusMetric extends ParameterDefinition {
 	@Override
 	public String getParamUniqueName() { return LABEL; }
 
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	@Override
+	public String descriptionShort() {
+		return "Allows the user to use auto complete while typing to find a prometheus metric.";
+	}
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeaturePrometheus.PACKAGE_MANUAL, "parameter_"+LABEL.toLowerCase().replace(" ", "_")+".html");
+	}
+	
+	
 	/***************************************************************
 	 * 
 	 ***************************************************************/

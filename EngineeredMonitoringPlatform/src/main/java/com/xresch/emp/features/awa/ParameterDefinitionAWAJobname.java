@@ -27,6 +27,22 @@ public class ParameterDefinitionAWAJobname extends ParameterDefinition {
 	/***************************************************************
 	 * 
 	 ***************************************************************/
+	@Override
+	public String descriptionShort() {
+		return "Allows a user to select a AWA jobname with auto-complete while typing.";
+	}
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
+	@Override
+	public String descriptionHTML() {
+		return CFW.Files.readPackageResource(FeatureAWA.PACKAGE_MANUAL, "parameter_"+LABEL.toLowerCase().replace(" ", "_")+".html");
+	}
+	
+	/***************************************************************
+	 * 
+	 ***************************************************************/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
