@@ -645,7 +645,9 @@ public class StepEnvironment extends AbstractContextSettings {
 					  "sort": {
 						"field": "endTime",
 						"direction": "DESCENDING"
-					  }
+					  },
+					  "performEnrichment": false,
+					  "calculateCounts": false
 					}
 					""".formatted(schedulerID, earliest, latest, executionCount)
 				)
