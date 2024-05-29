@@ -87,7 +87,7 @@ public class StepEnvironmentManagement {
 		environments.remove(id);
 		
 		if(environment.isProperlyDefined()) {
-			environment.initializeCaches();
+			environment.initialize();
 			environments.put(id, environment);
 		}else {
 			CFW.Messages.addInfoMessage("Configuration incomplete, at least URL and API token have to be defined.");

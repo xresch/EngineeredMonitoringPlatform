@@ -45,7 +45,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 	public static final String CONFIG_CATEGORY = "Exense Step";
 	public static final String CONFIG_CACHE_RELOAD_MINUTES = "Cache Reload Minutes";
 	
-	private static ScheduledFuture<?> taskReloadSchedulerCache;
+	private static ScheduledFuture<?> taskRefreshmentiazione;
 	
 	static final JsonWriterSettings writterSettings = 
 		JsonWriterSettings
@@ -206,13 +206,13 @@ public class FeatureExenseStep extends CFWAppFeature {
 	public void startTasks() {
 		//----------------------------------------
 		// Task: Store to Database
-		if(taskReloadSchedulerCache != null) {
-			taskReloadSchedulerCache.cancel(false);
+		if(taskRefreshmentiazione != null) {
+			taskRefreshmentiazione.cancel(false);
 		}
 		
 		int minutes = CFW.DB.Config.getConfigAsInt(CONFIG_CATEGORY, CONFIG_CACHE_RELOAD_MINUTES);
 		int millis = (int)CFWTimeUnit.m.toMillis(minutes);
-		taskReloadSchedulerCache = CFW.Schedule.runPeriodicallyMillis(millis, millis, new TaskStepReloadSchedulerCache());
+		taskRefreshmentiazione = CFW.Schedule.runPeriodicallyMillis(millis, millis, new TaskStepRefreshmentiazione());
 				
 	}
 

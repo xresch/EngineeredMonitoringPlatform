@@ -231,7 +231,11 @@ public class StepEnvironment extends AbstractContextSettings {
 	/*********************************************************************
 	 * 
 	 *********************************************************************/
-	public void initializeCaches() {
+	public void initialize() {
+		
+		//-----------------------------------
+		// Set Tenant to All
+		setTenantCurrentAll();
 		
 		//-----------------------------------
 		// Remove all existing Caches
@@ -404,6 +408,34 @@ public class StepEnvironment extends AbstractContextSettings {
 				.header("Accept", "application/json")
 				.header("Authorization", "Bearer "+this.apiToken())
 			;
+	}
+	
+	/*********************************************************************
+	 * Returns a JsonArray with the fetched data.
+	 * This method will not create logs on errors, it will only create
+	 * messages for the end user.
+	 * 
+	 * @param tableName
+	 *********************************************************************/
+	public void setTenantCurrentAll() {
+
+
+		//----------------------------
+		// Call API
+		CFWHttpResponse response = createAPIRequestBuilder("/tenants/current")
+				.POST()
+				.header("accept", "application/json")
+				.body("application/json", "[All]")
+				.send()
+				;
+				
+		//----------------------------
+		// Read API Response
+		if(response.getStatus() >= 400) {
+			
+			new CFWLog(logger).warn("Error when setting tenant [All].", new Exception() );		
+		}
+		
 	}
 	
 	/*********************************************************************
