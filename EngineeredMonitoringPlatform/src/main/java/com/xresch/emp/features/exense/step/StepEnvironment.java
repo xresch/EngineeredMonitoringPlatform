@@ -433,7 +433,7 @@ public class StepEnvironment extends AbstractContextSettings {
 		// Read API Response
 		if(response.getStatus() >= 400) {
 			
-			new CFWLog(logger).warn("Error when setting tenant [All].", new Exception() );		
+			new CFWLog(logger).warn("Error when setting tenant [All]. HTTPStatus: "+response.getStatus());		
 		}
 		
 	}
