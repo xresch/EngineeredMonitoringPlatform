@@ -580,7 +580,7 @@ public class StepEnvironment extends AbstractContextSettings {
 						JsonObject schedulerObject = response.getResponseBodyAsJsonObject();
 							
 						if(schedulerObject == null) {
-							return null;
+							throw new Exception("Problem while Fetching scheduler: "+response.getResponseBody());
 						}
 						
 						return new StepSchedulerDetails(THIS_ENV, schedulerObject);
