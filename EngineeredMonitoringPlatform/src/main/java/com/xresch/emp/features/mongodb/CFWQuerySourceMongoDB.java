@@ -105,8 +105,13 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 	 ******************************************************************/
 	@Override
 	public String descriptionHTML() {
-		return CFW.Files.readPackageResource(FeatureMongoDB.PACKAGE_RESOURCE, "z_manual_source_mongodb.html")
-				.replaceAll("\\{sourcename\\}", this.uniqueName());
+		String manual = CFW.Files.readPackageResource(FeatureMongoDB.PACKAGE_RESOURCE, "z_manual_source_mongodb.html");
+				
+		if(!Strings.isNullOrEmpty(manual)) {
+			return manual.replaceAll("\\{sourcename\\}", this.uniqueName());
+		}
+		
+		return "null";
 	}
 	
 	
