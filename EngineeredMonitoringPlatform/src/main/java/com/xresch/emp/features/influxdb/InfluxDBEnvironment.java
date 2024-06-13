@@ -2,7 +2,6 @@ package com.xresch.emp.features.influxdb;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedHashMap;
 
 import com.google.common.base.Strings;
 import com.google.gson.JsonArray;
@@ -19,6 +18,7 @@ import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.utils.CFWHttp.CFWHttpRequestBuilder;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 
 /**************************************************************************************************************
@@ -159,17 +159,33 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 		//---------------------------
 		// Prepare Query
 		String queryURL = getAPIUrlVersion1() + "/query";
-		LinkedHashMap<String,String> params = new LinkedHashMap<>();
-		params.put("q", influxdbQuery);
-		params.put("epoch", "ms");
+//		LinkedHashMap<String,String> params = new LinkedHashMap<>();
+//		params.put("q", influxdbQuery);
+//		params.put("epoch", "ms");
+//		
+//		if(!Strings.isNullOrEmpty(database)) 		{  params.put("db", database); }
+//		if(!Strings.isNullOrEmpty(this.username())) {  params.put("u", this.username()); }
+//		if(!Strings.isNullOrEmpty(this.password())) {  params.put("p", this.password()); }
 		
-		if(!Strings.isNullOrEmpty(database)) 		{  params.put("db", database); }
-		if(!Strings.isNullOrEmpty(this.username())) {  params.put("u", this.username()); }
-		if(!Strings.isNullOrEmpty(this.password())) {  params.put("p", this.password()); }
+		CFWHttpRequestBuilder builder = CFW.HTTP.newRequestBuilder(queryURL)
+		 			.POST()
+		 			.param("epoch", "ms")
+		 			.param("q", influxdbQuery)
+		 			;
 		
+		if(!Strings.isNullOrEmpty(database)) 		{  builder.param("db", database); }
+		//if(!Strings.isNullOrEmpty(this.username())) {  builder.param("u", this.username()); }
+		//if(!Strings.isNullOrEmpty(this.password())) {  builder.param("p", this.password()); }
+		 
+		 if(!Strings.isNullOrEmpty(this.username())) { 
+			 //builder.header("Authorization", "Token "+ username.getValue() + ":" + password.getValue());
+			 builder.authenticationBasic(username.getValue(), password.getValue());
+		 }
+		 
 		//---------------------------
 		// Execute API Call
-		CFWHttpResponse queryResult = CFW.HTTP.sendPOSTRequest(queryURL, params, null);
+		 CFWHttpResponse queryResult = builder.send();
+		//CFWHttpResponse queryResult = CFW.HTTP.sendPOSTRequest(queryURL, params, null);
 		
 		System.out.println("=========== TEST =========");
 		
@@ -210,31 +226,7 @@ public class InfluxDBEnvironment extends AbstractContextSettings {
 									 ;
 
 		return queryInfluxQL(database, influxdbQuery);
-		//System.out.println(influxdbQuery);
-		
-//		String queryURL = getAPIUrlVersion1() 
-//				+ "/query?q="+CFW.HTTP.encode(influxdbQuery)
-//				+"&epoch=ms";
-//		
-//		if(!Strings.isNullOrEmpty(database)) {
-//			queryURL += "&db="+CFW.HTTP.encode(database);
-//		}
-//
-//		//---------------------------
-//		// Execute API Call
-//		CFWHttpResponse queryResult = CFW.HTTP.sendGETRequest(queryURL);
-//		if(queryResult != null) {
-//			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
-//			
-//			JsonObject json = jsonElement.getAsJsonObject();
-////			if(json.get("error") != null) {
-////				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "InfluxDB Error: "+json.get("error").getAsString());
-////				return null;
-////			}
-//			
-//			return json;
-//		}
-//		return null;
+
 	}
 	
 	/************************************************************************************
