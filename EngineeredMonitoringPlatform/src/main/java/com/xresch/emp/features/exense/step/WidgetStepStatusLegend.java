@@ -12,12 +12,10 @@ import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
-import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
+import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.emp.features.common.FeatureEMPCommon;
-import com.xresch.emp.features.influxdb.FeatureInfluxDB;
 
 public class WidgetStepStatusLegend extends WidgetDefinition {
 	
