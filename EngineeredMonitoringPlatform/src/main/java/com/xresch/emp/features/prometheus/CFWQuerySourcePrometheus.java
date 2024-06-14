@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
+import com.xresch.cfw.extensions.influxdb.InfluxDBEnvironment;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
@@ -95,41 +96,8 @@ public class CFWQuerySourcePrometheus extends CFWQuerySource {
 	@Override
 	public void autocomplete(AutocompleteResult result, CFWQueryAutocompleteHelper helper) {
 		
-		// if source name is given, list up to 50 available prometheus environments
-		if( helper.getCommandTokenCount() >= 2 ) {
-			
-			HashMap<Integer, Object> environmentMap = CFW.DB.ContextSettings.getSelectOptionsForTypeAndUser(PrometheusEnvironment.SETTINGS_TYPE);
-			
-			AutocompleteList list = new AutocompleteList();
-			result.addList(list);
-			int i = 0;
-			for (Object envID : environmentMap.keySet() ) {
-
-				Object envName = environmentMap.get(envID);
-				
-				JsonObject envJson = new JsonObject();
-				envJson.addProperty("id", Integer.parseInt(envID.toString()));
-				envJson.addProperty("name", envName.toString());
-				String envJsonString = "environment="+CFW.JSON.toJSON(envJson)+" ";
-				
-				list.addItem(
-					helper.createAutocompleteItem(
-						""
-					  , envJsonString
-					  , "Environment: "+envName
-					  , envJsonString
-					)
-				);
-				
-				i++;
-				
-				if((i % 10) == 0) {
-					list = new AutocompleteList();
-					result.addList(list);
-				}
-				if(i == 50) { break; }
-			}
-		}
+		helper.autocompleteContextSettingsForSource(PrometheusEnvironment.SETTINGS_TYPE, result);
+		
 	}
 
 	
