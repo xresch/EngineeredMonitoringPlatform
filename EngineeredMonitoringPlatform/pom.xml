@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.xresch</groupId>
 	<artifactId>emp</artifactId>
-	<version>4.0.0</version>
+	<version>4.1.0</version>
 
 	<!-- ================= PROPERTIES ================== -->
 	<properties>
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.xresch</groupId>
 			<artifactId>cfw</artifactId>
-			<version>9.0.0</version>
+			<version>9.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 
