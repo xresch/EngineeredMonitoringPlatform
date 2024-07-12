@@ -143,7 +143,9 @@ Following a list of tables extracted from STEP version 3.24.3:
 	"sort": {
 		"field": "endTime",
 		"direction": "DESCENDING"
-	}
+	},
+	"performEnrichment": false,
+	"calculateCounts": false
 }`
 | unbox 
 	executionParameters.userID
