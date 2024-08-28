@@ -36,7 +36,7 @@ public class MongoDBEnvironmentManagement {
 			}
 
 			@Override
-			public void onDelete(AbstractContextSettings typeSettings) {
+			public void onDeleteOrDeactivate(AbstractContextSettings typeSettings) {
 				environmentsWithDB.remove(typeSettings.getDefaultObject().id());
 			}
 		};
@@ -51,7 +51,7 @@ public class MongoDBEnvironmentManagement {
 		// Clear environments
 		environmentsWithDB = new HashMap<Integer, MongoDBEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(MongoDBEnvironment.SETTINGS_TYPE);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(MongoDBEnvironment.SETTINGS_TYPE, true);
 
 		for(AbstractContextSettings settings : settingsArray) {
 			MongoDBEnvironment current = (MongoDBEnvironment)settings;

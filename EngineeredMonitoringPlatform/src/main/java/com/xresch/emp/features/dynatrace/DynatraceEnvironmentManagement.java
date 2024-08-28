@@ -38,7 +38,7 @@ public class DynatraceEnvironmentManagement {
 			}
 			
 			@Override
-			public void onDelete(AbstractContextSettings typeSettings) {
+			public void onDeleteOrDeactivate(AbstractContextSettings typeSettings) {
 				environments.remove(typeSettings.getDefaultObject().id());
 			}
 		};
@@ -56,7 +56,7 @@ public class DynatraceEnvironmentManagement {
 		// Clear environments
 		environments = new HashMap<Integer, DynatraceEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(DynatraceEnvironment.SETTINGS_TYPE);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(DynatraceEnvironment.SETTINGS_TYPE, true);
 
 		for(AbstractContextSettings settings : settingsArray) {
 			DynatraceEnvironment current = (DynatraceEnvironment)settings;

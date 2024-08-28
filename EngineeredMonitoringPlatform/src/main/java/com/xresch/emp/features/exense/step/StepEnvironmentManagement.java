@@ -47,7 +47,7 @@ public class StepEnvironmentManagement {
 			}
 
 			@Override
-			public void onDelete(AbstractContextSettings typeSettings) {
+			public void onDeleteOrDeactivate(AbstractContextSettings typeSettings) {
 				StepEnvironment oldSettings = environments.remove(typeSettings.getDefaultObject().id());
 				if(oldSettings != null) {
 					oldSettings.removeCaches();
@@ -68,7 +68,7 @@ public class StepEnvironmentManagement {
 		// Clear environments
 		environments = new HashMap<Integer, StepEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(StepEnvironment.SETTINGS_TYPE);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(StepEnvironment.SETTINGS_TYPE, true);
 
 		for(AbstractContextSettings settings : settingsArray) {
 			StepEnvironment current = (StepEnvironment)settings;
