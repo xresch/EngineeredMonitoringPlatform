@@ -349,7 +349,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 			CFWHttpResponse queryResult = 
 				CFW.HTTP.newRequestBuilder(getAPIUrlVersion1()+"/executions")
 						.GET()
-						.authenticationBasic(this.apiUsername(), this.apiPassword())
+						.setAuthCredentials(this.apiUsername(), this.apiPassword())
 						.header("Content-Type", "application/json")
 						.param("name", currentJobname)
 						//.param("include_deactivated", "true")
