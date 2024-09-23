@@ -4,12 +4,11 @@ import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWTimeframe;
-import com.xresch.cfw.extensions.databases.generic.FeatureDBExtensionsGenericJDBC;
 import com.xresch.cfw.features.parameter.ParameterDefinition;
-import com.xresch.cfw.features.query.FeatureQuery;
 
 public class ParameterDefinitionSPMEnvironment extends ParameterDefinition {
 
@@ -58,7 +57,7 @@ public class ParameterDefinitionSPMEnvironment extends ParameterDefinition {
 	 ***************************************************************/
 	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public CFWField getFieldForWidget(HttpServletRequest request, String dashboardid, Object parameterValue, CFWTimeframe timeframe) {
+	public CFWField getFieldForWidget(HttpServletRequest request, String dashboardid, Object parameterValue, CFWTimeframe timeframe, JsonObject  userSelectedParamValues) {
 
 		return getFieldForSettings(request, dashboardid, parameterValue);
 	}

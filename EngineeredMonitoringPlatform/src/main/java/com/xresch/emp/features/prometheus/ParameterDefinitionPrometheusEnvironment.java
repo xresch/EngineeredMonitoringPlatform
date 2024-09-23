@@ -4,16 +4,11 @@ import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.google.common.base.Strings;
+import com.google.gson.JsonObject;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWTimeframe;
-import com.xresch.cfw.features.core.AutocompleteResult;
-import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.parameter.ParameterDefinition;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
-import com.xresch.emp.features.awa.FeatureAWA;
 
 public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinition {
 
@@ -61,7 +56,7 @@ public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinitio
 	 ***************************************************************/
 	@SuppressWarnings({ "rawtypes" })
 	@Override
-	public CFWField getFieldForWidget(HttpServletRequest request, String dashboardid, Object parameterValue, CFWTimeframe timeframe) {
+	public CFWField getFieldForWidget(HttpServletRequest request, String dashboardid, Object parameterValue, CFWTimeframe timeframe, JsonObject  userSelectedParamValues) {
 
 		return getFieldForSettings(request, dashboardid, parameterValue);
 	}
