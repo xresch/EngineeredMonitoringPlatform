@@ -2,7 +2,7 @@
   {
     "PK_ID": 2782,
     "FK_ID_USER": 1,
-    "NAME": "All Widgets Test",
+    "NAME": "Test Widgets",
     "DESCRIPTION": null,
     "TAGS": null,
     "IS_SHARED": false,
