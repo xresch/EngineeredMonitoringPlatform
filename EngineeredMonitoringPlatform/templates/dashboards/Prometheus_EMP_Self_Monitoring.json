@@ -15,7 +15,7 @@
     "JSON_EDITOR_GROUPS": {},
     "ALLOW_EDIT_SETTINGS": true,
     "TIME_CREATED": 1728540144802,
-    "LAST_UPDATED": 1728548201983,
+    "LAST_UPDATED": 1728549482881,
     "IS_PUBLIC": false,
     "START_FULLSCREEN": false,
     "IS_DELETABLE": true,
@@ -49,7 +49,7 @@
         "PARAM_WIDGET_LOAD": false,
         "JSON_SETTINGS": {
           "environment": "$prometheus_environment$",
-          "query": "label_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"PS Old Gen\", $filterquery$}) / 1000000), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"PS Old Gen\", $filterquery$}) / 1000000), \"name\", \"committed\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"G1 Old Gen\", $filterquery$}) ), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_allocated_bytes_total{pool\u003d\"G1 Old Gen\", $filterquery$}) ), \"name\", \"committed\", \"pool\", \".*\")",
+          "query": "label_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"PS Old Gen\", $filterquery$}) / 1000000), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"PS Old Gen\", $filterquery$}) / 1000000), \"name\", \"committed\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"G1 Old Gen\", $filterquery$}) ), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"G1 Old Gen\", $filterquery$}) ), \"name\", \"committed\", \"pool\", \".*\")",
           "labels": null,
           "JSON_CHART_SETTINGS": {
             "charttype": "area",
@@ -498,7 +498,7 @@
         "PARAM_WIDGET_LOAD": false,
         "JSON_SETTINGS": {
           "environment": "$prometheus_environment$",
-          "query": "label_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"PS Survivor Space\", $filterquery$}) / 1000000), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"PS Survivor Space\", $filterquery$}) / 1000000), \"name\", \"committed\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"G1 Survivor Space\", $filterquery$}) ), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_allocated_bytes_total{pool\u003d\"G1 Survivor Space\", $filterquery$}) ), \"name\", \"committed\", \"pool\", \".*\")",
+          "query": "label_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"PS Survivor Space\", $filterquery$}) / 1000000), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"PS Survivor Space\", $filterquery$}) / 1000000), \"name\", \"committed\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"G1 Survivor Space\", $filterquery$}) ), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"G1 Survivor Space\", $filterquery$}) ), \"name\", \"committed\", \"pool\", \".*\")",
           "labels": null,
           "JSON_CHART_SETTINGS": {
             "charttype": "area",
@@ -545,7 +545,7 @@
         "PARAM_WIDGET_LOAD": false,
         "JSON_SETTINGS": {
           "environment": "$prometheus_environment$",
-          "query": "label_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"PS Eden Space\", $filterquery$}) / 1000000), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"PS Eden Space\", $filterquery$}) / 1000000), \"name\", \"committed\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"G1 Eden Space\", $filterquery$}) / 1000 ), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_allocated_bytes_total{pool\u003d\"G1 Eden Space\", $filterquery$}) / 1000), \"name\", \"committed\", \"pool\", \".*\")",
+          "query": "label_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"PS Eden Space\", $filterquery$}) / 1000000), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"PS Eden Space\", $filterquery$}) / 1000000), \"name\", \"committed\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"G1 Eden Space\", $filterquery$}) / 1000 ), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"G1 Eden Space\", $filterquery$}) / 1000), \"name\", \"committed\", \"pool\", \".*\")",
           "labels": null,
           "JSON_CHART_SETTINGS": {
             "charttype": "area",
