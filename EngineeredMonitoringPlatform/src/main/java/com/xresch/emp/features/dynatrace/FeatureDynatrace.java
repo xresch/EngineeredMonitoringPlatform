@@ -25,6 +25,13 @@ public class FeatureDynatrace extends CFWAppFeature {
 	public static final String WIDGET_PREFIX = "emp_dynatrace";
 	public static final String WIDGET_CATEGORY_DYNATRACE = "Dynatrace";
 	
+	public static final ManualPage MANUALPAGE_PARENT = 
+			new ManualPage("Dynatrace")
+				.faicon("fas fa-desktop")
+				.addPermission(FeatureManual.PERMISSION_MANUAL)
+				.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_dynatrace.html")
+				;
+	
 	/************************************************************************************
 	 * Override to make it managed and return something else then null.
 	 ************************************************************************************/
@@ -78,13 +85,8 @@ public class FeatureDynatrace extends CFWAppFeature {
 		CFW.Registry.Parameters.add(new ParameterDefinitionDynatraceEnvironment());
 		
 		//----------------------------------
-		// Register Manual Page
-		CFW.Registry.Manual.addManualPage(null,
-				new ManualPage("Dynatrace")
-					.faicon("fas fa-desktop")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
-					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_widgets_dynatrace.html")
-			);
+		// Register Manual
+		registerManual();
 	}
 
 	@Override
@@ -111,6 +113,24 @@ public class FeatureDynatrace extends CFWAppFeature {
 	@Override
 	public void stopFeature() {
 		/* do nothing */
+	}
+	
+	
+	public void registerManual() {
+		
+		//----------------------------------
+		// Register Parent
+		CFW.Registry.Manual.addManualPage(null, MANUALPAGE_PARENT);
+		
+		//----------------------------------
+		// Register Queries
+		MANUALPAGE_PARENT.addChild(
+			new ManualPage("Dynatrace Queries")
+			.faicon("fas fa-code")
+			.addPermission(FeatureManual.PERMISSION_MANUAL)
+			.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_dynatrace_queries.html")
+		);
+		
 	}
 
 }

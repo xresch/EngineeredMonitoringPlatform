@@ -1,0 +1,204 @@
+
+<div id="manual-toc"></div>
+
+<p>You can use the Query feature of EMP to grab data directly from the Dynatrace API. 
+Here you will find some examples of queries that fetch data from the Dynatrace API.
+</p>
+
+<h2>Get Dynatrace Host IDs</h2>
+<pre><code class="language-cfwquery">###########################################################
+# Get IDs for Host
+###########################################################
+| source web 
+	each =  [
+		 "win12345lx.example.com"
+		,"win12343lx.example.com"
+	]
+	url= (
+		credentials("DYN_API_PROD").url + "/v2/entities"
+		+"?entitySelector=type(HOST),entityName.in("+meta(each)+")"
+		#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
+		+"&from=now-24h"
+		+"&pageSize=500"
+	)
+	headers= object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+| unbox entities
+| unbox entities replace=true
+</code></pre>
+
+
+
+<h2>Get CPU Usage For Hosts</h2>
+<pre><code class="language-cfwquery">###########################################################
+# Get CPU Usage For Hosts
+###########################################################
+| paramdefaults
+	metric = "builtin:host.cpu.usage" # builtin:host.mem.usage
+	resolution = 2
+| source web 
+	each =  [
+		 "win12345lx.example.com"
+		,"win12343lx.example.com"
+	]
+	url = ( 
+			credentials("DYN_API_PROD").url 
+			+ "/v2/metrics/query"
+			+ "?metricSelector="+param(metric)
+			+ "&resolution="+param(resolution)
+			+ "&entitySelector=type(HOST),entityName.in("+meta('each')+")"
+			+ "&from="+timeoffset(latest(), -5, 'm' )
+			+ "&to="+latest()
+		)
+	headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+| unbox result
+| unbox result.data
+| set CPU = literal(data.values[0])
+| keep CPU
+</code></pre>
+
+
+
+<h2>Get Disk Name for Disk ID</h2>
+<pre><code class="language-cfwquery">###########################################################
+# Get Disk Name for Disk ID
+###########################################################
+| source web 
+	url= (
+		credentials("DYN_API_PROD").url + "/v2/entities"
+		+"?entitySelector=type(DISK),entityId(DISK-5BAB299437008E47)"
+		#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
+		+"&from=now-24h"
+		+"&pageSize=500"
+	)
+	headers= object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+| unbox entities
+| unbox entities.displayName replace=true
+</code></pre>
+
+
+
+<h2>Get Disk usage for all Disks of Host</h2>
+<pre><code class="language-cfwquery">###########################################################
+# Get Disk usage for all Disks of Host
+###########################################################
+| source web 
+	url = ( 
+			credentials("DYN_API_PROD").url 
+			+ "/v2/metrics/query"
+			+ "?metricSelector=builtin:host.disk.usedPct"
+			+ "&resolution=5m"
+			+ "&entitySelector=type(HOST),entityName.in(win12345lx.example.com)"
+			+ "&from="+timeoffset(latest(), -5, 'm' )
+			+ "&to="+latest()
+		)
+	headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+| unbox result
+| unbox result.data
+| unbox data.dimensionMap."dt.entity.disk"
+| set 
+	DISKUSAGE = literal(data.values[0])
+	DISK = subquery(`| source web 
+			url= (
+				credentials("DYN_API_PROD").url + "/v2/entities"
+				+"?entitySelector=type(DISK),entityId(`+disk+`)"
+				#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
+				+"&from=now-24h"
+				+"&pageSize=500"
+			)
+			headers= object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+		| unbox entities
+		| unbox entities.displayName replace=true`) 
+| keep DISK, DISKUSAGE
+</code></pre>
+
+
+
+<h2>CPU / Memory / Disk Usage for multiple Hosts</h2>
+<p>This is a combination of multiple API calls to get various host metrics. The records will be colored based on the values.</p>
+<pre><code class="language-cfwquery">###########################################################
+# 
+###########################################################
+| record
+	[HOST]
+	["win12340lx"]
+	["win12341lx"]
+	["win12342lx"]
+	["win12343lx"]
+	["win12344lx"]
+	["win12345lx"]
+| set
+	CPU = subquery(`| source web 
+			url = ( 
+					credentials("DYN_API_PROD").url 
+					+ "/v2/metrics/query"
+					+ "?metricSelector=builtin:host.cpu.usage"
+					+ "&resolution=5m"
+					+ "&entitySelector=type(HOST),entityName.startsWith(`+HOST+`)"
+					+ "&from="+timeoffset(latest(), -5, 'm' )
+					+ "&to="+latest()
+				)
+			headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+		| unbox result
+		| unbox result.data
+		| set METRIC = literal(data.values[0])
+		| keep METRIC`)	
+		
+	MEMORY = subquery(`| source web 
+			url = ( 
+					credentials("DYN_API_PROD").url 
+					+ "/v2/metrics/query"
+					+ "?metricSelector=builtin:host.mem.usage"
+					+ "&resolution=5m"
+					+ "&entitySelector=type(HOST),entityName.startsWith(`+HOST+`)"
+					+ "&from="+timeoffset(latest(), -5, 'm' )
+					+ "&to="+latest()
+				)
+			headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+		| unbox result
+		| unbox result.data
+		| set METRIC = literal(data.values[0])
+		| keep METRIC`)	
+		
+	DISK = subquery(`| source web 
+			url = ( 
+					credentials("DYN_API_PROD").url 
+					+ "/v2/metrics/query"
+					+ "?metricSelector=builtin:host.disk.usedPct"
+					+ "&resolution=5m"
+					+ "&entitySelector=type(HOST),entityName.startsWith(`+HOST+`)"
+					+ "&from="+timeoffset(latest(), -5, 'm' )
+					+ "&to="+latest()
+				)
+			headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+		| unbox result
+		| unbox result.data
+		| unbox data.dimensionMap."dt.entity.disk"
+		| set 
+			DISKUSAGE = literal(data.values[0])
+			DISK = subquery('| source web 
+					url= (
+						credentials("DYN_API_PROD").url + "/v2/entities"
+						+"?entitySelector=type(DISK),entityId('+disk+')"
+						#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
+						+"&from=now-24h"
+						+"&pageSize=500"
+					)
+					headers= object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+				| unbox entities
+				| unbox entities.displayName replace=true') 
+		| stats max(DISKUSAGE)
+		` )
+| formatfield
+	CPU = ['case', ">90", "cfw-red", ">80", "cfw-orange", [], "cfw-green" ]
+	MEMORY = ['case', ">95", "cfw-red", ">90", "cfw-orange", [], "cfw-green" ]
+	DISK = ['case', ">95", "cfw-red", ">90", "cfw-orange", [], "cfw-green" ]
+	
+	[CPU, MEMORY, DISK] = [
+		['decimals', 1]
+		, ['postfix', "%"]
+	]
+| formatrecord
+ 	[(CPU > 90 OR MEMORY > 95 OR DISK > 95), "cfw-red"] 
+ 	[(CPU > 80 OR MEMORY > 90 OR DISK > 90), "cfw-orange"] 
+	[true, "cfw-green"] 
+</code></pre>
