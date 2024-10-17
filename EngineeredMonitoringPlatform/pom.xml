@@ -127,6 +127,12 @@
 						        <delete file="${binariesFolder}/LICENSE"/>
 						        <copy file="${basedir}/LICENSE" tofile="${binariesFolder}/LICENSE"></copy>
 						        
+						        <!-- ##### Copy templates ##### -->
+						        <delete dir="${binariesFolder}/templates"/>
+						        <mkdir dir="${binariesFolder}/templates"/>
+						        <copy todir="${binariesFolder}/templates">
+						            <fileset dir="${basedir}/templates"  />
+						        </copy>
 						        
 						        <!-- ##### Create Zip file with Version ##### -->
 						        <mkdir dir="${zipFolder}" />
