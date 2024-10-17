@@ -1,6 +1,6 @@
 {"success": true,"messages": [],"payload": [
   {
-    "PK_ID": 111,
+    "PK_ID": 119,
     "FK_ID_USER": 1,
     "NAME": "Prometheus EMP Self Monitoring",
     "DESCRIPTION": null,
@@ -14,20 +14,20 @@
     "JSON_EDITORS": {},
     "JSON_EDITOR_GROUPS": {},
     "ALLOW_EDIT_SETTINGS": true,
-    "TIME_CREATED": 1728540144802,
-    "LAST_UPDATED": 1728549482881,
+    "TIME_CREATED": 1729151177939,
+    "LAST_UPDATED": 1729161217069,
     "IS_PUBLIC": false,
     "START_FULLSCREEN": false,
     "IS_DELETABLE": true,
     "IS_RENAMABLE": true,
     "IS_ARCHIVED": false,
-    "VERSION_GROUP": null,
+    "VERSION_GROUP": "47bce358-9bb2-45c7-a055-3d561864fa00",
     "VERSION": 0,
     "username": "admin",
     "widgets": [
       {
-        "PK_ID": 295,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 448,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 19,
@@ -73,8 +73,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 296,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 449,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 20,
         "Y": 4,
@@ -120,8 +120,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 297,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 450,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_instant_threshold",
         "X": 20,
         "Y": 0,
@@ -160,8 +160,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 298,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 451,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_instant_threshold",
         "X": 40,
         "Y": 0,
@@ -200,8 +200,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 299,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 452,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 40,
         "Y": 4,
@@ -247,8 +247,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 300,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 453,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_instant_threshold",
         "X": 0,
         "Y": 0,
@@ -287,8 +287,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 301,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 454,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 4,
@@ -334,8 +334,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 302,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 455,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 40,
         "Y": 93,
@@ -381,8 +381,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 303,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 456,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 34,
@@ -428,8 +428,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 304,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 457,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 20,
         "Y": 34,
@@ -475,8 +475,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 305,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 458,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 40,
         "Y": 19,
@@ -522,8 +522,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 306,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 459,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 20,
         "Y": 19,
@@ -545,7 +545,7 @@
         "PARAM_WIDGET_LOAD": false,
         "JSON_SETTINGS": {
           "environment": "$prometheus_environment$",
-          "query": "label_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"PS Eden Space\", $filterquery$}) / 1000000), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"PS Eden Space\", $filterquery$}) / 1000000), \"name\", \"committed\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"G1 Eden Space\", $filterquery$}) / 1000 ), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"G1 Eden Space\", $filterquery$}) / 1000), \"name\", \"committed\", \"pool\", \".*\")",
+          "query": "label_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"PS Eden Space\", $filterquery$}) / 1000000), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"PS Eden Space\", $filterquery$}) / 1000000), \"name\", \"committed\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_used{pool\u003d\"G1 Eden Space\", $filterquery$}) ), \"name\", \"used\", \"pool\", \".*\")\r\nlabel_replace(sum by(pool)((jvm_memory_pool_bytes_committed{pool\u003d\"G1 Eden Space\", $filterquery$}) ), \"name\", \"committed\", \"pool\", \".*\")",
           "labels": null,
           "JSON_CHART_SETTINGS": {
             "charttype": "area",
@@ -569,8 +569,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 307,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 460,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 48,
@@ -616,8 +616,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 308,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 461,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 40,
         "Y": 34,
@@ -663,8 +663,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 309,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 462,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 93,
@@ -710,8 +710,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 310,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 463,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 20,
         "Y": 93,
@@ -757,8 +757,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 311,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 464,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 63,
@@ -804,8 +804,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 312,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 465,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 20,
         "Y": 63,
@@ -851,8 +851,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 313,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 466,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 40,
         "Y": 63,
@@ -898,8 +898,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 314,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 467,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 78,
@@ -945,8 +945,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 315,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 468,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 40,
         "Y": 78,
@@ -992,8 +992,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 316,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 469,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 20,
         "Y": 78,
@@ -1039,8 +1039,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 317,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 470,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 20,
         "Y": 48,
@@ -1086,8 +1086,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 318,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 471,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 40,
         "Y": 48,
@@ -1133,8 +1133,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 319,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 472,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 123,
@@ -1180,8 +1180,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 320,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 473,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 20,
         "Y": 123,
@@ -1227,8 +1227,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 321,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 474,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 40,
         "Y": 123,
@@ -1274,8 +1274,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 322,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 475,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 40,
         "Y": 108,
@@ -1321,8 +1321,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 323,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 476,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 108,
@@ -1368,8 +1368,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 324,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 477,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 20,
         "Y": 108,
@@ -1415,8 +1415,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 325,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 478,
+        "FK_ID_DASHBOARD": 119,
         "TYPE": "emp_prometheus_range_chart",
         "X": 0,
         "Y": 138,
@@ -1464,8 +1464,8 @@
     ],
     "parameters": [
       {
-        "PK_ID": 127,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 161,
+        "FK_ID_DASHBOARD": 119,
         "WIDGET_TYPE": "emp_prometheus_range_chart",
         "LABEL": "environment",
         "PARAM_TYPE": "SELECT",
@@ -1476,8 +1476,8 @@
         "IS_DYNAMIC": false
       },
       {
-        "PK_ID": 128,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 162,
+        "FK_ID_DASHBOARD": 119,
         "WIDGET_TYPE": "emp_prometheus_instant_threshold",
         "LABEL": "environment",
         "PARAM_TYPE": "SELECT",
@@ -1488,8 +1488,8 @@
         "IS_DYNAMIC": false
       },
       {
-        "PK_ID": 129,
-        "FK_ID_DASHBOARD": 111,
+        "PK_ID": 163,
+        "FK_ID_DASHBOARD": 119,
         "WIDGET_TYPE": null,
         "LABEL": "Prometheus Filter",
         "PARAM_TYPE": "TEXT",
