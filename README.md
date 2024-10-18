@@ -11,7 +11,20 @@ The following were the goals in mind when EMP was created:
 - Flexible Permission Management (Users/Roles/Permissions)
 - Extendable with custom widgets to tailor it to specific needs.
 
+#Quick Start
+You can find a lot of tutorials on the EMP Youtube Channel :
+https://www.youtube.com/@EMPMonitoring
 
+Best Videos to Start:
+* [Installation and Setup](https://www.youtube.com/watch?v=0Ug1daCedfs)
+* [Dashboarding Intro](https://www.youtube.com/watch?v=dZvoUlYOqbI)
+* [Query Intro](https://www.youtube.com/watch?v=U8JH9mVJtxM)
+
+Youtube Playlists:
+* [User Tutorials](https://www.youtube.com/watch?v=raeSbIi18Ks&list=PLRvyXNOgocHQCgGWolDdZS864tQ4grycU&pp=iAQB)
+* [Query Language Tutorials](https://www.youtube.com/watch?v=U8JH9mVJtxM&list=PLRvyXNOgocHSM2MD_fsxBHcM-2V40qYSZ&pp=iAQB)
+* [Query Sources](https://www.youtube.com/watch?v=LHR4OXoysOc&list=PLRvyXNOgocHRgoK4xFLRoB81PilmEnNHd&pp=iAQB)
+* [Admin Tutorials](https://www.youtube.com/watch?v=0Ug1daCedfs&list=PLRvyXNOgocHTbIBuor6_wyMeuY9NLWOBC&pp=iAQB)
 
 # Features
 Following is a list of features of EMP:
