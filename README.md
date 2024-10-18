@@ -1,4 +1,4 @@
-# EngineeredMonitoringPlatform
+# Introduction
 
 The Engineered Monitoring Platform(EMP) is a project which arised from the need to have a easy to customize Monitoring & Dashboarding solution. Company specific needs can easily be implemented through extensions and therefore can be tailored to a lot of situations. With a flexible Role & permission management it allows to grant access in verious ways, from public dashboards that do not need any login down to sharing dashboards with specific users and groups.
 EMP is built upon the CoreFramework(CFW) project.
@@ -11,10 +11,50 @@ The following were the goals in mind when EMP was created:
 - Flexible Permission Management (Users/Roles/Permissions)
 - Extendable with custom widgets to tailor it to specific needs.
 
-# Included Widets
+
+
+# Features
+Following is a list of features of EMP:
+* Dashboards
+* Query Language to fetch, manipulate format data for displaying it 
+* Credential Management
+* Task Scheduler 
+* Fully functional user management with roles, groups and permissions
+* Connectors to various Databases and other data sources
+* Users have the possibility to create and manage their own groups for sharing
+* API Endpoints
+
+
+# Included Query Sources
+The query language can grab data from various sources.
+Here a list of most of them:
+- web
+- jdbc
+- mssql
+- mysql
+- oracle
+- postgres
+- mongodb
+- prometheus
+- appdb (DB of EMP)
+- applog (Log of EMP)
+- auditlog (Audit Log of EMP)
+- csv
+- eavstats
+- empty
+- influxql
+- json
+- random
+- stepapi
+- stepdata
+- text
+- threaddump
+
+
+# Included Dashboard Widgets
 EMP is delivered with the following widgets:
 - Standard Widgets
-  - Text
+- Text
   - Label
   - List
   - Checklist
@@ -25,19 +65,74 @@ EMP is delivered with the following widgets:
   - Website
   - Youtube Video
   - Refresh Time
+- Advanced
+  - Default Refresh
+  - Force Refresh
   - Parameters
   - Replica
-- Query
-- Monitoring Widgets
-  - Dynatrace
-  - MySQL
-  - MSSQL
-  - Oracle
-  - Generic JDBC Widget
-  - Influx DB
-  - Prometheus
-  - Silk Performance Manager(SPM)
-  - Webex(API Service Health Check)
-  - CA Automic Workload Automation(AWA)
+  - Javascript
+  - Custom Threshold Legend
+  - Display Query Results
+- Database
+  - Chart
+    - Postgres Query Chart
+    - MySQL Query Chart
+    - MSSQL Query Chart
+    - Oracle Query Chart
+    - Generic JDBC Query Chart
+    - InfluxQL Query Chart
+    - MongoDB Query Chart
+  - Status
+    - Postgres Query Status
+    - MySQL Query Status
+    - MSSQL Query Status
+    - Oracle Query Status
+    - Generic JDBC Query Status
+    - InfluxQL Query Status
+    - MongoDB Query Status
+- Web
+  - Evaluate Response
+- Automic Workload Automation (AWA)
+  - AWA Job Status - Current
+  - AWA Job Status - Current Grouped
+  - AWA Job Status - History
+  - AWA Jobs with Status
+  - AWA Job Status Legend
+- Dynatrace
+  - Host Details
+  - Host Events
+  - Host Logs
+  - Host Metrics Chart
+  - Host Metrics Status
+  - Host Processes
+  - Host Unit Consumption By Tags
+  - Process Events
+  - Process Logs
+  - Process Metrics Chart
+- Exense STEP
+  - Scheduler Status
+  - Scheduler Status By Project
+  - Scheduler Status By User
+  - Scheduler Status History
+  - Scheduler Executions Last N
+  - Scheduler Executions Time Range
+  - Scheduler Duration Chart
+  - Scheduler Metrics Chart
+  - Status Legend
+- Prometheus
+  - Instant Threshold
+  - Range Chart
+- Silk Performance Manager(SPM) - End of Life
+  - SPM Project Status
+  - SPM Monitor Status
+  - SPM Monitor Status for Projects
+  - SPM Monitor Status All
+  - SPM Counters for Monitor
+  - SPM Counters for Project
+  - SPM Timers for Monitor
+  - SPM Timers for Project
+  - SPM Status Legend
+  - SPM Measure Legend
+
  
 
