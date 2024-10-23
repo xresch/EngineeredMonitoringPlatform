@@ -11,7 +11,8 @@ The following were the goals in mind when EMP was created:
 - Flexible Permission Management (Users/Roles/Permissions)
 - Extendable with custom widgets to tailor it to specific needs.
 
-#Quick Start
+# Quick Start
+
 You can find a lot of tutorials on the EMP Youtube Channel :
 https://www.youtube.com/@EMPMonitoring
 
@@ -27,6 +28,7 @@ Youtube Playlists:
 * [Admin Tutorials](https://www.youtube.com/watch?v=0Ug1daCedfs&list=PLRvyXNOgocHTbIBuor6_wyMeuY9NLWOBC&pp=iAQB)
 
 # Features
+
 Following is a list of features of EMP:
 * Dashboards
 * Query Language to fetch, manipulate format data for displaying it 
@@ -37,8 +39,8 @@ Following is a list of features of EMP:
 * Users have the possibility to create and manage their own groups for sharing
 * API Endpoints
 
-
 # Included Query Sources
+
 The query language can grab data from various sources.
 Here a list of most of them:
 - web
@@ -63,8 +65,8 @@ Here a list of most of them:
 - text
 - threaddump
 
-
 # Included Dashboard Widgets
+
 EMP is delivered with the following widgets:
 - Standard Widgets
 - Text
@@ -146,6 +148,3 @@ EMP is delivered with the following widgets:
   - SPM Timers for Project
   - SPM Status Legend
   - SPM Measure Legend
-
- 
-
