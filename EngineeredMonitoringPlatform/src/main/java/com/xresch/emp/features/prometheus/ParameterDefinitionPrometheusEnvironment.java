@@ -42,7 +42,7 @@ public class ParameterDefinitionPrometheusEnvironment extends ParameterDefinitio
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
-		CFWField settingsField = PrometheusSettingsFactory.createEnvironmentSelectorField();
+		CFWField settingsField = PrometheusSettingsFactory.createEnvironmentSelectorField().allowHTML(true);
 				
 		if(fieldValue != null) {
 			settingsField.setValueConvert(fieldValue, true);

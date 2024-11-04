@@ -51,6 +51,7 @@ public class ParameterDefinitionPrometheusMetric extends ParameterDefinition {
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
 		CFWField settingsField = CFWField.newString(FormFieldType.TAGS, LABEL)
 				.addAttribute("maxTags", "1")
+				.allowHTML(true)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override

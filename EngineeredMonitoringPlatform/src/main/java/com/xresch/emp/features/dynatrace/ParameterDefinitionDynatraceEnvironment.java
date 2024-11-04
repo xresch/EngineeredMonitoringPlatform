@@ -42,7 +42,8 @@ public class ParameterDefinitionDynatraceEnvironment extends ParameterDefinition
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
-		CFWField settingsField = DynatraceSettingsFactory.createEnvironmentSelectorField();
+		CFWField settingsField = DynatraceSettingsFactory.createEnvironmentSelectorField()
+														 .allowHTML(true);
 				
 		if(fieldValue != null) {
 			settingsField.setValueConvert(fieldValue, true);

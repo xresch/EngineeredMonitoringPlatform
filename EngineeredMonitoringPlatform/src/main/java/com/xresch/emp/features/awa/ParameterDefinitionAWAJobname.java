@@ -48,6 +48,7 @@ public class ParameterDefinitionAWAJobname extends ParameterDefinition {
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
 		CFWField settingsField = CFWField.newString(FormFieldType.TAGS, LABEL)
+				.allowHTML(true)
 				.setAutocompleteHandler(new CFWAutocompleteHandler(10) {
 					
 					@Override

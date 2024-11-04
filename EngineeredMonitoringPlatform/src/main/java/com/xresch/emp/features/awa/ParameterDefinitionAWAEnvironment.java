@@ -42,7 +42,8 @@ public class ParameterDefinitionAWAEnvironment extends ParameterDefinition {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
-		CFWField settingsField = AWASettingsFactory.createEnvironmentSelectorField();
+		CFWField settingsField = AWASettingsFactory.createEnvironmentSelectorField()
+												   .allowHTML(true);
 				
 		if(fieldValue != null) {
 			settingsField.setValueConvert(fieldValue, true);

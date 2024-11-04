@@ -42,7 +42,8 @@ public class ParameterDefinitionMongoDBEnvironment extends ParameterDefinition {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
-		CFWField settingsField = MongoDBSettingsFactory.createEnvironmentSelectorField();
+		CFWField settingsField = MongoDBSettingsFactory.createEnvironmentSelectorField()
+													   .allowHTML(true);
 				
 		if(fieldValue != null) {
 			settingsField.setValueConvert(fieldValue, true);

@@ -42,7 +42,7 @@ public class ParameterDefinitionStepEnvironment extends ParameterDefinition {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
-		CFWField settingsField = StepSettingsFactory.createEnvironmentSelectorField();
+		CFWField settingsField = StepSettingsFactory.createEnvironmentSelectorField().allowHTML(true);
 				
 		if(fieldValue != null) {
 			settingsField.setValueConvert(fieldValue, true);

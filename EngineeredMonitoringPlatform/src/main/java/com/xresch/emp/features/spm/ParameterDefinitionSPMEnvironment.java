@@ -43,7 +43,7 @@ public class ParameterDefinitionSPMEnvironment extends ParameterDefinition {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public CFWField getFieldForSettings(HttpServletRequest request, String dashboardid, Object fieldValue) {
-		CFWField settingsField = SPMSettingsFactory.createEnvironmentSelectorField();
+		CFWField settingsField = SPMSettingsFactory.createEnvironmentSelectorField().allowHTML(true);
 				
 		if(fieldValue != null) {
 			settingsField.setValueConvert(fieldValue, true);
