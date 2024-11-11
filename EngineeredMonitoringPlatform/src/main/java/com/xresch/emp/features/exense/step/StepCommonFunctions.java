@@ -101,7 +101,7 @@ public class StepCommonFunctions {
 				
 		//----------------------------------------
 		// Handle Alerting
-		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, widgetType);
+		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, widgetType, false);
 	
 		alertObject.mapJobExecutionContext(context);
 	

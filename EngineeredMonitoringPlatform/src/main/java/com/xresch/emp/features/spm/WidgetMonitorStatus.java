@@ -355,7 +355,7 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 	 * @return CFWObject
 	 ************************************************************/
 	public CFWObject getTasksParameters() {
-		return new CFWJobsAlertObject()
+		return new CFWJobsAlertObject(false)
 				.addField(
 				CFWField.newInteger(FormFieldType.NUMBER, FIELDNAME_THRESHOLD_PERCENT)
 				.setDescription("Threshhold in percent, trigger event when a value of one selected monitor falls below this value.")
@@ -411,7 +411,7 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		
 		//----------------------------------------
 		// Handle Alerting
-		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, this.getWidgetType());
+		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, this.getWidgetType(), false);
 
 		alertObject.mapJobExecutionContext(context);
 

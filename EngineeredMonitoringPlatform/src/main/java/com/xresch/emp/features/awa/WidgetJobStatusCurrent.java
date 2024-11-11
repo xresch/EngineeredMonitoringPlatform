@@ -277,7 +277,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 	 * @return CFWObject
 	 ************************************************************/
 	public CFWObject getTasksParameters() {
-		return new CFWJobsAlertObject();
+		return new CFWJobsAlertObject(false);
 	}
 	
 	/*************************************************************************
@@ -317,7 +317,7 @@ public class WidgetJobStatusCurrent extends WidgetDefinition {
 		
 		//----------------------------------------
 		// Handle Alerting
-		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, this.getWidgetType());
+		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, this.getWidgetType(), false);
 
 		alertObject.mapJobExecutionContext(context);
 

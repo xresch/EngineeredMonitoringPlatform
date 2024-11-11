@@ -312,7 +312,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	 ************************************************************/
 	public CFWObject getTasksParameters() {
 		
-		return new CFWJobsAlertObject()
+		return new CFWJobsAlertObject(false)
 				.addField(
 					CFWField.newString(FormFieldType.SELECT, FIELDNAME_ALERT_THRESHOLD)
 					.setDescription("Select the threshhold that should trigger the alert when reached.")
@@ -401,7 +401,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 				
 		//----------------------------------------
 		// Handle Alerting
-		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, this.getWidgetType());
+		CFWJobsAlertObject alertObject = new CFWJobsAlertObject(context, this.getWidgetType(), false);
 
 		alertObject.mapJobExecutionContext(context);
 

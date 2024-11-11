@@ -250,7 +250,7 @@ public class WidgetPlanStatusByUser extends WidgetDefinition  {
 	 ************************************************************/
 	public CFWObject getTasksParameters() {
 		
-		return new CFWJobsAlertObject()
+		return new CFWJobsAlertObject(false)
 				.addField(CFW.Conditions.createThresholdTriggerSelectorField());
 	}
 	
