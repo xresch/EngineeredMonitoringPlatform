@@ -28,6 +28,7 @@ import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.utils.CFWMonitor;
 import com.xresch.cfw.utils.CFWState;
 
 public class WidgetPlanStatusByUser extends WidgetDefinition  {
@@ -259,7 +260,7 @@ public class WidgetPlanStatusByUser extends WidgetDefinition  {
 	 * See {@link com.xresch.cfw.features.jobs.CFWJobTask#executeTask CFWJobTask.executeTask()} to get
 	 * more details on how to implement this method.
 	 *************************************************************************/
-	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings, CFWTimeframe offset) throws JobExecutionException {
+	public void executeTask(JobExecutionContext context, CFWObject taskParams, DashboardWidget widget, CFWObject settings, CFWMonitor monitor, CFWTimeframe offset) throws JobExecutionException {
 				
 		//----------------------------------------
 		// Fetch Data

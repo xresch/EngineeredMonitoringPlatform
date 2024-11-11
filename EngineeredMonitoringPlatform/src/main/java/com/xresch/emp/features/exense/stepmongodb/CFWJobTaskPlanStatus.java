@@ -14,6 +14,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
 import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.jobs.FeatureJobs;
 import com.xresch.cfw.features.usermgmt.User;
+import com.xresch.cfw.utils.CFWMonitor;
 
 public class CFWJobTaskPlanStatus extends CFWJobTask {
 	
@@ -62,14 +63,14 @@ public class CFWJobTaskPlanStatus extends CFWJobTask {
 	}
 
 	@Override
-	public void executeTask(JobExecutionContext context) throws JobExecutionException {
+	public void executeTask(JobExecutionContext context, CFWMonitor monitor) throws JobExecutionException {
 		
 		CFWObject jobsettings = this.getParameters();
 		jobsettings.mapJobExecutionContext(context);
 		
 		CFWTimeframe offset = CFWJobTaskWidgetTaskExecutor.getOffsetFromJobSettings(jobsettings); 
 		
-		widget.executeTask(context, jobsettings, null, jobsettings, offset);
+		widget.executeTask(context, jobsettings, null, jobsettings, monitor, offset);
 		
 	}
 	

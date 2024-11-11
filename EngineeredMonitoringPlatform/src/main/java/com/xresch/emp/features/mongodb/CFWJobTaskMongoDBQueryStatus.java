@@ -13,6 +13,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
 import com.xresch.cfw.features.jobs.CFWJobTask;
 import com.xresch.cfw.features.jobs.FeatureJobs;
 import com.xresch.cfw.features.usermgmt.User;
+import com.xresch.cfw.utils.CFWMonitor;
 
 public class CFWJobTaskMongoDBQueryStatus extends CFWJobTask {
 	
@@ -61,12 +62,12 @@ public class CFWJobTaskMongoDBQueryStatus extends CFWJobTask {
 	}
 
 	@Override
-	public void executeTask(JobExecutionContext context) throws JobExecutionException {
+	public void executeTask(JobExecutionContext context, CFWMonitor monitor) throws JobExecutionException {
 		CFWObject paramsAndSettings = this.getParameters();
 		
 		paramsAndSettings.mapJobExecutionContext(context);
 		
-		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings, null);
+		widget.executeTask(context, paramsAndSettings, null, paramsAndSettings, monitor, null);
 	}
 	
 }
