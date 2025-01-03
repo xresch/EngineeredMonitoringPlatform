@@ -16,7 +16,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 	]
 	url= (
 		credentials("DYN_API_PROD").url + "/v2/entities"
-		+"?entitySelector=type(HOST),entityName.in("+meta(each)+")"
+		+"?entitySelector=type(HOST),entityName.in("+ sourceEach() +")"
 		#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
 		+"&from=now-24h"
 		+"&pageSize=500"
@@ -45,7 +45,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 			+ "/v2/metrics/query"
 			+ "?metricSelector="+param(metric)
 			+ "&resolution="+param(resolution)
-			+ "&entitySelector=type(HOST),entityName.in("+meta('each')+")"
+			+ "&entitySelector=type(HOST),entityName.in(" + sourceEach() + ")"
 			+ "&from="+timeoffset(latest(), -5, 'm' )
 			+ "&to="+latest()
 		)
