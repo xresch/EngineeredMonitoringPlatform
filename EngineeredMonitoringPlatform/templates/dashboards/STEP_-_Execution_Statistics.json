@@ -8,9 +8,7 @@
     "IS_SHARED": true,
     "JSON_SHARE_WITH_USERS": {},
     "JSON_SHARE_WITH_GROUPS": {},
-    "JSON_EDITORS": {
-      "903": "u89201(Perftest User 9201)"
-    },
+    "JSON_EDITORS": {},
     "JSON_EDITOR_GROUPS": {},
     "ALLOW_EDIT_SETTINGS": true,
     "TIME_CREATED": 1719584795124,
