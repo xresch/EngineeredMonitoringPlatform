@@ -14,14 +14,14 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 		 "win12345lx.example.com"
 		,"win12343lx.example.com"
 	]
-	url= (
-		credentials("DYN_API_PROD").url + "/api/v2/entities"
-		+"?entitySelector=type(HOST),entityName.in("+ sourceEach() +")"
-		#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
-		+"&from=now-24h"
-		+"&pageSize=500"
-	)
-	headers= object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+	url = credentials("DYN_API_PROD").url 
+			+ "/api/v2/entities"
+			+ "?entitySelector=type(HOST),entityName.in("+ sourceEach() +")"
+			#+ "&fields=properties.monitoringMode,tags" # choose additional fields to display
+			+ "&from=now-24h"
+			+ "&pageSize=500"
+	
+	headers = object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
 | unbox entities
 | unbox entities replace=true
 </code></pre>
@@ -40,16 +40,15 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 		 "win12345lx.example.com"
 		,"win12343lx.example.com"
 	]
-	url = ( 
-			credentials("DYN_API_PROD").url 
-			+ "/api/v2/metrics/query"
-			+ "?metricSelector="+param(metric)
-			+ "&resolution="+param(resolution)
-			+ "&entitySelector=type(HOST),entityName.in(" + sourceEach() + ")"
-			+ "&from="+timeoffset(latest(), -5, 'm' )
-			+ "&to="+latest()
-		)
-	headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
+	url = credentials("DYN_API_PROD").url 
+				+ "/api/v2/metrics/query"
+				+ "?metricSelector="+param(metric)
+				+ "&resolution="+param(resolution)
+				+ "&entitySelector=type(HOST),entityName.in(" + sourceEach() + ")"
+				+ "&from="+timeoffset(latest(), -5, 'm' )
+				+ "&to="+latest()
+		
+	headers = object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
 | unbox result
 | unbox result.data
 | set CPU = literal(data.values[0])
@@ -63,13 +62,13 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 # Get Disk Name for Disk ID
 ###########################################################
 | source web 
-	url= (
-		credentials("DYN_API_PROD").url + "/api/v2/entities"
-		+"?entitySelector=type(DISK),entityId(DISK-5BAB299437008E47)"
-		#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
-		+"&from=now-24h"
-		+"&pageSize=500"
-	)
+	url = credentials("DYN_API_PROD").url
+			+ "/api/v2/entities"
+			+ "?entitySelector=type(DISK),entityId(DISK-5BAB299437008E47)"
+			#+ "&fields=properties.monitoringMode,tags" # choose additional fields to display
+			+ "&from=now-24h"
+			+ "&pageSize=500"
+	
 	headers= object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
 | unbox entities
 | unbox entities.displayName replace=true
@@ -82,15 +81,14 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 # Get Disk usage for all Disks of Host
 ###########################################################
 | source web 
-	url = ( 
-			credentials("DYN_API_PROD").url 
+	url = credentials("DYN_API_PROD").url 
 			+ "/api/v2/metrics/query"
 			+ "?metricSelector=builtin:host.disk.usedPct"
 			+ "&resolution=5m"
 			+ "&entitySelector=type(HOST),entityName.in(win12345lx.example.com)"
 			+ "&from="+timeoffset(latest(), -5, 'm' )
 			+ "&to="+latest()
-		)
+	
 	headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
 | unbox result
 | unbox result.data
@@ -98,13 +96,13 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 | set 
 	DISKUSAGE = literal(data.values[0])
 	DISK = subquery(`| source web 
-			url= (
-				credentials("DYN_API_PROD").url + "/api/v2/entities"
+			url= credentials("DYN_API_PROD").url 
+				+"/api/v2/entities"
 				+"?entitySelector=type(DISK),entityId(`+disk+`)"
 				#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
 				+"&from=now-24h"
 				+"&pageSize=500"
-			)
+			
 			headers= object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
 		| unbox entities
 		| unbox entities.displayName replace=true`) 
@@ -128,15 +126,14 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 	["win12345lx"]
 | set
 	CPU = subquery(`| source web 
-			url = ( 
-					credentials("DYN_API_PROD").url 
+			url = credentials("DYN_API_PROD").url 
 					+ "/api/v2/metrics/query"
 					+ "?metricSelector=builtin:host.cpu.usage"
 					+ "&resolution=5m"
 					+ "&entitySelector=type(HOST),entityName.startsWith(`+HOST+`)"
 					+ "&from="+timeoffset(latest(), -5, 'm' )
 					+ "&to="+latest()
-				)
+				
 			headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
 		| unbox result
 		| unbox result.data
@@ -144,15 +141,14 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 		| keep METRIC`)	
 		
 	MEMORY = subquery(`| source web 
-			url = ( 
-					credentials("DYN_API_PROD").url 
+			url = credentials("DYN_API_PROD").url 
 					+ "/api/v2/metrics/query"
 					+ "?metricSelector=builtin:host.mem.usage"
 					+ "&resolution=5m"
 					+ "&entitySelector=type(HOST),entityName.startsWith(`+HOST+`)"
 					+ "&from="+timeoffset(latest(), -5, 'm' )
 					+ "&to="+latest()
-				)
+				
 			headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
 		| unbox result
 		| unbox result.data
@@ -160,15 +156,14 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 		| keep METRIC`)	
 		
 	DISK = subquery(`| source web 
-			url = ( 
-					credentials("DYN_API_PROD").url 
+			url = credentials("DYN_API_PROD").url 
 					+ "/api/v2/metrics/query"
 					+ "?metricSelector=builtin:host.disk.usedPct"
 					+ "&resolution=5m"
 					+ "&entitySelector=type(HOST),entityName.startsWith(`+HOST+`)"
 					+ "&from="+timeoffset(latest(), -5, 'm' )
 					+ "&to="+latest()
-				)
+				
 			headers=object( "Authorization" "Api-Token "+ credentials("DYN_API_PROD").password )
 		| unbox result
 		| unbox result.data
