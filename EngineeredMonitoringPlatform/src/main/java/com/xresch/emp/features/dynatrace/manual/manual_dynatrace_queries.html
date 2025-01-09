@@ -15,7 +15,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 		,"win12343lx.example.com"
 	]
 	url= (
-		credentials("DYN_API_PROD").url + "/v2/entities"
+		credentials("DYN_API_PROD").url + "/api/v2/entities"
 		+"?entitySelector=type(HOST),entityName.in("+ sourceEach() +")"
 		#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
 		+"&from=now-24h"
@@ -42,7 +42,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 	]
 	url = ( 
 			credentials("DYN_API_PROD").url 
-			+ "/v2/metrics/query"
+			+ "/api/v2/metrics/query"
 			+ "?metricSelector="+param(metric)
 			+ "&resolution="+param(resolution)
 			+ "&entitySelector=type(HOST),entityName.in(" + sourceEach() + ")"
@@ -64,7 +64,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 ###########################################################
 | source web 
 	url= (
-		credentials("DYN_API_PROD").url + "/v2/entities"
+		credentials("DYN_API_PROD").url + "/api/v2/entities"
 		+"?entitySelector=type(DISK),entityId(DISK-5BAB299437008E47)"
 		#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
 		+"&from=now-24h"
@@ -84,7 +84,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 | source web 
 	url = ( 
 			credentials("DYN_API_PROD").url 
-			+ "/v2/metrics/query"
+			+ "/api/v2/metrics/query"
 			+ "?metricSelector=builtin:host.disk.usedPct"
 			+ "&resolution=5m"
 			+ "&entitySelector=type(HOST),entityName.in(win12345lx.example.com)"
@@ -99,7 +99,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 	DISKUSAGE = literal(data.values[0])
 	DISK = subquery(`| source web 
 			url= (
-				credentials("DYN_API_PROD").url + "/v2/entities"
+				credentials("DYN_API_PROD").url + "/api/v2/entities"
 				+"?entitySelector=type(DISK),entityId(`+disk+`)"
 				#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
 				+"&from=now-24h"
@@ -130,7 +130,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 	CPU = subquery(`| source web 
 			url = ( 
 					credentials("DYN_API_PROD").url 
-					+ "/v2/metrics/query"
+					+ "/api/v2/metrics/query"
 					+ "?metricSelector=builtin:host.cpu.usage"
 					+ "&resolution=5m"
 					+ "&entitySelector=type(HOST),entityName.startsWith(`+HOST+`)"
@@ -146,7 +146,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 	MEMORY = subquery(`| source web 
 			url = ( 
 					credentials("DYN_API_PROD").url 
-					+ "/v2/metrics/query"
+					+ "/api/v2/metrics/query"
 					+ "?metricSelector=builtin:host.mem.usage"
 					+ "&resolution=5m"
 					+ "&entitySelector=type(HOST),entityName.startsWith(`+HOST+`)"
@@ -162,7 +162,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 	DISK = subquery(`| source web 
 			url = ( 
 					credentials("DYN_API_PROD").url 
-					+ "/v2/metrics/query"
+					+ "/api/v2/metrics/query"
 					+ "?metricSelector=builtin:host.disk.usedPct"
 					+ "&resolution=5m"
 					+ "&entitySelector=type(HOST),entityName.startsWith(`+HOST+`)"
@@ -177,7 +177,7 @@ Here you will find some examples of queries that fetch data from the Dynatrace A
 			DISKUSAGE = literal(data.values[0])
 			DISK = subquery('| source web 
 					url= (
-						credentials("DYN_API_PROD").url + "/v2/entities"
+						credentials("DYN_API_PROD").url + "/api/v2/entities"
 						+"?entitySelector=type(DISK),entityId('+disk+')"
 						#+"&fields=properties.monitoringMode,tags" # choose additional fields to display
 						+"&from=now-24h"
