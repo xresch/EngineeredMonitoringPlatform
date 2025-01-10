@@ -12,5 +12,5 @@ COPY ./resources/ resources/
 #RUN sed -i 's/.\/log\//\/data\/log\//g' ${BASEDIR}/config/logging.properties
 
 COPY ./target/lib extensions/
-COPY ./target/emp-?.?.?.jar extensions/
+COPY ./target/emp-*.jar extensions/
 
