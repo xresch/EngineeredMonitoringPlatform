@@ -1,6 +1,6 @@
 {"success": true,"messages": [],"payload": [
   {
-    "PK_ID": 26,
+    "PK_ID": 143,
     "FK_ID_USER": 1,
     "NAME": "Dynatrace User Session Analysis",
     "DESCRIPTION": null,
@@ -11,8 +11,8 @@
     "JSON_EDITORS": {},
     "JSON_EDITOR_GROUPS": {},
     "ALLOW_EDIT_SETTINGS": true,
-    "TIME_CREATED": 1735830469046,
-    "LAST_UPDATED": null,
+    "TIME_CREATED": 1740557652597,
+    "LAST_UPDATED": 1740558952191,
     "IS_PUBLIC": false,
     "START_FULLSCREEN": false,
     "IS_DELETABLE": true,
@@ -23,8 +23,8 @@
     "username": "admin",
     "widgets": [
       {
-        "PK_ID": 359,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 738,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 0,
         "Y": 12,
@@ -45,14 +45,14 @@
         "MANUAL_LOAD": false,
         "PARAM_WIDGET_LOAD": false,
         "JSON_SETTINGS": {
-          "query": "###########################################################\r\n# List of User Sessions\r\n###########################################################\r\n| paramdefaults\r\n\tapplication \u003d \"%\"\r\n\tuser \u003d \"%\"\r\n\ttimestep \u003d 60  # amount of time for shifting the timeframe\r\n\ttimeunit \u003d \u0027m\u0027 # unit of time for shifting the timeframe\r\n\tpagesize \u003d 5000\r\n\tpagemax \u003d 1000\r\n| globals\r\n\tINITIAL_LATEST \u003d latest()\r\n\tCREDENTIALS \u003d $environment$\r\n\tQUERY \u003d encode(`\r\nSELECT \r\n\t  userSessionId\r\n\t, userId\r\n\t, startTime\r\n\t, endTime\r\n\t, duration\r\n\t, userevent.page\r\n\t, useraction.application \r\nFROM usersession\r\nWHERE useraction.application LIKE \"`+param(application, \"%\")+`\"\r\n  AND userId  LIKE \"`+param(user, \"%\")+`\"\r\n`)\r\n\r\n| source web \r\n\turl\u003d globals(CREDENTIALS).url + \"/api/v1/userSessionQueryLanguage/table?\"\r\n\t\t\t+\"query\u003d\"+globals(QUERY)\r\n\t\t\t+\"\u0026addDeepLinkFields\u003dfalse\"\r\n\t\t\t+\"\u0026explain\u003dfalse\"\r\n\t\t\t+\"\u0026startTimestamp\u003d\"+earliest()\r\n\t\t\t+\"\u0026endTimestamp\u003d\"+latest()\r\n\t\t\t+\"\u0026pageSize\u003d\" + param(pagesize)\r\n\t\r\n\theaders \u003d object( \"Authorization\" \"Api-Token \"+ globals(CREDENTIALS).password )\r\n\t\r\n\tpagination \t\u003d true # enable pagination\r\n\t\r\n\tpageinitial \u003d latestSet(earliest(), param(timestep), param(timeunit)) # initial page value \r\n\t\r\n\tpage \t\t\u003d timeframeOffset(0, param(timestep), param(timeunit)) # adjust the initial value every time\r\n\t\t\t\t  \r\n\tpageend \t\u003d ( \r\n\t\t\t\t\t latest() \u003e globals(INITIAL_LATEST)\r\n\t\t\t\t\t OR timeOffset(earliest(), param(timestep), param(timeunit)) \u003e globals(INITIAL_LATEST)\r\n\t\t\t\t  ) # return true when end condition has been reached\r\n\t\r\n\tpagemax \t\u003d param(pagemax) # the max number of pages to fetch, prevents endless loops\r\n\t\r\n| filter length(values) \u003e 0 AND isUndef(error)\t\r\n| unbox values\r\n| set\r\n\t# https://dynatrace.yourcompany.com/e/1234abcd-5d58-xxxx-yyyy-123456789/ui/user-sessions/query?gtf\u003d-100d%20to%20now\u0026gf\u003dall\u0026sessionquery\u003d\r\n\t# Query Example: SELECT * FROM usersession WHERE userSessionId \u003d\"xxx\"\r\n\t\"Dynatrace\" \u003d globals(CREDENTIALS).url \r\n\t\t\t+ \"/ui/user-sessions/query?gtf\u003d-100d%20to%20now\u0026gf\u003dall\u0026sessionquery\u003d\"\r\n\t\t\t+ encode(\u0027SELECT * FROM usersession WHERE userSessionId \u003d\"\u0027 +values[0] + \u0027\"\u0027)\r\n\t\t\t\r\n\t\"EMP\" \u003d \"/app/dashboard/view?id\u003d28\u0026session_id\u003d\" + values[0]\r\n\t\t\t+\"\u0026environment\u003d\" + encode(`$environment$`)\r\n\t\t\t+\"\u0026earliest\u003d\" + earliest()\r\n\t\t\t+\"\u0026latest\u003d\" + latest()\r\n\t\r\n\t\"userID\" \u003d values[1]\r\n\t\"starttime\" \u003d values[2]\r\n\t\"endtime\" \u003d values[3]\r\n\t\"duration\" \u003d values[4]\r\n\t\"pages\" \u003d values[5]\r\n\t\"applications\" \u003d values[6]\r\n| remove columnNames, values, extrapolationLevel\r\n| formatfield \r\n\t[columnNames, pages, applications] \u003d list\r\n\t[starttime, endtime] \u003d timestamp\r\n\tduration \u003d [\u0027duration\u0027, \"ms\"]\r\n\t\"Dynatrace\"\u003d [\u0027link\u0027, \"Dynatrace\", \"button\", \"fa-external-link-square-alt\", \"blank\"]\r\n\t\"EMP\"\u003d [\u0027link\u0027, \"EMP\", \"button\", \"fa-external-link-square-alt\", \"blank\"]\r\n| sort count reverse\u003dtrue\r\n| display \r\n\tdownload \u003d true\r\n",
+          "query": "###########################################################\r\n# List of User Sessions\r\n###########################################################\r\n| paramdefaults\r\n\tapplication \u003d \"%\"\r\n\tuser \u003d \"%\"\r\n\ttimestep \u003d 60  # amount of time for shifting the timeframe\r\n\ttimeunit \u003d \u0027m\u0027 # unit of time for shifting the timeframe\r\n\tpagesize \u003d 5000\r\n\tpagemax \u003d 1000\r\n| globals\r\n\tINITIAL_EARLIEST \u003d earliest()\r\n\tINITIAL_LATEST \u003d latest()\r\n\tCREDENTIALS \u003d $environment$\r\n\tQUERY \u003d encode(`\r\nSELECT \r\n\t  userSessionId\r\n\t, userId\r\n\t, startTime\r\n\t, endTime\r\n\t, duration\r\n\t, userevent.page\r\n\t, useraction.application \r\nFROM usersession\r\nWHERE useraction.application LIKE \"`+param(application, \"%\")+`\"\r\n  AND userId  LIKE \"`+param(user, \"%\")+`\"\r\n`)\r\n\r\n| source web \r\n\turl\u003d globals(CREDENTIALS).url + \"/api/v1/userSessionQueryLanguage/table?\"\r\n\t\t\t+\"query\u003d\"+globals(QUERY)\r\n\t\t\t+\"\u0026addDeepLinkFields\u003dfalse\"\r\n\t\t\t+\"\u0026explain\u003dfalse\"\r\n\t\t\t+\"\u0026startTimestamp\u003d\"+earliest()\r\n\t\t\t+\"\u0026endTimestamp\u003d\"+latest()\r\n\t\t\t+\"\u0026pageSize\u003d\" + param(pagesize)\r\n\t\r\n\theaders \u003d object( \"Authorization\" \"Api-Token \"+ globals(CREDENTIALS).password )\r\n\t\r\n\tpagination \t\u003d true # enable pagination\r\n\t\r\n\tpageinitial \u003d latestSet(earliest(), param(timestep), param(timeunit)) # initial page value \r\n\t\r\n\tpage \t\t\u003d timeframeOffset(0, param(timestep), param(timeunit)) # adjust the initial value every time\r\n\t\t\t\t  \r\n\tpageend \t\u003d ( \r\n\t\t\t\t\t latest() \u003e globals(INITIAL_LATEST)\r\n\t\t\t\t\t OR timeOffset(earliest(), param(timestep), param(timeunit)) \u003e globals(INITIAL_LATEST)\r\n\t\t\t\t  ) # return true when end condition has been reached\r\n\t\r\n\tpagemax \t\u003d param(pagemax) # the max number of pages to fetch, prevents endless loops\r\n\t\r\n| filter length(values) \u003e 0 AND isUndef(error)\t\r\n| unbox values\r\n| set\r\n\t# https://dynatrace.yourcompany.com/e/1234abcd-5d58-xxxx-yyyy-123456789/ui/user-sessions/query?gtf\u003d-100d%20to%20now\u0026gf\u003dall\u0026sessionquery\u003d\r\n\t# Query Example: SELECT * FROM usersession WHERE userSessionId \u003d\"xxx\"\r\n\t\"Dynatrace\" \u003d globals(CREDENTIALS).url \r\n\t\t\t+ \"/ui/user-sessions/query?gtf\u003d-100d%20to%20now\u0026gf\u003dall\u0026sessionquery\u003d\"\r\n\t\t\t+ encode(\u0027SELECT * FROM usersession WHERE userSessionId \u003d\"\u0027 +values[0] + \u0027\"\u0027)\r\n\t\t\t\r\n\t\"EMP\" \u003d \"/app/dashboard/view?id\u003d144\u0026session_id\u003d\" + values[0]\r\n\t\t\t+\"\u0026environment\u003d\" + encode(`$environment$`)\r\n\t\t\t+\"\u0026earliest\u003d\" + g(INITIAL_EARLIEST)\r\n\t\t\t+\"\u0026latest\u003d\" + g(INITIAL_LATEST)\r\n\t\r\n\t\"userID\" \u003d values[1]\r\n\t\"starttime\" \u003d values[2]\r\n\t\"endtime\" \u003d values[3]\r\n\t\"duration\" \u003d values[4]\r\n\t\"pages\" \u003d values[5]\r\n\t\"applications\" \u003d values[6]\r\n| remove columnNames, values, extrapolationLevel\r\n| formatfield \r\n\t[columnNames, pages, applications] \u003d list\r\n\t[starttime, endtime] \u003d timestamp\r\n\tduration \u003d [\u0027duration\u0027, \"ms\"]\r\n\t\"Dynatrace\"\u003d [\u0027link\u0027, \"Dynatrace\", \"button\", \"fa-external-link-square-alt\", \"blank\"]\r\n\t\"EMP\"\u003d [\u0027link\u0027, \"EMP\", \"button\", \"fa-external-link-square-alt\", \"blank\"]\r\n| sort count reverse\u003dtrue\r\n| display \r\n\tdownload \u003d true\r\n",
           "sampledata": false
         },
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 361,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 739,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_parameter",
         "X": 0,
         "Y": 4,
@@ -90,8 +90,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 362,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 740,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 0,
         "Y": 101,
@@ -118,8 +118,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 363,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 741,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 19,
         "Y": 101,
@@ -146,8 +146,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 364,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 742,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 39,
         "Y": 101,
@@ -174,8 +174,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 365,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 743,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 0,
         "Y": 136,
@@ -202,8 +202,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 366,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 744,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 0,
         "Y": 66,
@@ -230,8 +230,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 367,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 745,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 19,
         "Y": 66,
@@ -258,8 +258,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 368,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 746,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 39,
         "Y": 66,
@@ -286,8 +286,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 372,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 747,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 0,
         "Y": 171,
@@ -314,8 +314,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 376,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 748,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_widget_queryresults",
         "X": 0,
         "Y": 211,
@@ -342,8 +342,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 377,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 749,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_parameter",
         "X": 0,
         "Y": 206,
@@ -381,8 +381,8 @@
         "JSON_TASK_PARAMETERS": {}
       },
       {
-        "PK_ID": 407,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 750,
+        "FK_ID_DASHBOARD": 143,
         "TYPE": "cfw_htmleditor",
         "X": 0,
         "Y": 0,
@@ -410,8 +410,8 @@
     ],
     "parameters": [
       {
-        "PK_ID": 127,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 234,
+        "FK_ID_DASHBOARD": 143,
         "WIDGET_TYPE": null,
         "LABEL": "Query Select",
         "PARAM_TYPE": "QUERY_EDITOR",
@@ -422,8 +422,8 @@
         "IS_DYNAMIC": true
       },
       {
-        "PK_ID": 129,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 235,
+        "FK_ID_DASHBOARD": 143,
         "WIDGET_TYPE": null,
         "LABEL": "Text",
         "PARAM_TYPE": "TEXT",
@@ -434,8 +434,8 @@
         "IS_DYNAMIC": false
       },
       {
-        "PK_ID": 131,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 236,
+        "FK_ID_DASHBOARD": 143,
         "WIDGET_TYPE": null,
         "LABEL": "Select",
         "PARAM_TYPE": "VALUE_LABEL",
@@ -446,8 +446,8 @@
         "IS_DYNAMIC": false
       },
       {
-        "PK_ID": 134,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 237,
+        "FK_ID_DASHBOARD": 143,
         "WIDGET_TYPE": null,
         "LABEL": "Number",
         "PARAM_TYPE": "NUMBER",
@@ -458,8 +458,8 @@
         "IS_DYNAMIC": false
       },
       {
-        "PK_ID": 149,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 238,
+        "FK_ID_DASHBOARD": 143,
         "WIDGET_TYPE": null,
         "LABEL": "Number",
         "PARAM_TYPE": "NUMBER",
@@ -470,8 +470,8 @@
         "IS_DYNAMIC": false
       },
       {
-        "PK_ID": 150,
-        "FK_ID_DASHBOARD": 26,
+        "PK_ID": 239,
+        "FK_ID_DASHBOARD": 143,
         "WIDGET_TYPE": null,
         "LABEL": "Text",
         "PARAM_TYPE": "TEXT",
