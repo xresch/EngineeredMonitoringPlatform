@@ -14,8 +14,7 @@ import com.xresch.cfw.features.contextsettings.ContextSettings;
 import com.xresch.cfw.response.HTMLResponse;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.PlaintextResponse;
-
-import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
+import com.xresch.cfw.utils.web.CFWHttp.CFWHttpResponse;
 
 /**************************************************************************************************************
  * 
