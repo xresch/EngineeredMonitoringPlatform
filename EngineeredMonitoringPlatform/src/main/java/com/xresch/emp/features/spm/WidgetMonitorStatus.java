@@ -27,15 +27,15 @@ import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
-import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWMonitor;
 import com.xresch.cfw.validation.NumberRangeValidator;
 
@@ -167,7 +167,7 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 		db = environment.getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status: The db of the chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("SPM Monitor Status: The db of the chosen environment seems not configured correctly.");
 			return null;
 		}
 		

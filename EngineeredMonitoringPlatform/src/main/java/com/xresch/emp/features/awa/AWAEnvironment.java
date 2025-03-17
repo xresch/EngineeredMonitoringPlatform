@@ -23,7 +23,6 @@ import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 
 /**************************************************************************************************************
@@ -135,7 +134,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 		if(count == 0) {
 			return true;
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The AWA Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			CFW.Messages.addErrorMessage("The AWA Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
 			return false;
 		}
 
@@ -474,7 +473,7 @@ public class AWAEnvironment extends AbstractContextSettings {
 		DBInterface db = this.getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "AWA Job Status: The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("AWA Job Status: The chosen environment seems not configured correctly.");
 			return null;
 		}
 		

@@ -11,7 +11,7 @@ import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.emp.features.mongodb.MongoDBEnvironment;
 
 /**************************************************************************************************************
@@ -50,7 +50,7 @@ public class StepEnvironment extends MongoDBEnvironment {
 		if(count == 0) {
 			return true;
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The Step Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			CFW.Messages.addErrorMessage("The Step Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
 			return false;
 		}
 

@@ -7,7 +7,7 @@ import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 
 /**************************************************************************************************************
  * 
@@ -80,7 +80,7 @@ public class EnvironmentSPM extends AbstractContextSettings {
 		if(count == 0) {
 			return true;
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The SPM Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			CFW.Messages.addErrorMessage("The SPM Environment cannot be deleted as it is still in use by "+count+"  widget(s).");
 			return false;
 		}
 

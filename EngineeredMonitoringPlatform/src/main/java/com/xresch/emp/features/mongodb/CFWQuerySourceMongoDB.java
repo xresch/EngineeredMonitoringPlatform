@@ -22,7 +22,7 @@ import com.xresch.cfw.features.query.CFWQueryAutocompleteHelper;
 import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
 import com.xresch.cfw.features.usermgmt.User;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 	
 /**************************************************************************************************************
@@ -252,7 +252,7 @@ public class CFWQuerySourceMongoDB extends CFWQuerySource {
 		if(environmentString != null) {
 			 environment = MongoDBEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "mongodb: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage("mongodb: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		

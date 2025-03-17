@@ -17,7 +17,7 @@ import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 
 
 public class EnvironmentManagerSPM {
@@ -137,7 +137,7 @@ public class EnvironmentManagerSPM {
 		db = EnvironmentManagerSPM.getEnvironment(environmentID).getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("The chosen environment seems not configured correctly.");
 			return null;
 		}
 		
@@ -182,7 +182,7 @@ public class EnvironmentManagerSPM {
 		db = EnvironmentManagerSPM.getEnvironment(environmentID).getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("The chosen environment seems not configured correctly.");
 			return null;
 		}
 		
@@ -226,7 +226,7 @@ public class EnvironmentManagerSPM {
 		db = EnvironmentManagerSPM.getEnvironment(environmentID).getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("The chosen environment seems not configured correctly.");
 			return null;
 		}
 		
@@ -270,7 +270,7 @@ public class EnvironmentManagerSPM {
 		db = EnvironmentManagerSPM.getEnvironment(environmentID).getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("The chosen environment seems not configured correctly.");
 			return null;
 		}
 
@@ -315,7 +315,7 @@ public class EnvironmentManagerSPM {
 		db = EnvironmentManagerSPM.getEnvironment(environmentID).getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("The chosen environment seems not configured correctly.");
 			return null;
 		}
 
@@ -359,7 +359,7 @@ public class EnvironmentManagerSPM {
 		db = EnvironmentManagerSPM.getEnvironment(environmentID).getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("The chosen environment seems not configured correctly.");
 			return null;
 		}
 
@@ -401,7 +401,7 @@ public class EnvironmentManagerSPM {
 		db = EnvironmentManagerSPM.getEnvironment(environmentID).getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("The chosen environment seems not configured correctly.");
 			return null;
 		}
 

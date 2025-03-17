@@ -23,7 +23,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.utils.CFWState;
 
 public class WidgetSchedulerStatusHistory extends WidgetDefinition {
@@ -132,7 +132,7 @@ public class WidgetSchedulerStatusHistory extends WidgetDefinition {
 		if(environment == null) { return; }
 		
 		if(!environment.isProperlyDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Status: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage("Step Status: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
@@ -151,7 +151,7 @@ public class WidgetSchedulerStatusHistory extends WidgetDefinition {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, this.widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage(this.widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		

@@ -10,7 +10,7 @@ import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 
 /********************************************************************
@@ -34,7 +34,7 @@ public class API_Input_EnvTimeframeProject extends API_Input_Environment {
 				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 					String envID = request.getParameter("ENVIRONMENT_ID");
 					if(Strings.isNullOrEmpty(envID)) {
-						CFW.Context.Request.addAlertMessage(MessageType.INFO, "Select an environment to get suggestions.");
+						CFW.Messages.addInfoMessage("Select an environment to get suggestions.");
 						return null;
 					}
 					return EnvironmentManagerSPM.autocompleteProjects(Integer.parseInt(envID), searchValue, this.getMaxResults());

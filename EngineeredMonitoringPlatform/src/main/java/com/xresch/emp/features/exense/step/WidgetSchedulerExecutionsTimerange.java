@@ -4,34 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.bson.Document;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mongodb.client.MongoIterable;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.caching.FileDefinition;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
-import com.xresch.cfw.datahandling.CFWField;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
-import com.xresch.cfw.datahandling.CFWField.FormFieldType;
-import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
-import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
-import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState;
-import com.xresch.cfw.validation.NumberRangeValidator;
 
 public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 	
@@ -158,7 +146,7 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isProperlyDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage(widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
@@ -177,7 +165,7 @@ public class WidgetSchedulerExecutionsTimerange extends WidgetDefinition  {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage(widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		

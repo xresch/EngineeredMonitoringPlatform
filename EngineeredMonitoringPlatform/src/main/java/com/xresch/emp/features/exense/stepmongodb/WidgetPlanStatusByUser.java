@@ -27,7 +27,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCache
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.utils.CFWMonitor;
 import com.xresch.cfw.utils.CFWState;
 
@@ -153,7 +153,7 @@ public class WidgetPlanStatusByUser extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isDBDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by User: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage("Step Plan Status by User: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
@@ -172,7 +172,7 @@ public class WidgetPlanStatusByUser extends WidgetDefinition  {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by User: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage("Step Plan Status by User: The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		

@@ -11,9 +11,9 @@ import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
-import com.xresch.cfw.response.bootstrap.DynamicItemCreator;
-import com.xresch.cfw.response.bootstrap.HierarchicalHTMLItem;
-import com.xresch.cfw.response.bootstrap.MenuItem;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemDynamic;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItem;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemMenuItem;
 import com.xresch.cfw.spi.CFWAppFeature;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
@@ -65,23 +65,23 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 		
     	//----------------------------------
     	// Register Menus
-		MenuItem theusinatorMenu = (MenuItem)new MenuItem("Theusinator") 
-			.setDynamicCreator(new DynamicItemCreator() {		
+		CFWHTMLItemMenuItem theusinatorMenu = (CFWHTMLItemMenuItem)new CFWHTMLItemMenuItem("Theusinator") 
+			.setDynamicCreator(new CFWHTMLItemDynamic() {		
 	
 				@Override
-				public ArrayList<HierarchicalHTMLItem> createDynamicItems() {
+				public ArrayList<CFWHTMLItem> createDynamicItems() {
 					
 					ArrayList<AbstractContextSettings> environments = 
 							CFW.DB.ContextSettings.getContextSettingsForTypeAndUser(
 									EnvironmentSPM.SETTINGS_TYPE
 								  , CFW.Context.Request.getUser());
 					
-					ArrayList<HierarchicalHTMLItem> childitems = new ArrayList<HierarchicalHTMLItem>();
+					ArrayList<CFWHTMLItem> childitems = new ArrayList<CFWHTMLItem>();
 					
 					for(AbstractContextSettings current : environments) {
 						EnvironmentSPM spmEnv = (EnvironmentSPM)current;
 						childitems.add(
-							(MenuItem)new MenuItem(spmEnv.getDefaultObject().name())
+							(CFWHTMLItemMenuItem)new CFWHTMLItemMenuItem(spmEnv.getDefaultObject().name())
 								.addPermission(PERMISSION_THEUSINATOR)
 								.href("/app/theusinator?env="+spmEnv.getDefaultObject().id()) 
 						);

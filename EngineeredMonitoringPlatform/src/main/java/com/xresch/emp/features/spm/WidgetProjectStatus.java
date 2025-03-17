@@ -30,7 +30,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCache
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 public class WidgetProjectStatus extends WidgetDefinition {
@@ -132,7 +132,7 @@ public class WidgetProjectStatus extends WidgetDefinition {
 		
 		EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Project Status: The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("SPM Project Status: The chosen environment seems not configured correctly.");
 			return;
 		}
 		
@@ -142,7 +142,7 @@ public class WidgetProjectStatus extends WidgetDefinition {
 		db = environment.getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Project Status: The db of the chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("SPM Project Status: The db of the chosen environment seems not configured correctly.");
 			return;
 		}
 		

@@ -27,20 +27,19 @@ import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.extensions.databases.FeatureDBExtensions;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
-import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWMonitor;
 import com.xresch.cfw.utils.CFWState;
 import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
-import com.xresch.emp.features.prometheus.FeaturePrometheus;
 
 public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 	
@@ -232,7 +231,7 @@ public class WidgetMongoDBQueryStatus extends WidgetDefinition  {
 		if(environmentString != null) {
 			 environment = MongoDBEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "mongodb: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage("mongodb: The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 				

@@ -14,7 +14,7 @@ import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.emp.features.exense.step.FeatureExenseStep.StepExecutionResult;
 

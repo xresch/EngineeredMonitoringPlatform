@@ -31,7 +31,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCache
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.utils.CFWState;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
@@ -101,7 +101,7 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 									int firstID = Integer.parseInt(projectsMap.keySet().toArray()[0].toString());
 									return EnvironmentManagerSPM.autocompleteCountersForProject(Integer.parseInt(environment), firstID, searchValue, this.getMaxResults());
 								}else {
-									CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a project first.");
+									CFW.Messages.addInfoMessage("Please select a project first.");
 									return null;
 								}
 							}
@@ -170,7 +170,7 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 		
 		EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Counters for Project: The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("SPM Counters for Project: The chosen environment seems not configured correctly.");
 			return;
 		}
 		
@@ -180,7 +180,7 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 		db = environment.getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Counters for Project: The db of the chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("SPM Counters for Project: The db of the chosen environment seems not configured correctly.");
 			return;
 		}
 				

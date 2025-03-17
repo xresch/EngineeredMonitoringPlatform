@@ -27,7 +27,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCache
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.utils.CFWState;
 
 public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
@@ -151,7 +151,7 @@ public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isDBDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by Current User: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage("Step Plan Status by Current User: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
@@ -169,7 +169,7 @@ public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by Current User: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage("Step Plan Status by Current User: The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		
@@ -181,7 +181,7 @@ public class WidgetPlanStatusByCurrentUser extends WidgetDefinition  {
 
 		User currentUser = CFW.Context.Request.getUser();
 		if(currentUser == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Step Plan Status by Current User: No logged in user found.");
+			CFW.Messages.addWarningMessage("Step Plan Status by Current User: No logged in user found.");
 			return null;
 		}
 		String currentUserFilter = "'username': '"+currentUser.username()+"'";

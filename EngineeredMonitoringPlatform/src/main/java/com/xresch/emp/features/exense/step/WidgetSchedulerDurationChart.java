@@ -19,7 +19,6 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
 public class WidgetSchedulerDurationChart extends WidgetDefinition  {
 	
@@ -141,7 +140,7 @@ public class WidgetSchedulerDurationChart extends WidgetDefinition  {
 		if(environment == null) { return; }
 		
 		if(!environment.isProperlyDefined()) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage(widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		
@@ -160,7 +159,7 @@ public class WidgetSchedulerDurationChart extends WidgetDefinition  {
 		// Get Environment
 		StepEnvironment environment = StepCommonFunctions.resolveEnvironmentFromWidgetSettings(widgetSettings);
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage(widgetName()+": The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 		

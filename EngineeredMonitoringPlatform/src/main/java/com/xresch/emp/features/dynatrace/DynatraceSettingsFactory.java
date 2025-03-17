@@ -10,7 +10,6 @@ import com.xresch.cfw.datahandling.CFWField.CFWFieldFlag;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.validation.NumberRangeValidator;
 import com.xresch.emp.features.dynatrace.DynatraceEnvironment.EntityType;
 
@@ -49,7 +48,7 @@ public class DynatraceSettingsFactory {
 						
 						String environment = request.getParameter("environment");
 						if(Strings.isNullOrEmpty(environment) ) {
-							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							CFW.Messages.addInfoMessage("Please select an environment first.");
 							return null;
 						}
 						
@@ -78,13 +77,13 @@ public class DynatraceSettingsFactory {
 
 						String environment = request.getParameter("environment");
 						if(Strings.isNullOrEmpty(environment) ) {
-							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							CFW.Messages.addInfoMessage("Please select an environment first.");
 							return null;
 						}
 						
 						String host = request.getParameter("JSON_HOST");
 						if(Strings.isNullOrEmpty(host) || host.equals("{}")) {
-							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a host first.");
+							CFW.Messages.addInfoMessage( "Please select a host first.");
 							return null;
 						}
 						
@@ -119,13 +118,13 @@ public class DynatraceSettingsFactory {
 
 						String environment = request.getParameter("environment");
 						if(Strings.isNullOrEmpty(environment) ) {
-							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							CFW.Messages.addInfoMessage( "Please select an environment first.");
 							return null;
 						}
 						
 						String host = request.getParameter("JSON_HOST");
 						if(Strings.isNullOrEmpty(host) || host.equals("{}")) {
-							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a host first.");
+							CFW.Messages.addInfoMessage("Please select a host first.");
 							return null;
 						}
 						
@@ -158,7 +157,7 @@ public class DynatraceSettingsFactory {
 						
 						String environment = request.getParameter("environment");
 						if(Strings.isNullOrEmpty(environment) ) {
-							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							CFW.Messages.addInfoMessage("Please select an environment first.");
 							return null;
 						}
 						
@@ -187,13 +186,13 @@ public class DynatraceSettingsFactory {
 						
 						String environment = request.getParameter("environment");
 						if(Strings.isNullOrEmpty(environment) ) {
-							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select an environment first.");
+							CFW.Messages.addInfoMessage("Please select an environment first.");
 							return null;
 						}
 						
 						String entityString = request.getParameter( (entityType == EntityType.HOST ? "JSON_HOST" : "JSON_PROCESS_GROUP") );
 						if(Strings.isNullOrEmpty(entityString) || entityString.equals("{}")) {
-							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a host or process first.");
+							CFW.Messages.addInfoMessage("Please select a host or process first.");
 							return null;
 						}
 						

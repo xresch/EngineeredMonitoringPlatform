@@ -31,7 +31,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCache
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.utils.CFWState;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
@@ -100,7 +100,7 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 									int firstID = Integer.parseInt(monitorsMap.keySet().toArray()[0].toString());
 									return EnvironmentManagerSPM.autocompleteTimersForMonitor(Integer.parseInt(environment), firstID, searchValue, this.getMaxResults());
 								}else {
-									CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please select a monitor first");
+									CFW.Messages.addInfoMessage("Please select a monitor first");
 									return null;
 								}
 								
@@ -172,7 +172,7 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 		
 		EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status All: The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("SPM Monitor Status All: The chosen environment seems not configured correctly.");
 			return;
 		}
 		
@@ -182,7 +182,7 @@ public class WidgetTimersForMonitor extends WidgetDefinition {
 		db = environment.getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "SPM Monitor Status All: The db of the chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("SPM Monitor Status All: The db of the chosen environment seems not configured correctly.");
 			return;
 		}
 				

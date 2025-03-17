@@ -28,7 +28,6 @@ import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpRequestBuilder;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 
@@ -347,7 +346,7 @@ public class StepEnvironment extends AbstractContextSettings {
 		if(count == 0) {
 			return true;
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The STEP environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			CFW.Messages.addErrorMessage("The STEP environment cannot be deleted as it is still in use by "+count+"  widget(s).");
 			return false;
 		}
 

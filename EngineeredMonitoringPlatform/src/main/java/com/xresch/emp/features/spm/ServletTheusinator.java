@@ -14,7 +14,7 @@ import com.xresch.cfw.features.contextsettings.ContextSettings;
 import com.xresch.cfw.response.HTMLResponse;
 import com.xresch.cfw.response.JSONResponse;
 import com.xresch.cfw.response.PlaintextResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 
 /**************************************************************************************************************
@@ -56,7 +56,7 @@ public class ServletTheusinator extends HttpServlet
 			}
 			
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, CFW.L("cfw_core_error_accessdenied", "Access Denied!"));
+			CFW.Messages.addErrorMessage(CFW.L("cfw_core_error_accessdenied", "Access Denied!"));
 		}
         
     }
@@ -77,7 +77,7 @@ public class ServletTheusinator extends HttpServlet
 		// build manually, environment without DB will not be created successfully 
 		ContextSettings settings = CFW.DB.ContextSettings.selectByID(env);
 		if(settings == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The SPM environment seems not to be configured correctly.");
+			CFW.Messages.addErrorMessage("The SPM environment seems not to be configured correctly.");
 			return;
 		}
 

@@ -9,7 +9,7 @@ import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.utils.CFWTime.CFWTimeUnit;
 import com.xresch.emp.features.exense.step.StepEnvironment;
 import com.xresch.emp.features.exense.step.StepEnvironmentManagement;
@@ -26,7 +26,7 @@ public class STEPAPI_Input_GetLastExecutionsForScheduler extends STEPAPI_Input_E
 				public AutocompleteResult getAutocompleteData(HttpServletRequest request, String searchValue, int cursorPosition) {
 					String environmentID = request.getParameter(STEPAPI_Factory.INPUT_ENVIRONMENT);
 					if(Strings.isNullOrEmpty(environmentID)) {
-						CFW.Context.Request.addAlertMessage(MessageType.INFO, "Select an environment to get suggestions.");
+						CFW.Messages.addInfoMessage("Select an environment to get suggestions.");
 						return null;
 					}
 					StepEnvironment environment = StepEnvironmentManagement.getEnvironment( Integer.parseInt(environmentID) );

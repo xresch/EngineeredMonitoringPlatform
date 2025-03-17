@@ -13,7 +13,6 @@ import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
 import com.xresch.cfw.features.parameter.ParameterDefinition;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
 public class ParameterDefinitionAWAJobname extends ParameterDefinition {
 
@@ -56,7 +55,7 @@ public class ParameterDefinitionAWAJobname extends ParameterDefinition {
 						String environmentID = request.getParameter("environment");
 						
 						if(Strings.isNullOrEmpty(environmentID)) {
-							CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please choose an environment first.");
+							CFW.Messages.addInfoMessage("Please choose an environment first.");
 							return null;
 						}
 						

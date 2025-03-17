@@ -18,7 +18,7 @@ import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 
 /**************************************************************************************************************
@@ -67,7 +67,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		if(count == 0) {
 			return true;
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The Prometheus environment cannot be deleted as it is still in use by "+count+"  widget(s).");
+			CFW.Messages.addErrorMessage("The Prometheus environment cannot be deleted as it is still in use by "+count+"  widget(s).");
 			return false;
 		}
 
@@ -134,7 +134,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "getTargets() - Prometheus Error: "+json.get("error").getAsString());
+				CFW.Messages.addErrorMessage("getTargets() - Prometheus Error: "+json.get("error").getAsString());
 				return null;
 			}
 			
@@ -155,7 +155,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "getMetrics() - Prometheus Error: "+json.get("error").getAsString());
+				CFW.Messages.addErrorMessage("getMetrics() - Prometheus Error: "+json.get("error").getAsString());
 				return null;
 			}
 			
@@ -181,7 +181,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "query() - Prometheus Error: "+json.get("error").getAsString());
+				CFW.Messages.addErrorMessage("query() - Prometheus Error: "+json.get("error").getAsString());
 				return null;
 			}
 			
@@ -212,7 +212,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 			JsonElement jsonElement = CFW.JSON.fromJson(queryResult.getResponseBody());
 			JsonObject json = jsonElement.getAsJsonObject();
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "queryRange() - Prometheus Error: "+json.get("error").getAsString());
+				CFW.Messages.addErrorMessage("queryRange() - Prometheus Error: "+json.get("error").getAsString());
 				return null;
 			}
 			

@@ -22,7 +22,7 @@ import com.xresch.cfw.features.query.CFWQueryAutocompleteHelper;
 import com.xresch.cfw.features.query.CFWQuerySource;
 import com.xresch.cfw.features.query.EnhancedJsonObject;
 import com.xresch.cfw.features.usermgmt.User;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
 	
 /**************************************************************************************************************
@@ -247,7 +247,7 @@ public class CFWQuerySourceStep extends CFWQuerySource {
 		if(environmentString != null) {
 			 environment = StepEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "step: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage("step: The chosen environment seems configured incorrectly or is unavailable.");
 			return;
 		}
 		

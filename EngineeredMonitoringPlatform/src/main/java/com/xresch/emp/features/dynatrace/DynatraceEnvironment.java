@@ -20,7 +20,6 @@ import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 
 /**************************************************************************************************************
@@ -99,7 +98,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		if(count == 0) {
 			return true;
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The Dynatrace environment cannot be deleted as it is still in use by "+count+"  dashboard widget(s).");
+			CFW.Messages.addErrorMessage("The Dynatrace environment cannot be deleted as it is still in use by "+count+"  dashboard widget(s).");
 			return false;
 		}
 
@@ -180,7 +179,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 		if(duration <= (MILLIS_1_DAY * maxDays) ) {
 			return startTimestamp+"";
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Dynatrace Widget: Time range adjusted to "+maxDays+" days(latest time - 3 days).");
+			CFW.Messages.addWarningMessage("Dynatrace Widget: Time range adjusted to "+maxDays+" days(latest time - 3 days).");
 			return (endTimestamp - (MILLIS_1_DAY * maxDays) )+"";
 		}
 	}
@@ -272,7 +271,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 			JsonObject payload = queryResult.getResponseBodyAsJsonObject();
 			
 			if(!payload.get("nextPageKey").isJsonNull()) {
-				CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Over 5000 metrics available. Only the first 5000 were loaded.");
+				CFW.Messages.addWarningMessage("Over 5000 metrics available. Only the first 5000 were loaded.");
 			}
 			
 			if(payload.get("metrics") != null) {
@@ -356,7 +355,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 			JsonObject json = jsonElement.getAsJsonObject();
 			
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Dynatrace Error: "+json.get("error").getAsString());
+				CFW.Messages.addErrorMessage("Dynatrace Error: "+json.get("error").getAsString());
 				return null;
 			}
 			
@@ -379,7 +378,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 			JsonObject json = jsonElement.getAsJsonObject();
 			
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Dynatrace Error: "+json.get("error").getAsString());
+				CFW.Messages.addErrorMessage("Dynatrace Error: "+json.get("error").getAsString());
 				return null;
 			}
 			
@@ -406,7 +405,7 @@ public class DynatraceEnvironment extends AbstractContextSettings {
 			JsonObject json = jsonElement.getAsJsonObject();
 			
 			if(json.get("error") != null) {
-				CFW.Context.Request.addAlertMessage(MessageType.ERROR, "Dynatrace Error: "+json.get("error").getAsString());
+				CFW.Messages.addErrorMessage("Dynatrace Error: "+json.get("error").getAsString());
 				return null;
 			}
 			

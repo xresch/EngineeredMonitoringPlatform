@@ -74,7 +74,7 @@ public class DynatraceEnvironmentManagement {
 
 //		InetSocketAddress address = new InetSocketAddress(environment.apiURL());
 //		if(address.isUnresolved()) {
-//			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The URL could not be resolved: "+environment.apiURL()+":"+environment.apiToken());
+//			CFW.Messages.addErrorMessage("The URL could not be resolved: "+environment.apiURL()+":"+environment.apiToken());
 //			return;
 //		};
 		

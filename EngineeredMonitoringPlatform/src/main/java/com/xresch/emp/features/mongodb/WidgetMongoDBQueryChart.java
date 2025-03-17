@@ -27,7 +27,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 
 /**************************************************************************************************************
  * 
@@ -182,7 +182,7 @@ public class WidgetMongoDBQueryChart extends WidgetDefinition {
 		if(environmentString != null) {
 			 environment = MongoDBEnvironmentManagement.getEnvironment(Integer.parseInt(environmentString));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "mongodb: The chosen environment seems configured incorrectly or is unavailable.");
+			CFW.Messages.addWarningMessage("mongodb: The chosen environment seems configured incorrectly or is unavailable.");
 			return null;
 		}
 				

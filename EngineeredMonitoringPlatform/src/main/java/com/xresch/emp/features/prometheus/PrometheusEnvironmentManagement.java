@@ -10,7 +10,7 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 
 
 public class PrometheusEnvironmentManagement {
@@ -76,7 +76,7 @@ public class PrometheusEnvironmentManagement {
 
 		InetSocketAddress address = new InetSocketAddress(environment.host(), environment.port());
 		if(address.isUnresolved()) {
-			CFW.Context.Request.addAlertMessage(MessageType.ERROR, "The URL could not be resolved: "+environment.host()+":"+environment.port());
+			CFW.Messages.addErrorMessage("The URL could not be resolved: "+environment.host()+":"+environment.port());
 			return;
 		};
 		

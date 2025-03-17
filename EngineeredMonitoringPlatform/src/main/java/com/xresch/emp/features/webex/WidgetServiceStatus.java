@@ -22,7 +22,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCache
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.cfw.utils.CFWHttp.CFWHttpResponse;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.spm.FeatureSPM;
@@ -131,7 +131,7 @@ public class WidgetServiceStatus extends WidgetDefinition {
 				response.setSuccess(true);
 			}else {
 				response.setSuccess(false);
-				CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The Webex Rest Service returned the HTTP Status "+httpResponse.getStatus());
+				CFW.Messages.addWarningMessage("The Webex Rest Service returned the HTTP Status "+httpResponse.getStatus());
 			}
 		}
 		

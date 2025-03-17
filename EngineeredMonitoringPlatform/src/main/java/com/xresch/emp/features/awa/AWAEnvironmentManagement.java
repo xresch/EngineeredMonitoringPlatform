@@ -16,7 +16,6 @@ import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
 
 
 public class AWAEnvironmentManagement {
@@ -150,7 +149,7 @@ public class AWAEnvironmentManagement {
 				
 			}
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.INFO, "Please specify database first to get autocomplete values.");
+			CFW.Messages.addInfoMessage("Please specify database first to get autocomplete values.");
 		}
 		
 		return new AutocompleteResult(list);
@@ -171,7 +170,7 @@ public class AWAEnvironmentManagement {
 		db = environment.getDBInstance();
 		
 		if(db == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("The chosen environment seems not configured correctly.");
 			return null;
 		}
 

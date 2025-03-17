@@ -2,7 +2,6 @@ package com.xresch.emp.features.prometheus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
@@ -24,25 +23,19 @@ import com.xresch.cfw.datahandling.CFWField.CFWFieldFlag;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.datahandling.CFWObject;
 import com.xresch.cfw.datahandling.CFWTimeframe;
-import com.xresch.cfw.db.DBInterface;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
+import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.dashboard.widgets.WidgetDefinition;
 import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
-import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCachePolicy;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject;
 import com.xresch.cfw.features.jobs.CFWJobsAlertObject.AlertType;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+import com.xresch.cfw.response.bootstrap.CFWHTMLItemAlertMessage.MessageType;
 import com.xresch.cfw.utils.CFWMonitor;
-import com.xresch.cfw.utils.CFWState;
 import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.cfw.validation.NotNullOrEmptyValidator;
-import com.xresch.cfw.validation.NumberRangeValidator;
-import com.xresch.emp.features.spm.EnvironmentManagerSPM;
-import com.xresch.emp.features.spm.EnvironmentSPM;
-import com.xresch.emp.features.spm.SPMSettingsFactory;
 
 public class WidgetInstantThreshold extends WidgetDefinition {
 
@@ -167,7 +160,7 @@ public class WidgetInstantThreshold extends WidgetDefinition {
 		if(environmentID != null) {
 			environment = PrometheusEnvironmentManagement.getEnvironment(Integer.parseInt(environmentID));
 		}else {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Prometheus Instant Threshold: The db of the chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("Prometheus Instant Threshold: The db of the chosen environment seems not configured correctly.");
 			return null;
 		}
 		

@@ -26,7 +26,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetDataCache.WidgetDataCache
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.response.bootstrap.AlertMessage.MessageType;
+
 import com.xresch.emp.features.common.FeatureEMPCommon;
 import com.xresch.emp.features.spm.FeatureSPM;
 
@@ -144,7 +144,7 @@ public class WidgetRangeChart extends WidgetDefinition {
 		
 		PrometheusEnvironment environment = PrometheusEnvironmentManagement.getEnvironment(environmentElement.getAsInt());
 		if(environment == null) {
-			CFW.Context.Request.addAlertMessage(MessageType.WARNING, "Prometheus Widget: The chosen environment seems not configured correctly.");
+			CFW.Messages.addWarningMessage("Prometheus Widget: The chosen environment seems not configured correctly.");
 			return;
 		}
 		
