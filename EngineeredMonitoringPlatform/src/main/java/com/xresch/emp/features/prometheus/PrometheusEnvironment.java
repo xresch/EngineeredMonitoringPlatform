@@ -31,26 +31,31 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 	private String apiURL = null;
 	
 	public enum PrometheusEnvironmentFields{
+		URL,
 		HOST,
 		PORT,
 		USE_HTTPS
 	}
-			
+	
+	private CFWField<String> url = CFWField.newString(FormFieldType.TEXT, PrometheusEnvironmentFields.URL)
+			.setLabel("URL")
+			.setDescription("The API URL including proctol(http/https), port and without '/api/v1' at the end.");
+	
 	private CFWField<String> host = CFWField.newString(FormFieldType.TEXT, PrometheusEnvironmentFields.HOST)
-			.setDescription("The hostname of the prometheus instance.");
+			.setDescription("(Ignored if URL is defined) The hostname of the prometheus instance.");
 	
 	private CFWField<Integer> port = CFWField.newInteger(FormFieldType.NUMBER, PrometheusEnvironmentFields.PORT)
-			.setDescription("The port used to access the prometheus instance.");
+			.setDescription("(Ignored if URL is defined) The port used to access the prometheus instance. If this is not defined, the port is expected to be defined the hostname field.");
 	
 	private CFWField<Boolean> useHttps = CFWField.newBoolean(FormFieldType.BOOLEAN, PrometheusEnvironmentFields.USE_HTTPS)
-			.setDescription("Use HTTPS for calling the API.");
+			.setDescription("(Ignored if URL is defined) Use HTTPS for calling the API.");
 	
 	public PrometheusEnvironment() {
 		initializeFields();
 	}
 		
 	private void initializeFields() {
-		this.addFields(host, port, useHttps);
+		this.addFields(url, host, port, useHttps);
 	}
 		
 			
@@ -84,22 +89,41 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 	
 	public String getAPIUrlVersion1() {
 		
+		//------------------------------------
+		// Create URL once
 		if(apiURL == null) {
-			StringBuilder builder = new StringBuilder();
-			
-			if(useHttps.getValue()) {
-				builder.append("https://");
+
+			if( !Strings.isNullOrEmpty(url.getValue()) ) {
+				//-------------------------------
+				// Use URL
+				apiURL = url.getValue() + "/api/v1";
+				apiURL = apiURL.replace("//api", "/api");
+				
 			}else {
-				builder.append("http://");
+				//-------------------------------
+				// Use Legacy host and port definition
+				
+				StringBuilder builder = new StringBuilder();
+				if(useHttps.getValue()) {
+					builder.append("https://");
+				}else {
+					builder.append("http://");
+				}
+				builder.append(host.getValue());
+				
+				if(port.getValue() != null) {
+					builder.append(":")
+						   .append(port.getValue());
+				}
+				builder.append("/api/v1");
+				apiURL = builder.toString();
 			}
-			builder.append(host.getValue())
-				.append(":")
-				.append(port.getValue())
-				.append("/api/v1");
 			
-			apiURL = builder.toString();
+			
 		}
 		
+		//------------------------------------
+		// Return URL
 		return apiURL;
 	}
 	

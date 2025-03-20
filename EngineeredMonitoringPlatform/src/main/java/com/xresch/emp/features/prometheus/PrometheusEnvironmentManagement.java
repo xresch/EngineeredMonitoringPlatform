@@ -1,6 +1,9 @@
 package com.xresch.emp.features.prometheus;
 
 import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -73,12 +76,32 @@ public class PrometheusEnvironmentManagement {
 	private static void createEnvironment(PrometheusEnvironment environment) {
 
 		environments.remove(environment.getDefaultObject().id());
-
-		InetSocketAddress address = new InetSocketAddress(environment.host(), environment.port());
-		if(address.isUnresolved()) {
-			CFW.Messages.addErrorMessage("The URL could not be resolved: "+environment.host()+":"+environment.port());
+		
+		String urlString = environment.getAPIUrlVersion1();
+		
+		try {
+			URL url = new URI(urlString).toURL();
+			int port = url.getPort();
+			
+			if(port == -1) {
+				if(url.getProtocol().toLowerCase().equals("https")) {
+					port = 443;
+				}else {
+					port = 80;
+				}
+			}
+			
+			InetSocketAddress address = new InetSocketAddress(url.getHost(), port );
+			if(address.isUnresolved()) {
+				CFW.Messages.addErrorMessage("The URL could not be resolved: "+urlString);
+				return;
+			};
+			
+		} catch (Exception e) {
+			CFW.Messages.addErrorMessage("Issue with URL: "+urlString+" - Error: "+e.getMessage() );
 			return;
-		};
+		}
+
 		
 		environments.put(environment.getDefaultObject().id(), environment);
 		
