@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.xresch</groupId>
 	<artifactId>emp</artifactId>
-	<version>4.3.2.1</version>
+	<version>4.4.0</version>
 
 	<!-- ================= PROPERTIES ================== -->
 	<properties>
@@ -13,10 +13,10 @@
 		<folderName>EMPServer</folderName> <!-- making folder without version name, as antrun can't handle regex with folders -->
 		<binariesFolder>${basedir}/target/${folderName}</binariesFolder>
 		
-		<releaseName>EMPServer_v${version}</releaseName> <!-- making versioned folder for zipping -->
+		<releaseName>EMPServer_v${project.version}</releaseName> <!-- making versioned folder for zipping -->
 		<zipFolder>${basedir}/target/${releaseName}</zipFolder>
 		
-		<skipMakeFolder>false</skipMakeFolder>
+		<skipMakeFolder>true</skipMakeFolder>
 		
 	</properties>
 
@@ -117,7 +117,7 @@
 						        </copy>
 						        
 						        <!-- ##### Copy jars to extensions ##### -->
-						        <copy todir="${binariesFolder}/extensions" file="${basedir}/target/emp-${version}.jar"></copy>
+						        <copy todir="${binariesFolder}/extensions" file="${basedir}/target/emp-${project.version}.jar"></copy>
 						        <copy todir="${binariesFolder}/extensions">
 								  <fileset dir="${basedir}/target/lib"/>
 								</copy>
