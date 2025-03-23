@@ -471,7 +471,7 @@ public class WidgetMonitorStatus extends WidgetDefinition {
 			//----------------------------------------
 			// RESOLVE
 			if(type.equals(AlertType.RESOLVE)) {
-				String message = CFW.Random.randomIssueResolvedMessage();
+				String message = CFW.Random.issueResolvedMessage();
 				String messageHTML = "<p>"+message+"</p>"+linkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");

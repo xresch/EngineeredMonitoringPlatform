@@ -160,7 +160,7 @@ public class StepCommonFunctions {
 			//----------------------------------------
 			// RESOLVE
 			if(type.equals(AlertType.RESOLVE)) {
-				String message = CFW.Random.randomIssueResolvedMessage();
+				String message = CFW.Random.issueResolvedMessage();
 				String messageHTML = "<p>"+message+"</p>"+widgetLinkHTML;
 				
 				CFW.Messages.addSuccessMessage("Issue has resolved.");
@@ -192,23 +192,23 @@ public class StepCommonFunctions {
 			JsonArray array = new JsonArray();
 			
 			for(int i = 0 ; i < planCount; i++) {
-				String alphas = ("["+CFW.Random.randomStringAlphaNumerical(3)+"] ").toUpperCase();
-				String randomProject = CFW.Random.randomFromArray(new String[] {"Project Omega", "Project Alpha", "Project Epsilon"});
-				String randomPlan = CFW.Random.randomFromArray(new String[] {"Test Plan", "Ricks Plan Rolls", "Plan Ahead", "Plan of a Lifetime", "No Plan", "Plan Tage", "Plan E", "Plan ET"});
-				String randomResult = CFW.Random.randomFromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "FAILED", "TECHNICAL_ERROR", "RUNNING"});
+				String alphas = ("["+CFW.Random.stringAlphaNum(3)+"] ").toUpperCase();
+				String randomProject = CFW.Random.fromArray(new String[] {"Project Omega", "Project Alpha", "Project Epsilon"});
+				String randomPlan = CFW.Random.fromArray(new String[] {"Test Plan", "Ricks Plan Rolls", "Plan Ahead", "Plan of a Lifetime", "No Plan", "Plan Tage", "Plan E", "Plan ET"});
+				String randomResult = CFW.Random.fromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "FAILED", "TECHNICAL_ERROR", "RUNNING"});
 				
-				int offsetMinutes = -1 * CFW.Random.randomIntegerInRange(15, 120);
-				int offsetMultiplier = CFW.Random.randomIntegerInRange(2, 5);
+				int offsetMinutes = -1 * CFW.Random.integerInRange(15, 120);
+				int offsetMultiplier = CFW.Random.integerInRange(2, 5);
 				JsonObject object = new JsonObject();
 				object.addProperty("projectid", "62444fadee10d74e1b1395af");
 				object.addProperty("projectname", alphas+randomProject);
-				object.addProperty("planid", CFW.Random.randomStringAlphaNumerical(24).toLowerCase());
+				object.addProperty("planid", CFW.Random.stringAlphaNum(24).toLowerCase());
 				object.addProperty("planname",  alphas+randomPlan);
-				object.addProperty("schedulerid", CFW.Random.randomStringAlphaNumerical(24).toLowerCase());
+				object.addProperty("schedulerid", CFW.Random.stringAlphaNum(24).toLowerCase());
 				object.addProperty("schedulername", alphas+"Scheduler for "+randomPlan);
 				object.addProperty("status", "ENDED");
 				object.addProperty("result", randomResult);
-				object.addProperty("duration", CFW.Random.randomIntegerInRange(10, 12000) );
+				object.addProperty("duration", CFW.Random.integerInRange(10, 12000) );
 				object.addProperty("starttime", CFW.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes*offsetMultiplier).getTime());
 				object.addProperty("endtime",  CFW.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes).getTime());
 				
@@ -228,20 +228,20 @@ public class StepCommonFunctions {
 		
 		for(int j = 0; j < seriesCount; j++) {
 			
-			String alphas = ("["+CFW.Random.randomStringAlphaNumerical(3)+"] ").toUpperCase();
-			String randomProject = CFW.Random.randomFromArray(new String[] {"Project Omega", "Project Alpha", "Project Epsilon"});
-			String randomPlan = CFW.Random.randomFromArray(new String[] {"Test Plan", "Ricks Plan Rolls", "Plan Ahead", "Plan of a Lifetime", "No Plan", "Plan Tage", "Plan E", "Plan ET"});
+			String alphas = ("["+CFW.Random.stringAlphaNum(3)+"] ").toUpperCase();
+			String randomProject = CFW.Random.fromArray(new String[] {"Project Omega", "Project Alpha", "Project Epsilon"});
+			String randomPlan = CFW.Random.fromArray(new String[] {"Test Plan", "Ricks Plan Rolls", "Plan Ahead", "Plan of a Lifetime", "No Plan", "Plan Tage", "Plan E", "Plan ET"});
 			
 			for(int i = 0 ; i < 24; i++) {
-				String randomResult = CFW.Random.randomFromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "FAILED", "TECHNICAL_ERROR", "RUNNING"});
+				String randomResult = CFW.Random.fromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "FAILED", "TECHNICAL_ERROR", "RUNNING"});
 				
-				int duration = CFW.Random.randomIntegerInRange(10, 12000);
+				int duration = CFW.Random.integerInRange(10, 12000);
 				JsonObject object = new JsonObject();
 				object.addProperty("projectid", "62444fadee10d74e1b1395af");
 				object.addProperty("projectname", alphas+randomProject);
-				object.addProperty("planid", CFW.Random.randomStringAlphaNumerical(24).toLowerCase());
+				object.addProperty("planid", CFW.Random.stringAlphaNum(24).toLowerCase());
 				object.addProperty("planname",  alphas+randomPlan);
-				object.addProperty("schedulerid", CFW.Random.randomStringAlphaNumerical(24).toLowerCase());
+				object.addProperty("schedulerid", CFW.Random.stringAlphaNum(24).toLowerCase());
 				object.addProperty("schedulername", alphas+"Scheduler for "+randomPlan);
 				object.addProperty("status", "ENDED");
 				object.addProperty("result", randomResult);

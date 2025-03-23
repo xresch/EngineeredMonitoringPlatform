@@ -180,9 +180,9 @@ public class ServletTheusinator extends HttpServlet
 			
 			case "getclientmeasuredata": 	plaintext.append(
 													CFW.Files.readPackageResource(FeatureSPM.PACKAGE_RESOURCE, "theusinator_sample_getClientMeasureData.xml")
-														.replaceAll("#value#", ""+CFW.Random.randomFromZeroToInteger(100))
-														.replaceAll("#value2#", ""+CFW.Random.randomFromZeroToInteger(100))
-														.replaceAll("#value3#", ""+CFW.Random.randomFromZeroToInteger(100))
+														.replaceAll("#value#", ""+CFW.Random.fromZeroToInteger(100))
+														.replaceAll("#value2#", ""+CFW.Random.fromZeroToInteger(100))
+														.replaceAll("#value3#", ""+CFW.Random.fromZeroToInteger(100))
 													);			
 											break;
 			
