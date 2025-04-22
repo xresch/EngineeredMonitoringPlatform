@@ -79,7 +79,7 @@ public class Main implements CFWAppInterface {
 	        executor.setDefaultURL("/dashboard/list", true);
 	        
 	        try {
-				executor.start();
+				executor.startServer();
 			} catch (Exception e) {
 				Logger logger = CFWLog.getLogger(Main.class.getName());
 				new CFWLog(logger)
