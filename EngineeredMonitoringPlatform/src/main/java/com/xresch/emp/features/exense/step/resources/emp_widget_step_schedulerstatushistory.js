@@ -9,7 +9,6 @@
 			menuicon: "fas fa-traffic-light",
 			menulabel: CFWL('emp_widget_step_schedulerstatushistory', "Scheduler Status History"),
 			description: CFWL('emp_widget_step_schedulerstatushistory_desc', "Displays a table with status history for the selected schedulers."),
-			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){

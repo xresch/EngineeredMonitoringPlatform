@@ -9,7 +9,6 @@
 			menuicon: "fas fa-traffic-light",
 			menulabel: CFWL('emp_awajobstatusgrouped', "AWA Job Status - Current Grouped"),
 			description: CFWL('emp_awajobstatusgrouped_desc', "Fetches the current status of one or multiple AWA Jobs and displays them as a single status."),
-			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){

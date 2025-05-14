@@ -10,7 +10,6 @@
 			menuicon: "fas fa-bolt",
 			menulabel: CFWL('emp_widget_dynatrace_processevents', "Process Events"),
 			description: CFWL('emp_widget_dynatrace_processevents_desc', "Lists the events for the selected process, occurred during the selected time frame."), 
-			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){

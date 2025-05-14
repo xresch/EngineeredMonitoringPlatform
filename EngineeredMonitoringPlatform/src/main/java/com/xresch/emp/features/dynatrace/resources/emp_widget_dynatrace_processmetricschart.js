@@ -10,7 +10,6 @@
 			menuicon: "fas fa-chart-area",
 			menulabel: CFWL('emp_widget_dynatrace_processmetricschart', "Process Metrics Chart"),
 			description: CFWL('emp_widget_dynatrace_processmetricschart_desc', "Displays a chart for the selected metrics and the selected process on a specific host."), 
-			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){

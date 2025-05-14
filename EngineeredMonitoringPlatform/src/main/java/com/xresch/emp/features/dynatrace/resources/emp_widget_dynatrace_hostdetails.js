@@ -10,7 +10,6 @@
 			menuicon: "fas fa-server",
 			menulabel: CFWL('emp_widget_dynatrace_hostdetails', "Host Details"),
 			description: CFWL('emp_widget_dynatrace_hostdetails_desc', "Displays details about a host monitored by Dynatrace."), 
-			usetimeframe: false,
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){

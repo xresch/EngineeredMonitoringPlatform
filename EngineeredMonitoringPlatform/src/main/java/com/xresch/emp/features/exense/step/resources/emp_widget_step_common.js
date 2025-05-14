@@ -156,7 +156,6 @@ function createStepStatusWidgetBase(widgetMenuLabel, widgetDescription){
 		menuicon: "fas fa-thermometer-half",
 		menulabel: widgetMenuLabel,
 		description: widgetDescription, 
-		usetimeframe: true,
 		createWidgetInstance: function (widgetObject, params, callback) {
 				
 			CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){
@@ -247,7 +246,6 @@ function createStepChartWidgetBase(
 		menuicon: "fas fa-chart-bar",
 		menulabel: widgetMenuLabel,
 		description: widgetDescription, 
-		usetimeframe: true,
 		createWidgetInstance: function (widgetObject, params, callback) {
 				
 			CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){

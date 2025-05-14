@@ -10,7 +10,6 @@
 			menuicon: "fas fa-thermometer-half",
 			menulabel: CFWL('emp_widget_dynatrace_hostmetricsstatus', "Host Metrics Status"),
 			description: CFWL('emp_widget_dynatrace_hostmetricsstatus_desc', "Displays a chart for the selected metrics and the selected host."), 
-			usetimeframe: true,
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
 				CFW.dashboard.fetchWidgetData(widgetObject, params, function(data){

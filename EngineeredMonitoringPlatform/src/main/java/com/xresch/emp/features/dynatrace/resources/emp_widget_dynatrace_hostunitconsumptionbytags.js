@@ -79,7 +79,6 @@
 			menuicon: "fas fa-file-invoice-dollar",
 			menulabel: CFWL('emp_widget_dynatrace_hostunitconsumptionbytags', "Host Unit Consumption By Tags"),
 			description: CFWL('emp_widget_dynatrace_hostunitconsumptionbytags_desc', "Calculates the host unit consumption by tags. This widget can be useful for accounting and finding out how many units are consumed by which application."), 
-			usetimeframe: true,
 
 			createWidgetInstance: function (widgetObject, params, callback) {
 					
