@@ -3,6 +3,7 @@ package com.xresch.emp.features.prometheus;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.caching.FileDefinition.HandlingType;
+import com.xresch.cfw.extensions.databases.CFWStatusMonitorDatabase;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
@@ -75,6 +76,10 @@ public class FeaturePrometheus extends CFWAppFeature {
 		//----------------------------------
 		// Register Source
 		CFW.Registry.Query.registerSource(new CFWQuerySourcePrometheus(null));
+		
+		//-------------------------------------
+		// Register Status Monitor
+		CFW.Registry.StatusMonitor.registerStatusMonitor(new CFWStatusMonitorPrometheus());
 		
 		//----------------------------------
 		// Register Job Task

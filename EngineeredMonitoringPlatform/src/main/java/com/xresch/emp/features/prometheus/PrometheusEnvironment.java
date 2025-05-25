@@ -1,5 +1,10 @@
 package com.xresch.emp.features.prometheus;
 
+import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map.Entry;
@@ -18,6 +23,7 @@ import com.xresch.cfw.features.core.AutocompleteList;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.dashboard.DashboardWidget;
 import com.xresch.cfw.features.dashboard.DashboardWidget.DashboardWidgetFields;
+import com.xresch.cfw.utils.CFWState.CFWStateOption;
 import com.xresch.cfw.utils.web.CFWHttp.CFWHttpResponse;
 
 /**************************************************************************************************************
@@ -57,8 +63,26 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 	private void initializeFields() {
 		this.addFields(url, host, port, useHttps);
 	}
+	
+	/**************************************************************
+	 *
+	 **************************************************************/
+	public CFWStateOption getStatus() {
 		
-			
+
+		//-----------------------------
+		// If Undefined 
+		if(!isDefined() || !this.isActive()) {
+			return  CFWStateOption.DISABLED;
+		}
+		
+		return CFW.HTTP.checkURLGetsResponse(this.getAPIUrlVersion1());
+
+	}
+	
+	/**************************************************************
+	 *
+	 **************************************************************/	
 	@Override
 	public boolean isDeletable(int id) {
 
@@ -77,16 +101,24 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 
 	}
 	
+	/**************************************************************
+	 *
+	 **************************************************************/
 	public boolean isDefined() {
-		if(host.getValue() != null
-		&& port.getValue() != null) {
+		if(url.getValue() != null
+		|| ( host.getValue() != null
+			&& port.getValue() != null
+			)
+		) {
 			return true;
 		}
 		
 		return false;
 	}
 	
-	
+	/**************************************************************
+	 *
+	 **************************************************************/
 	public String getAPIUrlVersion1() {
 		
 		//------------------------------------
@@ -127,19 +159,31 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 		return apiURL;
 	}
 	
+	/**************************************************************
+	 *
+	 **************************************************************/
 	public String host() {
 		return host.getValue();
 	}
 	
+	/**************************************************************
+	 *
+	 **************************************************************/
 	public PrometheusEnvironment host(String value) {
 		this.host.setValue(value);
 		return this;
 	}
 		
+	/**************************************************************
+	 *
+	 **************************************************************/
 	public int port() {
 		return port.getValue();
 	}
 	
+	/**************************************************************
+	 *
+	 **************************************************************/
 	public PrometheusEnvironment port(int value) {
 		this.port.setValue(value);
 		return this;
