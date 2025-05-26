@@ -6,4 +6,4 @@
 #-------------------------------
 mvn clean install
 docker build -t xresch/emp:latest .
-docker build -t xresch/emp:latest -t xresch/emp:4.4.0 .
+docker build -t xresch/emp:latest -t xresch/emp:4.4.4 .
