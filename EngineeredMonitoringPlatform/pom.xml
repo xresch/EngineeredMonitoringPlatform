@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.xresch</groupId>
 	<artifactId>emp</artifactId>
-	<version>4.4.0</version>
+	<version>4.4.4</version>
 
 	<!-- ================= PROPERTIES ================== -->
 	<properties>
@@ -16,7 +16,7 @@
 		<releaseName>EMPServer_v${project.version}</releaseName> <!-- making versioned folder for zipping -->
 		<zipFolder>${basedir}/target/${releaseName}</zipFolder>
 		
-		<skipMakeFolder>true</skipMakeFolder>
+		<skipMakeFolder>false</skipMakeFolder>
 		
 	</properties>
 
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.xresch</groupId>
 			<artifactId>cfw</artifactId>
-			<version>11.0.0</version>
+			<version>11.1.1</version>
 			<scope>provided</scope>
 		</dependency>
 
