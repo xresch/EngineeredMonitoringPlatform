@@ -76,7 +76,7 @@ public class PrometheusEnvironment extends AbstractContextSettings {
 			return  CFWStateOption.DISABLED;
 		}
 		
-		return CFW.HTTP.checkURLGetsResponse(this.getAPIUrlVersion1());
+		return CFW.HTTP.checkURLGetsResponse(this.getAPIUrlVersion1(), false);
 
 	}
 	
