@@ -67,20 +67,5 @@ public class ParameterDefinitionStepEnvironment extends ParameterDefinition {
 	public boolean isDynamic() {
 		return false;
 	}
-	
-	/***************************************************************
-	 * 
-	 ***************************************************************/
-	@Override
-	public boolean isAvailable(HashSet<String> widgetTypesArray) {
-		
-		for(String type : widgetTypesArray) {
-			if(type.contains(FeatureExenseStepMongoDB.WIDGET_PREFIX)) {
-				return true;
-			}
-			
-		}
-		return false;
-	}
 
 }

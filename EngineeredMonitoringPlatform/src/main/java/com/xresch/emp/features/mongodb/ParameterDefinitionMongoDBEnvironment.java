@@ -69,20 +69,5 @@ public class ParameterDefinitionMongoDBEnvironment extends ParameterDefinition {
 	public boolean isDynamic() {
 		return false;
 	}
-	
-	/***************************************************************
-	 * 
-	 ***************************************************************/
-	@Override
-	public boolean isAvailable(HashSet<String> widgetTypesArray) {
-		
-		for(String type : widgetTypesArray) {
-			if(type.contains("emp_mongodb")) {
-				return true;
-			}
-			
-		}
-		return false;
-	}
 
 }

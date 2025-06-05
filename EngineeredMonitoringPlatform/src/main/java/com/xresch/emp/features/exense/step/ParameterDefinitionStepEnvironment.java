@@ -69,19 +69,4 @@ public class ParameterDefinitionStepEnvironment extends ParameterDefinition {
 		return false;
 	}
 	
-	/***************************************************************
-	 * 
-	 ***************************************************************/
-	@Override
-	public boolean isAvailable(HashSet<String> widgetTypesArray) {
-		
-		for(String type : widgetTypesArray) {
-			if(type.contains(FeatureExenseStep.WIDGET_PREFIX)) {
-				return true;
-			}
-			
-		}
-		return false;
-	}
-
 }

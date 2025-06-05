@@ -70,19 +70,4 @@ public class ParameterDefinitionDynatraceEnvironment extends ParameterDefinition
 		return false;
 	}
 	
-	/***************************************************************
-	 * 
-	 ***************************************************************/
-	@Override
-	public boolean isAvailable(HashSet<String> widgetTypesArray) {
-		
-		for(String type : widgetTypesArray) {
-			if(type.contains("emp_dynatrace")) {
-				return true;
-			}
-			
-		}
-		return false;
-	}
-
 }

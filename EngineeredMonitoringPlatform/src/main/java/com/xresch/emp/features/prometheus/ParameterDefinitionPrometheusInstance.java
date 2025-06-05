@@ -96,19 +96,4 @@ public class ParameterDefinitionPrometheusInstance extends ParameterDefinition {
 		return false;
 	}
 	
-	/***************************************************************
-	 * 
-	 ***************************************************************/
-	@Override
-	public boolean isAvailable(HashSet<String> widgetTypesArray) {
-		
-		for(String type : widgetTypesArray) {
-			if(type.contains("prometheus")) {
-				return true;
-			}
-			
-		}
-		return false;
-	}
-
 }
