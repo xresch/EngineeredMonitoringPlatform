@@ -210,7 +210,13 @@ public class CFWQuerySourceStepAPI extends CFWQuerySource {
 			}
 		}
 		
+		if(environmentString == null) {
+			 CFW.Messages.addWarningMessage("Parameter 'environment' cannot be null.");
+			 return;
+		}
+			
 		int environmentID = Integer.parseInt(environmentString);
+		
 		
 		//-----------------------------
 		// Get Environment
