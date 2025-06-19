@@ -211,7 +211,7 @@ public class CFWQuerySourceStepAPI extends CFWQuerySource {
 		}
 		
 		if(environmentString == null) {
-			 CFW.Messages.addWarningMessage("Parameter 'environment' cannot be null.");
+			 CFW.Messages.addWarningMessage(uniqueName()+": Parameter 'environment' cannot be null.");
 			 return;
 		}
 			
