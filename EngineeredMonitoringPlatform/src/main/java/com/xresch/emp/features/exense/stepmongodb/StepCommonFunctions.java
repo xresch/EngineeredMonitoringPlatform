@@ -197,8 +197,8 @@ public class StepCommonFunctions {
 				String randomPlan = CFW.Random.fromArray(new String[] {"Test Plan", "Ricks Plan Rolls", "Plan Ahead", "Plan of a Lifetime", "No Plan", "Plan Tage", "Plan E", "Plan ET"});
 				String randomResult = CFW.Random.fromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "FAILED", "TECHNICAL_ERROR", "RUNNING"});
 				
-				int offsetMinutes = -1 * CFW.Random.integerInRange(15, 120);
-				int offsetMultiplier = CFW.Random.integerInRange(2, 5);
+				int offsetMinutes = -1 * CFW.Random.integer(15, 120);
+				int offsetMultiplier = CFW.Random.integer(2, 5);
 				JsonObject object = new JsonObject();
 				object.addProperty("projectid", "62444fadee10d74e1b1395af");
 				object.addProperty("projectname", alphas+randomProject);
@@ -208,7 +208,7 @@ public class StepCommonFunctions {
 				object.addProperty("schedulername", alphas+"Scheduler for "+randomPlan);
 				object.addProperty("status", "ENDED");
 				object.addProperty("result", randomResult);
-				object.addProperty("duration", CFW.Random.integerInRange(10, 12000) );
+				object.addProperty("duration", CFW.Random.integer(10, 12000) );
 				object.addProperty("starttime", CFW.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes*offsetMultiplier).getTime());
 				object.addProperty("endtime",  CFW.Time.getCurrentTimestampWithOffset(0, 0, 0, 0, offsetMinutes).getTime());
 				
@@ -235,7 +235,7 @@ public class StepCommonFunctions {
 			for(int i = 0 ; i < 24; i++) {
 				String randomResult = CFW.Random.fromArray(new String[] {"PASSED", "PASSED", "PASSED", "PASSED", "PASSED", "FAILED", "TECHNICAL_ERROR", "RUNNING"});
 				
-				int duration = CFW.Random.integerInRange(10, 12000);
+				int duration = CFW.Random.integer(10, 12000);
 				JsonObject object = new JsonObject();
 				object.addProperty("projectid", "62444fadee10d74e1b1395af");
 				object.addProperty("projectname", alphas+randomProject);
