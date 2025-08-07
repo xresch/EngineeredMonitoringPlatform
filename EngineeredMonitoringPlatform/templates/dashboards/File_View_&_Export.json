@@ -1,0 +1,115 @@
+{"success": true,"messages": [],"payload": {
+  "dashboards": [
+    {
+      "PK_ID": 769,
+      "FK_ID_USER": 1,
+      "NAME": "[EMP] File View \u0026 Export",
+      "DESCRIPTION": null,
+      "TAGS": [
+        "file",
+        "emp",
+        "view",
+        "export"
+      ],
+      "IS_SHARED": false,
+      "JSON_SHARE_WITH_USERS": {},
+      "JSON_SHARE_WITH_GROUPS": {},
+      "JSON_EDITORS": {},
+      "JSON_EDITOR_GROUPS": {},
+      "ALLOW_EDIT_SETTINGS": false,
+      "TIME_CREATED": 1754555401761,
+      "LAST_UPDATED": 1754557757859,
+      "IS_PUBLIC": false,
+      "START_FULLSCREEN": false,
+      "IS_DELETABLE": true,
+      "IS_RENAMABLE": true,
+      "IS_ARCHIVED": false,
+      "VERSION_GROUP": "9d8075d1-825e-42f8-b11b-19666768026a",
+      "VERSION": 0,
+      "username": "admin",
+      "widgets": [
+        {
+          "PK_ID": 1965,
+          "FK_ID_DASHBOARD": 769,
+          "TYPE": "cfw_parameter",
+          "X": 0,
+          "Y": 0,
+          "WIDTH": 59,
+          "HEIGHT": 9,
+          "TITLE": null,
+          "TITLE_LINK": null,
+          "TITLE_INFO": null,
+          "TITLE_FONTSIZE": null,
+          "TITLE_POSITION": null,
+          "TITLE_ALIGN": null,
+          "CONTENT_FONTSIZE": null,
+          "FOOTER": null,
+          "BGCOLOR": null,
+          "FGCOLOR": null,
+          "INVISIBLE": false,
+          "PAUSE": false,
+          "MANUAL_LOAD": false,
+          "PARAM_WIDGET_LOAD": false,
+          "JSON_SETTINGS": {
+            "description": "This dashboard allows you to view a File stored in the file manager. It is useful to display data like csv, excel and json as a table and export the data in a different format.",
+            "JSON_PARAMETERS": {
+              "2116": "file"
+            },
+            "addtotop": false,
+            "showbutton": true,
+            "buttonlabel": "View",
+            "checkpassword": false,
+            "password": null,
+            "JSON_AFFECTED_WIDGETS": {},
+            "load_previous_values": true
+          },
+          "JSON_TASK_PARAMETERS": {}
+        },
+        {
+          "PK_ID": 1966,
+          "FK_ID_DASHBOARD": 769,
+          "TYPE": "cfw_widget_queryresults",
+          "X": 0,
+          "Y": 9,
+          "WIDTH": 59,
+          "HEIGHT": 42,
+          "TITLE": "Merged Data",
+          "TITLE_LINK": null,
+          "TITLE_INFO": null,
+          "TITLE_FONTSIZE": null,
+          "TITLE_POSITION": "top",
+          "TITLE_ALIGN": "start",
+          "CONTENT_FONTSIZE": null,
+          "FOOTER": null,
+          "BGCOLOR": "null",
+          "FGCOLOR": "null",
+          "INVISIBLE": false,
+          "PAUSE": false,
+          "MANUAL_LOAD": false,
+          "PARAM_WIDGET_LOAD": false,
+          "JSON_SETTINGS": {
+            "query": "| source file\r\n\tfile \u003d p(file, -1)\r\n| display\r\n\tdownload \u003d true",
+            "sampledata": false
+          },
+          "JSON_TASK_PARAMETERS": {}
+        }
+      ],
+      "parameters": [
+        {
+          "PK_ID": 2116,
+          "FK_ID_DASHBOARD": 769,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "User File List",
+          "PARAM_TYPE": "SELECT",
+          "NAME": "file",
+          "DESCRIPTION": "The file you want to view",
+          "VALUE": "{\"id\":262,\"name\":\"namestats_A.json\"}",
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        }
+      ]
+    }
+  ]
+}}
