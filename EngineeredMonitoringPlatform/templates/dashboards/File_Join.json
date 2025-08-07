@@ -1,0 +1,159 @@
+{"success": true,"messages": [],"payload": {
+  "dashboards": [
+    {
+      "PK_ID": 705,
+      "FK_ID_USER": 1,
+      "NAME": "[EMP] File Join",
+      "DESCRIPTION": null,
+      "TAGS": [
+        "file",
+        "emp",
+        "join"
+      ],
+      "IS_SHARED": true,
+      "JSON_SHARE_WITH_USERS": {},
+      "JSON_SHARE_WITH_GROUPS": {},
+      "JSON_EDITORS": {},
+      "JSON_EDITOR_GROUPS": {},
+      "ALLOW_EDIT_SETTINGS": false,
+      "TIME_CREATED": 1754548336599,
+      "LAST_UPDATED": 1754554042025,
+      "IS_PUBLIC": false,
+      "START_FULLSCREEN": false,
+      "IS_DELETABLE": true,
+      "IS_RENAMABLE": true,
+      "IS_ARCHIVED": false,
+      "VERSION_GROUP": "5d77e546-76bb-4aad-bee0-7ee4a2f7fa6b",
+      "VERSION": 0,
+      "username": "admin",
+      "widgets": [
+        {
+          "PK_ID": 1901,
+          "FK_ID_DASHBOARD": 705,
+          "TYPE": "cfw_parameter",
+          "X": 0,
+          "Y": 0,
+          "WIDTH": 59,
+          "HEIGHT": 13,
+          "TITLE": null,
+          "TITLE_LINK": null,
+          "TITLE_INFO": null,
+          "TITLE_FONTSIZE": null,
+          "TITLE_POSITION": null,
+          "TITLE_ALIGN": null,
+          "CONTENT_FONTSIZE": null,
+          "FOOTER": null,
+          "BGCOLOR": null,
+          "FGCOLOR": null,
+          "INVISIBLE": false,
+          "PAUSE": false,
+          "MANUAL_LOAD": false,
+          "PARAM_WIDGET_LOAD": false,
+          "JSON_SETTINGS": {
+            "description": "This dashboard is used to join the records of two files like you would do with SQL, while the records can be identified by a value of a column(Join On). If the column is not specified, the data is joined by the first column of both files. This can be used with JSON data you have stored from this application using the store button, or other files you have uploaded in the File Manager. Both files need the \u003cspan style\u003d\"color: rgb(255, 0, 0); font-weight: bold;\"\u003esame\u0026nbsp;column names\u003c/span\u003e\u0026nbsp;for the identifier column for the columns to be joined.",
+            "JSON_PARAMETERS": {
+              "2051": "file_left",
+              "2052": "file_right",
+              "2053": "join_on",
+              "2115": "join_type"
+            },
+            "addtotop": false,
+            "showbutton": true,
+            "buttonlabel": "Join",
+            "checkpassword": false,
+            "password": null,
+            "JSON_AFFECTED_WIDGETS": {},
+            "load_previous_values": true
+          },
+          "JSON_TASK_PARAMETERS": {}
+        },
+        {
+          "PK_ID": 1902,
+          "FK_ID_DASHBOARD": 705,
+          "TYPE": "cfw_widget_queryresults",
+          "X": 0,
+          "Y": 13,
+          "WIDTH": 59,
+          "HEIGHT": 42,
+          "TITLE": "Joined Data",
+          "TITLE_LINK": null,
+          "TITLE_INFO": null,
+          "TITLE_FONTSIZE": null,
+          "TITLE_POSITION": "top",
+          "TITLE_ALIGN": "start",
+          "CONTENT_FONTSIZE": null,
+          "FOOTER": null,
+          "BGCOLOR": "null",
+          "FGCOLOR": "null",
+          "INVISIBLE": false,
+          "PAUSE": false,
+          "MANUAL_LOAD": false,
+          "PARAM_WIDGET_LOAD": false,
+          "JSON_SETTINGS": {
+            "query": "| source file\r\n\tfile \u003d p(file_left, -1)\r\n;\r\n| source file\r\n\tfile \u003d p(file_right, -1)\r\n;\r\n| resultjoin \r\n\ton\u003dp(join_on, null)\r\n\tjoin\u003dp(join_type, \u0027left\u0027)\r\n| display\r\n\tstore \u003d true\r\n\tdownload \u003d true",
+            "sampledata": false
+          },
+          "JSON_TASK_PARAMETERS": {}
+        }
+      ],
+      "parameters": [
+        {
+          "PK_ID": 2051,
+          "FK_ID_DASHBOARD": 705,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "User File List",
+          "PARAM_TYPE": "SELECT",
+          "NAME": "file_left",
+          "DESCRIPTION": "The left file for the join operation.",
+          "VALUE": "{\"id\":262,\"name\":\"namestats_A.json\"}",
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        },
+        {
+          "PK_ID": 2052,
+          "FK_ID_DASHBOARD": 705,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "User File List",
+          "PARAM_TYPE": "SELECT",
+          "NAME": "file_right",
+          "DESCRIPTION": "The right file for the join operation.",
+          "VALUE": "{\"id\":263,\"name\":\"namestats_B.json\"}",
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        },
+        {
+          "PK_ID": 2053,
+          "FK_ID_DASHBOARD": 705,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "Text",
+          "PARAM_TYPE": "TEXT",
+          "NAME": "join_on",
+          "DESCRIPTION": "The name of the column that should be used to join the two files on. The first column is used if not defined.",
+          "VALUE": null,
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        },
+        {
+          "PK_ID": 2115,
+          "FK_ID_DASHBOARD": 705,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "Select",
+          "PARAM_TYPE": "VALUE_LABEL",
+          "NAME": "join_type",
+          "DESCRIPTION": "Define How to join the data.",
+          "VALUE": "{\"left\":\"Left\",\"right\":\"Right\",\"inner\":\"Inner\"}",
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        }
+      ]
+    }
+  ]
+}}

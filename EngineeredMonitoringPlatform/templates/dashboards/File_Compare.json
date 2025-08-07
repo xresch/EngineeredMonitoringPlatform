@@ -1,0 +1,144 @@
+{"success": true,"messages": [],"payload": {
+  "dashboards": [
+    {
+      "PK_ID": 737,
+      "FK_ID_USER": 1,
+      "NAME": "[EMP] File Compare",
+      "DESCRIPTION": null,
+      "TAGS": [
+        "file",
+        "emp",
+        "compare"
+      ],
+      "IS_SHARED": false,
+      "JSON_SHARE_WITH_USERS": {},
+      "JSON_SHARE_WITH_GROUPS": {},
+      "JSON_EDITORS": {},
+      "JSON_EDITOR_GROUPS": {},
+      "ALLOW_EDIT_SETTINGS": false,
+      "TIME_CREATED": 1754551839497,
+      "LAST_UPDATED": 1754553762691,
+      "IS_PUBLIC": false,
+      "START_FULLSCREEN": false,
+      "IS_DELETABLE": true,
+      "IS_RENAMABLE": true,
+      "IS_ARCHIVED": false,
+      "VERSION_GROUP": "0df64517-5363-4639-86f1-fba21206e646",
+      "VERSION": 0,
+      "username": "admin",
+      "widgets": [
+        {
+          "PK_ID": 1933,
+          "FK_ID_DASHBOARD": 737,
+          "TYPE": "cfw_parameter",
+          "X": 0,
+          "Y": 0,
+          "WIDTH": 59,
+          "HEIGHT": 11,
+          "TITLE": null,
+          "TITLE_LINK": null,
+          "TITLE_INFO": null,
+          "TITLE_FONTSIZE": null,
+          "TITLE_POSITION": null,
+          "TITLE_ALIGN": null,
+          "CONTENT_FONTSIZE": null,
+          "FOOTER": null,
+          "BGCOLOR": null,
+          "FGCOLOR": null,
+          "INVISIBLE": false,
+          "PAUSE": false,
+          "MANUAL_LOAD": false,
+          "PARAM_WIDGET_LOAD": false,
+          "JSON_SETTINGS": {
+            "description": "This dashboard is used to compare the records of two files, while the records can be identified by a value of a column(Compare By). If the column is not specified, the data is compared by the first column of both files. This can be used with JSON data you have stored from this application using the store button, or other files you have uploaded in the File Manager. Both files need the \u003cspan style\u003d\"color: rgb(255, 0, 0); font-weight: bold;\"\u003esame\u0026nbsp;column names\u003c/span\u003e for the columns to be compared.",
+            "JSON_PARAMETERS": {
+              "2051": "file_earlier",
+              "2052": "file_later",
+              "2053": "compare_by"
+            },
+            "addtotop": false,
+            "showbutton": true,
+            "buttonlabel": "Compare",
+            "checkpassword": false,
+            "password": null,
+            "JSON_AFFECTED_WIDGETS": {},
+            "load_previous_values": true
+          },
+          "JSON_TASK_PARAMETERS": {}
+        },
+        {
+          "PK_ID": 1934,
+          "FK_ID_DASHBOARD": 737,
+          "TYPE": "cfw_widget_queryresults",
+          "X": 0,
+          "Y": 11,
+          "WIDTH": 59,
+          "HEIGHT": 42,
+          "TITLE": "Compared Data",
+          "TITLE_LINK": null,
+          "TITLE_INFO": null,
+          "TITLE_FONTSIZE": null,
+          "TITLE_POSITION": "top",
+          "TITLE_ALIGN": "start",
+          "CONTENT_FONTSIZE": null,
+          "FOOTER": null,
+          "BGCOLOR": "null",
+          "FGCOLOR": "null",
+          "INVISIBLE": false,
+          "PAUSE": false,
+          "MANUAL_LOAD": false,
+          "PARAM_WIDGET_LOAD": false,
+          "JSON_SETTINGS": {
+            "query": "| source file\r\n\tfile \u003d p(file_earlier, -1)\r\n;\r\n| source file\r\n\tfile \u003d p(file_later, -1)\r\n;\r\n| resultcompare\r\n\tby\u003dp(compare_by, null)\r\n| display\r\n\tstore \u003d true\r\n\tdownload \u003d true",
+            "sampledata": false
+          },
+          "JSON_TASK_PARAMETERS": {}
+        }
+      ],
+      "parameters": [
+        {
+          "PK_ID": 2083,
+          "FK_ID_DASHBOARD": 737,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "User File List",
+          "PARAM_TYPE": "SELECT",
+          "NAME": "file_earlier",
+          "DESCRIPTION": "The file that contains the earlier data",
+          "VALUE": "{\"id\":262,\"name\":\"namestats_A.json\"}",
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        },
+        {
+          "PK_ID": 2084,
+          "FK_ID_DASHBOARD": 737,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "User File List",
+          "PARAM_TYPE": "SELECT",
+          "NAME": "file_later",
+          "DESCRIPTION": "the file that contains the loater data.",
+          "VALUE": "{\"id\":263,\"name\":\"namestats_B.json\"}",
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        },
+        {
+          "PK_ID": 2085,
+          "FK_ID_DASHBOARD": 737,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "Text",
+          "PARAM_TYPE": "TEXT",
+          "NAME": "compare_by",
+          "DESCRIPTION": "The name of the column that should be used to compare the two files. The first column is used if not defined.",
+          "VALUE": null,
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        }
+      ]
+    }
+  ]
+}}

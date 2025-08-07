@@ -1,0 +1,129 @@
+{"success": true,"messages": [],"payload": {
+  "dashboards": [
+    {
+      "PK_ID": 706,
+      "FK_ID_USER": 1,
+      "NAME": "[EMP] File Merge",
+      "DESCRIPTION": null,
+      "TAGS": [
+        "file",
+        "emp",
+        "merge"
+      ],
+      "IS_SHARED": false,
+      "JSON_SHARE_WITH_USERS": {},
+      "JSON_SHARE_WITH_GROUPS": {},
+      "JSON_EDITORS": {},
+      "JSON_EDITOR_GROUPS": {},
+      "ALLOW_EDIT_SETTINGS": false,
+      "TIME_CREATED": 1754550883903,
+      "LAST_UPDATED": 1754551765720,
+      "IS_PUBLIC": false,
+      "START_FULLSCREEN": false,
+      "IS_DELETABLE": true,
+      "IS_RENAMABLE": true,
+      "IS_ARCHIVED": false,
+      "VERSION_GROUP": "9943c2c3-66a8-4fb4-a7ef-432968ccde44",
+      "VERSION": 0,
+      "username": "admin",
+      "widgets": [
+        {
+          "PK_ID": 1903,
+          "FK_ID_DASHBOARD": 706,
+          "TYPE": "cfw_parameter",
+          "X": 0,
+          "Y": 0,
+          "WIDTH": 59,
+          "HEIGHT": 9,
+          "TITLE": null,
+          "TITLE_LINK": null,
+          "TITLE_INFO": null,
+          "TITLE_FONTSIZE": null,
+          "TITLE_POSITION": null,
+          "TITLE_ALIGN": null,
+          "CONTENT_FONTSIZE": null,
+          "FOOTER": null,
+          "BGCOLOR": null,
+          "FGCOLOR": null,
+          "INVISIBLE": false,
+          "PAUSE": false,
+          "MANUAL_LOAD": false,
+          "PARAM_WIDGET_LOAD": false,
+          "JSON_SETTINGS": {
+            "description": "This dashboard is used to merge the data of two files. This can be useful if you have similar data structures in two different file formats like csv and excel. It can also be useful to just get a single file for multiple data exports.",
+            "JSON_PARAMETERS": {
+              "2054": "file_a",
+              "2055": "file_b"
+            },
+            "addtotop": false,
+            "showbutton": true,
+            "buttonlabel": "Merge",
+            "checkpassword": false,
+            "password": null,
+            "JSON_AFFECTED_WIDGETS": {},
+            "load_previous_values": true
+          },
+          "JSON_TASK_PARAMETERS": {}
+        },
+        {
+          "PK_ID": 1904,
+          "FK_ID_DASHBOARD": 706,
+          "TYPE": "cfw_widget_queryresults",
+          "X": 0,
+          "Y": 9,
+          "WIDTH": 59,
+          "HEIGHT": 42,
+          "TITLE": "Merged Data",
+          "TITLE_LINK": null,
+          "TITLE_INFO": null,
+          "TITLE_FONTSIZE": null,
+          "TITLE_POSITION": "top",
+          "TITLE_ALIGN": "start",
+          "CONTENT_FONTSIZE": null,
+          "FOOTER": null,
+          "BGCOLOR": "null",
+          "FGCOLOR": "null",
+          "INVISIBLE": false,
+          "PAUSE": false,
+          "MANUAL_LOAD": false,
+          "PARAM_WIDGET_LOAD": false,
+          "JSON_SETTINGS": {
+            "query": "| source file\r\n\tfile \u003d p(file_a, -1)\r\n;\r\n| source file\r\n\tfile \u003d p(file_b, -1)\r\n;\r\n| resultconcat\r\n| display\r\n\tstore \u003d true\r\n\tdownload \u003d true",
+            "sampledata": false
+          },
+          "JSON_TASK_PARAMETERS": {}
+        }
+      ],
+      "parameters": [
+        {
+          "PK_ID": 2054,
+          "FK_ID_DASHBOARD": 706,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "User File List",
+          "PARAM_TYPE": "SELECT",
+          "NAME": "file_a",
+          "DESCRIPTION": "The first file",
+          "VALUE": "{\"id\":262,\"name\":\"namestats_A.json\"}",
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        },
+        {
+          "PK_ID": 2055,
+          "FK_ID_DASHBOARD": 706,
+          "FK_ID_QUERY": null,
+          "WIDGET_TYPE": null,
+          "LABEL": "User File List",
+          "PARAM_TYPE": "SELECT",
+          "NAME": "file_b",
+          "DESCRIPTION": "The second file",
+          "VALUE": "{\"id\":263,\"name\":\"namestats_B.json\"}",
+          "MODE": "MODE_SUBSTITUTE",
+          "IS_MODE_CHANGE_ALLOWED": false,
+          "IS_DYNAMIC": false
+        }
+      ]
+    }
+  ]
+}}
