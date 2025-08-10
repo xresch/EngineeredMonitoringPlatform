@@ -30,9 +30,11 @@ Youtube Playlists:
 # Features
 
 Following is a list of features of EMP:
+* Query Language to fetch, manipulate  and format data for visualization 
 * Dashboards
-* Query Language to fetch, manipulate format data for displaying it 
+* Custom Dashboard Widgets based on parameterized queries
 * Credential Management
+* File Manager
 * Task Scheduler 
 * Fully functional user management with roles, groups and permissions
 * Connectors to various Databases and other data sources
@@ -50,6 +52,7 @@ Here a list of most of them:
 - oracle
 - postgres
 - mongodb
+- file
 - prometheus
 - appdb (DB of EMP)
 - applog (Log of EMP)
