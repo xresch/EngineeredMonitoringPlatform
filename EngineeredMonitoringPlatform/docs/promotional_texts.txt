@@ -1,0 +1,35 @@
+
+
+===================https://www.producthunt.com/ ===================
+The Engineered Monitoring Platform helps you to create company and team-specific data visualization on the fly with its flexible and powerful query language, without the necessity to rely on custom implementations by 3rd party vendors.
+
+
+
+
+
+=================== Hacker News:  https://news.ycombinator.com ======================
+A nice and free data visualization tool that allows you to fast and easily fetch data from a database, a Web API, a file or other sources and put it up on a dashboard as needed.
+You can also create your own customized widgets based on parameterized queries, and these customized widgets are easy to use for non-techies.
+
+Here is an example of the query language:
+
+| source jdbc
+	environment={"id":1234,"name":"H2 EMP"} 
+	query=`
+		SELECT * 
+		FROM mighty_table 
+		WHERE DATE >= "`+earliest("yyyy-MM-dd")+`" 
+		  AND DATE <= "`+latest("yyyy-MM-dd")+`"
+		ORDER BY time DESC
+		`
+| formatrecord 
+	[(VALUE >= 80), "cfw-red"] 
+	[(VALUE >= 60), "cfw-orange"]  
+	[(VALUE >= 40), "cfw-yellow", "purple"] 
+	[(VALUE >= 20), "cfw-limegreen"] 
+	[(VALUE >= 10), "cfw-green"] 
+	[true, "cfw-gray"] 
+| formatfield LIKES_TIRAMISU=none
+| display 
+	as = statusmap
+	menu = false
