@@ -1,5 +1,7 @@
 
 
+A free platform for dashboarding, monitoring and analytics.
+
 ===================https://www.producthunt.com/ ===================
 The Engineered Monitoring Platform helps you to create company and team-specific data visualization on the fly with its flexible and powerful query language, without the necessity to rely on custom implementations by 3rd party vendors.
 
