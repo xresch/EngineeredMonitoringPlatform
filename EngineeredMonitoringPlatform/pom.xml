@@ -16,7 +16,7 @@
 		<releaseName>EMPServer_v${project.version}</releaseName> <!-- making versioned folder for zipping -->
 		<zipFolder>${basedir}/target/${releaseName}</zipFolder>
 		
-		<skipMakeFolder>true</skipMakeFolder>
+		<skipMakeFolder>false</skipMakeFolder>
 		
 	</properties>
 
