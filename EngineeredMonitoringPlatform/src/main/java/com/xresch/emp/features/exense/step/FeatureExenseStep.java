@@ -11,13 +11,11 @@ import com.xresch.cfw.caching.FileDefinition.HandlingType;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
 import com.xresch.cfw.features.config.ConfigChangeListener;
 import com.xresch.cfw.features.config.Configuration;
-import com.xresch.cfw.features.dashboard.FeatureDashboard;
 import com.xresch.cfw.features.manual.FeatureManual;
 import com.xresch.cfw.features.manual.ManualPage;
 import com.xresch.cfw.features.usermgmt.FeatureUserManagement;
 import com.xresch.cfw.features.usermgmt.Permission;
 import com.xresch.cfw.spi.CFWAppFeature;
-import com.xresch.cfw.utils.CFWTime.CFWTimeUnit;
 import com.xresch.emp.features.exense.step.api.STEPAPI_Factory;
 import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepPlanName;
 import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepProjectName;
@@ -25,6 +23,7 @@ import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepSchedulerNa
 import com.xresch.emp.features.exense.step.query.CFWQueryFunctionStepSetEnv;
 import com.xresch.emp.features.exense.step.query.CFWQuerySourceStepAPI;
 import com.xresch.emp.features.exense.step.query.CFWQuerySourceStepData;
+import com.xresch.xrutils.utils.XRTimeUnit;
 
 /**************************************************************************************************************
  * 
@@ -211,7 +210,7 @@ public class FeatureExenseStep extends CFWAppFeature {
 		}
 		
 		int minutes = CFW.DB.Config.getConfigAsInt(CONFIG_CATEGORY, CONFIG_CACHE_RELOAD_MINUTES);
-		int millis = (int)CFWTimeUnit.m.toMillis(minutes);
+		int millis = (int)XRTimeUnit.m.toMillis(minutes);
 		taskRefreshmentiazione = CFW.Schedule.runPeriodicallyMillis(millis, millis, new TaskStepRefreshmentiazione());
 				
 	}

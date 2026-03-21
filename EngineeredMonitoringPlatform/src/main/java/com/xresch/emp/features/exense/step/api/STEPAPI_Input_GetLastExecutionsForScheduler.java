@@ -5,14 +5,13 @@ import javax.servlet.http.HttpServletRequest;
 import com.google.common.base.Strings;
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.datahandling.CFWField;
-import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.datahandling.CFWField.FormFieldType;
+import com.xresch.cfw.datahandling.CFWTimeframe;
 import com.xresch.cfw.features.core.AutocompleteResult;
 import com.xresch.cfw.features.core.CFWAutocompleteHandler;
-
-import com.xresch.cfw.utils.CFWTime.CFWTimeUnit;
 import com.xresch.emp.features.exense.step.StepEnvironment;
 import com.xresch.emp.features.exense.step.StepEnvironmentManagement;
+import com.xresch.xrutils.utils.XRTimeUnit;
 
 /********************************************************************
  *
@@ -41,7 +40,7 @@ public class STEPAPI_Input_GetLastExecutionsForScheduler extends STEPAPI_Input_E
 			.setDescription("The timeframe that should be fetched. If you set an offset, earliest and latest is ignored. The value clientTimezoneOffset is ignored.")
 			.setValue(
 				new CFWTimeframe()
-					.setOffset(1, CFWTimeUnit.h)
+					.setOffset(1, XRTimeUnit.h)
 			);
 	
 	private CFWField<Integer> executions = 
