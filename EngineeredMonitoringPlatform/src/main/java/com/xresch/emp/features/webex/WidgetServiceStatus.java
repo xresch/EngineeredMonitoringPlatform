@@ -22,7 +22,7 @@ import com.xresch.cfw.features.dashboard.widgets.WidgetSettingsFactory;
 import com.xresch.cfw.features.usermgmt.User;
 import com.xresch.cfw.logging.CFWLog;
 import com.xresch.cfw.response.JSONResponse;
-import com.xresch.cfw.utils.web.CFWHttp.CFWHttpResponse;
+import com.xresch.cfw.utils.web.CFWHttpResponse;
 import com.xresch.emp.features.common.FeatureEMPCommon;
 
 public class WidgetServiceStatus extends WidgetDefinition {
