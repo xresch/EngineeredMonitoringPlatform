@@ -262,7 +262,13 @@ public class StepEnvironment extends AbstractContextSettings {
 					new CacheLoader<String, JsonObject>() {
 						@Override
 						public JsonObject load(final String planID) throws Exception {
-							return fetchPlanByID(planID);
+							
+							JsonObject result = fetchPlanByID(planID);
+							
+							if(result == null) {
+								throw new Exception("Plan ID seems not to exist: "+planID);
+							}
+							return result;
 						}
 					}
 				);
@@ -278,7 +284,12 @@ public class StepEnvironment extends AbstractContextSettings {
 				new CacheLoader<String, JsonObject>() {
 					@Override
 					public JsonObject load(final String projectID) throws Exception {
-						return fetchProjectByID(projectID);
+						JsonObject result = fetchProjectByID(projectID);
+						
+						if(result == null) {
+							throw new Exception("Project ID seems not to exist: "+projectID);
+						}
+						return result;
 					}
 				}
 			);
@@ -294,7 +305,13 @@ public class StepEnvironment extends AbstractContextSettings {
 				new CacheLoader<String, JsonArray>() {
 					@Override
 					public JsonArray load(final String userID) throws Exception {
-						return fetchProjectsForUser(userID);
+						JsonArray result = fetchProjectsForUser(userID);
+						
+						if(result == null) {
+							throw new Exception("Could not load projects for User ID: "+userID);
+						}
+						
+						return result;
 					}
 				}
 			);
@@ -402,10 +419,11 @@ public class StepEnvironment extends AbstractContextSettings {
 		if(apiEndpoint == null) {	apiEndpoint = "/"; }
 		if(!apiEndpoint.startsWith("/")) {	apiEndpoint = "/"+apiEndpoint; }
 		
-		
 		return CFW.HTTP.newRequestBuilder(this.url()+"rest"+apiEndpoint)
 				.header("Accept", "application/json")
+				.header("Step-Project", "[ALL]")
 				.header("Authorization", "Bearer "+this.apiToken())
+				
 			;
 	}
 	
