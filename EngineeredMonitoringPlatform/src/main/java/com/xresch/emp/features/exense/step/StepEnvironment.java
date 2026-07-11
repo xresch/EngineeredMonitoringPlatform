@@ -421,7 +421,7 @@ public class StepEnvironment extends AbstractContextSettings {
 		
 		return CFW.HTTP.newRequestBuilder(this.url()+"rest"+apiEndpoint)
 				.header("Accept", "application/json")
-				.header("Step-Project", "[ALL]")
+				.header("Step-Project", "[All]")
 				.header("Authorization", "Bearer "+this.apiToken())
 				
 			;
