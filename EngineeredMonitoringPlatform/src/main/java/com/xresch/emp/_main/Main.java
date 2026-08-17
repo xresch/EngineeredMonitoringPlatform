@@ -36,6 +36,7 @@ public class Main implements CFWAppInterface {
 	public void settings() {
 		CFW.AppSettings.enableContextSettings(true);
 		CFW.AppSettings.enableDashboarding(true);
+		CFW.AppSettings.enableSpaces(true);
 	}
 	
 	@Override
