@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<soapenv:Body>
+		<getClientMeasureDataResponse
+			soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+			<getClientMeasureDataReturn
+				soapenc:arrayType="ns1:DataPoint[1]" xsi:type="soapenc:Array"
+				xmlns:ns1="http://vision.segue.com"
+				xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+				<getClientMeasureDataReturn href="#id0" />
+			</getClientMeasureDataReturn>
+		</getClientMeasureDataResponse>
+		
+		<multiRef id="id0" soapenc:root="0"
+			soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+			xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+			xmlns:ns2="http://vision.segue.com">
+			<boundCount1 xsi:type="xsd:double">1</boundCount1>
+			<boundCount2 xsi:type="xsd:double">1</boundCount2>
+			<max>#value#</max>
+			<min>#value#</min>
+			<readableTime xsi:type="xsd:string">2021-06-04 12:18:30.000</readableTime>
+			<sum>#value#</sum>
+			<sumSquare xsi:type="xsd:double">6666.666666666665</sumSquare>
+			<time xsi:type="xsd:long">1622801910000</time>
+			<valueCount xsi:type="xsd:double">1</valueCount>
+			<count xsi:type="xsd:double">1</count>
+		</multiRef>
+		
+		<multiRef id="id0" soapenc:root="0"
+			soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+			xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+			xmlns:ns2="http://vision.segue.com">
+			<boundCount1 xsi:type="xsd:double">1</boundCount1>
+			<boundCount2 xsi:type="xsd:double">1</boundCount2>
+			<max>#value2#</max>
+			<min>#value2#</min>
+			<readableTime xsi:type="xsd:string">2021-06-04 13:18:30.000</readableTime>
+			<sum>#value2#</sum>
+			<sumSquare xsi:type="xsd:double">6666.666666666665</sumSquare>
+			<time xsi:type="xsd:long">1622805510000</time>
+			<valueCount xsi:type="xsd:double">1</valueCount>
+			<count xsi:type="xsd:double">1</count>
+		</multiRef>
+		
+		<multiRef id="id0" soapenc:root="0"
+			soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+			xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+			xmlns:ns2="http://vision.segue.com">
+			<boundCount1 xsi:type="xsd:double">1</boundCount1>
+			<boundCount2 xsi:type="xsd:double">1</boundCount2>
+			<max>#value3#</max>
+			<min>#value3#</min>
+			<readableTime xsi:type="xsd:string">2021-06-04 14:18:30.000</readableTime>
+			<sum>#value3#</sum>
+			<sumSquare xsi:type="xsd:double">6666.666666666665</sumSquare>
+			<time xsi:type="xsd:long">1622809110000</time>
+			<valueCount xsi:type="xsd:double">1</valueCount>
+			<count xsi:type="xsd:double">1</count>
+		</multiRef>
+	</soapenv:Body>
+</soapenv:Envelope>

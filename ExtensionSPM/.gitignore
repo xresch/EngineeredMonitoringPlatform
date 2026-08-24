@@ -1,0 +1,5 @@
+/bin/
+/.metadata/.lock
+/log/
+/.gradle/
+/target/
