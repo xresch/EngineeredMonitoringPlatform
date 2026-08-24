@@ -9,7 +9,6 @@ import com.xresch.cfw._main.CFW;
 import com.xresch.cfw.features.contextsettings.AbstractContextSettings;
 import com.xresch.cfw.features.contextsettings.ContextSettingsChangeListener;
 import com.xresch.cfw.logging.CFWLog;
-import com.xresch.emp.features.spm.EnvironmentSPM;
 
 public class StepEnvironmentManagement {
 	private static Logger logger = CFWLog.getLogger(StepEnvironmentManagement.class.getName());
