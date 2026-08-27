@@ -61,7 +61,7 @@ public class PrometheusEnvironmentManagement {
 		// Clear environments
 		environments = new HashMap<Integer, PrometheusEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(PrometheusEnvironment.SETTINGS_TYPE, true);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForTypeAll(PrometheusEnvironment.SETTINGS_TYPE, true);
 
 		for(AbstractContextSettings settings : settingsArray) {
 			PrometheusEnvironment current = (PrometheusEnvironment)settings;

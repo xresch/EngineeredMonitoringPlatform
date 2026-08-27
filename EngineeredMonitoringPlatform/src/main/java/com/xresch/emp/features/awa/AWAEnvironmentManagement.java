@@ -67,7 +67,7 @@ public class AWAEnvironmentManagement {
 		// Clear environments
 		environmentsWithDB = new HashMap<Integer, AWAEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(AWAEnvironment.SETTINGS_TYPE, true);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForTypeAll(AWAEnvironment.SETTINGS_TYPE, true);
 
 		for(AbstractContextSettings settings : settingsArray) {
 			AWAEnvironment current = (AWAEnvironment)settings;

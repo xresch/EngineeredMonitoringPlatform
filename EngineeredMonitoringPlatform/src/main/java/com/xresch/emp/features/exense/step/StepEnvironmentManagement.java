@@ -67,7 +67,7 @@ public class StepEnvironmentManagement {
 		// Clear environments
 		environments = new HashMap<Integer, StepEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(StepEnvironment.SETTINGS_TYPE, true);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForTypeAll(StepEnvironment.SETTINGS_TYPE, true);
 
 		for(AbstractContextSettings settings : settingsArray) {
 			StepEnvironment current = (StepEnvironment)settings;

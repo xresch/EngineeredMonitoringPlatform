@@ -56,7 +56,7 @@ public class DynatraceEnvironmentManagement {
 		// Clear environments
 		environments = new HashMap<Integer, DynatraceEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(DynatraceEnvironment.SETTINGS_TYPE, true);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForTypeAll(DynatraceEnvironment.SETTINGS_TYPE, true);
 
 		for(AbstractContextSettings settings : settingsArray) {
 			DynatraceEnvironment current = (DynatraceEnvironment)settings;

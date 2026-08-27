@@ -51,7 +51,7 @@ public class MongoDBEnvironmentManagement {
 		// Clear environments
 		environmentsWithDB = new HashMap<Integer, MongoDBEnvironment>();
 		
-		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForType(MongoDBEnvironment.SETTINGS_TYPE, true);
+		ArrayList<AbstractContextSettings> settingsArray = CFW.DB.ContextSettings.getContextSettingsForTypeAll(MongoDBEnvironment.SETTINGS_TYPE, true);
 
 		for(AbstractContextSettings settings : settingsArray) {
 			MongoDBEnvironment current = (MongoDBEnvironment)settings;

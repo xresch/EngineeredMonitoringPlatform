@@ -37,14 +37,14 @@ public class CFWStatusMonitorPrometheus implements CFWStatusMonitor {
 	 * 
 	 *************************************************************/
 	@Override
-	public HashMap<JsonObject, CFWStateOption> getStatuses() {
+	public HashMap<JsonObject, CFWStateOption> getStatusesSpaced() {
 		
 		
 		LinkedHashMap<JsonObject, CFWStateOption> result = new LinkedHashMap<>();
 		
 		//----------------------------------
 		// Generic JDBC
-		ArrayList<AbstractContextSettings> settingsList = CFW.DB.ContextSettings.getContextSettingsForType(PrometheusEnvironment.SETTINGS_TYPE, true);
+		ArrayList<AbstractContextSettings> settingsList = CFW.DB.ContextSettings.getContextSettingsForTypeSpaced(PrometheusEnvironment.SETTINGS_TYPE, true);
 		for(AbstractContextSettings  setting : settingsList) {
 			
 			PrometheusEnvironment env = (PrometheusEnvironment)setting;
