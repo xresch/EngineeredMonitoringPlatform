@@ -93,7 +93,7 @@ public class STEPAPI_Factory {
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/
-	private static APIDefinitionJsonArray createGetLastExecutionsForScheduler() {
+	private static APIDefinition createGetLastExecutionsForScheduler() {
 	
 		APIDefinitionJsonArray apiDef = 
 				new APIDefinitionJsonArray(
@@ -149,7 +149,7 @@ public class STEPAPI_Factory {
 			
 			
 		apiDef.setExecutor(executor);
-		return apiDef;
+		return apiDef.isSpaced(false);
 	}
 	
 

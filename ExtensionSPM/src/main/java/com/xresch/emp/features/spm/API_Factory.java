@@ -106,7 +106,7 @@ public class API_Factory {
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/
-	private static APIDefinitionSQL createGetExecutionLogsForProject() {
+	private static APIDefinition createGetExecutionLogsForProject() {
 
 		APIDefinitionSQL apiDef = 
 				new APIDefinitionSQL(
@@ -129,7 +129,7 @@ public class API_Factory {
 		
 		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
-			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object, boolean isSpaced) {
 				API_Input_EnvTimeframeProject inputs = (API_Input_EnvTimeframeProject)object;
 				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
 				
@@ -147,13 +147,13 @@ public class API_Factory {
 		};
 			
 		apiDef.setSQLExecutor(executor);
-		return apiDef;
+		return apiDef.isSpaced(false);
 	}
 	
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/
-	private static APIDefinitionSQL createGetExecutionLogsForMonitor() {
+	private static APIDefinition createGetExecutionLogsForMonitor() {
 	
 		APIDefinitionSQL apiDef = 
 				new APIDefinitionSQL(
@@ -176,7 +176,7 @@ public class API_Factory {
 		
 		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
-			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object, boolean isSpaced) {
 				API_Input_GetExecutionLogsForMonitor inputs = (API_Input_GetExecutionLogsForMonitor)object;
 				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
 				
@@ -195,13 +195,14 @@ public class API_Factory {
 		};
 			
 		apiDef.setSQLExecutor(executor);
-		return apiDef;
+		
+		return apiDef.isSpaced(false);
 	}
 	
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/
-	private static APIDefinitionSQL createGetServiceTargetInfoForProject() {
+	private static APIDefinition createGetServiceTargetInfoForProject() {
 
 		APIDefinitionSQL apiDef = 
 				new APIDefinitionSQL(
@@ -241,7 +242,7 @@ public class API_Factory {
 		
 		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
-			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object, boolean isSpaced) {
 				API_Input_EnvTimeframeProject inputs = (API_Input_EnvTimeframeProject)object;
 				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
 				
@@ -259,13 +260,13 @@ public class API_Factory {
 		};
 			
 		apiDef.setSQLExecutor(executor);
-		return apiDef;
+		return apiDef.isSpaced(false);
 	}
 	
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/
-	private static APIDefinitionSQL createGetServiceTargetViolationsForProject() {
+	private static APIDefinition createGetServiceTargetViolationsForProject() {
 
 		APIDefinitionSQL apiDef = 
 				new APIDefinitionSQL(
@@ -306,7 +307,7 @@ public class API_Factory {
 		
 		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
-			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object, boolean isSpaced) {
 				API_Input_EnvTimeframeProject inputs = (API_Input_EnvTimeframeProject)object;
 				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
 				
@@ -324,13 +325,14 @@ public class API_Factory {
 		};
 			
 		apiDef.setSQLExecutor(executor);
-		return apiDef;
+		
+		return apiDef.isSpaced(false);
 	}
 
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/
-	private static APIDefinitionSQL createGetStatusForMonitor() {
+	private static APIDefinition createGetStatusForMonitor() {
 	
 		APIDefinitionSQL apiDef = 
 				new APIDefinitionSQL(
@@ -358,7 +360,7 @@ public class API_Factory {
 		
 		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
-			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object, boolean isSpaced) {
 				API_Input_GetStatusForMonitor inputs = (API_Input_GetStatusForMonitor)object;
 				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
 				
@@ -375,13 +377,14 @@ public class API_Factory {
 		};
 			
 		apiDef.setSQLExecutor(executor);
-		return apiDef;
+		
+		return apiDef.isSpaced(false);
 	}
 	
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/
-	private static APIDefinitionSQL createGetStatusForProject() {
+	private static APIDefinition createGetStatusForProject() {
 	
 		APIDefinitionSQL apiDef = 
 				new APIDefinitionSQL(
@@ -437,7 +440,7 @@ public class API_Factory {
 		
 		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
-			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object, boolean isSpaced) {
 				API_Input_GetStatusForProject inputs = (API_Input_GetStatusForProject)object;
 				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
 				
@@ -455,13 +458,14 @@ public class API_Factory {
 		};
 			
 		apiDef.setSQLExecutor(executor);
-		return apiDef;
+		
+		return apiDef.isSpaced(false);
 	}
 	
 	/***************************************************************************
 	 * 
 	 ***************************************************************************/
-	private static APIDefinitionSQL createGetStatusForProjectMonitors() {
+	private static APIDefinition createGetStatusForProjectMonitors() {
 	
 		APIDefinitionSQL apiDef = 
 				new APIDefinitionSQL(
@@ -489,7 +493,7 @@ public class API_Factory {
 		
 		APIExecutorSQL executor = new APIExecutorSQL() {
 			@Override
-			public ResultSet execute(APIDefinitionSQL definition, CFWObject object) {
+			public ResultSet execute(APIDefinitionSQL definition, CFWObject object, boolean isSpaced) {
 				API_Input_GetStatusForProject inputs = (API_Input_GetStatusForProject)object;
 				EnvironmentSPM environment = EnvironmentManagerSPM.getEnvironment(inputs.environmentID());
 				
@@ -507,6 +511,6 @@ public class API_Factory {
 		};
 			
 		apiDef.setSQLExecutor(executor);
-		return apiDef;
+		return apiDef.isSpaced(false);
 	}
 }
