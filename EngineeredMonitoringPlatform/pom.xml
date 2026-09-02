@@ -106,7 +106,9 @@
 								<delete dir="${binariesFolder}/config"/>
 						        <mkdir dir="${binariesFolder}/config" />
 						        <copy todir="${binariesFolder}/config">
-						            <fileset dir="${basedir}/config"  />
+						            <fileset dir="${basedir}/config">
+								        <exclude name="salt*" />
+								    </fileset>
 						        </copy>
 						        
 						        <!-- ##### Copy resource folder ##### -->
