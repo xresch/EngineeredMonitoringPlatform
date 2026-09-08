@@ -35,6 +35,7 @@
   box-sizing: border-box; }
 
 html {
+  color-scheme: light;
   font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
