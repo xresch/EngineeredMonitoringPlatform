@@ -97,7 +97,7 @@ public class WidgetCounterForProjectStatus extends WidgetDefinition {
 								String projects = request.getParameter("JSON_PROJECTS");
 								
 								if(!Strings.isNullOrEmpty(projects) && !projects.equals("{}")) {
-									LinkedHashMap<String, String> projectsMap = CFW.JSON.fromJsonLinkedHashMap(projects);
+									LinkedHashMap<String, String> projectsMap = CFW.JSON.fromJsonToLinkedHashMap(projects);
 									int firstID = Integer.parseInt(projectsMap.keySet().toArray()[0].toString());
 									return EnvironmentManagerSPM.autocompleteCountersForProject(Integer.parseInt(environment), firstID, searchValue, this.getMaxResults());
 								}else {

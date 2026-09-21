@@ -98,7 +98,7 @@ public class WidgetCounterForMonitorStatus extends WidgetDefinition {
 								String monitors = request.getParameter("JSON_MONITORS");
 								
 								if(!Strings.isNullOrEmpty(monitors) && !monitors.equals("{}")) {
-									LinkedHashMap<String, String> monitorsMap = CFW.JSON.fromJsonLinkedHashMap(monitors);
+									LinkedHashMap<String, String> monitorsMap = CFW.JSON.fromJsonToLinkedHashMap(monitors);
 									int firstID = Integer.parseInt(monitorsMap.keySet().toArray()[0].toString());
 									return EnvironmentManagerSPM.autocompleteCountersForMonitor(Integer.parseInt(environment), firstID, searchValue, this.getMaxResults());
 								}else {
