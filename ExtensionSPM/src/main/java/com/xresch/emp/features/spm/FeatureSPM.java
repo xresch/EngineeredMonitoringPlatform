@@ -136,7 +136,6 @@ public class FeatureSPM extends CFWAppFeature {
 		CFW.Registry.Manual.addManualPage(null,
 				new ManualPage("SPM")
 					.faicon("fas fa-desktop")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_SPM.html")
 			);
 	}

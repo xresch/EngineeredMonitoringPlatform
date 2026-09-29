@@ -139,22 +139,19 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 				
     	//----------------------------------
     	// Register Theusinator Manual
-		ManualPage theusinator = new ManualPage("Theusinator").faicon("fas fa-tachometer-alt")
-				.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR);
+		ManualPage theusinator = new ManualPage("Theusinator").faicon("fas fa-tachometer-alt");
 		
 		CFW.Registry.Manual.addManualPage(null, theusinator);
 		
 			theusinator.addChild(
 				new ManualPage("Introduction")
 					.faicon("fas fa-star")
-					.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR)
 					.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_intro.html")
 			);
 			
 			theusinator.addChild(
 				new ManualPage("Setup")
 					.faicon("fas fa-check-square")
-					.addPermission(FeatureManual.PERMISSION_ADMIN_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_setup.html")
 			);
 			
@@ -163,7 +160,6 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 			ManualPage views =
 				new ManualPage("Views")
 						.faicon("fas fa-binoculars")
-						.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR)
 						.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_views.html");
 			
 			theusinator.addChild(views);
@@ -171,35 +167,30 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 				views.addChild(
 					new ManualPage("Dashboard View")
 						.faicon("fas fa-digital-tachograph")
-						.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR)
 						.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_view_dashboard.html")
 				);
 				
 				views.addChild(
 					new ManualPage("Box View")
 						.faicon("fas fa-cubes")
-						.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR)
 						.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_view_box.html")
 				);
 				
 				views.addChild(
 					new ManualPage("Health History View")
 						.faicon("fas fa-heartbeat")
-						.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR)
 						.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_view_healthhistory.html")
 				);
 				
 				views.addChild(
 					new ManualPage("Status")
 						.faicon("fas fa-circle-notch")
-						.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR)
 						.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_view_status.html")
 				);
 				
 				views.addChild(
 					new ManualPage("Graph")
 						.faicon("fas fa-chart-bar")
-						.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR)
 						.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_view_graph.html")
 				);
 				
@@ -208,7 +199,6 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 			theusinator.addChild(
 				new ManualPage("Details Modal")
 					.faicon("fas fa-search")
-					.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR)
 					.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_modal.html")
 			);
 			
@@ -217,7 +207,6 @@ public class FeatureSPMTheusinator extends CFWAppFeature {
 			theusinator.addChild(
 				new ManualPage("Miscellaneous")
 					.faicon("fas fa-ellipsis-h")
-					.addPermission(FeatureSPMTheusinator.PERMISSION_THEUSINATOR)
 					.content(HandlingType.JAR_RESOURCE, FeatureSPM.PACKAGE_MANUAL, "manual_theusinator_misc.html")
 			);
 	}

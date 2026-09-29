@@ -107,7 +107,6 @@ public class FeatureExenseStepMongoDB extends CFWAppFeature {
 		CFW.Registry.Manual.addManualPage(null,
 				new ManualPage("Exense Step(MongoDB)")
 					.faicon("fas fa-desktop")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, PACKAGE_RESOURCE, "z_manual_step.html")
 			);
 		

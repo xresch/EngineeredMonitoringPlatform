@@ -87,7 +87,6 @@ public class FeaturePrometheus extends CFWAppFeature {
 		CFW.Registry.Manual.addManualPage(null,
 				new ManualPage("Prometheus")
 					.faicon("fas fa-desktop")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_widgets_Prometheus.html")
 			);
 	}

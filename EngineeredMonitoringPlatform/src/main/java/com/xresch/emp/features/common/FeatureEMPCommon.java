@@ -46,8 +46,7 @@ public class FeatureEMPCommon extends CFWAppFeature {
 		
 		//----------------------------------
 		// Register Manuals	
-		TOP_PAGE.addPermission(FeatureManual.PERMISSION_MANUAL)
-				.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_intro.html");
+		TOP_PAGE.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "z_manual_intro.html");
 				
 	}
 	

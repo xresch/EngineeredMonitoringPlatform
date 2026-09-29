@@ -118,7 +118,6 @@ public class FeatureDynatrace extends CFWAppFeature {
 		MANUALPAGE_PARENT = 
 				new ManualPage("Dynatrace")
 					.faicon("fas fa-desktop")
-					.addPermission(FeatureManual.PERMISSION_MANUAL)
 					.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_dynatrace.html")
 					;
 		
@@ -129,7 +128,6 @@ public class FeatureDynatrace extends CFWAppFeature {
 		MANUALPAGE_PARENT.addChild(
 			new ManualPage("Dynatrace Queries")
 			.faicon("fas fa-code")
-			.addPermission(FeatureManual.PERMISSION_MANUAL)
 			.content(HandlingType.JAR_RESOURCE, PACKAGE_MANUAL, "manual_dynatrace_queries.html")
 		);
 		
