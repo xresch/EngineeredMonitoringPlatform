@@ -2,6 +2,8 @@ package com.xresch.emp._main;
 
 import java.util.logging.Logger;
 
+import org.eclipse.jetty.util.MultiException;
+
 import com.xresch.cfw._main.CFW;
 import com.xresch.cfw._main.CFWApplicationExecutor;
 import com.xresch.cfw.logging.CFWLog;
@@ -75,7 +77,15 @@ public class Main implements CFWAppInterface {
 	        
 	        try {
 				executor.startServer();
-			} catch (Exception e) {
+			}catch (MultiException e) {
+				
+				for(Throwable t : e.getThrowables()) {
+					Logger logger = CFWLog.getLogger(Main.class.getName());
+					new CFWLog(logger)
+						.severe("MultiException occured during application startup: "+t.getMessage(), t);
+				}
+				
+	    	} catch (Exception e) {
 				Logger logger = CFWLog.getLogger(Main.class.getName());
 				new CFWLog(logger)
 				.severe("Exception occured during startup.", e);
